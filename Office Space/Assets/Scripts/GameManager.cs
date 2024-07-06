@@ -11,48 +11,74 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuLose;
 
-    float time;
+    public GameObject player;
+    public PlayerControl playerScript;
 
-    public bool isPaused = false;
+    public bool isPaused;
+
+    int enemyCount;
+
     // Start is called before the first frame update
-    private void Awake()
+    void Awake()
     {
         instance = this;
-        time = Time.timeScale;
+        player = GameObject.FindWithTag("Player");
+        playerScript = player.GetComponent<PlayerControl>();
     }
 
     // Update is called once per frame
     void Update()
     {
-       if(Input.GetButtonDown("Cancel"))
+        if (Input.GetButtonDown("Cancel"))
         {
-            if(menuActive == null)
+            if (menuActive == null)
             {
-                statePaused();
+                StatePause();
                 menuActive = menuPause;
-                menuPause.SetActive(isPaused);
+                menuActive.SetActive(isPaused);
             }
-            else if(menuActive == menuPause)
+            else if (menuActive == menuPause)
             {
-                stateUnpaused();
+                StateUnpause();
             }
         }
     }
-    public void statePaused()
+
+    public void StatePause()
     {
         isPaused = !isPaused;
         Time.timeScale = 0;
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
-    }
-
-    public void stateUnpaused()
-    {
-        isPaused = !isPaused;
-        Time.timeScale = time;
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.Confined;
+    }
+
+    public void StateUnpause()
+    {
+        isPaused = !isPaused;
+        Time.timeScale = 1;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
         menuActive.SetActive(isPaused);
         menuActive = null;
+    }
+
+    public void UpdateGameGoal(int amount)
+    {
+        enemyCount += amount;
+
+        if (enemyCount <= 0)
+        {
+            //you win!
+            StatePause();
+            menuActive = menuWin;
+            menuActive.SetActive(isPaused);
+        }
+    }
+
+    public void YouLose()
+    {
+        StatePause();
+        menuActive = menuLose;
+        menuActive.SetActive(true);
     }
 }

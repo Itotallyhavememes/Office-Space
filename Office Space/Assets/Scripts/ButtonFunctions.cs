@@ -5,27 +5,27 @@ using UnityEngine.SceneManagement;
 
 public class ButtonFunctions : MonoBehaviour
 {
-    GameManager gm;
-    // Start is called before the first frame update
-    public void resume()
-    {
-        GameManager.instance.stateUnpaused();
-    }
+//    GameManager gm;
+//    // Start is called before the first frame update
+//    public void resume()
+//    {
+//        GameManager.instance.stateUnpaused();
+//    }
 
-    public void restart()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        GameManager.instance.stateUnpaused();
-    }
+//    public void restart()
+//    {
+//        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+//        GameManager.instance.stateUnpaused();
+//    }
 
-    public void quit()
-    {
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
+//    public void quit()
+//    {
+//#if UNITY_EDITOR
+//        UnityEditor.EditorApplication.isPlaying = false;
 
-#else
-     Application.Quit();
+//#else
+//     Application.Quit();
 
-#endif
-    }
+//#endif
+//    }
 }
