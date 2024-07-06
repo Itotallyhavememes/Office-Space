@@ -262,14 +262,14 @@ NavMeshAgent:
   m_GameObject: {fileID: 340813803}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_Radius: 1.5
   m_Speed: 3.5
-  m_Acceleration: 8
+  m_Acceleration: 32
   avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
+  m_AngularSpeed: 200
+  m_StoppingDistance: 8
   m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
+  m_AutoBraking: 0
   m_AutoRepath: 1
   m_Height: 2
   m_BaseOffset: 1
@@ -1112,7 +1112,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b130284ef4f8d854eb1b982045424a1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponSwap: 0
   hand: {fileID: 1726348102}
   shuriken: {fileID: 0}
   controller: {fileID: 1926363804}
@@ -1121,13 +1120,17 @@ MonoBehaviour:
     m_Bits: 8
   HP: 3
   speed: 8
-  sprintMod: 3
+  sprintMod: 2
+  crouchMod: 4
   jumpSpeed: 8
   gravity: 22
   shootDamage: 1
   shootRate: 0.5
   shootDist: 15
   cube: {fileID: 0}
+  crouchLevel: 0.5
+  slideSpeed: 19
+  slideLockoutTime: 3
 --- !u!1 &2089134492
 GameObject:
   m_ObjectHideFlags: 0

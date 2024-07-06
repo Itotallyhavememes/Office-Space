@@ -8,7 +8,6 @@ public class PlayerControl : MonoBehaviour, IDamage
 
     //[SerializeField] enum weapon { hand, shuriken }
     //[SerializeField] weapon weaponSelection;
-    [SerializeField] bool weaponSwap;
 
     [SerializeField] GameObject hand;
     [SerializeField] GameObject shuriken;
@@ -19,6 +18,7 @@ public class PlayerControl : MonoBehaviour, IDamage
     [SerializeField] int HP;
     [SerializeField] int speed;
     [SerializeField] int sprintMod;
+    [SerializeField] int crouchMod;
     //[SerializeField] int jumpsMax;
     [SerializeField] int jumpSpeed;
     [SerializeField] int gravity;
@@ -34,13 +34,27 @@ public class PlayerControl : MonoBehaviour, IDamage
     int jumpCount;
     int HPOrig;
 
+    [SerializeField] float crouchLevel;
+    [SerializeField] int slideSpeed;
+    [SerializeField] float slideLockoutTime;
+    float slideLockout;
+    int origSpeed;
+    float origHeight;
+
+    bool weaponSwap;
     bool isShooting;
+    bool isCrouching;
+    bool isSprinting;
+    bool isSliding;
 
     // Start is called before the first frame update
     void Start()
     {
         HPOrig = HP;
+        origSpeed = speed;
         weaponSwap = true;
+        origHeight = controller.height;
+        slideLockout = slideLockoutTime * 60;
     }
 
     // Update is called once per frame
@@ -48,8 +62,16 @@ public class PlayerControl : MonoBehaviour, IDamage
     {
         Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDist, Color.green);
         WeaponHandle();
-        Movement();
-        Sprint();
+        if (!isSliding)
+        {
+            Movement();
+            Crouch();
+            Sprint();
+        }
+        else if (isSliding)
+        {
+            Slide();
+        }
     }
 
     void Movement()
@@ -78,7 +100,6 @@ public class PlayerControl : MonoBehaviour, IDamage
             StartCoroutine(Shoot());
         }
 
-
     }
 
     void WeaponHandle()
@@ -103,16 +124,68 @@ public class PlayerControl : MonoBehaviour, IDamage
         }
     }
 
+    void Slide()
+    {
+        controller.height = crouchLevel;
+        playerVel = transform.forward *= slideSpeed;
+        controller.Move(playerVel * Time.deltaTime);
+        if (slideLockout > 0)
+        {
+            slideLockout--;
+        }
+        else if (slideLockout <= 0)
+        {
+            slideLockout = slideLockoutTime * 60;
+            controller.height = origHeight;
+            isSliding = false;
+            playerVel = Vector3.zero;
+            speed = origSpeed;
+        }
+    }
+
+    void Crouch()
+    {
+        if (isSprinting && Input.GetButtonDown("Crouch") && controller.isGrounded)
+        {
+            isSliding = true;
+        }
+        else if (Input.GetButtonDown("Crouch"))
+        {
+            isCrouching = !isCrouching;
+
+            switch (isCrouching)
+            {
+                case true:
+                    controller.height = crouchLevel;
+                    speed -= crouchMod;
+                    break;
+                case false:
+                    controller.height = origHeight;
+                    speed += crouchMod;
+                    break;
+            }
+        }
+
+        if (isCrouching)
+            if (Input.GetButtonDown("Jump") || Input.GetButtonDown("Sprint"))
+            {
+                isCrouching = false;
+                controller.height = origHeight;
+                speed += crouchMod;
+            }
+    }
 
     void Sprint()
     {
         if (Input.GetButtonDown("Sprint"))
         {
             speed *= sprintMod;
+            isSprinting = true;
         }
         else if (Input.GetButtonUp("Sprint"))
         {
-            speed /= sprintMod;
+            speed = origSpeed;
+            isSprinting = false;
         }
     }
 
