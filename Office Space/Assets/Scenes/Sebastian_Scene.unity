@@ -143,7 +143,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!136 &340813804
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -402,6 +402,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 357263036}
   m_CullTransparentMesh: 1
+--- !u!1 &359574974 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4379273917763433846, guid: a3dbb891dab34c948bc8908029ac82d0, type: 3}
+  m_PrefabInstance: {fileID: 1350461249}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &482177804
 GameObject:
   m_ObjectHideFlags: 0
@@ -848,11 +853,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!1 &1726348102 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6190694010534994171, guid: a3dbb891dab34c948bc8908029ac82d0, type: 3}
-  m_PrefabInstance: {fileID: 1350461249}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1726348103 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4232878177832096532, guid: a3dbb891dab34c948bc8908029ac82d0, type: 3}
@@ -1112,7 +1112,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b130284ef4f8d854eb1b982045424a1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hand: {fileID: 1726348102}
+  hand: {fileID: 359574974}
   shuriken: {fileID: 0}
   controller: {fileID: 1926363804}
   ignoreMask:
@@ -1124,6 +1124,8 @@ MonoBehaviour:
   crouchMod: 4
   jumpSpeed: 8
   gravity: 22
+  ammoCount: 5
+  currentAmmo: 0
   shootDamage: 1
   shootRate: 0.5
   shootDist: 15
@@ -1131,6 +1133,9 @@ MonoBehaviour:
   crouchLevel: 0.5
   slideSpeed: 19
   slideLockoutTime: 3
+  handReloadTime: 1.5
+  handRotationReload: 40
+  handRotationRecoil: 15
 --- !u!1 &2089134492
 GameObject:
   m_ObjectHideFlags: 0

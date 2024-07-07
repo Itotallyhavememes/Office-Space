@@ -26,10 +26,13 @@ public class PlayerControl : MonoBehaviour, IDamage
     Vector3 moveDir;
     Vector3 playerVel;
 
+    [SerializeField] int ammoCount;
+    [SerializeField] int currentAmmo;
     [SerializeField] int shootDamage;
     [SerializeField] float shootRate;
     [SerializeField] int shootDist;
     [SerializeField] GameObject cube;
+
 
     int jumpCount;
     int HPOrig;
@@ -47,6 +50,10 @@ public class PlayerControl : MonoBehaviour, IDamage
     bool isSprinting;
     bool isSliding;
 
+    [SerializeField] float handReloadTime;
+    [SerializeField] float handRotationReload;
+    [SerializeField] float handRotationRecoil;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -55,22 +62,26 @@ public class PlayerControl : MonoBehaviour, IDamage
         weaponSwap = true;
         origHeight = controller.height;
         slideLockout = slideLockoutTime * 60;
+        currentAmmo = ammoCount;
     }
 
     // Update is called once per frame
     void Update()
     {
         Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDist, Color.green);
-        WeaponHandle();
-        if (!isSliding)
+        if (!GameManager.instance.isPaused)
         {
-            Movement();
-            Crouch();
-            Sprint();
-        }
-        else if (isSliding)
-        {
-            Slide();
+            WeaponHandle();
+            if (!isSliding)
+            {
+                Movement();
+                Crouch();
+                Sprint();
+            }
+            else if (isSliding)
+            {
+                Slide();
+            }
         }
     }
 
@@ -98,6 +109,11 @@ public class PlayerControl : MonoBehaviour, IDamage
         if (Input.GetButton("Fire1") && !isShooting)
         {
             StartCoroutine(Shoot());
+        }
+
+        if (Input.GetButtonDown("Reload") && currentAmmo < ammoCount)
+        {
+            StartCoroutine(Reload());
         }
 
     }
@@ -189,32 +205,57 @@ public class PlayerControl : MonoBehaviour, IDamage
         }
     }
 
+    IEnumerator Reload()
+    {
+        if (weaponSwap)
+            hand.transform.Rotate(Vector3.back * handRotationReload);
+
+        currentAmmo = ammoCount;
+
+        yield return new WaitForSeconds(handReloadTime);
+
+        if (weaponSwap)
+            hand.transform.Rotate(Vector3.forward * handRotationReload);
+    }
+
     IEnumerator Shoot()
     {
-        isShooting = true;
-        if (weaponSwap)
+        if (currentAmmo > 0)
         {
+            currentAmmo--;
+            isShooting = true;
 
-            RaycastHit hit;
-            if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, shootDist, ~ignoreMask))
+            if (weaponSwap)
             {
-                Debug.Log(hit.collider.name);
 
-                IDamage dmg = hit.collider.GetComponent<IDamage>();
-
-                if (hit.transform != transform && dmg != null)
+                RaycastHit hit;
+                if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, shootDist, ~ignoreMask))
                 {
-                    dmg.takeDamage(shootDamage);
+                    Debug.Log(hit.collider.name);
+
+                    IDamage dmg = hit.collider.GetComponent<IDamage>();
+
+                    if (hit.transform != transform && dmg != null)
+                    {
+                        dmg.takeDamage(shootDamage);
+                    }
                 }
             }
-        }
-        else if (!weaponSwap)
-        {
-            //shuriken code here
-        }
+            else if (!weaponSwap)
+            {
+                //shuriken code here
+            }
 
-        yield return new WaitForSeconds(shootRate);
-        isShooting = false;
+            if (weaponSwap)
+                hand.transform.Rotate(Vector3.back * handRotationRecoil);
+
+            yield return new WaitForSeconds(shootRate);
+
+            if (weaponSwap)
+                hand.transform.Rotate(Vector3.forward * handRotationRecoil);
+
+            isShooting = false;
+        }
     }
 
     public void takeDamage(int amount)
