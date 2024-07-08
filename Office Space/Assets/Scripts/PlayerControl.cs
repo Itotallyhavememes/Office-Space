@@ -87,15 +87,15 @@ public class PlayerControl : MonoBehaviour, IDamage
 
     void Movement()
     {
-        moveDir = Input.GetAxis("Vertical") * transform.forward +
-                   Input.GetAxis("Horizontal") * transform.right;
-        controller.Move(moveDir * speed * Time.deltaTime);
-
         if (controller.isGrounded)
         {
             jumpCount = 0;
             playerVel = Vector3.zero;
         }
+
+        moveDir = Input.GetAxis("Vertical") * transform.forward +
+                   Input.GetAxis("Horizontal") * transform.right;
+        controller.Move(moveDir * speed * Time.deltaTime);
 
         if (Input.GetButtonDown("Jump") && jumpCount < 1 /*jumpsMax*/)
         {

@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject menuPause;
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuLose;
-    [SerializeField] GameObject menuTittle;
+    [SerializeField] GameObject menuTitle;
     [SerializeField] GameObject menuSettings;
 
     public GameObject player;
@@ -22,14 +22,20 @@ public class GameManager : MonoBehaviour
 
     int enemyCount;
 
+    GameObject previousScreen;
+
     void Awake()
     {
-        menuActive = menuTittle;
-        menuActive.SetActive(true);
         instance = this;
-        isPaused = true;
         player = GameObject.FindWithTag("Player");
         playerScript = player.GetComponent<PlayerControl>();
+    }
+
+    void Start()
+    {
+        StatePause();
+        menuActive = menuTitle;
+        menuActive.SetActive(true);
     }
 
     // Update is called once per frame
@@ -88,14 +94,23 @@ public class GameManager : MonoBehaviour
         menuActive.SetActive(true);
     }
 
-    public void setActive(GameObject active)
+    public void ActivateMenu(GameObject active)
     {
         menuActive = active;
         menuActive.SetActive(true);
     }
-    public void disableCurrentUi()
+
+    public void OpenSettings()
+    {
+        previousScreen = menuActive;
+        menuActive = menuSettings;
+        ActivateMenu(menuActive);
+    }
+
+    public void ReturnFromSettings()
     {
         menuActive.SetActive(false);
+        menuActive = previousScreen;
     }
 
     public void SetVolume(float volume)

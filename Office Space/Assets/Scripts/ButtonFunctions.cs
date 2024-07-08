@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
-using Unity.VisualScripting.Dependencies.Sqlite;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -20,10 +19,15 @@ public class ButtonFunctions : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         GameManager.instance.StateUnpause();
     }
+
+    public void settings()
+    {
+        GameManager.instance.OpenSettings();
+    }
     
     public void returnButton()
     {
-        GameManager.instance.disableCurrentUi();
+        GameManager.instance.ReturnFromSettings();
     }
 
     public void quit()
