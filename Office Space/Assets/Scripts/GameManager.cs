@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class GameManager : MonoBehaviour
 {
@@ -10,18 +11,23 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject menuPause;
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuLose;
+    [SerializeField] GameObject menuTittle;
+    [SerializeField] GameObject menuSettings;
 
     public GameObject player;
     public PlayerControl playerScript;
+    public AudioMixer audioMixer;
 
     public bool isPaused;
 
     int enemyCount;
 
-    // Start is called before the first frame update
     void Awake()
     {
+        menuActive = menuTittle;
+        menuActive.SetActive(true);
         instance = this;
+        isPaused = true;
         player = GameObject.FindWithTag("Player");
         playerScript = player.GetComponent<PlayerControl>();
     }
@@ -80,5 +86,25 @@ public class GameManager : MonoBehaviour
         StatePause();
         menuActive = menuLose;
         menuActive.SetActive(true);
+    }
+
+    public void setActive(GameObject active)
+    {
+        menuActive = active;
+        menuActive.SetActive(true);
+    }
+    public void disableCurrentUi()
+    {
+        menuActive.SetActive(false);
+    }
+
+    public void SetVolume(float volume)
+    {
+        Debug.Log(volume);
+        audioMixer.SetFloat("MasterAudio", volume);
+    }
+    public void SetFullScreen(bool isFullScreen)
+    {
+       Screen.fullScreen = isFullScreen;
     }
 }
