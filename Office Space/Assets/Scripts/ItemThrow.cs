@@ -20,8 +20,9 @@ public class ItemThrow : MonoBehaviour
 
     private void ThrowItem()
     {
-        GameObject item = Instantiate(itemPrefab, Camera.main.transform.position, itemSpawnPoint.transform.rotation);
+        GameObject item = Instantiate(itemPrefab, itemSpawnPoint.transform.position, itemSpawnPoint.transform.rotation);
         Rigidbody rb = item.GetComponent<Rigidbody>();
-        rb.AddForce(transform.forward * throwForce, ForceMode.VelocityChange);
+        rb.velocity = Camera.main.transform.forward * throwForce;
+        //rb.AddForce(transform.forward * throwForce, ForceMode.VelocityChange);
     }
 }

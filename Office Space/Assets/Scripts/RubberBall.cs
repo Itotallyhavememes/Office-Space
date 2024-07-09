@@ -64,10 +64,7 @@ public class RubberBall : MonoBehaviour
             }
         }
 
-
         Destroy(gameObject);
         hasExploded = true;
-
-
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Damage : MonoBehaviour
 {
-    [SerializeField] enum damageType { stream, stationary, projectile }
+    [SerializeField] enum damageType { stream, stationary, projectile, item }
     [SerializeField] damageType type;
 
     [SerializeField] Rigidbody rb;
@@ -26,7 +26,9 @@ public class Damage : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.isTrigger)
+        if(type != damageType.item)
+        {
+            if (other.isTrigger)
             return;
 
         IDamage dmg = other.GetComponent<IDamage>();
@@ -34,10 +36,11 @@ public class Damage : MonoBehaviour
         if (dmg != null && !hasDamaged)
             dmg.takeDamage(damageAmount);
 
-        if (type == damageType.stream || type == damageType.projectile)
-        {
-            hasDamaged = true;
-            Destroy(gameObject);
+            if (type == damageType.stream || type == damageType.projectile)
+            {
+                hasDamaged = true;
+                Destroy(gameObject);
+            }
         }
     }
 }

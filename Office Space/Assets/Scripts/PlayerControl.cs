@@ -45,6 +45,7 @@ public class PlayerControl : MonoBehaviour, IDamage
     [SerializeField] GameObject shurikenProjectile;
     [SerializeField] float shurikenRate;
     [SerializeField] int shurikenAmmo;
+    [SerializeField] float shurikenReloadTime;
     int shurikenStartAmmo;
 
 
@@ -127,7 +128,7 @@ public class PlayerControl : MonoBehaviour, IDamage
             StartCoroutine(Shoot());
         }
 
-        if (Input.GetButtonDown("Reload") && handCurrentAmmo < ammoCount)
+        if (Input.GetButtonDown("Reload") && (handCurrentAmmo < ammoCount || shurikenAmmo < shurikenStartAmmo))
         {
             StartCoroutine(Reload());
         }
@@ -241,7 +242,7 @@ public class PlayerControl : MonoBehaviour, IDamage
         {
             shurikenAmmo = shurikenStartAmmo;
             shurikenHUD.SetActive(false);
-            yield return new WaitForSeconds(shurikenRate);
+            yield return new WaitForSeconds(shurikenReloadTime);
             shurikenHUD.SetActive(true);
         }
 
