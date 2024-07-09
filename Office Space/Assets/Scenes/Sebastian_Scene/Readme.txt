@@ -15,13 +15,38 @@ Current Ammo: 0 (set to ammo count in script)
 Shoot Damage: 1
 Shoot Rate: 0.5
 Shoot Dist: 15
-Cube: None
+
+Shuriken HUD: ShurikenHUD (prefab)
+Shuriken Spawn Point: ProjectileSpawnPoint (prefab)
+Shuriken Projectile: Shuriken (prefab)
+Shuriken Shoot Rate: 0.5
+Shuriken Ammo: 10
+
 Crouch Level: 0.5
 Slide Speed: 19
 Slide Lockout Time: 3 (Lock movement during slide)
 Hand Reload Time: 1.5
 Hand Rotation Reload: 40 (How much to rotate hand)
 Hand Rotation Recoil: 15
+
+
+
+
+--------------------------------------
+
+Shuriken Prefab Values:
+	
+	Transform Values:
+	Position (0.42, -0.26, 0.63)
+	Rotation (0, 0, 30)
+	Scale (0.2, 0.2, 0.2)
+	
+	Damage Script:
+	Type: Projectile
+	Rb: Shuriken (Rigidbody)
+	Damage Amount: 2
+	Speed: 35
+	Destroy Time: 3
 
 --------------------------------------
 

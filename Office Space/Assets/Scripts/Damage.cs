@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Damage : MonoBehaviour
 {
-    [SerializeField] enum damageType { stream, stationary }
+    [SerializeField] enum damageType { stream, stationary, projectile }
     [SerializeField] damageType type;
 
     [SerializeField] Rigidbody rb;
@@ -17,7 +17,7 @@ public class Damage : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (type == damageType.stream)
+        if (type == damageType.stream || type == damageType.projectile)
         {
             rb.velocity = transform.forward * speed;
             Destroy(gameObject, destroyTime);
@@ -34,7 +34,7 @@ public class Damage : MonoBehaviour
         if (dmg != null && !hasDamaged)
             dmg.takeDamage(damageAmount);
 
-        if (type == damageType.stream)
+        if (type == damageType.stream || type == damageType.projectile)
         {
             hasDamaged = true;
             Destroy(gameObject);

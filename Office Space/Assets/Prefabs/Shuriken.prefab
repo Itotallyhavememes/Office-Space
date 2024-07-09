@@ -9,8 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6344079472754854098}
-  - component: {fileID: -4866612310316074379}
-  - component: {fileID: -8384607847150293301}
+  - component: {fileID: 178499713694605896}
   - component: {fileID: 312377961391748602}
   - component: {fileID: 6771191412527741379}
   - component: {fileID: 5461497336981969858}
@@ -37,7 +36,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 63, y: 67, z: 113}
---- !u!114 &-4866612310316074379
+--- !u!114 &178499713694605896
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -46,28 +45,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 9051712137437555885}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e9d00a4b1389d3409541edb00ef74d1, type: 3}
+  m_Script: {fileID: 11500000, guid: 77ce09461f47338459abe81eda185d20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 1
+  type: 2
   rb: {fileID: -7229983277525793893}
   damageAmount: 2
   speed: 35
   destroyTime: 3
---- !u!114 &-8384607847150293301
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9051712137437555885}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 04606026e2e45e445a676f27fadf03c6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  paperBallBody: {fileID: -7229983277525793893}
-  rotationSpeed: 200
 --- !u!33 &312377961391748602
 MeshFilter:
   m_ObjectHideFlags: 0
