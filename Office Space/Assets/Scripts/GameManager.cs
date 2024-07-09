@@ -32,8 +32,7 @@ public class GameManager : MonoBehaviour
 
     int enemyCount;
 
-
-
+    GameObject previousScreen;
 
     void Awake()
     {
@@ -112,22 +111,23 @@ public class GameManager : MonoBehaviour
         menuActive.SetActive(true);
     }
 
-    public void OpenSettings()
-    {
-        menuActive = menuSettings;
-        ActivateMenu(menuActive);
-    }
-
     public void OpenControls()
     {
         menuActive = menuControls;
         ActivateMenu(menuActive);
     }
 
-    public void ReturnToPrevUI()
+    public void OpenSettings()
+    {
+        previousScreen = menuActive;
+        menuActive = menuSettings;
+        ActivateMenu(menuActive);
+    }
+
+    public void ReturnFromSettings()
     {
         menuActive.SetActive(false);
-       
+        menuActive = previousScreen;
     }
 
     public void SetVolume(float volume)

@@ -29,10 +29,10 @@ public class ButtonFunctions : MonoBehaviour
     {
         GameManager.instance.OpenControls();
     }
-    
+
     public void returnButton()
     {
-        GameManager.instance.ReturnToPrevUI();
+        GameManager.instance.ReturnFromSettings();
     }
 
     public void quit()
