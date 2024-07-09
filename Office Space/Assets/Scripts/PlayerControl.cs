@@ -32,6 +32,15 @@ public class PlayerControl : MonoBehaviour, IDamage
     [SerializeField] float shootRate;
     [SerializeField] int shootDist;
     [SerializeField] GameObject cube;
+    [SerializeField] AudioSource handFire;
+    [SerializeField] AudioSource handReloadBegin;
+    [SerializeField] AudioSource handReloadEnd;
+
+    [SerializeField] AudioSource DamageSound1;
+    [SerializeField] AudioSource DamageSound2;
+    [SerializeField] AudioSource DamageSound3;
+    [SerializeField] AudioSource DamageSound4;
+    [SerializeField] AudioSource DamageSound5;
 
 
     int jumpCount;
@@ -208,14 +217,20 @@ public class PlayerControl : MonoBehaviour, IDamage
     IEnumerator Reload()
     {
         if (weaponSwap)
+        {
             hand.transform.Rotate(Vector3.back * handRotationReload);
+            handReloadBegin.Play();
+        }
 
         currentAmmo = ammoCount;
 
         yield return new WaitForSeconds(handReloadTime);
 
         if (weaponSwap)
+        {
             hand.transform.Rotate(Vector3.forward * handRotationReload);
+            handReloadEnd.Play();
+        }
     }
 
     IEnumerator Shoot()
@@ -227,6 +242,7 @@ public class PlayerControl : MonoBehaviour, IDamage
 
             if (weaponSwap)
             {
+                handFire.Play();
 
                 RaycastHit hit;
                 if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, shootDist, ~ignoreMask))
@@ -261,6 +277,25 @@ public class PlayerControl : MonoBehaviour, IDamage
     public void takeDamage(int amount)
     {
         HP -= amount;
+
+        switch (Random.Range(0, 4))
+        {
+            case 0:
+                DamageSound1.Play();
+                break;
+            case 1:
+                DamageSound2.Play();
+                break;
+            case 2:
+                DamageSound3.Play();
+                break;
+            case 3:
+                DamageSound4.Play();
+                break;
+            case 4:
+                DamageSound5.Play();
+                break;
+        }
 
         if (HP <= 0)
         {
