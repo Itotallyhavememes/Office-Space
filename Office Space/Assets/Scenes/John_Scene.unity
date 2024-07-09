@@ -8437,12 +8437,19 @@ MonoBehaviour:
   menuPause: {fileID: 19577790}
   menuWin: {fileID: 19577790}
   menuLose: {fileID: 19577790}
-  menuTittle: {fileID: 19577790}
+  menuTitle: {fileID: 0}
   menuSettings: {fileID: 19577790}
+  menuControls: {fileID: 0}
+  enemyCountText: {fileID: 0}
+  playerHPBar: {fileID: 0}
+  playerAmmoBar: {fileID: 0}
+  damageFlash: {fileID: 0}
   player: {fileID: 0}
   playerScript: {fileID: 0}
   audioMixer: {fileID: 24100000, guid: 491cca7fefc6f3f418f639a8b44c47aa, type: 2}
   isPaused: 0
+  playerHP: 0
+  playerAmmo: 0
 --- !u!4 &242727139
 Transform:
   m_ObjectHideFlags: 0
@@ -26184,7 +26191,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hand: {fileID: 533501861}
-  shuriken: {fileID: 0}
   controller: {fileID: 642149497}
   ignoreMask:
     serializedVersion: 2
@@ -26196,11 +26202,24 @@ MonoBehaviour:
   jumpSpeed: 3
   gravity: 0
   ammoCount: 0
-  currentAmmo: 0
+  handCurrentAmmo: 0
   shootDamage: 0
   shootRate: 0
   shootDist: 0
-  cube: {fileID: 0}
+  handFire: {fileID: 0}
+  handReloadBegin: {fileID: 0}
+  handReloadEnd: {fileID: 0}
+  DamageSound1: {fileID: 0}
+  DamageSound2: {fileID: 0}
+  DamageSound3: {fileID: 0}
+  DamageSound4: {fileID: 0}
+  DamageSound5: {fileID: 0}
+  shurikenHUD: {fileID: 0}
+  shurikenSpawnPoint: {fileID: 0}
+  shurikenProjectile: {fileID: 0}
+  shurikenRate: 0
+  shurikenAmmo: 0
+  shurikenReloadTime: 0
   crouchLevel: 0
   slideSpeed: 0
   slideLockoutTime: 0
@@ -36712,7 +36731,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e48205f49abc900438434b6170c82435, type: 2}
+  - {fileID: 2100000, guid: b19bd9f83c409344db03d5acc032b80a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -47662,6 +47681,63 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: c9a6799bba6d13d429bb5834ff47aeb6, type: 3}
   m_PrefabInstance: {fileID: 1238629443}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1245842885
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 970473058032439917, guid: 7f150933be0b89348ad6bc4bd64feb49, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -34.41482
+      objectReference: {fileID: 0}
+    - target: {fileID: 970473058032439917, guid: 7f150933be0b89348ad6bc4bd64feb49, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.9395256
+      objectReference: {fileID: 0}
+    - target: {fileID: 970473058032439917, guid: 7f150933be0b89348ad6bc4bd64feb49, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -153.70737
+      objectReference: {fileID: 0}
+    - target: {fileID: 970473058032439917, guid: 7f150933be0b89348ad6bc4bd64feb49, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 970473058032439917, guid: 7f150933be0b89348ad6bc4bd64feb49, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 970473058032439917, guid: 7f150933be0b89348ad6bc4bd64feb49, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 970473058032439917, guid: 7f150933be0b89348ad6bc4bd64feb49, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 970473058032439917, guid: 7f150933be0b89348ad6bc4bd64feb49, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 970473058032439917, guid: 7f150933be0b89348ad6bc4bd64feb49, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 970473058032439917, guid: 7f150933be0b89348ad6bc4bd64feb49, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6564448390298921637, guid: 7f150933be0b89348ad6bc4bd64feb49, type: 3}
+      propertyPath: m_Name
+      value: Enemy
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 7f150933be0b89348ad6bc4bd64feb49, type: 3}
 --- !u!1 &1247213329
 GameObject:
   m_ObjectHideFlags: 0
@@ -79580,3 +79656,4 @@ SceneRoots:
   - {fileID: 19577791}
   - {fileID: 1752656677}
   - {fileID: 1730289424}
+  - {fileID: 1245842885}
