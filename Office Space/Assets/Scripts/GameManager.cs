@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.UI;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -13,22 +15,32 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject menuLose;
     [SerializeField] GameObject menuTitle;
     [SerializeField] GameObject menuSettings;
+    [SerializeField] GameObject menuControls;
+    [SerializeField] TMP_Text enemyCountText;
 
+    public Image playerHPBar;
+    public Image playerAmmoBar;
+
+    public GameObject damageFlash;
     public GameObject player;
     public PlayerControl playerScript;
     public AudioMixer audioMixer;
 
     public bool isPaused;
+    public int playerHP;
+    public int playerAmmo;
 
     int enemyCount;
 
-    GameObject previousScreen;
+
+
 
     void Awake()
     {
         instance = this;
         player = GameObject.FindWithTag("Player");
         playerScript = player.GetComponent<PlayerControl>();
+        
     }
 
     void Start()
@@ -77,7 +89,7 @@ public class GameManager : MonoBehaviour
     public void UpdateGameGoal(int amount)
     {
         enemyCount += amount;
-
+        enemyCountText.text = enemyCount.ToString("F0");
         if (enemyCount <= 0)
         {
             //you win!
@@ -102,15 +114,20 @@ public class GameManager : MonoBehaviour
 
     public void OpenSettings()
     {
-        previousScreen = menuActive;
         menuActive = menuSettings;
         ActivateMenu(menuActive);
     }
 
-    public void ReturnFromSettings()
+    public void OpenControls()
+    {
+        menuActive = menuControls;
+        ActivateMenu(menuActive);
+    }
+
+    public void ReturnToPrevUI()
     {
         menuActive.SetActive(false);
-        menuActive = previousScreen;
+       
     }
 
     public void SetVolume(float volume)
