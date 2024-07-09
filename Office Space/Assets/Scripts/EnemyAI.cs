@@ -16,6 +16,12 @@ public class EnemyAI : MonoBehaviour, IDamage
     [SerializeField] GameObject bullet;
     [SerializeField] float shootRate;
 
+    [SerializeField] AudioSource DamageSound1;
+    [SerializeField] AudioSource DamageSound2;
+    [SerializeField] AudioSource DamageSound3;
+    [SerializeField] AudioSource DamageSound4;
+    [SerializeField] AudioSource DamageSound5;
+
     Color origColor;
 
     bool isShooting;
@@ -77,13 +83,22 @@ public class EnemyAI : MonoBehaviour, IDamage
     public void takeDamage(int amount)
     {
         HP -= amount;
+
         StartCoroutine(flashDamage());
+
+        PlayDamageSound();
 
         if (HP <= 0)
         {
-            GameManager.instance.UpdateGameGoal(-1);
-            Destroy(gameObject);
+            StartCoroutine(Die());
         }
+    }
+
+    IEnumerator Die()
+    {
+        yield return new WaitForSeconds(0.5f);
+        GameManager.instance.UpdateGameGoal(-1);
+        Destroy(gameObject);
     }
 
     IEnumerator flashDamage()
@@ -99,5 +114,27 @@ public class EnemyAI : MonoBehaviour, IDamage
         Instantiate(bullet, shootPos.position, transform.rotation);
         yield return new WaitForSeconds(shootRate);
         isShooting = false;
+    }
+
+    void PlayDamageSound()
+    {
+        switch (Random.Range(0, 4))
+        {
+            case 0:
+                DamageSound1.Play();
+                break;
+            case 1:
+                DamageSound2.Play();
+                break;
+            case 2:
+                DamageSound3.Play();
+                break;
+            case 3:
+                DamageSound4.Play();
+                break;
+            case 4:
+                DamageSound5.Play();
+                break;
+        }
     }
 }

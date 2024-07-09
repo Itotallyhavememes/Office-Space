@@ -10,7 +10,6 @@ public class PlayerControl : MonoBehaviour, IDamage
     //[SerializeField] weapon weaponSelection;
 
     [SerializeField] GameObject hand;
-    [SerializeField] GameObject shuriken;
 
     [SerializeField] CharacterController controller;
     [SerializeField] LayerMask ignoreMask;
@@ -19,7 +18,6 @@ public class PlayerControl : MonoBehaviour, IDamage
     [SerializeField] int speed;
     [SerializeField] int sprintMod;
     [SerializeField] int crouchMod;
-    //[SerializeField] int jumpsMax;
     [SerializeField] int jumpSpeed;
     [SerializeField] int gravity;
 
@@ -27,11 +25,28 @@ public class PlayerControl : MonoBehaviour, IDamage
     Vector3 playerVel;
 
     [SerializeField] int ammoCount;
-    [SerializeField] int currentAmmo;
+    [SerializeField] int handCurrentAmmo;
     [SerializeField] int shootDamage;
     [SerializeField] float shootRate;
     [SerializeField] int shootDist;
-    [SerializeField] GameObject cube;
+    [SerializeField] AudioSource handFire;
+    [SerializeField] AudioSource handReloadBegin;
+    [SerializeField] AudioSource handReloadEnd;
+
+    [SerializeField] AudioSource DamageSound1;
+    [SerializeField] AudioSource DamageSound2;
+    [SerializeField] AudioSource DamageSound3;
+    [SerializeField] AudioSource DamageSound4;
+    [SerializeField] AudioSource DamageSound5;
+
+    //Shuriken Variables
+    [SerializeField] GameObject shurikenHUD;
+    [SerializeField] GameObject shurikenSpawnPoint;
+    [SerializeField] GameObject shurikenProjectile;
+    [SerializeField] float shurikenRate;
+    [SerializeField] int shurikenAmmo;
+    int shurikenStartAmmo;
+
 
 
     int jumpCount;
@@ -62,7 +77,8 @@ public class PlayerControl : MonoBehaviour, IDamage
         weaponSwap = true;
         origHeight = controller.height;
         slideLockout = slideLockoutTime * 60;
-        currentAmmo = ammoCount;
+        handCurrentAmmo = ammoCount;
+        shurikenStartAmmo = shurikenAmmo;
     }
 
     // Update is called once per frame
@@ -87,17 +103,17 @@ public class PlayerControl : MonoBehaviour, IDamage
 
     void Movement()
     {
-        moveDir = Input.GetAxis("Vertical") * transform.forward +
-                   Input.GetAxis("Horizontal") * transform.right;
-        controller.Move(moveDir * speed * Time.deltaTime);
-
         if (controller.isGrounded)
         {
             jumpCount = 0;
             playerVel = Vector3.zero;
         }
 
-        if (Input.GetButtonDown("Jump") && jumpCount < 1 /*jumpsMax*/)
+        moveDir = Input.GetAxis("Vertical") * transform.forward +
+                   Input.GetAxis("Horizontal") * transform.right;
+        controller.Move(moveDir * speed * Time.deltaTime);
+
+        if (Input.GetButtonDown("Jump") && jumpCount < 1)
         {
             jumpCount++;
             playerVel.y = jumpSpeed;
@@ -111,7 +127,7 @@ public class PlayerControl : MonoBehaviour, IDamage
             StartCoroutine(Shoot());
         }
 
-        if (Input.GetButtonDown("Reload") && currentAmmo < ammoCount)
+        if (Input.GetButtonDown("Reload") && handCurrentAmmo < ammoCount)
         {
             StartCoroutine(Reload());
         }
@@ -128,12 +144,12 @@ public class PlayerControl : MonoBehaviour, IDamage
             {
                 case true:
                     Debug.Log("Hand");
-                    //shuriken.SetActive(false);
+                    shurikenHUD.SetActive(false);
                     hand.SetActive(true);
                     break;
                 case false:
                     Debug.Log("Shuriken");
-                    //shuriken.SetActive(true);
+                    shurikenHUD.SetActive(true);
                     hand.SetActive(false);
                     break;
             }
@@ -142,6 +158,8 @@ public class PlayerControl : MonoBehaviour, IDamage
 
     void Slide()
     {
+        isCrouching = true;
+        isSprinting = false;
         controller.height = crouchLevel;
         playerVel = transform.forward *= slideSpeed;
         controller.Move(playerVel * Time.deltaTime);
@@ -153,6 +171,7 @@ public class PlayerControl : MonoBehaviour, IDamage
         {
             slideLockout = slideLockoutTime * 60;
             controller.height = origHeight;
+            isCrouching = false;
             isSliding = false;
             playerVel = Vector3.zero;
             speed = origSpeed;
@@ -208,59 +227,96 @@ public class PlayerControl : MonoBehaviour, IDamage
     IEnumerator Reload()
     {
         if (weaponSwap)
+        {
             hand.transform.Rotate(Vector3.back * handRotationReload);
+            handReloadBegin.Play();
 
-        currentAmmo = ammoCount;
+            handCurrentAmmo = ammoCount;
 
-        yield return new WaitForSeconds(handReloadTime);
-
-        if (weaponSwap)
+            yield return new WaitForSeconds(handReloadTime);
             hand.transform.Rotate(Vector3.forward * handRotationReload);
+            handReloadEnd.Play();
+        }
+        else if (!weaponSwap)
+        {
+            shurikenAmmo = shurikenStartAmmo;
+            shurikenHUD.SetActive(false);
+            yield return new WaitForSeconds(shurikenRate);
+            shurikenHUD.SetActive(true);
+        }
+
     }
 
     IEnumerator Shoot()
     {
-        if (currentAmmo > 0)
+        if (handCurrentAmmo <= 0 || shurikenAmmo <= 0)
         {
-            currentAmmo--;
-            isShooting = true;
+            StartCoroutine(Reload());
+            yield return null;
+        }
 
-            if (weaponSwap)
+        isShooting = true;
+
+        if (weaponSwap && handCurrentAmmo > 0)
+        {
+            handCurrentAmmo--;
+
+            handFire.Play();
+
+            RaycastHit hit;
+            if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, shootDist, ~ignoreMask))
             {
+                Debug.Log(hit.collider.name);
 
-                RaycastHit hit;
-                if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, shootDist, ~ignoreMask))
+                IDamage dmg = hit.collider.GetComponent<IDamage>();
+
+                if (hit.transform != transform && dmg != null)
                 {
-                    Debug.Log(hit.collider.name);
-
-                    IDamage dmg = hit.collider.GetComponent<IDamage>();
-
-                    if (hit.transform != transform && dmg != null)
-                    {
-                        dmg.takeDamage(shootDamage);
-                    }
+                    dmg.takeDamage(shootDamage);
                 }
             }
-            else if (!weaponSwap)
-            {
-                //shuriken code here
-            }
 
-            if (weaponSwap)
-                hand.transform.Rotate(Vector3.back * handRotationRecoil);
-
+            hand.transform.Rotate(Vector3.back * handRotationRecoil);
             yield return new WaitForSeconds(shootRate);
+            hand.transform.Rotate(Vector3.forward * handRotationRecoil);
 
-            if (weaponSwap)
-                hand.transform.Rotate(Vector3.forward * handRotationRecoil);
-
-            isShooting = false;
         }
+        else if (!weaponSwap && shurikenAmmo > 0) //Shuriken
+        {
+            shurikenAmmo--;
+            shurikenHUD.SetActive(false);
+            Instantiate(shurikenProjectile, shurikenSpawnPoint.transform.position, shurikenSpawnPoint.transform.rotation);
+            yield return new WaitForSeconds(shurikenRate);
+            shurikenHUD.SetActive(true);
+        }
+        
+
+        isShooting = false;
+
     }
 
     public void takeDamage(int amount)
     {
         HP -= amount;
+
+        switch (Random.Range(0, 4))
+        {
+            case 0:
+                DamageSound1.Play();
+                break;
+            case 1:
+                DamageSound2.Play();
+                break;
+            case 2:
+                DamageSound3.Play();
+                break;
+            case 3:
+                DamageSound4.Play();
+                break;
+            case 4:
+                DamageSound5.Play();
+                break;
+        }
 
         if (HP <= 0)
         {
