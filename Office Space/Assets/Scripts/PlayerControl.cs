@@ -287,6 +287,7 @@ public class PlayerControl : MonoBehaviour, IDamage
         else if (!weaponSwap && shurikenAmmo > 0) //Shuriken
         {
             shurikenAmmo--;
+            UpdateAmmoUI();
             shurikenHUD.SetActive(false);
             Instantiate(shurikenProjectile, shurikenSpawnPoint.transform.position, shurikenSpawnPoint.transform.rotation);
             yield return new WaitForSeconds(shurikenRate);
