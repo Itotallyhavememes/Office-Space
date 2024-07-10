@@ -6,6 +6,7 @@ public class ItemThrow : MonoBehaviour
 {
 
     [SerializeField] float throwForce;
+    [SerializeField] float throwDelay;
     [SerializeField] GameObject itemPrefab;
     [SerializeField] GameObject itemSpawnPoint;
     [SerializeField] PlayerControl player;
@@ -13,24 +14,35 @@ public class ItemThrow : MonoBehaviour
     [SerializeField] GameObject shurikenHUD;
     [SerializeField] GameObject grenadeHUD;
 
+    public int rubberBallCount;
+    int rubberBallStartCount;
+
+    private void Start()
+    {
+        rubberBallStartCount = rubberBallCount;
+    }
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Item") && !player.isShooting && !player.isReloading)
+        if (!player.isShooting && !player.isReloading)
         {
-            StartCoroutine(ThrowItem());
+            if (Input.GetButtonDown("Item") && rubberBallCount > 0)
+            {
+                StartCoroutine(ThrowItem());
+                rubberBallCount--;
+            }
         }
     }
 
     IEnumerator ThrowItem()
     {
         WeaponToggleOff();
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(throwDelay);
         GameObject item = Instantiate(itemPrefab, itemSpawnPoint.transform.position, itemSpawnPoint.transform.rotation);
         Rigidbody rb = item.GetComponent<Rigidbody>();
         rb.velocity = Camera.main.transform.forward * throwForce;
         grenadeHUD.SetActive(false);
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(throwDelay);
         WeaponToggleOn();
 
     }

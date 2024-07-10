@@ -600,17 +600,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 2393792950822098801}
   model: {fileID: 4908030787383471447}
-  colorDamage: {r: 0.55660367, g: 0.55660367, b: 1, a: 1}
+  dmgColor: {r: 0, g: 0, b: 0, a: 0}
   shootPos: {fileID: 1956157698022107042}
   HP: 3
   faceTargetSpeed: 5
+  viewAngle: 90
   bullet: {fileID: 6562726978010489722, guid: be53c72d1bd770d4faa4be6708977d31, type: 3}
-  shootRate: 0.5
+  shootRate: 0.18
   DamageSound1: {fileID: 5703338137476531930}
   DamageSound2: {fileID: 2660570649892949112}
   DamageSound3: {fileID: 2014925032809867990}
   DamageSound4: {fileID: 644796454222486367}
   DamageSound5: {fileID: 6818429374452012668}
+  viewAngle: 90
+  dodgeSpeed: 0
+  chaseCooldown: 0
 --- !u!195 &2393792950822098801
 NavMeshAgent:
   m_ObjectHideFlags: 0

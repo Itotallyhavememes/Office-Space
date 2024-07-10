@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 
-public class PlayerControl : MonoBehaviour, IDamage
+public class PlayerControl : MonoBehaviour, IDamage, ITarget
 {
     [SerializeField] GameObject hand;
 
@@ -49,9 +49,7 @@ public class PlayerControl : MonoBehaviour, IDamage
     [SerializeField] float shurikenReloadTime;
     int shurikenStartAmmo;
 
-    //Rubber Ball variable
-    [SerializeField] int rubberBallCount;
-    int rubberBallStartCount;
+    //Item Throw
     ItemThrow item;
 
     int jumpCount;
@@ -375,5 +373,9 @@ public class PlayerControl : MonoBehaviour, IDamage
             GameManager.instance.playerAmmoBar.fillAmount = (float)shurikenAmmo / shurikenStartAmmo;
     }
 
+    public GameObject declareOBJ(GameObject obj)
+    {
+        return gameObject;
+    }
 }
 
