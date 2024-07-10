@@ -14,6 +14,12 @@ public class ButtonFunctions : MonoBehaviour
         GameManager.instance.StateUnpause();
     }
 
+    public void startButton()
+    {
+        SceneManager.LoadScene("Main_Scene");
+        GameManager.instance.StateUnpause();
+    }
+
     public void restart()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
