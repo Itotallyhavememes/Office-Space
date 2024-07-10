@@ -26,6 +26,11 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
     [SerializeField] int dodgeSpeed;
     Vector3 enemyVel;
     Vector3 randPos;
+    [SerializeField] float range;
+    [SerializeField] LayerMask groundLayer;
+    Vector3 enemyWalk;
+    Vector3 destPoint;
+    bool walkPoint;
     //TIM CODE
     [SerializeField] GameObject targetOBJ;
     ITarget target;
@@ -72,8 +77,7 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
         }
         else
         {
-            randPos = new Vector3(Random.Range(-100, 100), 0, Random.Range(-100, 100));
-            agent.SetDestination(randPos);
+            Patrol();
 
         }
     }
@@ -184,6 +188,35 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
         Instantiate(bullet, shootPos.position, transform.rotation);
         yield return new WaitForSeconds(shootRate);
         isShooting = false;
+    }
+
+    // method for enemy walk
+    void Patrol()
+    {
+        if (!walkPoint)
+        {
+            SetRandowWaypoint();
+        }
+        if (walkPoint)
+        {
+            agent.SetDestination(destPoint);
+        }
+        if (Vector3.Distance(transform.position, destPoint) < 8)
+        {
+            walkPoint = false;
+        }
+    }
+    private void SetRandowWaypoint()
+    {
+        //int randRage = Random.Range(-50, 50);
+        float x = Random.Range(-range, range);
+        float z = Random.Range(-range, range);
+
+        destPoint = new Vector3(transform.position.x + x, transform.position.y, transform.position.z + z);
+        if (Physics.Raycast(destPoint, Vector3.down, groundLayer))
+        {
+            walkPoint = true;
+        }
     }
 
     public GameObject declareOBJ(GameObject obj)
