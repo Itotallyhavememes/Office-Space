@@ -49,7 +49,10 @@ public class PlayerControl : MonoBehaviour, IDamage
     [SerializeField] float shurikenReloadTime;
     int shurikenStartAmmo;
 
-
+    //Rubber Ball variable
+    [SerializeField] int rubberBallCount;
+    int rubberBallStartCount;
+    ItemThrow item;
 
     int jumpCount;
     int HPOrig;
@@ -142,6 +145,7 @@ public class PlayerControl : MonoBehaviour, IDamage
             {
                 StartCoroutine(Reload());
             }
+
         }
 
     }
@@ -370,5 +374,6 @@ public class PlayerControl : MonoBehaviour, IDamage
         else if (!weaponSwap)
             GameManager.instance.playerAmmoBar.fillAmount = (float)shurikenAmmo / shurikenStartAmmo;
     }
+
 }
 
