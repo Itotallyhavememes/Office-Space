@@ -1150,6 +1150,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 7415348336417281650, guid: 40ec7c9ceea2bec4dac0acbce96e70fc, type: 3}
+      propertyPath: HandAmmoCount
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

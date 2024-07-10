@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject menuTitle;
     [SerializeField] GameObject menuSettings;
     [SerializeField] GameObject menuControls;
-    [SerializeField] TMP_Text enemyCountText;
+    [SerializeField] TMP_Text donutCountText;
     public TMP_Text grenadeStack;
 
 
@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
     public int rubberBCount;
     
 
-    int enemyCount;
+    int donutCount;
 
     GameObject previousScreen;
     ItemThrow rubber;
@@ -93,9 +93,9 @@ public class GameManager : MonoBehaviour
 
     public void UpdateGameGoal(int amount)
     {
-        enemyCount += amount;
-        enemyCountText.text = enemyCount.ToString("F0");
-        if (enemyCount <= 0)
+        donutCount += amount;
+        donutCountText.text = donutCount.ToString("F0");
+        if (donutCount <= 0)
         {
             //you win!
             StatePause();
