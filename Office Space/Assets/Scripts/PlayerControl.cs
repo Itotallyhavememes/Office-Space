@@ -6,34 +6,34 @@ using UnityEngine;
 
 public class PlayerControl : MonoBehaviour, IDamage
 {
-
-    //[SerializeField] enum weapon { hand, shuriken }
-    //[SerializeField] weapon weaponSelection;
-
     [SerializeField] GameObject hand;
 
     [SerializeField] CharacterController controller;
     [SerializeField] LayerMask ignoreMask;
 
+    //Player variables
     [SerializeField] int HP;
     [SerializeField] int speed;
     [SerializeField] int sprintMod;
     [SerializeField] int crouchMod;
     [SerializeField] int jumpSpeed;
     [SerializeField] int gravity;
-
     Vector3 moveDir;
     Vector3 playerVel;
 
+    //Hand variables
     [SerializeField] int ammoCount;
     [SerializeField] int handCurrentAmmo;
     [SerializeField] int shootDamage;
     [SerializeField] float shootRate;
     [SerializeField] int shootDist;
+
+    //Hand Audio
     [SerializeField] AudioSource handFire;
     [SerializeField] AudioSource handReloadBegin;
     [SerializeField] AudioSource handReloadEnd;
 
+    //Damage Audio
     [SerializeField] AudioSource DamageSound1;
     [SerializeField] AudioSource DamageSound2;
     [SerializeField] AudioSource DamageSound3;
@@ -63,6 +63,7 @@ public class PlayerControl : MonoBehaviour, IDamage
 
     bool weaponSwap;
     bool isShooting;
+    bool isReloading;
     bool isCrouching;
     bool isSprinting;
     bool isSliding;
@@ -90,7 +91,11 @@ public class PlayerControl : MonoBehaviour, IDamage
         Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDist, Color.green);
         if (!GameManager.instance.isPaused)
         {
-            WeaponHandle();
+            if (!isShooting)
+            {
+                WeaponHandle();
+            }
+
             if (!isSliding)
             {
                 Movement();
@@ -125,14 +130,17 @@ public class PlayerControl : MonoBehaviour, IDamage
         controller.Move(playerVel * Time.deltaTime);
         playerVel.y -= gravity * Time.deltaTime;
 
-        if (Input.GetButton("Fire1") && !isShooting)
+        if (!isShooting && !isReloading)
         {
-            StartCoroutine(Shoot());
-        }
+            if (Input.GetButton("Fire1"))
+            {
+                StartCoroutine(Shoot());
+            }
 
-        if (Input.GetButtonDown("Reload") && (handCurrentAmmo < ammoCount || shurikenAmmo < shurikenStartAmmo))
-        {
-            StartCoroutine(Reload());
+            if (Input.GetButtonDown("Reload"))
+            {
+                StartCoroutine(Reload());
+            }
         }
 
     }
@@ -157,6 +165,7 @@ public class PlayerControl : MonoBehaviour, IDamage
                     break;
             }
         }
+        UpdateAmmoUI();
     }
 
     void Slide()
@@ -229,35 +238,32 @@ public class PlayerControl : MonoBehaviour, IDamage
 
     IEnumerator Reload()
     {
-        if (weaponSwap)
+        isReloading = true;
+        if (weaponSwap && handCurrentAmmo < ammoCount)
         {
             hand.transform.Rotate(Vector3.back * handRotationReload);
             handReloadBegin.Play();
 
-            handCurrentAmmo = ammoCount;
-
             yield return new WaitForSeconds(handReloadTime);
             hand.transform.Rotate(Vector3.forward * handRotationReload);
             handReloadEnd.Play();
+
+            handCurrentAmmo = ammoCount;
         }
-        else if (!weaponSwap)
+        else if (!weaponSwap && shurikenAmmo < shurikenStartAmmo)
         {
-            shurikenAmmo = shurikenStartAmmo;
             shurikenHUD.SetActive(false);
             yield return new WaitForSeconds(shurikenReloadTime);
             shurikenHUD.SetActive(true);
-        }
 
+            shurikenAmmo = shurikenStartAmmo;
+        }
+        isReloading = false;
+        UpdateAmmoUI();
     }
 
     IEnumerator Shoot()
     {
-        if (handCurrentAmmo <= 0 || shurikenAmmo <= 0)
-        {
-            StartCoroutine(Reload());
-            yield return null;
-        }
-
         isShooting = true;
 
         if (weaponSwap && handCurrentAmmo > 0)
@@ -293,7 +299,10 @@ public class PlayerControl : MonoBehaviour, IDamage
             yield return new WaitForSeconds(shurikenRate);
             shurikenHUD.SetActive(true);
         }
-        
+        else if (!isReloading && (handCurrentAmmo <= 0 || shurikenAmmo <= 0))
+        {
+            StartCoroutine(Reload());
+        }
 
         isShooting = false;
 
