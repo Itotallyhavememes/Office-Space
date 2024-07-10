@@ -1149,7 +1149,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!136 &340813804
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -3321,6 +3321,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2047083274707365505, guid: f0ab30acf69428142ac55986442a519f, type: 3}
+      propertyPath: m_FillAmount
+      value: 0.419
+      objectReference: {fileID: 0}
+    - target: {fileID: 3625795018046634415, guid: f0ab30acf69428142ac55986442a519f, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -57
+      objectReference: {fileID: 0}
     - target: {fileID: 6414659824971823736, guid: f0ab30acf69428142ac55986442a519f, type: 3}
       propertyPath: m_Name
       value: UI
@@ -3408,6 +3416,10 @@ PrefabInstance:
     - target: {fileID: 7138851693277048538, guid: f0ab30acf69428142ac55986442a519f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8740464243601715904, guid: f0ab30acf69428142ac55986442a519f, type: 3}
+      propertyPath: m_FillAmount
+      value: 0.817
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4741414057563408162, guid: f0ab30acf69428142ac55986442a519f, type: 3}

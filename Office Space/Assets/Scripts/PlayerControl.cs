@@ -99,8 +99,8 @@ public class PlayerControl : MonoBehaviour, IDamage
             if (!isSliding)
             {
                 Movement();
-                Crouch();
                 Sprint();
+                Crouch();
             }
             else if (isSliding)
             {
@@ -172,9 +172,21 @@ public class PlayerControl : MonoBehaviour, IDamage
     {
         isCrouching = true;
         isSprinting = false;
+
+        if (controller.isGrounded)
+        {
+            jumpCount = 0;
+            playerVel = Vector3.zero;
+        }
+
         controller.height = crouchLevel;
-        playerVel = transform.forward *= slideSpeed;
+
+        playerVel.x = transform.forward.x * slideSpeed;
+        playerVel.z = transform.forward.z * slideSpeed;
+
         controller.Move(playerVel * Time.deltaTime);
+        playerVel.y -= gravity * Time.deltaTime;
+
         if (slideLockout > 0)
         {
             slideLockout--;
@@ -187,30 +199,27 @@ public class PlayerControl : MonoBehaviour, IDamage
             isSliding = false;
             playerVel = Vector3.zero;
             speed = origSpeed;
+            Sprint();
         }
     }
 
     void Crouch()
     {
-        if (isSprinting && Input.GetButtonDown("Crouch") && controller.isGrounded)
+        if (isSprinting && Input.GetButtonDown("Crouch"))
         {
             isSliding = true;
         }
         else if (Input.GetButtonDown("Crouch"))
         {
-            isCrouching = !isCrouching;
-
-            switch (isCrouching)
-            {
-                case true:
-                    controller.height = crouchLevel;
-                    speed -= crouchMod;
-                    break;
-                case false:
-                    controller.height = origHeight;
-                    speed += crouchMod;
-                    break;
-            }
+            controller.height = crouchLevel;
+            speed -= crouchMod;
+            isCrouching = true;
+        }
+        else if (Input.GetButtonUp("Crouch"))
+        {
+            controller.height = origHeight;
+            speed += crouchMod;
+            isCrouching = false;
         }
 
         if (isCrouching)
@@ -226,13 +235,17 @@ public class PlayerControl : MonoBehaviour, IDamage
     {
         if (Input.GetButtonDown("Sprint"))
         {
-            speed *= sprintMod;
-            isSprinting = true;
-        }
-        else if (Input.GetButtonUp("Sprint"))
-        {
-            speed = origSpeed;
-            isSprinting = false;
+            isSprinting = !isSprinting;
+
+            switch (isSprinting)
+            {
+                case true:
+                    speed *= sprintMod;
+                    break;
+                case false:
+                    speed = origSpeed;
+                    break;
+            }
         }
     }
 
