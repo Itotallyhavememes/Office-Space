@@ -81,34 +81,34 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
         //You can't see me, but I'm nearby
         else if (targetInRange && !canSeePlayer())
         {
-           
+
             //I just saw you, but I lost sight of you, but I'm going to try and find you
-            if (agent.remainingDistance > agent.stoppingDistance)
-            {
+            //if (agent.remainingDistance > agent.stoppingDistance)
+            //{
                 //ToggleSprint();
                 faceTarget();
                 TargetDIR = targetOBJ.transform.position - transform.position;
                 agent.SetDestination(targetOBJ.transform.position);
-            }
+         //   }
         }
     }
 
-    void ToggleSprint()
-    {
-        if (!isSprinting)
-        {
-            agent.speed *= 10000;
-            agent.angularSpeed *= 10000;
-            faceTargetSpeed *= 10000;
-        }
-        else
-        {
-            agent.speed /= 10000;
-            agent.angularSpeed /= 10000;
-            faceTargetSpeed /= 10000;
-        }
-        isSprinting = !isSprinting;
-    }
+    //void ToggleSprint()
+    //{
+    //    if (!isSprinting)
+    //    {
+    //        agent.speed *= 10000;
+    //        agent.angularSpeed *= 10000;
+    //        faceTargetSpeed *= 10000;
+    //    }
+    //    else
+    //    {
+    //        agent.speed /= 10000;
+    //        agent.angularSpeed /= 10000;
+    //        faceTargetSpeed /= 10000;
+    //    }
+    //    isSprinting = !isSprinting;
+    //}
 
     bool canSeePlayer()
     {
@@ -136,7 +136,6 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
     //if Player enters SPHERE/GENERAL RANGE
     public void OnTriggerEnter(Collider other)
     {
-        Debug.Log("OBJ IN RANGE");
         target = other.GetComponent<ITarget>();
         if (target != null)
         {
@@ -159,7 +158,7 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
     {
 
         Quaternion rot = Quaternion.LookRotation(TargetDIR);
-        //transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * faceTargetSpeed);
+        transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * faceTargetSpeed);
         transform.rotation = rot;
     }
     public void takeDamage(int amount)
@@ -169,10 +168,12 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
         StartCoroutine(flashDamage());
         //Enemy reacts to getting hurt
         //Enemy now SNAPS to the direction of firing player
+        Quaternion rot = Quaternion.LookRotation(TargetDIR);
+        transform.rotation = rot;
         agent.SetDestination(GameManager.instance.player.transform.position);
         if (HP <= 7)
             dodgeThreat();
-        faceTarget();
+  
         if (HP <= 0)
         {
             //He's died, so decrement
@@ -183,8 +184,10 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
 
     void dodgeThreat()
     {
-        enemyVel = new Vector3(Random.Range(-dodgeSpeed, dodgeSpeed), 0, Random.Range(-dodgeSpeed, dodgeSpeed));
-        agent.velocity = enemyVel;
+        //faceTarget();
+        //enemyVel = new Vector3(Random.Range(-dodgeSpeed, dodgeSpeed), 0, Random.Range(-dodgeSpeed, dodgeSpeed));
+        //agent.velocity = enemyVel;
+        
     }
 
     IEnumerator flashDamage()

@@ -491,17 +491,17 @@ MonoBehaviour:
   ignoreMask:
     serializedVersion: 2
     m_Bits: 8
-  HP: 3
-  speed: 8
+  HP: 10
+  speed: 6
   sprintMod: 2
   crouchMod: 4
   jumpSpeed: 8
   gravity: 22
   ammoCount: 5
   handCurrentAmmo: 0
-  shootDamage: 1
+  shootDamage: 2
   shootRate: 0.5
-  shootDist: 15
+  shootDist: 30
   handFire: {fileID: 4126415615648579579}
   handReloadBegin: {fileID: 6766277589638808452}
   handReloadEnd: {fileID: 8122209515640205071}
@@ -515,7 +515,7 @@ MonoBehaviour:
   shurikenProjectile: {fileID: 9051712137437555885, guid: 427abf216183ff34e8d038c29d5910a8, type: 3}
   shurikenRate: 0.5
   shurikenAmmo: 10
-  shurikenReloadTime: 2
+  shurikenReloadTime: 4
   crouchLevel: 0.5
   slideSpeed: 19
   slideLockoutTime: 3
