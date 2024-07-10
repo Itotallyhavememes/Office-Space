@@ -22,11 +22,11 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
     Vector3 playerVel;
 
     //Hand variables
-    [SerializeField] int ammoCount;
-    [SerializeField] int handCurrentAmmo;
+    [SerializeField] int HandAmmoCount;
     [SerializeField] int shootDamage;
     [SerializeField] float shootRate;
     [SerializeField] int shootDist;
+    int handCurrentAmmo;
 
     //Hand Audio
     [SerializeField] AudioSource handFire;
@@ -77,13 +77,13 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
 
     // Start is called before the first frame update
     void Start()
-    {
+    { 
         HPOrig = HP;
         origSpeed = speed;
         weaponSwap = true;
         origHeight = controller.height;
         slideLockout = slideLockoutTime * 60;
-        handCurrentAmmo = ammoCount;
+        handCurrentAmmo = HandAmmoCount;
         shurikenStartAmmo = shurikenAmmo;
     }
 
@@ -254,7 +254,7 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
     IEnumerator Reload()
     {
         isReloading = true;
-        if (weaponSwap && handCurrentAmmo < ammoCount)
+        if (weaponSwap && handCurrentAmmo < HandAmmoCount)
         {
             hand.transform.Rotate(Vector3.back * handRotationReload);
             handReloadBegin.Play();
@@ -263,7 +263,7 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
             hand.transform.Rotate(Vector3.forward * handRotationReload);
             handReloadEnd.Play();
 
-            handCurrentAmmo = ammoCount;
+            handCurrentAmmo = HandAmmoCount;
         }
         else if (!weaponSwap && shurikenAmmo < shurikenStartAmmo)
         {
@@ -368,7 +368,7 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
     public void UpdateAmmoUI()
     {
         if (weaponSwap)
-            GameManager.instance.playerAmmoBar.fillAmount = (float)handCurrentAmmo / ammoCount;
+            GameManager.instance.playerAmmoBar.fillAmount = (float)handCurrentAmmo / HandAmmoCount;
         else if (!weaponSwap)
             GameManager.instance.playerAmmoBar.fillAmount = (float)shurikenAmmo / shurikenStartAmmo;
 
