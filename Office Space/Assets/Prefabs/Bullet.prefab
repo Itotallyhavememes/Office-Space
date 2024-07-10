@@ -50,8 +50,8 @@ MonoBehaviour:
   type: 0
   rb: {fileID: 6051074458531916221}
   damageAmount: 1
-  speed: 25
-  destroyTime: 3
+  speed: 60
+  destroyTime: 2
 --- !u!54 &6051074458531916221
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -198,7 +198,7 @@ TrailRenderer:
       atime6: 0
       atime7: 0
       m_Mode: 0
-      m_ColorSpace: 0
+      m_ColorSpace: -1
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
     numCornerVertices: 0
