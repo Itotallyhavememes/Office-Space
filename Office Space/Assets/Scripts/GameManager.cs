@@ -5,7 +5,6 @@ using UnityEngine.Audio;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
-using UnityEditor.SearchService;
 
 public class GameManager : MonoBehaviour
 {

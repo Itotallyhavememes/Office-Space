@@ -61,9 +61,10 @@ public class PlayerControl : MonoBehaviour, IDamage
     int origSpeed;
     float origHeight;
 
-    bool weaponSwap;
-    bool isShooting;
-    bool isReloading;
+    public bool weaponSwap;
+    public bool isShooting;
+    public bool isReloading;
+
     bool isCrouching;
     bool isSprinting;
     bool isSliding;
@@ -222,13 +223,12 @@ public class PlayerControl : MonoBehaviour, IDamage
             isCrouching = false;
         }
 
-        if (isCrouching)
-            if (Input.GetButtonDown("Jump") || Input.GetButtonDown("Sprint"))
-            {
-                isCrouching = false;
-                controller.height = origHeight;
-                speed += crouchMod;
-            }
+        if (isCrouching && (Input.GetButtonDown("Jump") || Input.GetButtonDown("Sprint")))
+        {
+            isCrouching = false;
+            controller.height = origHeight;
+            speed += crouchMod;
+        }
     }
 
     void Sprint()

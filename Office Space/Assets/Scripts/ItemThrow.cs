@@ -8,11 +8,12 @@ public class ItemThrow : MonoBehaviour
     [SerializeField] float throwForce;
     [SerializeField] GameObject itemPrefab;
     [SerializeField] GameObject itemSpawnPoint;
+    [SerializeField] PlayerControl player;
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Item"))
+        if (Input.GetButtonDown("Item") && !player.isShooting && !player.isReloading)
         {
             ThrowItem();
         }
