@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject menuSettings;
     [SerializeField] GameObject menuControls;
     [SerializeField] TMP_Text enemyCountText;
+    [SerializeField] TMP_Text grenadeStack;
 
 
     public Image playerHPBar;
@@ -31,6 +32,7 @@ public class GameManager : MonoBehaviour
     public bool isPaused;
     public int playerHP;
     public int playerAmmo;
+    
 
     int enemyCount;
 
