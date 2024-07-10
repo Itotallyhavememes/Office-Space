@@ -198,11 +198,18 @@ MonoBehaviour:
   viewAngle: 90
   bullet: {fileID: 6562726978010489722, guid: be53c72d1bd770d4faa4be6708977d31, type: 3}
   shootRate: 0.12
+  DamageSound1: {fileID: 0}
+  DamageSound2: {fileID: 0}
+  DamageSound3: {fileID: 0}
+  DamageSound4: {fileID: 0}
+  DamageSound5: {fileID: 0}
   dodgeSpeed: 10
-  range: 8
+  range: 90
+  minRange: 50
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
+  patrolRate: 0
   targetOBJ: {fileID: 0}
 --- !u!195 &1345134661380831771
 NavMeshAgent:

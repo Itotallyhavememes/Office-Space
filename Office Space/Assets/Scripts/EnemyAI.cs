@@ -16,6 +16,12 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
     [SerializeField] GameObject bullet;
     [SerializeField] float shootRate;
 
+    [SerializeField] AudioSource DamageSound1;
+    [SerializeField] AudioSource DamageSound2;
+    [SerializeField] AudioSource DamageSound3;
+    [SerializeField] AudioSource DamageSound4;
+    [SerializeField] AudioSource DamageSound5;
+
     Color colorOrig;
     bool isShooting;
     bool targetInRange;
@@ -27,13 +33,17 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
     Vector3 enemyVel;
     Vector3 randPos;
     [SerializeField] float range;
+    [SerializeField] float minRange;
     [SerializeField] LayerMask groundLayer;
     Vector3 enemyWalk;
     Vector3 destPoint;
     bool walkPoint;
+    bool isPatrolling;
+    [SerializeField] float patrolRate;
     //TIM CODE
     [SerializeField] GameObject targetOBJ;
     ITarget target;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -48,6 +58,11 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
     // Update is called once per frame
     void Update()
     {
+        if (!targetInRange && !isPatrolling)
+        {
+            StartCoroutine(Patrol());
+        }
+       
         //I found you and I'm coming for you
         if (targetInRange && canSeePlayer())
         {
@@ -66,6 +81,7 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
         //You can't see me, but I'm nearby
         else if (targetInRange && !canSeePlayer())
         {
+           
             //I just saw you, but I lost sight of you, but I'm going to try and find you
             if (agent.remainingDistance > agent.stoppingDistance)
             {
@@ -74,11 +90,6 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
                 TargetDIR = targetOBJ.transform.position - transform.position;
                 agent.SetDestination(targetOBJ.transform.position);
             }
-        }
-        else
-        {
-            Patrol();
-
         }
     }
 
@@ -101,6 +112,7 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
 
     bool canSeePlayer()
     {
+       
         TargetDIR = targetOBJ.transform.position - transform.position;
         angleToPlayer = Vector3.Angle(TargetDIR, transform.forward);
         //Each frame, the enemy AI will be seeking out player's position through this line
@@ -152,6 +164,7 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
     }
     public void takeDamage(int amount)
     {
+        
         HP -= amount;
         StartCoroutine(flashDamage());
         //Enemy reacts to getting hurt
@@ -191,8 +204,9 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
     }
 
     // method for enemy walk
-    void Patrol()
+    IEnumerator Patrol()
     {
+        isPatrolling = true;
         if (!walkPoint)
         {
             SetRandowWaypoint();
@@ -201,11 +215,14 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
         {
             agent.SetDestination(destPoint);
         }
-        if (Vector3.Distance(transform.position, destPoint) < 8)
+        if (Vector3.Distance(transform.position, destPoint) < minRange)
         {
             walkPoint = false;
         }
+        yield return new WaitForSeconds(patrolRate);
+        isPatrolling = false;
     }
+
     private void SetRandowWaypoint()
     {
         //int randRage = Random.Range(-50, 50);
