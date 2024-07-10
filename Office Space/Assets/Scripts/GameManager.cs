@@ -47,9 +47,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        StatePause();
-        menuActive = menuTitle;
-        menuActive.SetActive(true);
+    
     }
 
     // Update is called once per frame
