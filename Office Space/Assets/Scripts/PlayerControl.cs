@@ -371,6 +371,7 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
             GameManager.instance.playerAmmoBar.fillAmount = (float)handCurrentAmmo / ammoCount;
         else if (!weaponSwap)
             GameManager.instance.playerAmmoBar.fillAmount = (float)shurikenAmmo / shurikenStartAmmo;
+
     }
 
     public GameObject declareOBJ(GameObject obj)

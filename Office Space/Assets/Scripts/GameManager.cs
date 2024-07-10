@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject menuSettings;
     [SerializeField] GameObject menuControls;
     [SerializeField] TMP_Text enemyCountText;
-    [SerializeField] TMP_Text grenadeStack;
+    public TMP_Text grenadeStack;
 
 
     public Image playerHPBar;
@@ -32,23 +32,26 @@ public class GameManager : MonoBehaviour
     public bool isPaused;
     public int playerHP;
     public int playerAmmo;
+    public int rubberBCount;
     
 
     int enemyCount;
 
     GameObject previousScreen;
+    ItemThrow rubber;
 
     void Awake()
     {
         instance = this;
         player = GameObject.FindWithTag("Player");
         playerScript = player.GetComponent<PlayerControl>();
-        
+
+   
     }
 
     void Start()
     {
-    
+        
     }
 
     // Update is called once per frame
@@ -86,6 +89,7 @@ public class GameManager : MonoBehaviour
         menuActive.SetActive(isPaused);
         menuActive = null;
     }
+    
 
     public void UpdateGameGoal(int amount)
     {
@@ -141,4 +145,5 @@ public class GameManager : MonoBehaviour
     {
        Screen.fullScreen = isFullScreen;
     }
+    
 }

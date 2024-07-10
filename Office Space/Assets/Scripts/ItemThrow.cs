@@ -17,9 +17,11 @@ public class ItemThrow : MonoBehaviour
     public int rubberBallCount;
     int rubberBallStartCount;
 
-    private void Start()
+    void Start()
     {
         rubberBallStartCount = rubberBallCount;
+        updateGrenadeUI();
+
     }
     // Update is called once per frame
     void Update()
@@ -29,7 +31,8 @@ public class ItemThrow : MonoBehaviour
             if (Input.GetButtonDown("Item") && rubberBallCount > 0)
             {
                 StartCoroutine(ThrowItem());
-                rubberBallCount--;
+                
+               
             }
         }
     }
@@ -42,9 +45,10 @@ public class ItemThrow : MonoBehaviour
         Rigidbody rb = item.GetComponent<Rigidbody>();
         rb.velocity = Camera.main.transform.forward * throwForce;
         grenadeHUD.SetActive(false);
+        rubberBallCount--;
+        updateGrenadeUI();
         yield return new WaitForSeconds(throwDelay);
         WeaponToggleOn();
-
     }
 
     void WeaponToggleOff()
@@ -75,5 +79,9 @@ public class ItemThrow : MonoBehaviour
         }
         player.isShooting = false;
         player.isReloading = false;
+    }
+    public void updateGrenadeUI()
+    {
+        GameManager.instance.grenadeStack.text = (rubberBallCount).ToString();
     }
 }
