@@ -9,21 +9,59 @@ public class ItemThrow : MonoBehaviour
     [SerializeField] GameObject itemPrefab;
     [SerializeField] GameObject itemSpawnPoint;
     [SerializeField] PlayerControl player;
+    [SerializeField] GameObject handHUD;
+    [SerializeField] GameObject shurikenHUD;
+    [SerializeField] GameObject grenadeHUD;
 
     // Update is called once per frame
     void Update()
     {
         if (Input.GetButtonDown("Item") && !player.isShooting && !player.isReloading)
         {
-            ThrowItem();
+            StartCoroutine(ThrowItem());
         }
     }
 
-    private void ThrowItem()
+    IEnumerator ThrowItem()
     {
+        WeaponToggleOff();
+        yield return new WaitForSeconds(0.5f);
         GameObject item = Instantiate(itemPrefab, itemSpawnPoint.transform.position, itemSpawnPoint.transform.rotation);
         Rigidbody rb = item.GetComponent<Rigidbody>();
         rb.velocity = Camera.main.transform.forward * throwForce;
-        //rb.AddForce(transform.forward * throwForce, ForceMode.VelocityChange);
+        grenadeHUD.SetActive(false);
+        yield return new WaitForSeconds(0.5f);
+        WeaponToggleOn();
+
+    }
+
+    void WeaponToggleOff()
+    {
+        player.isShooting = true;
+        player.isReloading = true;
+        if (player.weaponSwap)
+        {
+            handHUD.SetActive(false);
+        }
+        else
+        {
+            shurikenHUD.SetActive(false);
+        }
+        grenadeHUD.SetActive(true);
+        
+    }
+
+    void WeaponToggleOn()
+    {
+        if (player.weaponSwap)
+        {
+            handHUD.SetActive(true);
+        }
+        else
+        {
+            shurikenHUD.SetActive(true);
+        }
+        player.isShooting = false;
+        player.isReloading = false;
     }
 }
