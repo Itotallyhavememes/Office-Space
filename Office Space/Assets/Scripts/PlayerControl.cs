@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 
-public class PlayerControl : MonoBehaviour, IDamage
+public class PlayerControl : MonoBehaviour, IDamage, ITarget
 {
     [SerializeField] GameObject hand;
 
@@ -375,5 +375,9 @@ public class PlayerControl : MonoBehaviour, IDamage
             GameManager.instance.playerAmmoBar.fillAmount = (float)shurikenAmmo / shurikenStartAmmo;
     }
 
+    public GameObject declareOBJ(GameObject obj)
+    {
+        return gameObject;
+    }
 }
 

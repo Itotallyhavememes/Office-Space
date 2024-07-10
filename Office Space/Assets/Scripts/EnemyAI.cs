@@ -1,279 +1,193 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 
-
-public class EnemyAI : MonoBehaviour, IDamage
+public class enemyAI : MonoBehaviour, IDamage, ITarget
 {
     [SerializeField] NavMeshAgent agent;
     [SerializeField] Renderer model;
-    [SerializeField] Color colorDamage;
+    [SerializeField] Color dmgColor;
     [SerializeField] Transform shootPos;
-
     [SerializeField] int HP;
     [SerializeField] int faceTargetSpeed;
-
+    [SerializeField] int viewAngle;
     [SerializeField] GameObject bullet;
     [SerializeField] float shootRate;
 
-    [SerializeField] AudioSource DamageSound1;
-    [SerializeField] AudioSource DamageSound2;
-    [SerializeField] AudioSource DamageSound3;
-    [SerializeField] AudioSource DamageSound4;
-    [SerializeField] AudioSource DamageSound5;
-
-    [SerializeField] int viewAngle;
-    Color origColor;
-
+    Color colorOrig;
     bool isShooting;
-    bool playerInRange;
-
-    Vector3 playerDir;
-    Vector3 enemyVel;
-    // random walk for enemy
-    [SerializeField] float range;
-    [SerializeField] LayerMask groundLayer;
-    Vector3 enemyWalk;
-    Vector3 destPoint;
-    bool walkPoint;
-    GameObject players;
-    //
-    [SerializeField] int dodgeSpeed;
-    [SerializeField] int chaseCooldown;
-    bool isSprinting;
-    Vector3 randPos;
-    bool lostTraget;
+    bool targetInRange;
+    Vector3 TargetDIR;
     float angleToPlayer;
-
+    //JOHN CODE
+    bool isSprinting;
+    [SerializeField] int dodgeSpeed;
+    Vector3 enemyVel;
+    Vector3 randPos;
+    //TIM CODE
+    [SerializeField] GameObject targetOBJ;
+    ITarget target;
     // Start is called before the first frame update
     void Start()
     {
-        //  isSprinting = false;
-        agent.GetComponent<NavMeshAgent>();
-        players = GameObject.Find("Player");
-        origColor = model.material.color;
-        GameManager.instance.UpdateGameGoal(1);
-
+        colorOrig = model.material.color;
+        //tells game manager that we've made an enemy
+        //GameManager.instance.updateGameGoal(1);
+        isSprinting = false;
+        target = null;
+        randPos = Vector3.zero;
     }
 
     // Update is called once per frame
     void Update()
     {
-        // SetRandowWaypoint();
-        if(! playerInRange)
+        //I found you and I'm coming for you
+        if (targetInRange && canSeePlayer())
         {
-            Patrol();
-        }
-       
-            if (playerInRange && canSeePlayer())
-            {
-            
             //ToggleSprint();
             if (agent.remainingDistance <= agent.stoppingDistance)
-              {
-               
-                FaceTarget();
-              }
-                
-              if (!isShooting)
-               {
-                StartCoroutine(shoot());
-                 }
-             }
-             if (playerInRange && !canSeePlayer())
             {
-            
-                 if (agent.remainingDistance > agent.stoppingDistance)
-                 {
-              //  ToggleSprint();
-                FaceTarget();
-                playerDir = GameManager.instance.player.transform.position - transform.position;
-                agent.SetDestination(GameManager.instance.player.transform.position);
+                faceTarget();
             }
-               
-          
-        }
-       
-           
 
-        
+            if (!isShooting)
+            {
+                StartCoroutine(shoot());
+            }
+
+        }
+        //You can't see me, but I'm nearby
+        else if (targetInRange && !canSeePlayer())
+        {
+            //I just saw you, but I lost sight of you, but I'm going to try and find you
+            if (agent.remainingDistance > agent.stoppingDistance)
+            {
+                //ToggleSprint();
+                faceTarget();
+                TargetDIR = targetOBJ.transform.position - transform.position;
+                agent.SetDestination(targetOBJ.transform.position);
+            }
+        }
+        else
+        {
+            randPos = new Vector3(Random.Range(-100, 100), 0, Random.Range(-100, 100));
+            agent.SetDestination(randPos);
+
+        }
     }
+
+    void ToggleSprint()
+    {
+        if (!isSprinting)
+        {
+            agent.speed *= 10000;
+            agent.angularSpeed *= 10000;
+            faceTargetSpeed *= 10000;
+        }
+        else
+        {
+            agent.speed /= 10000;
+            agent.angularSpeed /= 10000;
+            faceTargetSpeed /= 10000;
+        }
+        isSprinting = !isSprinting;
+    }
+
     bool canSeePlayer()
     {
-        playerDir = GameManager.instance.player.transform.position - transform.position;
-        angleToPlayer = Vector3.Angle(playerDir, transform.forward);
+        TargetDIR = targetOBJ.transform.position - transform.position;
+        angleToPlayer = Vector3.Angle(TargetDIR, transform.forward);
+        //Each frame, the enemy AI will be seeking out player's position through this line
 
-        Debug.DrawRay(transform.position, playerDir);
+        Debug.Log(angleToPlayer);
+        Debug.DrawRay(transform.position, TargetDIR);
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, playerDir, out hit))
+        //This checks if there is a wall between enemy and player
+        if (Physics.Raycast(transform.position, TargetDIR, out hit))
         {
             if (hit.collider.CompareTag("Player") && angleToPlayer <= viewAngle)
             {
-                agent.SetDestination(GameManager.instance.player.transform.position);
-                if (agent.remainingDistance <= agent.stoppingDistance)
-                {
-                    FaceTarget();
-                }
-
-                if (!isShooting)
-                {
-                    StartCoroutine(shoot());
-                }
+                agent.SetDestination(targetOBJ.transform.position);
                 return true;
             }
+
         }
         return false;
     }
 
-    private void OnTriggerEnter(Collider other)
+    //if Player enters SPHERE/GENERAL RANGE
+    public void OnTriggerEnter(Collider other)
     {
-        bool trueDectect = false;
-        if (other.CompareTag("Player"))
+        Debug.Log("OBJ IN RANGE");
+        target = other.GetComponent<ITarget>();
+        if (target != null)
         {
-            trueDectect = true;
-
-        }
-        if (trueDectect)
-        {
-            if (chaseCooldown > 0)
-                chaseCooldown = 0;
-            playerInRange = true;
-            lostTraget = false;
+            targetOBJ = other.gameObject;
+            targetInRange = true;
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    //if Player exits bubble
+    public void OnTriggerExit(Collider other)
     {
-
-        if (other.CompareTag("Player"))
+        if (targetOBJ == other.gameObject)
         {
-            playerInRange = false;
-            lostTraget = true;
-            chaseCooldown = 100;
+            targetOBJ = null;
+            targetInRange = false;
         }
-
     }
 
-    void FaceTarget()
+    void faceTarget()
     {
-        Quaternion rot = Quaternion.LookRotation(playerDir);
-        transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * faceTargetSpeed);
-    }
 
+        Quaternion rot = Quaternion.LookRotation(TargetDIR);
+        //transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * faceTargetSpeed);
+        transform.rotation = rot;
+    }
     public void takeDamage(int amount)
     {
         HP -= amount;
-        
-        playerDir = GameManager.instance.player.transform.position - transform.position;
-       
-        agent.SetDestination(GameManager.instance.player.transform.position);
-        Quaternion rot = Quaternion.LookRotation(playerDir);
-        transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * faceTargetSpeed);
         StartCoroutine(flashDamage());
-
-        PlayDamageSound();
-        if(HP <=7)
-        {
+        //Enemy reacts to getting hurt
+        //Enemy now SNAPS to the direction of firing player
+        agent.SetDestination(GameManager.instance.player.transform.position);
+        if (HP <= 7)
             dodgeThreat();
-        }
-
+        faceTarget();
         if (HP <= 0)
         {
-            StartCoroutine(Die());
+            //He's died, so decrement
+            // GameManager.instance.updateGameGoal(-1);
+            Destroy(gameObject);
         }
     }
 
-    IEnumerator Die()
+    void dodgeThreat()
     {
-        yield return new WaitForSeconds(0.5f);
-        GameManager.instance.UpdateGameGoal(-1);
-        Destroy(gameObject);
+        enemyVel = new Vector3(Random.Range(-dodgeSpeed, dodgeSpeed), 0, Random.Range(-dodgeSpeed, dodgeSpeed));
+        agent.velocity = enemyVel;
     }
 
     IEnumerator flashDamage()
     {
-        model.material.color = colorDamage;
+        model.material.color = dmgColor;
         yield return new WaitForSeconds(0.1f);
-        model.material.color = origColor;
+        model.material.color = colorOrig;
     }
 
     IEnumerator shoot()
     {
         isShooting = true;
+
         Instantiate(bullet, shootPos.position, transform.rotation);
         yield return new WaitForSeconds(shootRate);
         isShooting = false;
     }
 
-    void PlayDamageSound()
+    public GameObject declareOBJ(GameObject obj)
     {
-        switch (Random.Range(0, 4))
-        {
-            case 0:
-                DamageSound1.Play();
-                break;
-            case 1:
-                DamageSound2.Play();
-                break;
-            case 2:
-                DamageSound3.Play();
-                break;
-            case 3:
-                DamageSound4.Play();
-                break;
-            case 4:
-                DamageSound5.Play();
-                break;
-        }
+        return this.gameObject;
     }
-
-    // method for enemy walk
-    void Patrol()
-    {
-        if(!walkPoint)
-        {
-            SetRandowWaypoint();
-        }
-        if (walkPoint)
-        {
-            agent.SetDestination(destPoint);
-        }
-        if (Vector3.Distance(transform.position, destPoint) < 8)
-        {
-            walkPoint = false;
-        }
-    }
-    private void SetRandowWaypoint()
-    {
-        //int randRage = Random.Range(-50, 50);
-        float x = Random.Range(-range, range);
-        float z = Random.Range(-range, range);
-
-        destPoint = new Vector3(transform.position.x + x, transform.position.y, transform.position.z + z);
-        if(Physics.Raycast(destPoint,Vector3.down, groundLayer))
-        {
-            walkPoint = true;
-        }
-    }
-    //void MoveEnemy()
-    //{
-    //    agent.SetDestination(randPos);
-    //}
-   
-    void dodgeThreat()
-    {
-       enemyVel = new Vector3(Random.Range(-dodgeSpeed, dodgeSpeed), Random.Range(-dodgeSpeed, dodgeSpeed), Random.Range(-dodgeSpeed, dodgeSpeed));
-        agent.velocity = enemyVel;
-    }
-    //IEnumerator startCooldown()
-    //{
-    //    do
-    //    {
-    //        yield return new WaitForSeconds(Time.deltaTime * 3000);
-    //        if (chaseCooldown > 0)
-    //            --chaseCooldown;
-    //    } while (chaseCooldown > 0);
-    //}
-    
 }

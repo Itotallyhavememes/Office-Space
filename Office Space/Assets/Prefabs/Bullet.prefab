@@ -51,7 +51,7 @@ MonoBehaviour:
   rb: {fileID: 6051074458531916221}
   damageAmount: 1
   speed: 60
-  destroyTime: 2
+  destroyTime: 1
 --- !u!54 &6051074458531916221
 Rigidbody:
   m_ObjectHideFlags: 0

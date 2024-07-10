@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface Itarget 
+public interface ITarget
 {
-    void declareSelf(GameObject target);
+   public GameObject declareOBJ(GameObject target);   
 }

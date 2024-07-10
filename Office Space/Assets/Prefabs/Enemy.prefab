@@ -600,10 +600,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 2393792950822098801}
   model: {fileID: 4908030787383471447}
-  colorDamage: {r: 0.55660367, g: 0.55660367, b: 1, a: 1}
+  dmgColor: {r: 0, g: 0, b: 0, a: 0}
   shootPos: {fileID: 1956157698022107042}
   HP: 3
-  faceTargetSpeed: 100
+  faceTargetSpeed: 5
+  viewAngle: 90
   bullet: {fileID: 6562726978010489722, guid: be53c72d1bd770d4faa4be6708977d31, type: 3}
   shootRate: 0.18
   DamageSound1: {fileID: 5703338137476531930}
