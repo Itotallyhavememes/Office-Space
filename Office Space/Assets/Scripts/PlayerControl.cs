@@ -49,9 +49,7 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
     [SerializeField] float shurikenReloadTime;
     int shurikenStartAmmo;
 
-    //Rubber Ball variable
-    [SerializeField] int rubberBallCount;
-    int rubberBallStartCount;
+    //Item Throw
     ItemThrow item;
 
     int jumpCount;

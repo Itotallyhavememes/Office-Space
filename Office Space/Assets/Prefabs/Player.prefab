@@ -516,7 +516,6 @@ MonoBehaviour:
   shurikenRate: 0.5
   shurikenAmmo: 10
   shurikenReloadTime: 2
-  rubberBallCount: 0
   crouchLevel: 0.5
   slideSpeed: 19
   slideLockoutTime: 3
@@ -539,12 +538,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   throwForce: 20
+  throwDelay: 0.8
   itemPrefab: {fileID: 3822187847243570803, guid: 14ce3eaf9a276fa49ba840ba1115eff7, type: 3}
   itemSpawnPoint: {fileID: 8126848198089703039}
   player: {fileID: 7415348336417281650}
   handHUD: {fileID: 7100084165559938074}
   shurikenHUD: {fileID: 3005249462168993782}
   grenadeHUD: {fileID: 3229027265721607037}
+  rubberBallCount: 3
 --- !u!33 &2256038359983609714
 MeshFilter:
   m_ObjectHideFlags: 0
