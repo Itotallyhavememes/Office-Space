@@ -263,7 +263,7 @@ public class PlayerControl : MonoBehaviour, IDamage
         if (weaponSwap && handCurrentAmmo > 0)
         {
             handCurrentAmmo--;
-
+            UpdateAmmoUI();
             handFire.Play();
 
             RaycastHit hit;
@@ -301,7 +301,8 @@ public class PlayerControl : MonoBehaviour, IDamage
     public void takeDamage(int amount)
     {
         HP -= amount;
-
+        StartCoroutine(flashScreenDamage());
+        UpdatePlayerUI();
         switch (Random.Range(0, 4))
         {
             case 0:
@@ -326,4 +327,25 @@ public class PlayerControl : MonoBehaviour, IDamage
             GameManager.instance.YouLose();
         }
     }
+
+    IEnumerator flashScreenDamage()
+    {
+        GameManager.instance.damageFlash.SetActive(true);
+        yield return new WaitForSeconds(0.2f);
+        GameManager.instance.damageFlash.SetActive(false);
+    }
+
+    public void UpdatePlayerUI()
+    {
+        GameManager.instance.playerHPBar.fillAmount = (float)HP / HPOrig;
+    }
+
+    public void UpdateAmmoUI()
+    {
+        if (weaponSwap)
+            GameManager.instance.playerAmmoBar.fillAmount = (float)handCurrentAmmo / ammoCount;
+        else if (!weaponSwap)
+            GameManager.instance.playerAmmoBar.fillAmount = (float)shurikenAmmo / shurikenStartAmmo;
+    }
 }
+
