@@ -99,7 +99,7 @@ public class GameManager : MonoBehaviour
     public void UpdateGameGoal(int amount)
     {
         donutCount += amount;
-        if (donutCount <= 0)
+        if (donutCount >= DonutPickUp.totalDonuts)
         {
             //you win!
             StatePause();
