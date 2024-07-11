@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationSpeed: 100
-  HpRestoreAmount: 3
+  HpRestoreAmount: 5
 --- !u!33 &8196115917129123271
 MeshFilter:
   m_ObjectHideFlags: 0
