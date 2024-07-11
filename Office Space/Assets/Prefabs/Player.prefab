@@ -536,7 +536,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c36764aaf63a82a42a850cfb1d3f59a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  throwForce: 20
+  throwForce: 40
   throwDelay: 0.4
   itemPrefab: {fileID: 3822187847243570803, guid: 14ce3eaf9a276fa49ba840ba1115eff7, type: 3}
   itemSpawnPoint: {fileID: 8126848198089703039}
@@ -544,7 +544,7 @@ MonoBehaviour:
   handHUD: {fileID: 7100084165559938074}
   shurikenHUD: {fileID: 3005249462168993782}
   grenadeHUD: {fileID: 3229027265721607037}
-  rubberBallCount: 5
+  rubberBallCount: 7
 --- !u!33 &2256038359983609714
 MeshFilter:
   m_ObjectHideFlags: 0
