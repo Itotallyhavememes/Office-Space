@@ -49,7 +49,7 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
     {
         colorOrig = model.material.color;
         //tells game manager that we've made an enemy
-        GameManager.instance.enemyCount ++;
+        GameManager.instance.enemyCount++;
         isSprinting = false;
         target = null;
         randPos = Vector3.zero;
@@ -62,7 +62,7 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
         {
             StartCoroutine(Patrol());
         }
-       
+
         //I found you and I'm coming for you
         if (targetInRange && canSeePlayer())
         {
@@ -85,11 +85,11 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
             //I just saw you, but I lost sight of you, but I'm going to try and find you
             //if (agent.remainingDistance > agent.stoppingDistance)
             //{
-                //ToggleSprint();
-                faceTarget();
-                TargetDIR = targetOBJ.transform.position - transform.position;
-                agent.SetDestination(targetOBJ.transform.position);
-         //   }
+            //ToggleSprint();
+            faceTarget();
+            TargetDIR = targetOBJ.transform.position - transform.position;
+            agent.SetDestination(targetOBJ.transform.position);
+            //   }
         }
     }
 
@@ -112,7 +112,7 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
 
     bool canSeePlayer()
     {
-       
+
         TargetDIR = targetOBJ.transform.position - transform.position;
         angleToPlayer = Vector3.Angle(TargetDIR, transform.forward);
         //Each frame, the enemy AI will be seeking out player's position through this line
@@ -163,7 +163,7 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
     }
     public void takeDamage(int amount)
     {
-        
+
         HP -= amount;
         StartCoroutine(flashDamage());
         //Enemy reacts to getting hurt
@@ -173,7 +173,26 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
         agent.SetDestination(GameManager.instance.player.transform.position);
         if (HP <= 7)
             dodgeThreat();
-  
+
+        switch (Random.Range(0, 4))
+        {
+            case 0:
+                DamageSound1.Play();
+                break;
+            case 1:
+                DamageSound2.Play();
+                break;
+            case 2:
+                DamageSound3.Play();
+                break;
+            case 3:
+                DamageSound4.Play();
+                break;
+            case 4:
+                DamageSound5.Play();
+                break;
+        }
+
         if (HP <= 0)
         {
             //He's died, so decrement
@@ -187,7 +206,7 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
         //faceTarget();
         //enemyVel = new Vector3(Random.Range(-dodgeSpeed, dodgeSpeed), 0, Random.Range(-dodgeSpeed, dodgeSpeed));
         //agent.velocity = enemyVel;
-        
+
     }
 
     IEnumerator flashDamage()

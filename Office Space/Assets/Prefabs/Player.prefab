@@ -491,7 +491,7 @@ MonoBehaviour:
   ignoreMask:
     serializedVersion: 2
     m_Bits: 8
-  HP: 10
+  HP: 13
   speed: 6
   sprintMod: 2
   crouchMod: 4
@@ -501,6 +501,9 @@ MonoBehaviour:
   shootDamage: 2
   shootRate: 0.3
   shootDist: 30
+  handReloadTime: 1.5
+  handRotationReload: 40
+  handRotationRecoil: 15
   handFire: {fileID: 4126415615648579579}
   handReloadBegin: {fileID: 6766277589638808452}
   handReloadEnd: {fileID: 8122209515640205071}
@@ -521,9 +524,6 @@ MonoBehaviour:
   weaponSwap: 0
   isShooting: 0
   isReloading: 0
-  handReloadTime: 1.5
-  handRotationReload: 40
-  handRotationRecoil: 15
 --- !u!114 &3164765986891349497
 MonoBehaviour:
   m_ObjectHideFlags: 0

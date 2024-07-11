@@ -608,11 +608,11 @@ MonoBehaviour:
   viewAngle: 90
   bullet: {fileID: 6562726978010489722, guid: be53c72d1bd770d4faa4be6708977d31, type: 3}
   shootRate: 0.18
-  DamageSound1: {fileID: 0}
-  DamageSound2: {fileID: 0}
-  DamageSound3: {fileID: 0}
-  DamageSound4: {fileID: 0}
-  DamageSound5: {fileID: 0}
+  DamageSound1: {fileID: 5703338137476531930}
+  DamageSound2: {fileID: 2660570649892949112}
+  DamageSound3: {fileID: 2014925032809867990}
+  DamageSound4: {fileID: 644796454222486367}
+  DamageSound5: {fileID: 6818429374452012668}
   dodgeSpeed: 7
   range: 90
   minRange: 50
