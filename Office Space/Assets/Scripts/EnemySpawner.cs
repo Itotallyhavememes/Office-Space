@@ -29,7 +29,7 @@ public class EnemySpawner : MonoBehaviour
                 GameObject enemy = enemyPrefab[rand];
                 Instantiate(enemy, transform.position, Quaternion.identity);
                 enemy.transform.position = new Vector3(transform.position.x + transform.forward.x, transform.position.y, transform.position.z);
-                GameManager.instance.enemyCount++;
+                //GameManager.instance.enemyCount++;
                 SetTimeSpawner();
             
             

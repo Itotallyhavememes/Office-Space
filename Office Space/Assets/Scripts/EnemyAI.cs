@@ -49,7 +49,7 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
     {
         colorOrig = model.material.color;
         //tells game manager that we've made an enemy
-        //GameManager.instance.UpdateGameGoal(1);
+        GameManager.instance.enemyCount ++;
         isSprinting = false;
         target = null;
         randPos = Vector3.zero;

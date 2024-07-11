@@ -47,7 +47,7 @@ public class GameManager : MonoBehaviour
         player = GameObject.FindWithTag("Player");
         playerScript = player.GetComponent<PlayerControl>();
         
-        Thresh = 19;
+        Thresh = 29;
    
     }
 
