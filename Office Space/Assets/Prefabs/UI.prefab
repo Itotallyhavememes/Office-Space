@@ -1675,7 +1675,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4284160674489374054}
-  m_Father: {fileID: 7138851693277048538}
+  m_Father: {fileID: 5761102148465132948}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
@@ -1807,7 +1807,7 @@ GameObject:
   - component: {fileID: 2481375745749482549}
   - component: {fileID: 5114930214817515932}
   m_Layer: 5
-  m_Name: GrenadeImage
+  m_Name: Ball Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2249,6 +2249,81 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &2640201741281986679
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6507342893564701795}
+  - component: {fileID: 6450730673734486697}
+  - component: {fileID: 7063679786226411072}
+  m_Layer: 5
+  m_Name: Input Button
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &6507342893564701795
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2640201741281986679}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1489248796462522745}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 42.5437, y: -29}
+  m_SizeDelta: {x: 50, y: 50}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &6450730673734486697
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2640201741281986679}
+  m_CullTransparentMesh: 1
+--- !u!114 &7063679786226411072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2640201741281986679}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 72b7851efee4c5b44a3b488f20bebd20, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &2671577416535166719
 GameObject:
   m_ObjectHideFlags: 0
@@ -2261,7 +2336,7 @@ GameObject:
   - component: {fileID: 1349861120952004631}
   - component: {fileID: 2495820617581496230}
   m_Layer: 5
-  m_Name: GrenadeAmmo
+  m_Name: Ball Ammo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5548,7 +5623,6 @@ RectTransform:
   m_Children:
   - {fileID: 8376681508942342655}
   - {fileID: 137628689593790920}
-  - {fileID: 7047571292844663901}
   - {fileID: 5761102148465132948}
   - {fileID: 8929195263833166162}
   - {fileID: 723279941977103512}
@@ -7644,6 +7718,7 @@ RectTransform:
   - {fileID: 5462554794765704249}
   - {fileID: 8697732245259101704}
   - {fileID: 7394253111802720294}
+  - {fileID: 7047571292844663901}
   - {fileID: 6573986227313914098}
   m_Father: {fileID: 7138851693277048538}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -8501,7 +8576,7 @@ GameObject:
   - component: {fileID: 7969658432287360554}
   - component: {fileID: 2020516058499602576}
   m_Layer: 5
-  m_Name: GrenadeCount
+  m_Name: Ball Count Txt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9356,7 +9431,7 @@ GameObject:
   - component: {fileID: 8246628902379746071}
   - component: {fileID: 1317279980984846449}
   m_Layer: 5
-  m_Name: Grenade Fill
+  m_Name: Ball Count
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9376,6 +9451,7 @@ RectTransform:
   m_Children:
   - {fileID: 3259926235543244821}
   - {fileID: 4479953414166414100}
+  - {fileID: 6507342893564701795}
   m_Father: {fileID: 6573986227313914098}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}

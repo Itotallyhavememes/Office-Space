@@ -14,7 +14,7 @@ public class DonutCount : MonoBehaviour
         countText = GetComponent<TMPro.TMP_Text>();
     }
 
-    private void Start()
+    void Start()
     {
         UpdateCount();
     }
