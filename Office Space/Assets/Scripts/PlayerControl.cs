@@ -12,7 +12,7 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
     [SerializeField] LayerMask ignoreMask;
 
     //Player variables
-    [SerializeField] int HP;
+    public int HP;
     [SerializeField] int speed;
     [SerializeField] int sprintMod;
     [SerializeField] int crouchMod;
@@ -26,6 +26,9 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
     [SerializeField] int shootDamage;
     [SerializeField] float shootRate;
     [SerializeField] int shootDist;
+    [SerializeField] float handReloadTime;
+    [SerializeField] float handRotationReload;
+    [SerializeField] float handRotationRecoil;
     int handCurrentAmmo;
 
     //Hand Audio
@@ -70,9 +73,6 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
     bool isSprinting;
     bool isSliding;
 
-    [SerializeField] float handReloadTime;
-    [SerializeField] float handRotationReload;
-    [SerializeField] float handRotationRecoil;
 
 
     // Start is called before the first frame update
@@ -80,11 +80,11 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
     { 
         HPOrig = HP;
         origSpeed = speed;
-        weaponSwap = true;
         origHeight = controller.height;
         slideLockout = slideLockoutTime * 60;
         handCurrentAmmo = HandAmmoCount;
         shurikenStartAmmo = shurikenAmmo;
+        DefaultPublicBools();
     }
 
     // Update is called once per frame
@@ -377,6 +377,24 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
     public GameObject declareOBJ(GameObject obj)
     {
         return gameObject;
+    }
+
+    public void HealthPickup()
+    {
+        int count = 1;
+        while (HP < HPOrig && count <= DonutPickUp.HPincrease)
+        {
+            count++;
+            HP++;
+        }
+        UpdatePlayerUI();
+    }
+
+    void DefaultPublicBools()
+    {
+        weaponSwap = true;
+        isShooting = false;
+        isReloading = false;
     }
 }
 

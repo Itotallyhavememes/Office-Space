@@ -23,6 +23,7 @@ public class ButtonFunctions : MonoBehaviour
     public void restart()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        DonutPickUp.totalDonuts = 0;
         GameManager.instance.StateUnpause();
     }
 

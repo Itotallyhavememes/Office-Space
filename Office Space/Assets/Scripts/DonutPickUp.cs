@@ -10,12 +10,16 @@ public class DonutPickUp : MonoBehaviour
     public static event Action OnCollected;
 
     public static int totalDonuts;
+    public static int HPincrease;
 
     [SerializeField] float rotationSpeed;
+    [SerializeField] int HpRestoreAmount;
+    
 
     private void Awake()
     {
         totalDonuts++;
+        HPincrease = HpRestoreAmount;
     }
 
     //[SerializeField] float maxHeight;

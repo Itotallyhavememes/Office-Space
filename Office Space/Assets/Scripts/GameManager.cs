@@ -30,10 +30,10 @@ public class GameManager : MonoBehaviour
     public AudioMixer audioMixer;
 
     public bool isPaused;
-    public int playerHP;
+    public int playerHPStart;
     public int playerAmmo;
     public int rubberBCount;
-    
+
 
     int donutCount;
     public int enemyCount;
@@ -53,10 +53,10 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        
+        playerHPStart = playerScript.HP;
     }
 
-    // Update is called once per frame
+    //Update is called once per frame
     void Update()
     {
         
@@ -94,12 +94,11 @@ public class GameManager : MonoBehaviour
         menuActive.SetActive(isPaused);
         menuActive = null;
     }
-    
+
 
     public void UpdateGameGoal(int amount)
     {
         donutCount += amount;
-        donutCountText.text = donutCount.ToString("F0");
         if (donutCount <= 0)
         {
             //you win!
@@ -148,7 +147,7 @@ public class GameManager : MonoBehaviour
     }
     public void SetFullScreen(bool isFullScreen)
     {
-       Screen.fullScreen = isFullScreen;
+        Screen.fullScreen = isFullScreen;
     }
-    
+
 }

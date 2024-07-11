@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class DonutCount : MonoBehaviour
 {
+    [SerializeField] AudioSource pickupSFX;
     TMPro.TMP_Text countText;
     int donutCount;
 
@@ -20,12 +21,12 @@ public class DonutCount : MonoBehaviour
 
     void OnEnable() //Enable registers OnDonutCollected method to OnCollected event
     {
-        DonutPickUp.OnCollected += OnDonutCollected; 
+        DonutPickUp.OnCollected += OnDonutCollected;
     }
 
     void OnDisable() //Disable unregisters OnDonutCollected method to OnCollected event
     {
-        DonutPickUp.OnCollected -= OnDonutCollected; 
+        DonutPickUp.OnCollected -= OnDonutCollected;
     }
 
 
@@ -33,6 +34,9 @@ public class DonutCount : MonoBehaviour
     {
         donutCount++;
         UpdateCount();
+        pickupSFX.Play();
+        GameManager.instance.UpdateGameGoal(1);
+        GameManager.instance.playerScript.HealthPickup();
     }
 
     void UpdateCount()
