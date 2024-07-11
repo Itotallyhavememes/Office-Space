@@ -36,7 +36,8 @@ public class GameManager : MonoBehaviour
     
 
     int donutCount;
-
+    public int enemyCount;
+    public int Thresh;
     GameObject previousScreen;
     ItemThrow rubber;
 
@@ -45,7 +46,8 @@ public class GameManager : MonoBehaviour
         instance = this;
         player = GameObject.FindWithTag("Player");
         playerScript = player.GetComponent<PlayerControl>();
-
+        
+        Thresh = 19;
    
     }
 
@@ -57,6 +59,9 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
+        
+        
         if (Input.GetButtonDown("Cancel"))
         {
             if (menuActive == null)
