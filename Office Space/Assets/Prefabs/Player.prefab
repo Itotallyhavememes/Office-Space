@@ -497,8 +497,7 @@ MonoBehaviour:
   crouchMod: 4
   jumpSpeed: 8
   gravity: 22
-  ammoCount: 5
-  handCurrentAmmo: 0
+  HandAmmoCount: 5
   shootDamage: 2
   shootRate: 0.5
   shootDist: 30
