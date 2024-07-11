@@ -33,6 +33,7 @@ public class DonutCount : MonoBehaviour
     void OnDonutCollected()
     {
         donutCount++;
+        GameManager.instance.Thresh++;
         UpdateCount();
         pickupSFX.Play();
         GameManager.instance.UpdateGameGoal(1);

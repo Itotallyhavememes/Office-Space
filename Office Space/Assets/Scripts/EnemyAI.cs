@@ -197,6 +197,7 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
         {
             //He's died, so decrement
             // GameManager.instance.updateGameGoal(-1);
+            --GameManager.instance.enemyCount;
             Destroy(gameObject);
         }
     }
