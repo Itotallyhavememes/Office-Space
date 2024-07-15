@@ -14,7 +14,10 @@ public class DonutPickUp : MonoBehaviour
 
     [SerializeField] float rotationSpeed;
     [SerializeField] int HpRestoreAmount;
-    
+    [SerializeField] int bobSpeed;
+    [SerializeField] float bobHeight;
+
+    Vector3 startPos;
 
     private void Awake()
     {
@@ -36,17 +39,25 @@ public class DonutPickUp : MonoBehaviour
         //minPosition = new Vector3(0, originalPosition.y - minHeight, 0);
         //maxPosition = new Vector3(0, originalPosition.y + maxHeight, 0);
         //targetPosition = maxPosition;
+
+        startPos = transform.position;
     }
 
     // Update is called once per frame
     void Update()
     {
         Spin();
+        Bob();
     }
 
     void Spin()
     {
         transform.Rotate(0f, rotationSpeed * Time.deltaTime, 0f, Space.Self);
+    }
+
+    void Bob()
+    {
+        transform.position = new Vector3(startPos.x, startPos.y + (bobHeight * Mathf.Sin(Time.time * bobSpeed)), startPos.z);
     }
 
     private void OnTriggerEnter(Collider other)

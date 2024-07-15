@@ -49,6 +49,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotationSpeed: 100
   HpRestoreAmount: 5
+  bobSpeed: 3
+  bobHeight: 0.3
 --- !u!33 &8196115917129123271
 MeshFilter:
   m_ObjectHideFlags: 0
