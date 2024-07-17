@@ -6,6 +6,7 @@ TagManager:
   tags:
   - MiniMap
   - EnemyKO
+  - Enemy
   layers:
   - Default
   - TransparentFX

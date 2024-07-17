@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
@@ -8,6 +9,9 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
 {
     [SerializeField] NavMeshAgent agent;
     [SerializeField] Renderer model;
+    [SerializeField] Animator anim;
+    [SerializeField] Transform headPos;
+    [SerializeField] Transform armPos;
     [SerializeField] Color dmgColor;
     [SerializeField] Transform shootPos;
     [SerializeField] int HP;
@@ -15,6 +19,8 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
     [SerializeField] int viewAngle;
     [SerializeField] GameObject bullet;
     [SerializeField] float shootRate;
+    [SerializeField] int animTransitSpeed;
+    public bool ikActive;
 
     [SerializeField] AudioSource DamageSound1;
     [SerializeField] AudioSource DamageSound2;
@@ -65,13 +71,16 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
     // Update is called once per frame
     void Update()
     {
-       
+        float agentSpeed = agent.velocity.normalized.magnitude;
+
+        anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), agentSpeed, Time.deltaTime * animTransitSpeed));
+
         //I found you and I'm coming for you
         if (targetInRange && canSeePlayer())
         {
             if (agent.remainingDistance <= agent.stoppingDistance)
             {
-                faceTarget();
+                //faceTarget();
             }
 
             if (!isShooting)
@@ -92,6 +101,22 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
         {
             if (!isRoaming && agent.remainingDistance < 0.05f)
                 StartCoroutine(Roam());
+        }
+    }
+
+    private void OnAnimatorIK()
+    {
+        if (anim)
+        {
+            if (ikActive && targetOBJ)
+            {
+                anim.SetLookAtWeight(1);
+                anim.SetLookAtPosition(targetOBJ.transform.position);
+            }
+            else
+            {
+                anim.SetLookAtWeight(0);
+            }
         }
     }
 
@@ -156,13 +181,8 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
         }
     }
 
-    void faceTarget()
-    {
-
-        Quaternion rot = Quaternion.LookRotation(TargetDIR);
-        transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * faceTargetSpeed);
-        transform.rotation = rot;
-    }
+    
+   
     public void takeDamage(int amount)
     {
 
