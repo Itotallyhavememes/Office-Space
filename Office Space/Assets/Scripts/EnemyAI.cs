@@ -43,6 +43,11 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
     //TIM CODE
     [SerializeField] GameObject targetOBJ;
     ITarget target;
+    [SerializeField] int roamDist;
+    [SerializeField] int roamTimer;
+    Vector3 startingPos;
+    bool isRoaming;
+    float stoppingDistOrig;
 
     // Start is called before the first frame update
     void Start()
@@ -53,20 +58,17 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
         isSprinting = false;
         target = null;
         randPos = Vector3.zero;
+        startingPos = transform.position;
+        stoppingDistOrig = agent.stoppingDistance;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!targetInRange && !isPatrolling)
-        {
-            StartCoroutine(Patrol());
-        }
-
+       
         //I found you and I'm coming for you
         if (targetInRange && canSeePlayer())
         {
-            //ToggleSprint();
             if (agent.remainingDistance <= agent.stoppingDistance)
             {
                 faceTarget();
@@ -76,40 +78,38 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
             {
                 StartCoroutine(shoot());
             }
-
+            agent.stoppingDistance = stoppingDistOrig;
         }
         //You can't see me, but I'm nearby
         else if (targetInRange && !canSeePlayer())
         {
 
-            //I just saw you, but I lost sight of you, but I'm going to try and find you
-            //if (agent.remainingDistance > agent.stoppingDistance)
-            //{
-            //ToggleSprint();
-            faceTarget();
-            TargetDIR = targetOBJ.transform.position - transform.position;
-            agent.SetDestination(targetOBJ.transform.position);
-            //   }
+            if(!isRoaming && agent.remainingDistance < 0.05f)
+                StartCoroutine(Roam());
+
+        }
+        else if (!targetInRange)
+        {
+            if (!isRoaming && agent.remainingDistance < 0.05f)
+                StartCoroutine(Roam());
         }
     }
 
-    //void ToggleSprint()
-    //{
-    //    if (!isSprinting)
-    //    {
-    //        agent.speed *= 10000;
-    //        agent.angularSpeed *= 10000;
-    //        faceTargetSpeed *= 10000;
-    //    }
-    //    else
-    //    {
-    //        agent.speed /= 10000;
-    //        agent.angularSpeed /= 10000;
-    //        faceTargetSpeed /= 10000;
-    //    }
-    //    isSprinting = !isSprinting;
-    //}
-
+    IEnumerator Roam()
+    {
+        isRoaming = true;
+        yield return new WaitForSeconds(roamTimer);
+        agent.stoppingDistance = 0;
+        //creates sphere that's the size of roamdist and selects a random position
+        Vector3 randPos = Random.insideUnitSphere * roamDist;
+        randPos += startingPos;
+        //Prevents getting null reference when creating random point
+        NavMeshHit hit;
+        NavMesh.SamplePosition(randPos, out hit, roamDist, 1);
+        //The "1" is in refernce to layer mask "1"
+        agent.SetDestination(hit.position);
+        isRoaming = false;
+    }
     bool canSeePlayer()
     {
 
@@ -117,19 +117,20 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
         angleToPlayer = Vector3.Angle(TargetDIR, transform.forward);
         //Each frame, the enemy AI will be seeking out player's position through this line
 
-        Debug.Log(angleToPlayer);
-        Debug.DrawRay(transform.position, TargetDIR);
+        //Debug.Log(angleToPlayer);
+        //Debug.DrawRay(transform.position, TargetDIR);
         RaycastHit hit;
         //This checks if there is a wall between enemy and player
         if (Physics.Raycast(transform.position, TargetDIR, out hit))
         {
-            if (hit.collider.CompareTag("Player") && angleToPlayer <= viewAngle)
+            if ((hit.collider.CompareTag("Player") || hit.collider.CompareTag("Enemy")) && angleToPlayer <= viewAngle)
             {
                 agent.SetDestination(targetOBJ.transform.position);
                 return true;
             }
 
         }
+        agent.stoppingDistance = 0;
         return false;
     }
 
@@ -137,7 +138,7 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
     public void OnTriggerEnter(Collider other)
     {
         target = other.GetComponent<ITarget>();
-        if (target != null)
+        if (target != null && other != this)
         {
             targetOBJ = other.gameObject;
             targetInRange = true;
@@ -151,6 +152,7 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
         {
             targetOBJ = null;
             targetInRange = false;
+            agent.stoppingDistance = 0;
         }
     }
 
@@ -170,9 +172,9 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
         //Enemy now SNAPS to the direction of firing player
         Quaternion rot = Quaternion.LookRotation(TargetDIR);
         transform.rotation = rot;
-        agent.SetDestination(GameManager.instance.player.transform.position);
-        if (HP <= 7)
-            dodgeThreat();
+        agent.SetDestination(targetOBJ.transform.position);
+        //if (HP <= 7)
+        //    dodgeThreat();
 
         switch (Random.Range(0, 4))
         {
@@ -227,24 +229,24 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
     }
 
     // method for enemy walk
-    IEnumerator Patrol()
-    {
-        isPatrolling = true;
-        if (!walkPoint)
-        {
-            SetRandowWaypoint();
-        }
-        if (walkPoint)
-        {
-            agent.SetDestination(destPoint);
-        }
-        if (Vector3.Distance(transform.position, destPoint) < minRange)
-        {
-            walkPoint = false;
-        }
-        yield return new WaitForSeconds(patrolRate);
-        isPatrolling = false;
-    }
+    //IEnumerator Patrol()
+    //{
+    //    isPatrolling = true;
+    //    if (!walkPoint)
+    //    {
+    //        SetRandowWaypoint();
+    //    }
+    //    if (walkPoint)
+    //    {
+    //        agent.SetDestination(destPoint);
+    //    }
+    //    if (Vector3.Distance(transform.position, destPoint) < minRange)
+    //    {
+    //        walkPoint = false;
+    //    }
+    //    yield return new WaitForSeconds(patrolRate);
+    //    isPatrolling = false;
+    //}
 
     private void SetRandowWaypoint()
     {

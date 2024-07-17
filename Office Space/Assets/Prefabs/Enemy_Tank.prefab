@@ -573,11 +573,11 @@ MonoBehaviour:
   model: {fileID: 8328059419578224073}
   dmgColor: {r: 0, g: 0, b: 0, a: 0}
   shootPos: {fileID: 5278584978234614558}
-  HP: 10
+  HP: 14
   faceTargetSpeed: 20
   viewAngle: 90
   bullet: {fileID: 6562726978010489722, guid: be53c72d1bd770d4faa4be6708977d31, type: 3}
-  shootRate: 0.18
+  shootRate: 0.3
   DamageSound1: {fileID: 2784327381852570608}
   DamageSound2: {fileID: 3667184716374853802}
   DamageSound3: {fileID: 5801134850327360586}
