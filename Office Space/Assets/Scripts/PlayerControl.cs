@@ -17,7 +17,15 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
     [SerializeField] int sprintMod;
     [SerializeField] int crouchMod;
     [SerializeField] int jumpSpeed;
+    [SerializeField] float crouchLevel;
+    [SerializeField] int slideSpeed;
+    [SerializeField] float slideLockoutTime;
     [SerializeField] int gravity;
+    int jumpCount;
+    int HPOrig;
+    float slideLockout;
+    int origSpeed;
+    float origHeight;
     Vector3 moveDir;
     Vector3 playerVel;
 
@@ -55,29 +63,17 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
     //Item Throw
     ItemThrow item;
 
-    int jumpCount;
-    int HPOrig;
-
-    [SerializeField] float crouchLevel;
-    [SerializeField] int slideSpeed;
-    [SerializeField] float slideLockoutTime;
-    float slideLockout;
-    int origSpeed;
-    float origHeight;
-
     public bool weaponSwap;
     public bool isShooting;
     public bool isReloading;
-
     bool isCrouching;
     bool isSprinting;
     bool isSliding;
 
 
-
     // Start is called before the first frame update
     void Start()
-    { 
+    {
         HPOrig = HP;
         origSpeed = speed;
         origHeight = controller.height;
@@ -245,7 +241,7 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
                     speed *= sprintMod;
                     break;
                 case false:
-                    speed = origSpeed;
+                    speed /= sprintMod;
                     break;
             }
         }
@@ -358,6 +354,36 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
         GameManager.instance.damageFlash.SetActive(true);
         yield return new WaitForSeconds(0.2f);
         GameManager.instance.damageFlash.SetActive(false);
+    }
+
+    //public IEnumerator SpeedPowerUp(int speedBoost) //Triggers buffs for a good cup of Joe (mediocre office brew)
+    //{
+    //    if (isSprinting)
+    //    {
+    //        speed /= sprintMod;
+    //    }
+    //    speed += speedBoost;
+    //    yield return new WaitForSeconds(1);
+    //    speed -= speedBoost;
+    //}
+
+
+    public void AddSpeed(int addSpeed) //Coffee Buff
+    {
+        if (isSprinting)
+        {
+            if (addSpeed > 0)
+                speed = (origSpeed + addSpeed) * sprintMod;
+            else
+                speed = origSpeed * sprintMod;
+        }
+        else
+        {
+            if (addSpeed > 0)
+                speed = origSpeed + addSpeed;
+            else
+                speed = origSpeed;
+        }
     }
 
     public void UpdatePlayerUI()

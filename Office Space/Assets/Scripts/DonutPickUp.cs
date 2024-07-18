@@ -25,21 +25,9 @@ public class DonutPickUp : MonoBehaviour
         HPincrease = HpRestoreAmount;
     }
 
-    //[SerializeField] float maxHeight;
-    //[SerializeField] float minHeight;
-    //Vector3 targetPosition;
-    //Vector3 originalPosition;
-    //Vector3 maxPosition;
-    //Vector3 minPosition;
-
     // Start is called before the first frame update
     void Start()
     {
-        //originalPosition = transform.position;
-        //minPosition = new Vector3(0, originalPosition.y - minHeight, 0);
-        //maxPosition = new Vector3(0, originalPosition.y + maxHeight, 0);
-        //targetPosition = maxPosition;
-
         startPos = transform.position;
     }
 
@@ -66,25 +54,9 @@ public class DonutPickUp : MonoBehaviour
         {
             OnCollected?.Invoke();
             Destroy(gameObject);
-        }
-        
+        }  
 
     }
 
-    //void Bounce() //More research required for prototype 2
-    //{
-    //    if (transform.position.y <= minPosition.y)
-    //    {
-    //        targetPosition = maxPosition;
-    //        Debug.Log("Min Height Reached");
-
-    //    }
-    //    else if (transform.position.y >= maxPosition.y)
-    //    {
-    //        targetPosition = minPosition;
-    //        Debug.Log("Max Height Reached");
-    //    }
-    //    transform.Translate((targetPosition - transform.position) * Time.deltaTime, Space.World);
-    //}
-
+    
 }
