@@ -4,20 +4,21 @@ using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Animations.Rigging;
 
 public class enemyAI : MonoBehaviour, IDamage, ITarget
 {
     [SerializeField] NavMeshAgent agent;
     [SerializeField] Renderer model;
     [SerializeField] Animator anim;
-    [SerializeField] Transform headPos;
-    [SerializeField] Transform armPos;
+    [SerializeField] RigBuilder enemRig;
     [SerializeField] Color dmgColor;
     [SerializeField] Transform shootPos;
     [SerializeField] int HP;
     [SerializeField] int faceTargetSpeed;
     [SerializeField] int viewAngle;
     [SerializeField] GameObject bullet;
+    [SerializeField] GameObject targeting;
     [SerializeField] float shootRate;
     [SerializeField] int animTransitSpeed;
     public bool ikActive;
@@ -54,6 +55,8 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
     Vector3 startingPos;
     bool isRoaming;
     float stoppingDistOrig;
+
+    bool canTarget;
 
     // Start is called before the first frame update
     void Start()
@@ -92,8 +95,7 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
         //You can't see me, but I'm nearby
         else if (targetInRange && !canSeePlayer())
         {
-
-            if(!isRoaming && agent.remainingDistance < 0.05f)
+            if (!isRoaming && agent.remainingDistance < 0.05f)
                 StartCoroutine(Roam());
 
         }
@@ -104,20 +106,31 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
         }
     }
 
-    private void OnAnimatorIK()
+    //private void OnAnimatorIK()
+    //{
+    //    if (canTarget && anim)
+    //    {
+    //        if (ikActive && targetOBJ)
+    //        {
+    //            //anim.SetLookAtWeight(1);
+    //            //anim.SetLookAtPosition(new Vector3(targetOBJ.transform.position.x, targetOBJ.transform.position.y + 1));
+
+
+    //            //Quaternion rot = Quaternion.LookRotation(TargetDIR);
+    //            //transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * faceTargetSpeed);
+    //        }
+    //        else
+    //        {
+    //            anim.SetLookAtWeight(0);
+    //        }
+    //    }
+    //}
+
+
+    void FaceTarget()
     {
-        if (anim)
-        {
-            if (ikActive && targetOBJ)
-            {
-                anim.SetLookAtWeight(1);
-                anim.SetLookAtPosition(targetOBJ.transform.position);
-            }
-            else
-            {
-                anim.SetLookAtWeight(0);
-            }
-        }
+        Quaternion rot = Quaternion.LookRotation(TargetDIR);
+        transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * faceTargetSpeed);
     }
 
     IEnumerator Roam()
@@ -151,11 +164,20 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
             if ((hit.collider.CompareTag("Player") || hit.collider.CompareTag("Enemy")) && angleToPlayer <= viewAngle)
             {
                 agent.SetDestination(targetOBJ.transform.position);
+                canTarget = true;
+                anim.SetBool("Aiming", true);
+                targeting.transform.position = targetOBJ.transform.position;
+                FaceTarget();
+                enemRig.enabled = true;
                 return true;
             }
 
         }
+
         agent.stoppingDistance = 0;
+        canTarget = false;
+        anim.SetBool("Aiming", false);
+        enemRig.enabled = false;
         return false;
     }
 
@@ -181,8 +203,8 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
         }
     }
 
-    
-   
+
+
     public void takeDamage(int amount)
     {
 
