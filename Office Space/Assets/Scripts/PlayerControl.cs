@@ -70,6 +70,8 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
     bool isSprinting;
     bool isSliding;
 
+    Coroutine speedCoroutine;
+
 
     // Start is called before the first frame update
     void Start()
@@ -356,19 +358,15 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
         GameManager.instance.damageFlash.SetActive(false);
     }
 
-    //public IEnumerator SpeedPowerUp(int speedBoost) //Triggers buffs for a good cup of Joe (mediocre office brew)
-    //{
-    //    if (isSprinting)
-    //    {
-    //        speed /= sprintMod;
-    //    }
-    //    speed += speedBoost;
-    //    yield return new WaitForSeconds(1);
-    //    speed -= speedBoost;
-    //}
 
+    IEnumerator SpeedPowerUp(CoffeeStats stats) //Triggers buffs for a good cup of Joe (mediocre office brew)
+    {
+        AddSpeed(stats.speedModifier);
+        yield return new WaitForSeconds(stats.speedBoostTime);
+        AddSpeed(-stats.speedModifier);
+    }
 
-    public void AddSpeed(int addSpeed) //Coffee Buff
+    private void AddSpeed(int addSpeed) //Controls the speed increase and maintains the boost constant regardless of state of player movement
     {
         if (isSprinting)
         {
@@ -385,6 +383,16 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
                 speed = origSpeed;
         }
     }
+
+    public void ActivateSpeedBoost(CoffeeStats stats) //Handles the activation of the speed power up coroutine 
+    {
+        if (speedCoroutine != null) //resets the timer if player picks up another power up
+        {
+            StopCoroutine(speedCoroutine);
+        }
+        speedCoroutine = StartCoroutine(SpeedPowerUp(stats));
+    }
+
 
     public void UpdatePlayerUI()
     {

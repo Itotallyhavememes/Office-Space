@@ -7,13 +7,12 @@ public class ItemPickup : MonoBehaviour
     [SerializeField] enum itemType { health, speedBoost, ammo }
     [SerializeField] itemType type;
     [SerializeField] float rotationSpeed;
-    [SerializeField] int speedModifier;
-    [SerializeField] int speedBoostTime;
     [SerializeField] int bobSpeed;
     [SerializeField] float bobHeight;
+    [SerializeField] CoffeeStats coffeeStats;
 
 
-    Vector3 startPos;    
+    Vector3 startPos;
 
     // Start is called before the first frame update
     void Start()
@@ -42,8 +41,6 @@ public class ItemPickup : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("Player Collided");
-
             switch (type)
             {
                 case itemType.health:
@@ -54,9 +51,8 @@ public class ItemPickup : MonoBehaviour
                 case itemType.speedBoost:
                     {
                         //StartCoroutine(GameManager.instance.playerScript.SpeedPowerUp(speedModifier));
-                        gameObject.GetComponent<MeshRenderer>().enabled = false;
-                        gameObject.GetComponent<CapsuleCollider>().enabled = false;
-                        StartCoroutine(SpeedPowerUp(speedModifier));
+                        GameManager.instance.playerScript.ActivateSpeedBoost(coffeeStats);
+                        Destroy(gameObject);
                         break;
                     }
                 case itemType.ammo:
@@ -67,15 +63,6 @@ public class ItemPickup : MonoBehaviour
 
             
         }
-
-    }
-
-    IEnumerator SpeedPowerUp(int speedBoost) //Triggers buffs for a good cup of Joe (mediocre office brew)
-    {
-        GameManager.instance.playerScript.AddSpeed(speedBoost);
-        yield return new WaitForSeconds(speedBoostTime);
-        GameManager.instance.playerScript.AddSpeed(-speedBoost);
-        Destroy(gameObject);
 
     }
 }
