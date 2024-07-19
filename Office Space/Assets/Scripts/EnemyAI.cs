@@ -8,6 +8,10 @@ using UnityEngine.Animations.Rigging;
 
 public class enemyAI : MonoBehaviour, IDamage, ITarget
 {
+    //Enum for distinguishing different enemy types for AI distinction
+    [SerializeField] enum enemyType { norm, fast, tank, security};
+    [SerializeField] enemyType type;
+
     [SerializeField] NavMeshAgent agent;
     [SerializeField] Renderer model;
     [SerializeField] Animator anim;
@@ -55,7 +59,7 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
     Vector3 startingPos;
     bool isRoaming;
     float stoppingDistOrig;
-
+    Vector3 targetingOrig;
     bool canTarget;
 
     // Start is called before the first frame update
@@ -69,6 +73,8 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
         randPos = Vector3.zero;
         startingPos = transform.position;
         stoppingDistOrig = agent.stoppingDistance;
+        //targetingOrig = gameObject.transform.position;
+        //targeting.transform.position = targetingOrig;
     }
 
     // Update is called once per frame
@@ -83,7 +89,7 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
         {
             if (agent.remainingDistance <= agent.stoppingDistance)
             {
-                //faceTarget();
+                FaceTarget();
             }
 
             if (!isShooting)
@@ -166,14 +172,14 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
                 agent.SetDestination(targetOBJ.transform.position);
                 canTarget = true;
                 anim.SetBool("Aiming", true);
-                targeting.transform.position = targetOBJ.transform.position;
+                if(targetOBJ != null)
+                    targeting.transform.position = targetOBJ.transform.position;
                 FaceTarget();
                 enemRig.enabled = true;
                 return true;
             }
 
         }
-
         agent.stoppingDistance = 0;
         canTarget = false;
         anim.SetBool("Aiming", false);
@@ -200,6 +206,8 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
             targetOBJ = null;
             targetInRange = false;
             agent.stoppingDistance = 0;
+            //If targetOBJ leaves (for now) reset targeting transform position
+            targeting.transform.position = targetingOrig;
         }
     }
 
@@ -290,18 +298,18 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
     //    isPatrolling = false;
     //}
 
-    private void SetRandowWaypoint()
-    {
-        //int randRage = Random.Range(-50, 50);
-        float x = Random.Range(-range, range);
-        float z = Random.Range(-range, range);
+    //private void SetRandowWaypoint()
+    //{
+    //    //int randRage = Random.Range(-50, 50);
+    //    float x = Random.Range(-range, range);
+    //    float z = Random.Range(-range, range);
 
-        destPoint = new Vector3(transform.position.x + x, transform.position.y, transform.position.z + z);
-        if (Physics.Raycast(destPoint, Vector3.down, groundLayer))
-        {
-            walkPoint = true;
-        }
-    }
+    //    destPoint = new Vector3(transform.position.x + x, transform.position.y, transform.position.z + z);
+    //    if (Physics.Raycast(destPoint, Vector3.down, groundLayer))
+    //    {
+    //        walkPoint = true;
+    //    }
+    //}
 
     public GameObject declareOBJ(GameObject obj)
     {
