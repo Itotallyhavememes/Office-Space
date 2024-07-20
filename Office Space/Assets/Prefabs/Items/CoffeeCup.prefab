@@ -136,7 +136,7 @@ MonoBehaviour:
   rotationSpeed: 100
   bobSpeed: 3
   bobHeight: 0.3
-  coffeeStats: {fileID: 11400000, guid: 4ca6404836521654ba62d54f0fc38381, type: 2}
+  powerupEffect: {fileID: 11400000, guid: 4ca6404836521654ba62d54f0fc38381, type: 2}
 --- !u!33 &7387428692115581037
 MeshFilter:
   m_ObjectHideFlags: 0

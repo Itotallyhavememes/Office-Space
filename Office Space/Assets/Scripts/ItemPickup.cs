@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class ItemPickup : MonoBehaviour
 {
-    [SerializeField] enum itemType { health, speedBoost, ammo }
+    [SerializeField] enum itemType { health, speedBoost, shuriken, rubberBand }
     [SerializeField] itemType type;
     [SerializeField] float rotationSpeed;
     [SerializeField] int bobSpeed;
     [SerializeField] float bobHeight;
-    [SerializeField] CoffeeStats coffeeStats;
+    [SerializeField] PowerUpEffect powerupEffect;
 
 
     Vector3 startPos;
@@ -45,23 +45,45 @@ public class ItemPickup : MonoBehaviour
             {
                 case itemType.health:
                     {
-                        GameManager.instance.playerScript.HealthPickup();
+                        if (GameManager.instance.playerScript.HP < GameManager.instance.playerScript.GetStartHP())
+                        {
+                            Destroy(gameObject);
+                            powerupEffect.ApplyBuff();
+                        }
                         break;
                     }
                 case itemType.speedBoost:
                     {
-                        //StartCoroutine(GameManager.instance.playerScript.SpeedPowerUp(speedModifier));
-                        GameManager.instance.playerScript.ActivateSpeedBoost(coffeeStats);
                         Destroy(gameObject);
+                        powerupEffect.ApplyBuff();
                         break;
                     }
-                case itemType.ammo:
-                    break;
+                case itemType.shuriken:
+                    {
+                        if (GameManager.instance.playerScript.shurikenAmmo < GameManager.instance.playerScript.GetStartShurikenAmmo())
+                        {
+                            GameManager.instance.playerScript.shurikenAmmo++;
+                            GameManager.instance.playerScript.UpdateAmmoUI();
+                            Destroy(gameObject);
+                        }
+                        break;
+                    }
+                case itemType.rubberBand:
+                    {
+                        if (GameManager.instance.playerScript.GetComponent<ItemThrow>().rubberBallCount < GameManager.instance.playerScript.GetComponent<ItemThrow>().GetMaxBallCount())
+                        {
+                            GameManager.instance.playerScript.GetComponent<ItemThrow>().rubberBallCount++;
+                            GameManager.instance.playerScript.GetComponent<ItemThrow>().updateGrenadeUI();
+                            Destroy(gameObject);
+                        }
+
+                        break;
+                    }
                 default:
                     break;
             }
 
-            
+
         }
 
     }

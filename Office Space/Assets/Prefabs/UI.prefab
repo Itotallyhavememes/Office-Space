@@ -2845,12 +2845,13 @@ MonoBehaviour:
   playerAmmoBar: {fileID: 1316860190791020327}
   damageFlash: {fileID: 7037176498022196109}
   player: {fileID: 2129940969073064523, guid: 40ec7c9ceea2bec4dac0acbce96e70fc, type: 3}
+  rubberBall: {fileID: 3822187847243570803, guid: 14ce3eaf9a276fa49ba840ba1115eff7, type: 3}
   playerScript: {fileID: 0}
+  rubberBallScript: {fileID: 0}
   audioMixer: {fileID: 24100000, guid: 491cca7fefc6f3f418f639a8b44c47aa, type: 2}
   isPaused: 0
   playerHPStart: 0
   playerAmmo: 5
-  rubberBCount: 0
   enemyCount: 0
   Thresh: 0
 --- !u!1 &3363124520113123284

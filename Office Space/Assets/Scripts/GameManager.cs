@@ -32,21 +32,20 @@ public class GameManager : MonoBehaviour
     public bool isPaused;
     public int playerHPStart;
     public int playerAmmo;
-    public int rubberBCount;
 
 
     int donutCount;
     public int enemyCount;
     public int Thresh;
     GameObject previousScreen;
-    ItemThrow rubber;
 
     void Awake()
     {
         instance = this;
         player = GameObject.FindWithTag("Player");
         playerScript = player.GetComponent<PlayerControl>();
-        
+
+
         Thresh = 29;
    
     }
@@ -58,9 +57,7 @@ public class GameManager : MonoBehaviour
 
     //Update is called once per frame
     void Update()
-    {
-        
-        
+    {       
         
         if (Input.GetButtonDown("Cancel"))
         {
@@ -142,7 +139,7 @@ public class GameManager : MonoBehaviour
 
     public void SetVolume(float volume)
     {
-        Debug.Log(volume);
+        //Debug.Log(volume);
         audioMixer.SetFloat("MasterAudio", volume);
     }
     public void SetFullScreen(bool isFullScreen)

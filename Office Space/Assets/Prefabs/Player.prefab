@@ -450,6 +450,7 @@ GameObject:
   - component: {fileID: 101635492213390160}
   - component: {fileID: 8551271330002583447}
   - component: {fileID: 2003670428629706353}
+  - component: {fileID: 3674711914778122749}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -488,8 +489,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b130284ef4f8d854eb1b982045424a1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hand: {fileID: 839672722277333399}
   controller: {fileID: 2003670428629706353}
+  aud: {fileID: 0}
   ignoreMask:
     serializedVersion: 2
     m_Bits: 8
@@ -498,7 +499,11 @@ MonoBehaviour:
   sprintMod: 2
   crouchMod: 4
   jumpSpeed: 8
+  crouchLevel: 0.3
+  slideSpeed: 19
+  slideLockoutTime: 3
   gravity: 22
+  hand: {fileID: 839672722277333399}
   HandAmmoCount: 12
   shootDamage: 2
   shootRate: 0.3
@@ -518,11 +523,8 @@ MonoBehaviour:
   shurikenSpawnPoint: {fileID: 8126848198089703039}
   shurikenProjectile: {fileID: 9051712137437555885, guid: 427abf216183ff34e8d038c29d5910a8, type: 3}
   shurikenRate: 0.5
-  shurikenAmmo: 10
   shurikenReloadTime: 1
-  crouchLevel: 0.3
-  slideSpeed: 19
-  slideLockoutTime: 3
+  shurikenAmmo: 10
   weaponSwap: 0
   isShooting: 0
   isReloading: 0
@@ -646,6 +648,102 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!82 &3674711914778122749
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2129940969073064523}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &5346818883138783498
 GameObject:
   m_ObjectHideFlags: 0
@@ -1446,6 +1544,10 @@ PrefabInstance:
     - target: {fileID: 4232878177832096532, guid: a3dbb891dab34c948bc8908029ac82d0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 89.842
+      objectReference: {fileID: 0}
+    - target: {fileID: 4379273917763433846, guid: a3dbb891dab34c948bc8908029ac82d0, type: 3}
+      propertyPath: m_Name
+      value: Arm
       objectReference: {fileID: 0}
     - target: {fileID: 6190694010534994171, guid: a3dbb891dab34c948bc8908029ac82d0, type: 3}
       propertyPath: m_Name

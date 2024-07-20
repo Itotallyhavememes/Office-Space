@@ -6,9 +6,9 @@ using UnityEngine;
 
 public class PlayerControl : MonoBehaviour, IDamage, ITarget
 {
-    [SerializeField] GameObject hand;
 
     [SerializeField] CharacterController controller;
+    [SerializeField] AudioSource aud;
     [SerializeField] LayerMask ignoreMask;
 
     //Player variables
@@ -30,6 +30,7 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
     Vector3 playerVel;
 
     //Hand variables
+    [SerializeField] GameObject hand;
     [SerializeField] int HandAmmoCount;
     [SerializeField] int shootDamage;
     [SerializeField] float shootRate;
@@ -56,8 +57,8 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
     [SerializeField] GameObject shurikenSpawnPoint;
     [SerializeField] GameObject shurikenProjectile;
     [SerializeField] float shurikenRate;
-    [SerializeField] int shurikenAmmo;
     [SerializeField] float shurikenReloadTime;
+    public int shurikenAmmo;
     int shurikenStartAmmo;
 
     //Item Throw
@@ -413,7 +414,7 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
         return gameObject;
     }
 
-    public void HealthPickup()
+    public void HealthPickup() //Proto 1 HealthPickup
     {
         int count = 1;
         while (HP < HPOrig && count <= DonutPickUp.HPincrease)
@@ -424,11 +425,31 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
         UpdatePlayerUI();
     }
 
+    public void HealthPickup(int amount) //PowerUp Health Pickup
+    {
+        HP += amount;
+        if (HP > HPOrig)
+        {
+            HP = HPOrig;
+        }
+        UpdatePlayerUI();
+    }
+
     void DefaultPublicBools()
     {
         weaponSwap = true;
         isShooting = false;
         isReloading = false;
+    }
+
+    public int GetStartShurikenAmmo()
+    {
+        return shurikenStartAmmo;
+    }
+
+    public int GetStartHP()
+    {
+        return HPOrig;
     }
 }
 

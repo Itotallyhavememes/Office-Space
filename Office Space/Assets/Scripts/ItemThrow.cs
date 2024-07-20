@@ -15,11 +15,11 @@ public class ItemThrow : MonoBehaviour
     [SerializeField] GameObject grenadeHUD;
 
     public int rubberBallCount;
-    int rubberBallStartCount;
+    int rubberBallMaxCount;
 
     void Start()
     {
-        rubberBallStartCount = rubberBallCount;
+        rubberBallMaxCount = rubberBallCount;
         updateGrenadeUI();
 
     }
@@ -31,8 +31,8 @@ public class ItemThrow : MonoBehaviour
             if (Input.GetButtonDown("Item") && rubberBallCount > 0)
             {
                 StartCoroutine(ThrowItem());
-                
-               
+
+
             }
         }
     }
@@ -64,7 +64,7 @@ public class ItemThrow : MonoBehaviour
             shurikenHUD.SetActive(false);
         }
         grenadeHUD.SetActive(true);
-        
+
     }
 
     void WeaponToggleOn()
@@ -83,5 +83,10 @@ public class ItemThrow : MonoBehaviour
     public void updateGrenadeUI()
     {
         GameManager.instance.grenadeStack.text = (rubberBallCount).ToString();
+    }
+
+    public int GetMaxBallCount()
+    {
+        return rubberBallMaxCount;
     }
 }
