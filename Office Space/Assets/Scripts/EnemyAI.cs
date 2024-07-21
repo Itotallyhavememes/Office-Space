@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
@@ -51,6 +52,16 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
     bool walkPoint;
     bool isPatrolling;
     [SerializeField] float patrolRate;
+
+    public Transform currentPoint;
+    [SerializeField] int romTimer;
+    Vector3 PatrolPoint;
+    Vector3 StartPoint;
+
+    [SerializeField] List<Transform> Positions;
+    int nextPosIndex;
+    bool isPatrol;
+
     //TIM CODE
     [SerializeField] GameObject targetOBJ;
     ITarget target;
@@ -73,6 +84,8 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
         randPos = Vector3.zero;
         startingPos = transform.position;
         stoppingDistOrig = agent.stoppingDistance;
+        StartPoint = transform.position;
+        nextPosIndex = 0;
         //targetingOrig = gameObject.transform.position;
         //targeting.transform.position = targetingOrig;
     }
@@ -83,7 +96,7 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
         float agentSpeed = agent.velocity.normalized.magnitude;
 
         anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), agentSpeed, Time.deltaTime * animTransitSpeed));
-
+        
         //I found you and I'm coming for you
         if (targetInRange && canSeePlayer())
         {
@@ -110,6 +123,24 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
             if (!isRoaming && agent.remainingDistance < 0.05f)
                 StartCoroutine(Roam());
         }
+        // JOHN PATROL CODE
+        //if (playerInRage && !canSeePlayer())
+        //{
+        //    if (!isPatrol && agent.remainingDistance < .5f)
+        //    {
+        //        StartCoroutine(Patrol());
+        //    }
+
+
+        //}
+        //else if (!playerInRage)
+        //{
+        //    if (!isPatrol && agent.remainingDistance < .5f)
+        //    {
+        //        StartCoroutine(Patrol());
+        //    }
+
+        //}
     }
 
     //private void OnAnimatorIK()
@@ -139,6 +170,40 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
         transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * faceTargetSpeed);
     }
 
+
+    IEnumerator Patrol()
+    {
+        isPatrol = true;
+
+
+        yield return new WaitForSeconds(romTimer);
+
+        agent.stoppingDistance = 0;
+        GoOnPatrol();
+        agent.SetDestination(PatrolPoint);
+        isPatrol = false;
+    }
+    // PATROL POINT CAN NOT BE A CHALDEN OF ENEMY
+    // PATROL POINT MUST BE DIG INTO POSITIONS IN EDIT 
+    public void GoOnPatrol()
+    {
+
+        if (nextPosIndex < Positions.Count)
+        {
+
+            PatrolPoint = Positions[nextPosIndex].transform.position;
+            ++nextPosIndex;
+        }
+        else if (nextPosIndex >= Positions.Count)
+        {
+            if (nextPosIndex > Positions.Count)
+            {
+                nextPosIndex = Positions.Count;
+            }
+            PatrolPoint = StartPoint;
+            nextPosIndex = 0;
+        }
+    }
     IEnumerator Roam()
     {
         isRoaming = true;
@@ -156,7 +221,7 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
     }
     bool canSeePlayer()
     {
-
+       
         TargetDIR = targetOBJ.transform.position - transform.position;
         angleToPlayer = Vector3.Angle(TargetDIR, transform.forward);
         //Each frame, the enemy AI will be seeking out player's position through this line
