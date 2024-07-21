@@ -4,5 +4,6 @@ using UnityEngine;
 
 public interface ITarget
 {
-   public GameObject declareOBJ(GameObject target);   
+   GameObject declareOBJ(GameObject target);   
+   bool declareDeath();
 }

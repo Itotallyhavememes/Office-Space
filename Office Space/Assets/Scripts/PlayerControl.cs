@@ -408,11 +408,20 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
             GameManager.instance.playerAmmoBar.fillAmount = (float)shurikenAmmo / shurikenStartAmmo;
 
     }
-
+    //ITarget Specific Methods
     public GameObject declareOBJ(GameObject obj)
     {
         return gameObject;
     }
+
+    public bool declareDeath() 
+    {
+        if (HP <= 0)
+            return true;
+        else
+            return false;
+    }
+    //END ITarget Methods
 
     public void HealthPickup() //Proto 1 HealthPickup
     {
@@ -451,5 +460,6 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
     {
         return HPOrig;
     }
+
 }
 

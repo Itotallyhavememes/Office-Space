@@ -2696,8 +2696,8 @@ MonoBehaviour:
   enemRig: {fileID: 6283643915320387762}
   dmgColor: {r: 0, g: 0, b: 0, a: 0}
   shootPos: {fileID: 6199350239027142021}
-  HP: 10
-  faceTargetSpeed: 30
+  HP: 12
+  faceTargetSpeed: 50
   viewAngle: 90
   bullet: {fileID: 6562726978010489722, guid: be53c72d1bd770d4faa4be6708977d31, type: 3}
   targeting: {fileID: 499808725165425823}
@@ -2709,14 +2709,24 @@ MonoBehaviour:
   DamageSound3: {fileID: 0}
   DamageSound4: {fileID: 0}
   DamageSound5: {fileID: 0}
-  dodgeSpeed: 0
+  dodgeSpeed: 5
   range: 90
   minRange: 50
   groundLayer:
     serializedVersion: 2
     m_Bits: 0
   patrolRate: 5
+  currentPoint: {fileID: 0}
+  romTimer: 0
+  Positions:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  dodgeNumber: 0
+  detCode: 0
   targetOBJ: {fileID: 0}
+  targets: []
+  jumpSpeed: 5
   roamDist: 10
   roamTimer: 3
 --- !u!195 &7911479136020618891
@@ -2733,7 +2743,7 @@ NavMeshAgent:
   m_Acceleration: 32
   avoidancePriority: 50
   m_AngularSpeed: 200
-  m_StoppingDistance: 8
+  m_StoppingDistance: 6
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 0
   m_AutoRepath: 1
