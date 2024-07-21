@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "PowerUps/SpeedBuff")]
-public class CoffeeStats : PowerUpEffect
+public class SpeedBuff : PowerUpEffect
 {
 
     public int speedModifier;
@@ -16,7 +16,6 @@ public class CoffeeStats : PowerUpEffect
     {
         //GameManager.instance.player.GetComponent<AudioSource>().PlayOneShot(pickupSFX, audPickupVol);
         GameManager.instance.playerScript.ActivateSpeedBoost(this);
-
 
     }
 

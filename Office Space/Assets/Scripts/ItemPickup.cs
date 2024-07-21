@@ -62,7 +62,13 @@ public class ItemPickup : MonoBehaviour
                     {
                         if (GameManager.instance.playerScript.shurikenAmmo < GameManager.instance.playerScript.GetStartShurikenAmmo())
                         {
-                            GameManager.instance.playerScript.shurikenAmmo++;
+                            GameManager.instance.playerScript.shurikenAmmo += 5;
+
+                            if (GameManager.instance.playerScript.shurikenAmmo < GameManager.instance.playerScript.GetStartShurikenAmmo())
+                            {
+                                GameManager.instance.playerScript.shurikenAmmo = GameManager.instance.playerScript.GetStartShurikenAmmo();
+                            }
+
                             GameManager.instance.playerScript.UpdateAmmoUI();
                             Destroy(gameObject);
                         }

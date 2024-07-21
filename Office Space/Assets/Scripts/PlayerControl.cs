@@ -360,7 +360,7 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
     }
 
 
-    IEnumerator SpeedPowerUp(CoffeeStats stats) //Triggers buffs for a good cup of Joe (mediocre office brew)
+    IEnumerator SpeedPowerUp(SpeedBuff stats) //Triggers buffs for a good cup of Joe (mediocre office brew)
     {
         AddSpeed(stats.speedModifier);
         yield return new WaitForSeconds(stats.speedBoostTime);
@@ -385,7 +385,7 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
         }
     }
 
-    public void ActivateSpeedBoost(CoffeeStats stats) //Handles the activation of the speed power up coroutine 
+    public void ActivateSpeedBoost(SpeedBuff stats) //Handles the activation of the speed power up coroutine 
     {
         if (speedCoroutine != null) //resets the timer if player picks up another power up
         {
