@@ -132,10 +132,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49e0f87f105640440815a6d39dcc4aa8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationSpeed: 100
   HpRestoreAmount: 5
+  rotationSpeed: 100
   bobSpeed: 3
   bobHeight: 0.3
+  pickupSFX: {fileID: 8300000, guid: 63b11c08e74a5a44cbb2b8b72c388e52, type: 3}
+  audPickupVol: 0.5
 --- !u!33 &8196115917129123271
 MeshFilter:
   m_ObjectHideFlags: 0

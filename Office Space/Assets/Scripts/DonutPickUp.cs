@@ -12,10 +12,13 @@ public class DonutPickUp : MonoBehaviour
     public static int totalDonuts;
     public static int HPincrease;
 
-    [SerializeField] float rotationSpeed;
+
     [SerializeField] int HpRestoreAmount;
+    [SerializeField] float rotationSpeed;
     [SerializeField] int bobSpeed;
     [SerializeField] float bobHeight;
+    [SerializeField] AudioClip pickupSFX;
+    [Range(0, 1)][SerializeField] float audPickupVol;
 
     Vector3 startPos;
 
@@ -53,8 +56,16 @@ public class DonutPickUp : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             OnCollected?.Invoke();
+            GameManager.instance.player.GetComponent<AudioSource>().PlayOneShot(pickupSFX, audPickupVol);
             Destroy(gameObject);
-        }  
+        }
+        else if (other.CompareTag("Enemy")) //Tim: Placeholder trigger. It triggers the same event as the player, but only the player's HP and count is affected
+        {
+            Debug.Log("Eat me YA FREAK!");
+            OnCollected?.Invoke();
+            GameManager.instance.player.GetComponent<AudioSource>().PlayOneShot(pickupSFX, audPickupVol);
+            Destroy(gameObject);
+        }
 
     }
 
