@@ -11,6 +11,8 @@ using UnityEngine.UIElements;
 
 public class enemyAI : MonoBehaviour, IDamage, ITarget
 {
+
+    public int enemyDonutCount;
     
     //Enum for distinguishing different enemy types for AI distinction
     [SerializeField] enum enemyType { norm, fast, tank, security };

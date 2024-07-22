@@ -46,7 +46,7 @@ public class GameManager : MonoBehaviour
     public int playerAmmo;
 
 
-    int donutCount;
+    int playerDonutCount;
     public int enemyCount;
     public int Thresh;
     GameObject previousScreen;
@@ -92,6 +92,12 @@ public class GameManager : MonoBehaviour
                 StateUnpause();
             }
         }
+    }
+
+    IEnumerator EndGame()
+    {
+        
+        yield return null;
     }
 
     IEnumerator Timer()
@@ -202,8 +208,8 @@ public class GameManager : MonoBehaviour
 
     public void UpdateGameGoal(int amount)
     {
-        donutCount += amount;
-        if (donutCount >= DonutPickUp.totalDonuts)
+        playerDonutCount += amount;
+        if (playerDonutCount >= DonutPickUp.totalDonuts)
         {
             //you win!
             StatePause();
