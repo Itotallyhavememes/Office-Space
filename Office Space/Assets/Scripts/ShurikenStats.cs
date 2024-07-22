@@ -2,15 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu]
-public class ShurikenStats : ScriptableObject
+[CreateAssetMenu(menuName = "Weapons/Shuriken")]
+public class ShurikenStats : WeaponStats
 {
     public GameObject shurikenHUD;
-    public GameObject shurikenSpawnPoint;
-    public GameObject shurikenProjectile;
-    public float shurikenRate;
-    public int shurikenAmmo;
-    public float shurikenReloadTime;
-    public int shurikenStartAmmo;
+    public GameObject shurikenSpawnPoint;   
 
 }
