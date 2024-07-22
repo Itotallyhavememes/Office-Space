@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Weapon")]
-public abstract class WeaponStats : ScriptableObject
+public class WeaponStats : ScriptableObject
 {
     public enum WeaponType { raycast, projectile }
     public WeaponType type;
