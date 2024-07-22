@@ -10,7 +10,7 @@ using System;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
-    public enum gameMode { DONUTKING2, NIGHTSHIFT}
+    public enum gameMode { DONUTKING2, NIGHTSHIFT }
     public static gameMode currentMode;
 
     [SerializeField] gameMode modeSelection;
@@ -55,7 +55,7 @@ public class GameManager : MonoBehaviour
         currentMode = modeSelection;
 
         Thresh = 29;
-   
+
     }
 
     void Start()
@@ -67,13 +67,13 @@ public class GameManager : MonoBehaviour
         }
 
         playerHPStart = playerScript.HP;
-        
+
     }
 
     //Update is called once per frame
     void Update()
-    {       
-        
+    {
+
         if (Input.GetButtonDown("Cancel"))
         {
             if (menuActive == null)
@@ -98,24 +98,27 @@ public class GameManager : MonoBehaviour
 
         while (timeElapsed > 0)
         {
-            timerMinutes = timeElapsed / 60;
-            timerSeconds = timeElapsed % 60;
+            if (!isPaused)
+            {
+                timerMinutes = timeElapsed / 60;
+                timerSeconds = timeElapsed % 60;
 
-            if (timerMinutes == 0 || timerMinutes < 10)
-                timeText = "0";
-            
-            timeText += timerMinutes.ToString() + ":";
+                if (timerMinutes == 0 || timerMinutes < 10)
+                    timeText = "0";
 
-            if (timerSeconds == 0 || timerSeconds < 10)
-                timeText += "0";
+                timeText += timerMinutes.ToString() + ":";
 
-            timeText += timerSeconds.ToString();
+                if (timerSeconds == 0 || timerSeconds < 10)
+                    timeText += "0";
 
-            timerText.text = timeText;
+                timeText += timerSeconds.ToString();
 
-            yield return new WaitForSeconds(1);
+                timerText.text = timeText;
 
-            timeElapsed--;
+                yield return new WaitForSeconds(1);
+
+                timeElapsed--;
+            }
         }
     }
 
