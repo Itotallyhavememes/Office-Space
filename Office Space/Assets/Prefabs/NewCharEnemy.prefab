@@ -572,6 +572,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd88741f0d8af4d4cb3837fc4ba68e7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 0
   agent: {fileID: 468893698764033443}
   model: {fileID: 7333572367662660762}
   anim: {fileID: 1445341346883032491}
@@ -579,18 +580,16 @@ MonoBehaviour:
   dmgColor: {r: 0.07861614, g: 0.07861614, b: 1, a: 1}
   shootPos: {fileID: 9133023461380442520}
   HP: 10
-  faceTargetSpeed: 30
+  faceTargetSpeed: 50
   viewAngle: 90
   bullet: {fileID: 6562726978010489722, guid: be53c72d1bd770d4faa4be6708977d31, type: 3}
   targeting: {fileID: 5213725561143460051}
   shootRate: 0.18
   animTransitSpeed: 5
   ikActive: 1
-  DamageSound1: {fileID: 7423014728454211521}
-  DamageSound2: {fileID: 7210539064354362524}
-  DamageSound3: {fileID: 636640736975154228}
-  DamageSound4: {fileID: 8347937968320487433}
-  DamageSound5: {fileID: 9089768950848620687}
+  aud: {fileID: 0}
+  audDamage: []
+  audDamageVol: 0
   dodgeSpeed: 7
   range: 90
   minRange: 50
@@ -598,7 +597,14 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   patrolRate: 5
+  currentPoint: {fileID: 0}
+  romTimer: 0
+  Positions: []
+  dodgeNumber: 0
+  detCode: 0
   targetOBJ: {fileID: 0}
+  targets: []
+  jumpSpeed: 5
   roamDist: 10
   roamTimer: 3
 --- !u!195 &468893698764033443

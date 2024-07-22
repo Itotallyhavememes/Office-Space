@@ -511,20 +511,25 @@ MonoBehaviour:
   handReloadTime: 1.5
   handRotationReload: 40
   handRotationRecoil: 15
-  handFire: {fileID: 4126415615648579579}
-  handReloadBegin: {fileID: 6766277589638808452}
-  handReloadEnd: {fileID: 8122209515640205071}
-  DamageSound1: {fileID: 35338324039748568}
-  DamageSound2: {fileID: 6332987679059918565}
-  DamageSound3: {fileID: 9059867390732410624}
-  DamageSound4: {fileID: 5601082686421744067}
-  DamageSound5: {fileID: 3186109418547668795}
   shurikenHUD: {fileID: 3005249462168993782}
   shurikenSpawnPoint: {fileID: 8126848198089703039}
   shurikenProjectile: {fileID: 9051712137437555885, guid: 427abf216183ff34e8d038c29d5910a8, type: 3}
   shurikenRate: 0.5
   shurikenReloadTime: 1
   shurikenAmmo: 10
+  audHandFire: {fileID: 8300000, guid: eb4729c1bd2536048af59271b18847ae, type: 3}
+  audHandFireVol: 0.5
+  audHandReloadBegin: {fileID: 8300000, guid: 96d8af6f777f08249bc9d4bc3b03e476, type: 3}
+  audHandReloadBeginVol: 0.5
+  audHandReloadEnd: {fileID: 8300000, guid: 9c4ba0e68ded5434393f03275608ef9a, type: 3}
+  audHandReloadEndVol: 0.5
+  audDamage:
+  - {fileID: 8300000, guid: 1a0f51f03789b0049bf3ed7975f2a5ec, type: 3}
+  - {fileID: 8300000, guid: f469e0090cbb7694f8656a816e968478, type: 3}
+  - {fileID: 8300000, guid: 9ecd099848485ea498a368af269db75a, type: 3}
+  - {fileID: 8300000, guid: 9b7a78212bfb060429e3697a82574c93, type: 3}
+  - {fileID: 8300000, guid: 87d1afcb45928044db032422cc026b14, type: 3}
+  audDamageVol: 0.5
   weaponSwap: 0
   isShooting: 0
   isReloading: 0

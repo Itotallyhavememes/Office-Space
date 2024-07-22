@@ -6,10 +6,12 @@ using UnityEngine;
 
 public class PlayerControl : MonoBehaviour, IDamage, ITarget
 {
-
+    [Header("----- Components -----")]
     [SerializeField] CharacterController controller;
     [SerializeField] AudioSource aud;
     [SerializeField] LayerMask ignoreMask;
+
+    [Header("----- Variables -----")]
 
     //Player variables
     public int HP;
@@ -29,6 +31,8 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
     Vector3 moveDir;
     Vector3 playerVel;
 
+    [Header("----- Hand -----")]
+
     //Hand variables
     [SerializeField] GameObject hand;
     [SerializeField] int HandAmmoCount;
@@ -40,17 +44,7 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
     [SerializeField] float handRotationRecoil;
     int handCurrentAmmo;
 
-    //Hand Audio
-    [SerializeField] AudioSource handFire;
-    [SerializeField] AudioSource handReloadBegin;
-    [SerializeField] AudioSource handReloadEnd;
-
-    //Damage Audio
-    [SerializeField] AudioSource DamageSound1;
-    [SerializeField] AudioSource DamageSound2;
-    [SerializeField] AudioSource DamageSound3;
-    [SerializeField] AudioSource DamageSound4;
-    [SerializeField] AudioSource DamageSound5;
+    [Header("----- Shuriken -----")]
 
     //Shuriken Variables
     [SerializeField] GameObject shurikenHUD;
@@ -60,6 +54,20 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
     [SerializeField] float shurikenReloadTime;
     public int shurikenAmmo;
     int shurikenStartAmmo;
+
+    [Header("----- Sounds -----")]
+
+    //Hand Audio
+    [SerializeField] AudioClip audHandFire;
+    [Range(0, 1)][SerializeField] float audHandFireVol;
+    [SerializeField] AudioClip audHandReloadBegin;
+    [Range(0, 1)][SerializeField] float audHandReloadBeginVol;
+    [SerializeField] AudioClip audHandReloadEnd;
+    [Range(0, 1)][SerializeField] float audHandReloadEndVol;
+
+    //Damage Audio
+    [SerializeField] AudioClip[] audDamage;
+    [Range(0, 1)][SerializeField] float audDamageVol;
 
     //Item Throw
     ItemThrow item;
@@ -256,11 +264,11 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
         if (weaponSwap && handCurrentAmmo < HandAmmoCount)
         {
             hand.transform.Rotate(Vector3.back * handRotationReload);
-            handReloadBegin.Play();
+            aud.PlayOneShot(audHandReloadBegin, audHandReloadBeginVol);
 
             yield return new WaitForSeconds(handReloadTime);
             hand.transform.Rotate(Vector3.forward * handRotationReload);
-            handReloadEnd.Play();
+            aud.PlayOneShot(audHandReloadEnd, audHandReloadEndVol);
 
             handCurrentAmmo = HandAmmoCount;
         }
@@ -284,7 +292,7 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
         {
             handCurrentAmmo--;
             UpdateAmmoUI();
-            handFire.Play();
+            aud.PlayOneShot(audHandFire, audHandFireVol);
 
             RaycastHit hit;
             if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, shootDist, ~ignoreMask))
@@ -327,24 +335,7 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
         HP -= amount;
         StartCoroutine(flashScreenDamage());
         UpdatePlayerUI();
-        switch (Random.Range(0, 4))
-        {
-            case 0:
-                DamageSound1.Play();
-                break;
-            case 1:
-                DamageSound2.Play();
-                break;
-            case 2:
-                DamageSound3.Play();
-                break;
-            case 3:
-                DamageSound4.Play();
-                break;
-            case 4:
-                DamageSound5.Play();
-                break;
-        }
+        aud.PlayOneShot(audDamage[Random.Range(0, audDamage.Length)], audDamageVol);
 
         if (HP <= 0)
         {

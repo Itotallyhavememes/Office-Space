@@ -11,6 +11,7 @@ using UnityEngine.UIElements;
 
 public class enemyAI : MonoBehaviour, IDamage, ITarget
 {
+    
     //Enum for distinguishing different enemy types for AI distinction
     [SerializeField] enum enemyType { norm, fast, tank, security };
     [SerializeField] enemyType type;
@@ -30,11 +31,12 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
     [Range(1, 10)][SerializeField] int animTransitSpeed;
     public bool ikActive;
 
-    [SerializeField] AudioSource DamageSound1;
-    [SerializeField] AudioSource DamageSound2;
-    [SerializeField] AudioSource DamageSound3;
-    [SerializeField] AudioSource DamageSound4;
-    [SerializeField] AudioSource DamageSound5;
+    [Header("----- Sounds -----")]
+    [SerializeField] AudioSource aud;
+    [SerializeField] AudioClip[] audDamage;
+    [Range(0, 1)][SerializeField] float audDamageVol;
+
+    [Header("----- Variables -----")]
 
     Color colorOrig;
     bool isShooting;
@@ -412,24 +414,7 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
             if (HP % dodgeNumber == 0)
                 dodgeThreat();
 
-            switch (Random.Range(0, 4))
-            {
-                case 0:
-                    DamageSound1.Play();
-                    break;
-                case 1:
-                    DamageSound2.Play();
-                    break;
-                case 2:
-                    DamageSound3.Play();
-                    break;
-                case 3:
-                    DamageSound4.Play();
-                    break;
-                case 4:
-                    DamageSound5.Play();
-                    break;
-            }
+            aud.PlayOneShot(audDamage[Random.Range(0, audDamage.Length)], audDamageVol);
 
             if (HP <= 0)
             {
