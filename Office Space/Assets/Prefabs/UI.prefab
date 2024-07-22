@@ -2908,8 +2908,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c9a642d26ac12746982503ded1eac8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bodyTracker: []
+  deadTracker: []
+  spawnPoints: []
   modeSelection: 0
-  timerTime: 0
+  timerTime: 30
   menuActive: {fileID: 0}
   menuPause: {fileID: 2764977254385002732}
   menuWin: {fileID: 3702295450739476585}
@@ -2918,8 +2921,9 @@ MonoBehaviour:
   menuSettings: {fileID: 132010803395148301}
   menuControls: {fileID: 7927998687885562222}
   donutCountText: {fileID: 42499501396447299}
-  timerUI: {fileID: 0}
-  timerText: {fileID: 0}
+  timerUI: {fileID: 2127334586548743669}
+  timerText: {fileID: 7642111384215667028}
+  donutCountUI: {fileID: 42499501396447299}
   grenadeStack: {fileID: 322348989249936782}
   playerHPBar: {fileID: 238028663170282827}
   playerAmmoBar: {fileID: 1316860190791020327}
@@ -2932,6 +2936,7 @@ MonoBehaviour:
   playerAmmo: 5
   enemyCount: 0
   Thresh: 0
+  PlayerName: 
 --- !u!1 &3363124520113123284
 GameObject:
   m_ObjectHideFlags: 0
@@ -6763,7 +6768,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7227122130109151905}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7afcad06edb2a5241a2098483228dbcf, type: 3}
   m_Name: 
@@ -6872,7 +6877,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7227122130109151905}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 24300002, guid: 491cca7fefc6f3f418f639a8b44c47aa, type: 2}
   m_audioClip: {fileID: 8300000, guid: 63b11c08e74a5a44cbb2b8b72c388e52, type: 3}

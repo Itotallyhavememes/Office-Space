@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reflection.Emit;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class DonutPickUp : MonoBehaviour
 {
@@ -53,20 +54,24 @@ public class DonutPickUp : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other == other.GetComponentInChildren<CapsuleCollider>())
         {
-            OnCollected?.Invoke();
-            GameManager.instance.player.GetComponent<AudioSource>().PlayOneShot(pickupSFX, audPickupVol);
-            Destroy(gameObject);
+            Debug.Log(other.gameObject.name + " PREREGISTERED");
+            GameObject compare = GameManager.instance.ReturnEntity(other.gameObject);
+            Debug.Log(compare.gameObject.name + " REGISTERED");
+            if (compare != null /*&& compare.transform.position == transform.position*/)
+            {
+                Debug.Log("ERR CHECK CODE: 1");
+                //if (compare.GetComponent<CapsuleCollider>())
+                //{
+                Debug.Log(other.gameObject.name.ToString() + " picked up: DONUT");
+                GameManager.instance.UpdateDonutCount(other.gameObject);
+                //OnCollected?.Invoke();
+                //GameManager.instance.player.GetComponent<AudioSource>().PlayOneShot(pickupSFX, audPickupVol);
+                Destroy(gameObject);
+                //}
+            }
         }
-        else if (other.CompareTag("Enemy")) //Tim: Placeholder trigger. It triggers the same event as the player, but only the player's HP and count is affected
-        {
-            Debug.Log("Eat me YA FREAK!");
-            OnCollected?.Invoke();
-            GameManager.instance.player.GetComponent<AudioSource>().PlayOneShot(pickupSFX, audPickupVol);
-            Destroy(gameObject);
-        }
-
     }
 
     

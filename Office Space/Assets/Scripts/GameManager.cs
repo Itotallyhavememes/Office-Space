@@ -14,10 +14,11 @@ public class GameManager : MonoBehaviour
     public enum gameMode { DONUTKING2, NIGHTSHIFT }
     public static gameMode currentMode;
     //Dictionary to hold player and NE_enemies along with live/dead stats
+
     [SerializeField] List<GameObject> bodyTracker;
     [SerializeField] List<string> deadTracker;
     [SerializeField] List<GameObject> spawnPoints;
-
+    public Dictionary<string, int> donutCountList;
     [SerializeField] gameMode modeSelection;
     [SerializeField] int timerTime;
     [SerializeField] GameObject menuActive;
@@ -30,6 +31,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] TMP_Text donutCountText;
     [SerializeField] GameObject timerUI;
     [SerializeField] TMP_Text timerText;
+    [SerializeField] TMP_Text donutCountUI;
     public TMP_Text grenadeStack;
 
 
@@ -51,6 +53,8 @@ public class GameManager : MonoBehaviour
     public int Thresh;
     GameObject previousScreen;
 
+    public string PlayerName;
+
     void Awake()
     {
         instance = this;
@@ -60,6 +64,9 @@ public class GameManager : MonoBehaviour
         currentMode = modeSelection;
 
         Thresh = 29;
+        bodyTracker = new List<GameObject>();
+        donutCountList = new Dictionary<string, int>();
+        //Transferring Donut UI to here
 
     }
 
@@ -70,9 +77,8 @@ public class GameManager : MonoBehaviour
             timerUI.SetActive(true);
             StartCoroutine(Timer());
         }
-
         playerHPStart = playerScript.HP;
-
+        
     }
 
     //Update is called once per frame
@@ -147,7 +153,10 @@ public class GameManager : MonoBehaviour
             }
         }
         if (canAdd)
+        {
             bodyTracker.Add(self);
+            donutCountList.Add(self.name, 0);
+        }
     }
     //Method for spawner. Also remove object from bodyTracker as new one will be instantiated upon spawn
     public void DeclareSelfDead(GameObject self, string type)
@@ -176,6 +185,23 @@ public class GameManager : MonoBehaviour
         }
         return null;
     }
+
+    public void UpdateDonutCount(GameObject donutCollector)
+    {
+        donutCountList[donutCollector.name] += 1;
+        //For Debugging purposes:
+        foreach(KeyValuePair<string, int> pair in donutCountList)
+        {
+            Debug.Log(pair.Key.ToString() + " HAS: " + pair.Value.ToString());
+        }
+        donutCountUI.text = donutCountList[player.name].ToString();
+        
+    }
+
+    //public string GetPlayerDC(GameObject target)
+    //{
+    //    return donutCountList[player.name].ToString();
+    //}
     ////method to set status to dead or alive for specific entity
     //public void SetEntityState(GameObject target, bool state)
     //{

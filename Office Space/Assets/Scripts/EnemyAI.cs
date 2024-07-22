@@ -70,7 +70,7 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
     bool isPatrol;
 
     //TIM CODE
-
+    public int enemyDonutCount;
     [SerializeField] int dodgeNumber;
     [SerializeField] int detCode;
     [SerializeField] GameObject targetOBJ;
@@ -85,7 +85,6 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
     float stoppingDistOrig;
     bool canTarget;
     bool isTargetDead;
-    bool amIDead;
 
 
     // Start is called before the first frame update
