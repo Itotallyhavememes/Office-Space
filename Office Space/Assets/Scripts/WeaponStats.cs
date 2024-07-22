@@ -14,15 +14,14 @@ public class WeaponStats : ScriptableObject
     public float reloadTime;
     public int startAmmo;
 
-    //public ParticleSystem hitEffect;
-    //public AudioClip shootSound;
-    //public float shootVol;
+    public ParticleSystem hitEffect;
+    public float shootVol;
 
     //Raycast Weapon
+    public float raycastDist;
     public float raycastRotationReload;
     public float raycastRotationRecoil;
 
     //Projectile Weapon
-    public GameObject projectileSpawnPoint;
     public GameObject projectileProjectile;
 }

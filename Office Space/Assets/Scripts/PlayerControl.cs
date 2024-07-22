@@ -31,29 +31,34 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
     Vector3 moveDir;
     Vector3 playerVel;
 
+    [Header("----- Weapons -----")]
+    [SerializeField] WeaponStats starterWeapon;
+    int selectedWeapon;
+    [SerializeField] List<WeaponStats> weaponList;
+    [SerializeField] GameObject weaponModel;
+    [SerializeField] float shootRate;
+    [SerializeField] int shootDamage;
+    [SerializeField] float reloadtime;
+
+    [SerializeField] float shootDist;
+    [SerializeField] float raycastRotationReload;
+    [SerializeField] float raycastRotationRecoil;
+
+    [Header("----- Shuriken -----")]
+    //Shuriken Variables
+    [SerializeField] GameObject shurikenSpawnPoint;
+    [SerializeField] GameObject shurikenProjectile;
+    //[SerializeField] GameObject shurikenHUD;
+    //[SerializeField] float shurikenRate;
+    //[SerializeField] float shurikenReloadTime;
+    //public int shurikenAmmo;
+    //int shurikenStartAmmo;
+
     [Header("----- Hand -----")]
 
     //Hand variables
-    [SerializeField] GameObject hand;
-    [SerializeField] int HandAmmoCount;
-    [SerializeField] int shootDamage;
-    [SerializeField] float shootRate;
-    [SerializeField] int shootDist;
-    [SerializeField] float handReloadTime;
-    [SerializeField] float handRotationReload;
-    [SerializeField] float handRotationRecoil;
-    int handCurrentAmmo;
-
-    [Header("----- Shuriken -----")]
-
-    //Shuriken Variables
-    [SerializeField] GameObject shurikenHUD;
-    [SerializeField] GameObject shurikenSpawnPoint;
-    [SerializeField] GameObject shurikenProjectile;
-    [SerializeField] float shurikenRate;
-    [SerializeField] float shurikenReloadTime;
-    public int shurikenAmmo;
-    int shurikenStartAmmo;
+    //[SerializeField] GameObject hand;
+    //[SerializeField] float handReloadTime;
 
     [Header("----- Sounds -----")]
 
@@ -89,8 +94,7 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
         origSpeed = speed;
         origHeight = controller.height;
         slideLockout = slideLockoutTime * 60;
-        handCurrentAmmo = HandAmmoCount;
-        shurikenStartAmmo = shurikenAmmo;
+        GetWeaponStats(starterWeapon);
         DefaultPublicBools();
         //Add self to gameManager's bodyTracker
         GameManager.instance.AddToTracker(this.gameObject);
@@ -104,7 +108,7 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
         {
             if (!isShooting)
             {
-                WeaponHandle();
+                WeaponSelect();
             }
 
             if (!isSliding)
@@ -157,28 +161,28 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
 
     }
 
-    void WeaponHandle()
-    {
-        if (Input.GetButtonDown("Swap"))
-        {
-            weaponSwap = !weaponSwap;
+    //void WeaponHandle()
+    //{
+    //    if (Input.GetButtonDown("Swap"))
+    //    {
+    //        weaponSwap = !weaponSwap;
 
-            switch (weaponSwap)
-            {
-                case true:
-                    Debug.Log("Hand");
-                    shurikenHUD.SetActive(false);
-                    hand.SetActive(true);
-                    break;
-                case false:
-                    Debug.Log("Shuriken");
-                    shurikenHUD.SetActive(true);
-                    hand.SetActive(false);
-                    break;
-            }
-        }
-        UpdateAmmoUI();
-    }
+    //        switch (weaponSwap)
+    //        {
+    //            case true:
+    //                Debug.Log("Hand");
+    //                shurikenHUD.SetActive(false);
+    //                hand.SetActive(true);
+    //                break;
+    //            case false:
+    //                Debug.Log("Shuriken");
+    //                shurikenHUD.SetActive(true);
+    //                hand.SetActive(false);
+    //                break;
+    //        }
+    //    }
+    //    UpdateAmmoUI();
+    //}
 
     void Slide()
     {
@@ -263,25 +267,28 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
     IEnumerator Reload()
     {
         isReloading = true;
-        if (weaponSwap && handCurrentAmmo < HandAmmoCount)
+
+        if (weaponList[selectedWeapon].currentAmmo < weaponList[selectedWeapon].startAmmo)
         {
-            hand.transform.Rotate(Vector3.back * handRotationReload);
-            aud.PlayOneShot(audHandReloadBegin, audHandReloadBeginVol);
+            if (weaponList[selectedWeapon].type == WeaponStats.WeaponType.raycast)
+            {
+                weaponModel.transform.Rotate(Vector3.left * raycastRotationReload);
+                aud.PlayOneShot(audHandReloadBegin, audHandReloadBeginVol);
 
-            yield return new WaitForSeconds(handReloadTime);
-            hand.transform.Rotate(Vector3.forward * handRotationReload);
-            aud.PlayOneShot(audHandReloadEnd, audHandReloadEndVol);
+                yield return new WaitForSeconds(reloadtime);
+                weaponModel.transform.Rotate(Vector3.right * raycastRotationReload);
+                aud.PlayOneShot(audHandReloadEnd, audHandReloadEndVol);
 
-            handCurrentAmmo = HandAmmoCount;
+            }
+            else if (weaponList[selectedWeapon].type == WeaponStats.WeaponType.projectile)
+            {
+                weaponModel.SetActive(false);
+                yield return new WaitForSeconds(reloadtime);
+                weaponModel.SetActive(true);
+
+            }
         }
-        else if (!weaponSwap && shurikenAmmo < shurikenStartAmmo)
-        {
-            shurikenHUD.SetActive(false);
-            yield return new WaitForSeconds(shurikenReloadTime);
-            shurikenHUD.SetActive(true);
-
-            shurikenAmmo = shurikenStartAmmo;
-        }
+        weaponList[selectedWeapon].currentAmmo = weaponList[selectedWeapon].startAmmo;
         isReloading = false;
         UpdateAmmoUI();
     }
@@ -290,40 +297,43 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
     {
         isShooting = true;
 
-        if (weaponSwap && handCurrentAmmo > 0)
+        if (weaponList[selectedWeapon].currentAmmo > 0)
         {
-            handCurrentAmmo--;
+            weaponList[selectedWeapon].currentAmmo--;
             UpdateAmmoUI();
-            aud.PlayOneShot(audHandFire, audHandFireVol);
 
-            RaycastHit hit;
-            if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, shootDist, ~ignoreMask))
+            if (weaponList[selectedWeapon].type == WeaponStats.WeaponType.raycast)
             {
-                Debug.Log(hit.collider.name);
+                aud.PlayOneShot(audHandFire, audHandFireVol);
 
-                IDamage dmg = hit.collider.GetComponent<IDamage>();
-
-                if (hit.transform != transform && dmg != null)
+                RaycastHit hit;
+                if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, shootDist, ~ignoreMask))
                 {
-                    dmg.takeDamage(shootDamage);
+                    Debug.Log(hit.collider.name);
+
+                    IDamage dmg = hit.collider.GetComponent<IDamage>();
+
+                    if (hit.transform != transform && dmg != null)
+                    {
+                        dmg.takeDamage(shootDamage);
+                    }
                 }
+
+                Debug.Log("Rotating arm");
+                weaponModel.transform.Rotate(Vector3.left * raycastRotationRecoil);
+                yield return new WaitForSeconds(shootRate);
+                weaponModel.transform.Rotate(Vector3.right * raycastRotationRecoil);
+
             }
-
-            hand.transform.Rotate(Vector3.back * handRotationRecoil);
-            yield return new WaitForSeconds(shootRate);
-            hand.transform.Rotate(Vector3.forward * handRotationRecoil);
-
+            else if (weaponList[selectedWeapon].type == WeaponStats.WeaponType.projectile) //Shuriken
+            {
+                weaponModel.SetActive(false);
+                Instantiate(shurikenProjectile, shurikenSpawnPoint.transform.position, shurikenSpawnPoint.transform.rotation);
+                yield return new WaitForSeconds(shootRate);
+                weaponModel.SetActive(true);
+            }
         }
-        else if (!weaponSwap && shurikenAmmo > 0) //Shuriken
-        {
-            shurikenAmmo--;
-            UpdateAmmoUI();
-            shurikenHUD.SetActive(false);
-            Instantiate(shurikenProjectile, shurikenSpawnPoint.transform.position, shurikenSpawnPoint.transform.rotation);
-            yield return new WaitForSeconds(shurikenRate);
-            shurikenHUD.SetActive(true);
-        }
-        else if (!isReloading && (handCurrentAmmo <= 0 || shurikenAmmo <= 0))
+        else if (!isReloading && (weaponList[selectedWeapon].currentAmmo <= 0))
         {
             StartCoroutine(Reload());
         }
@@ -395,10 +405,7 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
 
     public void UpdateAmmoUI()
     {
-        if (weaponSwap)
-            GameManager.instance.playerAmmoBar.fillAmount = (float)handCurrentAmmo / HandAmmoCount;
-        else if (!weaponSwap)
-            GameManager.instance.playerAmmoBar.fillAmount = (float)shurikenAmmo / shurikenStartAmmo;
+            GameManager.instance.playerAmmoBar.fillAmount = (float)weaponList[selectedWeapon].currentAmmo / weaponList[selectedWeapon].startAmmo;
 
     }
     //ITarget Specific Methods
@@ -407,7 +414,7 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
         return gameObject;
     }
 
-    public bool declareDeath() 
+    public bool declareDeath()
     {
         if (HP <= 0)
             return true;
@@ -444,15 +451,50 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
         isReloading = false;
     }
 
-    public int GetStartShurikenAmmo()
-    {
-        return shurikenStartAmmo;
-    }
+    //public int GetStartShurikenAmmo()
+    //{
+    //    return shurikenStartAmmo;
+    //}
 
     public int GetStartHP()
     {
         return HPOrig;
     }
+
+    public void GetWeaponStats(WeaponStats weapon)
+    {
+        weaponList.Add(weapon);
+        selectedWeapon = weaponList.Count - 1;
+
+        WeaponChange();
+
+    }
+
+    void WeaponSelect()
+    {
+        if (Input.GetAxis("Mouse ScrollWheel") > 0 && selectedWeapon < weaponList.Count - 1)
+        {
+            selectedWeapon++;
+            WeaponChange();
+        }
+        else if (Input.GetAxis("Mouse ScrollWheel") < 0 && selectedWeapon > 0)
+        {
+            selectedWeapon--;
+            WeaponChange();
+        }
+    }
+
+    void WeaponChange()
+    {
+
+        shootDamage = weaponList[selectedWeapon].shootDamage;
+        shootDist = weaponList[selectedWeapon].raycastDist;
+        shootRate = weaponList[selectedWeapon].shootRate;
+
+        weaponModel.GetComponent<MeshFilter>().sharedMesh = weaponList[selectedWeapon].weaponModel.GetComponent<MeshFilter>().sharedMesh;
+        weaponModel.GetComponent<MeshRenderer>().sharedMaterial = weaponList[selectedWeapon].weaponModel.GetComponent<MeshRenderer>().sharedMaterial;
+    }
+
 
 }
 
