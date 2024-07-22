@@ -6,12 +6,17 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 using System;
+using UnityEditor;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
     public enum gameMode { DONUTKING2, NIGHTSHIFT }
     public static gameMode currentMode;
+    //Dictionary to hold player and NE_enemies along with live/dead stats
+    [SerializeField] List<GameObject> bodyTracker;
+    [SerializeField] List<string> deadTracker;
+    [SerializeField] List<GameObject> spawnPoints;
 
     [SerializeField] gameMode modeSelection;
     [SerializeField] int timerTime;
@@ -121,6 +126,60 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+
+    //START: enemy&player Tracker Methods
+    //public method to have instantiated objects pass themselves
+    public void AddToTracker(GameObject self)
+    {
+        bool canAdd = true; ;
+        for (int i = 0; i < bodyTracker.Count; i++)
+        {
+            if (self.GetHashCode() == bodyTracker[i].GetHashCode())
+            {
+                canAdd = false;
+                break;
+            }
+        }
+        if (canAdd)
+            bodyTracker.Add(self);
+    }
+    //Method for spawner. Also remove object from bodyTracker as new one will be instantiated upon spawn
+    public void DeclareSelfDead(GameObject self, string type)
+    {
+        for (int i = 0; i < bodyTracker.Count; i++)
+        {
+            if(self.GetHashCode() == bodyTracker[i].GetHashCode())
+                bodyTracker.Remove(bodyTracker[i]);
+        }
+        deadTracker.Add(type);
+    }
+    //Method called in enemySpawner that returns the first entry in deadTracker
+    public string SpawnTheDead()
+    {
+        string returnable = deadTracker[0];
+        deadTracker.RemoveAt(0);
+        return returnable;
+    }
+    //method to search through tracker and return object
+    public GameObject ReturnEntity(GameObject target)
+    {
+        for (int i = 0; i < bodyTracker.Count; i++)
+        {
+            if (target.GetHashCode() == bodyTracker[i].GetHashCode())
+                return bodyTracker[i];
+        }
+        return null;
+    }
+    ////method to set status to dead or alive for specific entity
+    //public void SetEntityState(GameObject target, bool state)
+    //{
+    //    foreach(KeyValuePair<GameObject,bool> pair in bodyTracker)
+    //    {
+    //        if(pair.Key.Equals(target))
+    //            bodyTracker[pair.Key] = state;
+    //    }
+    //}
+    //END: enemy&player Tracker Methods
 
     public void StatePause()
     {

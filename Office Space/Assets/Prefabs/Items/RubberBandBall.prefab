@@ -50,9 +50,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   delay: 2
   explosionEffect: {fileID: 8849880530235429794, guid: fea057e85213925438cc96c1e2c5f3c1, type: 3}
-  blastRadius: 27
-  blastForce: 400
-  damageAmount: 1
+  blastRadius: 10
+  blastForce: 5
+  damageAmount: 13
 --- !u!33 &5566336552408166728
 MeshFilter:
   m_ObjectHideFlags: 0

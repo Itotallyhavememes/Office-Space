@@ -92,6 +92,8 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
         handCurrentAmmo = HandAmmoCount;
         shurikenStartAmmo = shurikenAmmo;
         DefaultPublicBools();
+        //Add self to gameManager's bodyTracker
+        GameManager.instance.AddToTracker(this.gameObject);
     }
 
     // Update is called once per frame

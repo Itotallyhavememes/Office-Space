@@ -45,7 +45,7 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
     float angleToTarget;
     //JOHN CODE
     bool isSprinting;
-    [Range(5,25)][SerializeField] int dodgeSpeed;
+    [Range(5, 25)][SerializeField] int dodgeSpeed;
     Vector3 enemyVel;
     Vector3 randPos;
     [Range(15, 100)][SerializeField] float range;
@@ -73,11 +73,11 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
     [SerializeField] int detCode;
     [SerializeField] GameObject targetOBJ;
     [SerializeField] List<GameObject> targets;
-    [Range(5,12)] [SerializeField] int jumpSpeed;
+    [Range(5, 12)][SerializeField] int jumpSpeed;
     bool isJumping;
     ITarget target;
-    [Range(10,20)] [SerializeField] int roamDist;
-    [Range(1,3)] [SerializeField] int roamTimer;
+    [Range(10, 20)][SerializeField] int roamDist;
+    [Range(1, 3)][SerializeField] int roamTimer;
     Vector3 startingPos;
     bool isRoaming;
     float stoppingDistOrig;
@@ -101,6 +101,9 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
         nextPosIndex = 0;
         //targetingOrig = gameObject.transform.position;
         //targeting.transform.position = targetingOrig;
+        //Add self to gameManager's bodyTracker
+        if(type != enemyType.security)
+            GameManager.instance.AddToTracker(this.gameObject);
     }
 
     // Update is called once per frame
@@ -111,18 +114,21 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
 
         if (targets.Count == 1)
         {
-            Debug.Log("Let's do a quick peek!");
             if (targets[0] == null && !targetOBJ)
             {
-                Debug.Log(gameObject.name.ToString() + " says: Time to Clean Up!");
                 targets.Remove(targets[0].gameObject);
-                if(targetInRange == true)
+                if (targetInRange == true)
                     targetInRange = false;
+            }
+            else
+            {
+                CleanUpList();
+                targetOBJ = PrioritizeTarget();
             }
         }
         if (targetInRange)
         {
-            if (targets.Count > 1)
+            if (targets.Count > 1 && targetOBJ == null)
             {
                 CleanUpList();
                 targetOBJ = PrioritizeTarget();
@@ -206,7 +212,6 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
     {
         if (type != enemyType.security)
         {
-            Debug.Log(gameObject.name.ToString() + " -> Time to ROAM");
             isRoaming = true;
             yield return new WaitForSeconds(roamTimer);
             agent.stoppingDistance = 0;
@@ -219,14 +224,13 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
             //The "1" is in refernce to layer mask "1"
             agent.SetDestination(hit.position);
             isRoaming = false;
-            Debug.Log(gameObject.name.ToString() + " -> Time to REST");
         }
     }
 
     //if potential target enters Sphere
     public void OnTriggerEnter(Collider other)
     {
-        
+
         target = other.GetComponent<ITarget>();
         if (target != null && other != this)
         {
@@ -234,10 +238,10 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
             targetInRange = true;
             TargetDIR = targetOBJ.transform.position - transform.position;
             //Player is detected via Raycast and enemy through Linecast
-            if (other.tag == "Player")
-                detCode = 1;
-            else
-                detCode = 2;
+            //if (other.tag == "Player")
+            //    detCode = 1;
+            //else
+            //    detCode = 2;
         }
         //System for holding multiple targets
         if (type != enemyType.security)
@@ -277,9 +281,10 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
     //If target exits Sphere
     public void OnTriggerExit(Collider other)
     {
-        if (targetOBJ == other.gameObject)
+        target = other.GetComponent<ITarget>();
+        if (target != null)
         {
-            RemoveFromList(targetOBJ);
+            RemoveFromList(other.gameObject);
             if (targets.Count == 0)
             {
                 targetOBJ = null;
@@ -288,7 +293,7 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
                 agent.stoppingDistance = 0;
                 TargetDIR = Vector3.zero;
             }
-            else if(targets.Count > 0)
+            else if (targets.Count > 0)
             {
                 targetOBJ = PrioritizeTarget();
             }
@@ -314,6 +319,7 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
             float currDist = Vector3.Distance(transform.position, targetOBJ.transform.position);
             float compareDist = 0.0f;
             GameObject currTarget = targetOBJ;
+            //Checks list while holding distance from currTarget
             for (int i = 0; i < targets.Count; ++i)
             {
                 //Compares targetOBJ position with other targets within targets List and focus on closest
@@ -325,13 +331,28 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
                     target = targets[i].gameObject.GetComponent<ITarget>();
                 }
             }
+            detCode = GetDetCode(currTarget);
             return currTarget;
         }
         else if (targets.Count == 1)
         {
+            detCode = GetDetCode(targets[0]);
             return targets[0].gameObject;
         }
+        //detCode = 0;
         return null;
+    }
+
+    int GetDetCode(GameObject target)
+    {
+        if (target != null)
+        {
+            if (target.CompareTag("Player"))
+                return 1;
+            else
+                return 2;
+        }
+        return 0;
     }
 
     public void RemoveFromList(GameObject targetObj)
@@ -341,7 +362,7 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
             if (targetObj.GetHashCode() == targets[i].GetHashCode())
             {
                 targets.Remove(targets[i]);
-                target = null;
+                //target = null;
                 break;
             }
         }
@@ -383,7 +404,6 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
 
             if (angleToTarget <= viewAngle && canSee)
             {
-                Debug.Log(gameObject.name.ToString() + " says: Time to FIGHT");
                 agent.stoppingDistance = stoppingDistOrig;
                 agent.SetDestination(targetOBJ.transform.position);
                 canTarget = true;
@@ -407,8 +427,11 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
             HP -= amount;
 
             StartCoroutine(flashDamage());
-            if(targetOBJ)
+            if (targetOBJ)
+            {
+                targetOBJ = PrioritizeTarget();
                 FaceTarget();
+            }
 
             //dodgeNumber determines how often this enemy dodges
             if (HP % dodgeNumber == 0)
@@ -420,6 +443,7 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
             {
                 //He's died, so decrement
                 --GameManager.instance.enemyCount;
+                GameManager.instance.DeclareSelfDead(this.gameObject, this.type.ToString());
                 Destroy(gameObject);
             }
         }
@@ -438,8 +462,8 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
         if (isJumping)
         {
             yield return null;
-            if(agent.baseOffset == -0.07)
-                isJumping= false;
+            if (agent.baseOffset == -0.07)
+                isJumping = false;
         }
     }
 
@@ -467,7 +491,7 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
         return this.gameObject;
     }
 
-    public bool declareDeath() 
+    public bool declareDeath()
     {
         return true;
     }
