@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class ItemPickup : MonoBehaviour
 {
-    [SerializeField] enum itemType { health, speedBoost, shuriken, rubberBand }
-    [SerializeField] itemType type;
+    [SerializeField] enum ItemType { health, speedBoost, shuriken, rubberBand, weapon }
+    [SerializeField] ItemType type;
     [SerializeField] float rotationSpeed;
     [SerializeField] int bobSpeed;
     [SerializeField] float bobHeight;
     [SerializeField] PowerUpEffect powerupEffect;
+    [SerializeField] WeaponStats weapon;
 
 
     Vector3 startPos;
@@ -43,7 +44,7 @@ public class ItemPickup : MonoBehaviour
         {
             switch (type)
             {
-                case itemType.health:
+                case ItemType.health:
                     {
                         if (GameManager.instance.playerScript.HP < GameManager.instance.playerScript.GetStartHP())
                         {
@@ -52,13 +53,13 @@ public class ItemPickup : MonoBehaviour
                         }
                         break;
                     }
-                case itemType.speedBoost:
+                case ItemType.speedBoost:
                     {
                         Destroy(gameObject);
                         powerupEffect.ApplyBuff();
                         break;
                     }
-                case itemType.shuriken:
+                case ItemType.shuriken:
                     {
                         if (GameManager.instance.playerScript.shurikenAmmo < GameManager.instance.playerScript.GetStartShurikenAmmo())
                         {
@@ -74,13 +75,22 @@ public class ItemPickup : MonoBehaviour
                         }
                         break;
                     }
-                case itemType.rubberBand:
+                case ItemType.rubberBand:
                     {
                         if (GameManager.instance.playerScript.GetComponent<ItemThrow>().rubberBallCount < GameManager.instance.playerScript.GetComponent<ItemThrow>().GetMaxBallCount())
                         {
                             GameManager.instance.playerScript.GetComponent<ItemThrow>().rubberBallCount++;
                             GameManager.instance.playerScript.GetComponent<ItemThrow>().updateGrenadeUI();
                             Destroy(gameObject);
+                        }
+
+                        break;
+                    }
+                case ItemType.weapon:
+                    {
+                        if (GameManager.instance.playerScript.GetComponent<ItemThrow>().rubberBallCount < GameManager.instance.playerScript.GetComponent<ItemThrow>().GetMaxBallCount())
+                        {
+                            
                         }
 
                         break;
