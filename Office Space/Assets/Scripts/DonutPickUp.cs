@@ -56,20 +56,11 @@ public class DonutPickUp : MonoBehaviour
     {
         if (other == other.GetComponentInChildren<CapsuleCollider>())
         {
-            Debug.Log(other.gameObject.name + " PREREGISTERED");
             GameObject compare = GameManager.instance.ReturnEntity(other.gameObject);
-            Debug.Log(compare.gameObject.name + " REGISTERED");
             if (compare != null /*&& compare.transform.position == transform.position*/)
             {
-                Debug.Log("ERR CHECK CODE: 1");
-                //if (compare.GetComponent<CapsuleCollider>())
-                //{
-                Debug.Log(other.gameObject.name.ToString() + " picked up: DONUT");
                 GameManager.instance.UpdateDonutCount(other.gameObject);
-                //OnCollected?.Invoke();
-                //GameManager.instance.player.GetComponent<AudioSource>().PlayOneShot(pickupSFX, audPickupVol);
                 Destroy(gameObject);
-                //}
             }
         }
     }

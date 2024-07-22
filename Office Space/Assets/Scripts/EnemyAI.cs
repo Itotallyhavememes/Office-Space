@@ -70,7 +70,7 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
     bool isPatrol;
 
     //TIM CODE
-    public int enemyDonutCount;
+    //public int enemyDonutCount;
     [SerializeField] int dodgeNumber;
     [SerializeField] int detCode;
     [SerializeField] GameObject targetOBJ;
