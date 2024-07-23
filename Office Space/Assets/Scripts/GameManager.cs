@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] int timerTime;
     [SerializeField] GameObject menuActive;
     [SerializeField] GameObject menuScore;
+    [SerializeField] GameObject scoreDisplay;
     [SerializeField] GameObject menuPause;
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuLose;
@@ -39,6 +40,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] TMP_Text scoreBoardPlacementsText;
     [SerializeField] TMP_Text scoreBoardNamesText;
     [SerializeField] TMP_Text scoreBoardScoreText;
+    [SerializeField] TMP_Text activeScoreNamesText;
+    [SerializeField] TMP_Text activeScoreText;
 
     // JOHN CODE FOR CHECKPOINT
     public GameObject playerSpawn;
@@ -95,7 +98,7 @@ public class GameManager : MonoBehaviour
             StartCoroutine(Timer());
         }
         playerHPStart = playerScript.HP;
-        
+
     }
 
     //Update is called once per frame
@@ -114,12 +117,17 @@ public class GameManager : MonoBehaviour
             {
                 StateUnpause();
             }
-        }        
+        }
+
+        if (currentMode == gameMode.DONUTKING2 && !isPaused)
+        {
+            DisplayInfoScreen();
+        }
     }
 
     IEnumerator EndGame()
     {
-        
+
         yield return null;
     }
 
@@ -213,14 +221,14 @@ public class GameManager : MonoBehaviour
     public void UpdateDonutCount(GameObject donutCollector)
     {
         donutCountList[donutCollector.name] += 1;
-        
+
         //For Debugging purposes:
-        foreach(KeyValuePair<string, int> pair in donutCountList)
+        foreach (KeyValuePair<string, int> pair in donutCountList)
         {
             Debug.Log(pair.Key.ToString() + " HAS: " + pair.Value.ToString());
         }
         donutCountText.text = donutCountList[player.name].ToString();
-        
+
     }
 
     public void DonutDeclarationDay(GameObject donutOBJ)
@@ -263,7 +271,7 @@ public class GameManager : MonoBehaviour
     }
 
 
-    public void UpdateGameGoal(int amount)
+    public void UpdateGameGoal(int amount) //Donut king 1 goal
     {
         playerDonutCount += amount;
         if (playerDonutCount >= DonutPickUp.totalDonuts)
@@ -275,22 +283,52 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void DonutKingGoal()
+    public void DonutKingGoal() //Donut King 2 Goal
     {
         if (gameEnd)
         {
+            scoreDisplay.SetActive(false);
             StatePause();
             menuActive = menuScore;
             menuActive.SetActive(true);
-            scoreBoardNamesText.text = string.Empty;
-            scoreBoardScoreText.text = string.Empty;
-            var scoreBoard = donutCountList.OrderByDescending(pair => pair.Value);
-            foreach (var score in scoreBoard)
-            {
-                scoreBoardNamesText.text += score.Key + '\n';
-                scoreBoardScoreText.text += score.Value.ToString() + '\n';
-            }
+            TallyScores();
+        }
+    }
 
+    void TallyScores()
+    {
+        scoreBoardNamesText.text = string.Empty;
+        scoreBoardScoreText.text = string.Empty;
+        var scoreBoard = donutCountList.OrderByDescending(pair => pair.Value);
+        foreach (var score in scoreBoard)
+        {
+            scoreBoardNamesText.text += score.Key + '\n';
+            scoreBoardScoreText.text += score.Value.ToString() + '\n';
+        }
+    }
+
+    public void TallyActiveScores()
+    {
+        activeScoreNamesText.text = string.Empty;
+        activeScoreText.text = string.Empty;
+        var scoreBoard = donutCountList.OrderByDescending(pair => pair.Value);
+        foreach (var score in scoreBoard)
+        {
+            activeScoreNamesText.text += score.Key + '\n';
+            activeScoreText.text += score.Value.ToString() + '\n';
+        }
+    }
+
+    public void DisplayInfoScreen()
+    {
+        if (Input.GetButtonDown("Info"))
+        {
+            TallyActiveScores();
+            scoreDisplay.SetActive(true);
+        }
+        else if (Input.GetButtonUp("Info"))
+        {
+            scoreDisplay.SetActive(false);
         }
     }
 

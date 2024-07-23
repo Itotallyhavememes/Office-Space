@@ -65,6 +65,7 @@ public class DonutPickUp : MonoBehaviour
                 if (gameObject == GameManager.instance.PriorityPoint)
                     GameManager.instance.PriorityPoint = null;
                 Destroy(gameObject);
+                GameManager.instance.TallyActiveScores();
             }
         }
     }
