@@ -100,7 +100,6 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
         GameManager.instance.AddToTracker(this.gameObject);
         // Call spawnPlayer
         spawnPlayer();
-        //
     }
 
 
