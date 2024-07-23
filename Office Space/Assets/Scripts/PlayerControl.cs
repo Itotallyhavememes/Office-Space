@@ -69,6 +69,10 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
     [Range(0, 1)][SerializeField] float audHandReloadBeginVol;
     [SerializeField] AudioClip audHandReloadEnd;
     [Range(0, 1)][SerializeField] float audHandReloadEndVol;
+    [SerializeField] AudioClip[] audStep;
+    [Range(0, 1)][SerializeField] float audStepVol;
+    [SerializeField] AudioClip[] audJump;
+    [Range(0, 1)][SerializeField] float audJumpVol;
 
     //Damage Audio
     [SerializeField] AudioClip[] audDamage;
@@ -83,6 +87,7 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
     bool isCrouching;
     bool isSprinting;
     bool isSliding;
+    bool isPlayingStep;
 
     Coroutine speedCoroutine;
 
@@ -154,6 +159,7 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
         {
             jumpCount++;
             playerVel.y = jumpSpeed;
+            aud.PlayOneShot(audJump[Random.Range(0, audJump.Length)], audJumpVol);
         }
 
         controller.Move(playerVel * Time.deltaTime);
@@ -173,6 +179,23 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
 
         }
 
+        if (controller.isGrounded && moveDir.magnitude > 0.3f && !isPlayingStep)
+            StartCoroutine(PlayStep());
+
+    }
+
+    IEnumerator PlayStep()
+    {
+        isPlayingStep = true;
+
+        aud.PlayOneShot(audStep[Random.Range(0, audStep.Length)], audStepVol);
+
+        if (!isSprinting)
+            yield return new WaitForSeconds(0.5f);
+        else if (isSprinting)
+            yield return new WaitForSeconds(0.3f);
+
+        isPlayingStep = false;
     }
 
     //void WeaponHandle()
