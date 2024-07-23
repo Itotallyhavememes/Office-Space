@@ -33,6 +33,7 @@ public class DonutPickUp : MonoBehaviour
     void Start()
     {
         startPos = transform.position;
+        GameManager.instance.DonutDeclarationDay(this.gameObject);
     }
 
     // Update is called once per frame
@@ -60,6 +61,9 @@ public class DonutPickUp : MonoBehaviour
             if (compare != null /*&& compare.transform.position == transform.position*/)
             {
                 GameManager.instance.UpdateDonutCount(other.gameObject);
+                //Keeps from null reference when donut is picked up
+                if (gameObject == GameManager.instance.PriorityPoint)
+                    GameManager.instance.PriorityPoint = null;
                 Destroy(gameObject);
             }
         }

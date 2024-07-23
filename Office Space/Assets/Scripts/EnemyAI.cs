@@ -85,6 +85,8 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
     float stoppingDistOrig;
     bool canTarget;
     bool isTargetDead;
+    //bool hasPriority;
+ 
 
 
     // Start is called before the first frame update
@@ -100,9 +102,6 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
         stoppingDistOrig = agent.stoppingDistance;
         StartPoint = transform.position;
         nextPosIndex = 0;
-        //targetingOrig = gameObject.transform.position;
-        //targeting.transform.position = targetingOrig;
-        //Add self to gameManager's bodyTracker
         if(type != enemyType.security)
             GameManager.instance.AddToTracker(this.gameObject);
     }
@@ -147,8 +146,29 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
             {
                 if (agent.remainingDistance < 0.05f)
                 {
-                    if (type != enemyType.security && !isRoaming)
-                        StartCoroutine(Roam());
+                    if (type != enemyType.security)
+                    {
+                        if (!isRoaming)
+                        {
+                            if (GameManager.instance.PriorityPoint == null)
+                            {
+                                StartCoroutine(Roam());
+                                //StopCoroutine(GoToPOI());
+                            }
+                            else
+                            {
+                                StartCoroutine(GoToPOI());
+                                //StopCoroutine(Roam());
+                            }
+                        }
+                        //if (!hasPriority && GameManager.instance.PriorityPoint != null)
+                        //    StartCoroutine(GoToPOI());
+                        //if (!isRoaming && GameManager.instance.PriorityPoint == null)
+                        //    StartCoroutine(Roam());
+
+                        //if (!isRoaming)
+                        //    StartCoroutine(Roam());
+                    }
                     else if (type == enemyType.security && !isPatrol)
                         StartCoroutine(Patrol());
                 }
@@ -159,7 +179,25 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
             if (type != enemyType.security)
             {
                 if (!isRoaming)
-                    StartCoroutine(Roam());
+                {
+                    if (GameManager.instance.PriorityPoint == null)
+                    {
+                        StartCoroutine(Roam());
+                        //StopCoroutine(GoToPOI());
+                    }
+                    else
+                    {
+                        StartCoroutine(GoToPOI());
+                        //StopCoroutine(Roam());
+                    }
+                }
+                //if (!hasPriority && GameManager.instance.PriorityPoint != null)
+                //    StartCoroutine(GoToPOI());
+                //if (!isRoaming && GameManager.instance.PriorityPoint == null)
+                //    StartCoroutine(Roam());
+
+                //if(!isRoaming)
+                //    StartCoroutine (Roam());
             }
             else
             {
@@ -229,6 +267,16 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
         }
     }
 
+    IEnumerator GoToPOI()
+    {
+        Debug.Log(gameObject.name.ToString() + "says: Heading For - " + GameManager.instance.PriorityPoint.name.ToString());
+        //hasPriority = true;
+        yield return new WaitForSeconds(0.1f);
+        agent.stoppingDistance = 0;
+        agent.SetDestination(GameManager.instance.PriorityPoint.position);
+        //hasPriority = false;
+    }
+
     //if potential target enters Sphere
     public void OnTriggerEnter(Collider other)
     {
@@ -239,11 +287,6 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
             targetOBJ = other.gameObject;
             targetInRange = true;
             TargetDIR = targetOBJ.transform.position - transform.position;
-            //Player is detected via Raycast and enemy through Linecast
-            //if (other.tag == "Player")
-            //    detCode = 1;
-            //else
-            //    detCode = 2;
         }
         //System for holding multiple targets
         if (type != enemyType.security)

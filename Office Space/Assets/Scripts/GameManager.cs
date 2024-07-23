@@ -45,7 +45,7 @@ public class GameManager : MonoBehaviour
     public GameObject checkPointPos;
     //
     public TMP_Text grenadeStack;
-
+    public Transform PriorityPoint;
 
     public Image playerHPBar;
     public Image playerAmmoBar;
@@ -181,11 +181,11 @@ public class GameManager : MonoBehaviour
     //Method for spawner. Also remove object from bodyTracker as new one will be instantiated upon spawn
     public void DeclareSelfDead(GameObject self, string type)
     {
-        for (int i = 0; i < bodyTracker.Count; i++)
-        {
-            if(self.GetHashCode() == bodyTracker[i].GetHashCode())
-                bodyTracker.Remove(bodyTracker[i]);
-        }
+        //for (int i = 0; i < bodyTracker.Count; i++)
+        //{
+        //    if(self.GetHashCode() == bodyTracker[i].GetHashCode())
+        //        bodyTracker.Remove(bodyTracker[i]);
+        //}
         deadTracker.Add(type);
     }
     //Method called in enemySpawner that returns the first entry in deadTracker
@@ -209,13 +209,20 @@ public class GameManager : MonoBehaviour
     public void UpdateDonutCount(GameObject donutCollector)
     {
         donutCountList[donutCollector.name] += 1;
+        
         //For Debugging purposes:
         foreach(KeyValuePair<string, int> pair in donutCountList)
         {
             Debug.Log(pair.Key.ToString() + " HAS: " + pair.Value.ToString());
         }
-        donutCountUI.text = donutCountList[player.name].ToString();
+        donutCountText.text = donutCountList[player.name].ToString();
         
+    }
+
+    public void DonutDeclarationDay(GameObject donutOBJ)
+    {
+        if (PriorityPoint == null)
+            PriorityPoint = donutOBJ.transform;
     }
 
     //public string GetPlayerDC(GameObject target)
