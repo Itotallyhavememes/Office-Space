@@ -16,10 +16,10 @@ MonoBehaviour:
   weaponModel: {fileID: 919132149155446097, guid: 332e48c2cdfb18e4fb7a2cb11594a42b, type: 3}
   shootRate: 0.3
   shootDamage: 2
-  currentAmmo: 3
+  currentAmmo: 10
   reloadTime: 1.5
   startAmmo: 12
-  hitEffect: {fileID: 0}
+  hitEffect: {fileID: 2433282508523890284, guid: 3ef3ae421f71c5c4e97fe12dc2fc6312, type: 3}
   shootVol: 0.5
   raycastDist: 30
   raycastRotationReload: 40
