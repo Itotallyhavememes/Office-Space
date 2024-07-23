@@ -11,4 +11,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Main_Scene.unity
     guid: 58e742702ba7c20498ef47703dd1ec7e
+  - enabled: 1
+    path: Assets/Scenes/Corporate Espionage.unity
+    guid: a7c80dfa509e79245a092137583447de
+  - enabled: 1
+    path: Assets/Scenes/Donut King 2.0.unity
+    guid: 33962dc37a0a8d84aac7ead2537f311e
   m_configObjects: {}

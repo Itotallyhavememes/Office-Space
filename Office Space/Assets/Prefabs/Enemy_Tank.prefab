@@ -569,20 +569,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd88741f0d8af4d4cb3837fc4ba68e7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 0
   agent: {fileID: 2505537457165491214}
   model: {fileID: 8328059419578224073}
+  anim: {fileID: 0}
+  enemRig: {fileID: 0}
   dmgColor: {r: 0, g: 0, b: 0, a: 0}
   shootPos: {fileID: 5278584978234614558}
   HP: 14
-  faceTargetSpeed: 20
+  faceTargetSpeed: 50
   viewAngle: 90
   bullet: {fileID: 6562726978010489722, guid: be53c72d1bd770d4faa4be6708977d31, type: 3}
+  targeting: {fileID: 0}
   shootRate: 0.3
-  DamageSound1: {fileID: 2784327381852570608}
-  DamageSound2: {fileID: 3667184716374853802}
-  DamageSound3: {fileID: 5801134850327360586}
-  DamageSound4: {fileID: 1025420325817059759}
-  DamageSound5: {fileID: 2863903926431782187}
+  animTransitSpeed: 1
+  ikActive: 0
+  aud: {fileID: 0}
+  audDamage: []
+  audDamageVol: 0
   dodgeSpeed: 5
   range: 90
   minRange: 50
@@ -590,7 +594,16 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   patrolRate: 0
+  currentPoint: {fileID: 0}
+  romTimer: 0
+  Positions: []
+  dodgeNumber: 0
+  detCode: 0
   targetOBJ: {fileID: 0}
+  targets: []
+  jumpSpeed: 0
+  roamDist: 0
+  roamTimer: 0
 --- !u!195 &2505537457165491214
 NavMeshAgent:
   m_ObjectHideFlags: 0

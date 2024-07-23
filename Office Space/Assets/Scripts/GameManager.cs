@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuLose;
     [SerializeField] GameObject menuTitle;
+    [SerializeField] GameObject menuGameModes;
     [SerializeField] GameObject menuSettings;
     [SerializeField] GameObject menuControls;
     [SerializeField] TMP_Text donutCountText;
@@ -270,11 +271,19 @@ public class GameManager : MonoBehaviour
         ActivateMenu(menuActive);
     }
 
+    public void OpenGameModes()
+    {
+        previousScreen = menuActive;
+        menuActive = menuGameModes;
+        ActivateMenu(menuActive);
+    }
+
     public void ReturnFromSettings()
     {
         menuActive.SetActive(false);
         menuActive = previousScreen;
     }
+
 
     public void SetVolume(float volume)
     {

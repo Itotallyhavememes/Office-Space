@@ -14,10 +14,13 @@ public class ButtonFunctions : MonoBehaviour
         GameManager.instance.StateUnpause();
     }
 
-    public void startButton()
+    public void startDoughnutKing()
     {
-        SceneManager.LoadScene("Main_Scene");
-        GameManager.instance.StateUnpause();
+        SceneManager.LoadScene("Donut King 2.0");
+    }
+    public void startNightShift()
+    {
+        SceneManager.LoadScene("Corporate Espionage");
     }
 
     public void restart()
@@ -26,7 +29,11 @@ public class ButtonFunctions : MonoBehaviour
         DonutPickUp.totalDonuts = 0;
         GameManager.instance.StateUnpause();
     }
-
+  
+    public void gameModes()
+    {
+        GameManager.instance.OpenGameModes();
+    }
     public void settings()
     {
         GameManager.instance.OpenSettings();
