@@ -49,6 +49,11 @@ public class ButtonFunctions : MonoBehaviour
         GameManager.instance.ReturnFromSettings();
     }
 
+    public void returnToTittle()
+    {
+        SceneManager.LoadScene("Title");
+    }
+
     public void quit()
     {
 #if UNITY_EDITOR

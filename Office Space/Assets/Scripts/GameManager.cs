@@ -101,6 +101,10 @@ public class GameManager : MonoBehaviour
             StartCoroutine(Timer());
         }
         playerHPStart = playerScript.HP;
+        if(SceneManager.GetSceneByName("Title") == SceneManager.GetActiveScene())
+        {
+            StateUnpause();
+        }
 
     }
 
