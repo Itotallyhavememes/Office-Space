@@ -489,7 +489,11 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
                 //He's died, so decrement
                 --GameManager.instance.enemyCount;
                 GameManager.instance.DeclareSelfDead(this.gameObject, this.type.ToString());
-                Destroy(gameObject);
+                //Destroy(gameObject);
+                
+                gameObject.SetActive(false);
+                if (gameObject.activeSelf == false)
+                    Debug.Log(gameObject.name.ToString() + " : DEAD");
             }
         }
     }

@@ -191,9 +191,13 @@ public class GameManager : MonoBehaviour
     //Method called in enemySpawner that returns the first entry in deadTracker
     public string SpawnTheDead()
     {
+        //if (deadTracker.Count > 0)
+        //{
         string returnable = deadTracker[0];
         deadTracker.RemoveAt(0);
         return returnable;
+        //}
+
     }
     //method to search through tracker and return object
     public GameObject ReturnEntity(GameObject target)
