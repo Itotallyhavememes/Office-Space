@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class SecurityCameraController : MonoBehaviour
 {
+    [SerializeField] AudioSource aud;
     [SerializeField] float maxTime;
+    [SerializeField] AudioClip detected;
 
     float totalTime;
     bool playerSpotted = false;
@@ -15,6 +17,7 @@ public class SecurityCameraController : MonoBehaviour
     {
         if (playerSpotted)
         {
+
             totalTime += Time.deltaTime;
             if(totalTime > maxTime)
             {
@@ -32,6 +35,7 @@ public class SecurityCameraController : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             playerSpotted = true;
+            aud.PlayOneShot(detected);
         }
     }
 

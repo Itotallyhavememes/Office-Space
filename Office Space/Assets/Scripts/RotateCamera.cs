@@ -4,15 +4,38 @@ using UnityEngine;
 
 public class RotateCamera : MonoBehaviour
 {
-    // Start is called before the first frame update
+    [SerializeField] float farLeft;
+    [SerializeField] float farRight;
+    [SerializeField] float turnSpeed;
+
     void Start()
     {
-        
+        StartCoroutine(CameraRotation());
     }
 
-    // Update is called once per frame
-    void Update()
+    IEnumerator CameraRotation()
     {
-        
+        while (true)
+        {
+            yield return RotateTo(Quaternion.Euler(0, farLeft, 0));
+            yield return new WaitForSeconds(2f);
+            yield return RotateTo(Quaternion.Euler(0, farRight, 0));
+            yield return new WaitForSeconds(2f);
+        }
+    }
+
+    IEnumerator RotateTo(Quaternion rotation)
+    {
+        Quaternion start = transform.rotation;
+        float time = 0f;
+        float duration = Quaternion.Angle(start, rotation) / turnSpeed;
+
+        while (time < duration)
+        {
+            transform.rotation = Quaternion.Slerp(start, rotation, (time / duration));
+            time += Time.deltaTime;
+            yield return null;
+        }
+        transform.rotation = rotation;
     }
 }
