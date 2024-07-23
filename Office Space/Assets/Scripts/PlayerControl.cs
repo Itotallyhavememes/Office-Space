@@ -34,7 +34,7 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
     [Header("----- Weapons -----")]
     [SerializeField] WeaponStats starterWeapon;
     int selectedWeapon;
-    [SerializeField] List<WeaponStats> weaponList;
+    [SerializeField] public List<WeaponStats> weaponList;
     [SerializeField] GameObject weaponModel;
     [SerializeField] float shootRate;
     [SerializeField] int shootDamage;
@@ -221,6 +221,11 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
     //    UpdateAmmoUI();
     //}
 
+
+    public int GetSelectedWeaponIndex()
+    {
+        return selectedWeapon;
+    }
     void Slide()
     {
         isCrouching = true;
@@ -353,6 +358,10 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
                     if (hit.transform != transform && dmg != null)
                     {
                         dmg.takeDamage(shootDamage);
+                    }
+                    else
+                    {
+                        Instantiate(weaponList[selectedWeapon].hitEffect, hit.point, Quaternion.identity);
                     }
                 }
 

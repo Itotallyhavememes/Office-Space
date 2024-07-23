@@ -49,7 +49,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   delay: 2
-  explosionEffect: {fileID: 8849880530235429794, guid: fea057e85213925438cc96c1e2c5f3c1, type: 3}
+  explosionEffect: {fileID: 4593184484909914552, guid: 2e1e9506f5904a64b81744324fb7cd50, type: 3}
   blastRadius: 10
   blastForce: 5
   damageAmount: 13
