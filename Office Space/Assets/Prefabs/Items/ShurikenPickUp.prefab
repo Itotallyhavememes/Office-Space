@@ -47,11 +47,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 015be6de7d325ec45ab61829e270f4d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 2
+  type: 3
   rotationSpeed: 100
   bobSpeed: 3
   bobHeight: 0.3
   powerupEffect: {fileID: 0}
+  weapon: {fileID: 11400000, guid: 21641470c5893094896493a45be6e766, type: 2}
 --- !u!33 &9179441603636853133
 MeshFilter:
   m_ObjectHideFlags: 0

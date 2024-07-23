@@ -2352,6 +2352,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MiniMapRender
       objectReference: {fileID: 0}
+    - target: {fileID: 8077523583769034976, guid: f0ab30acf69428142ac55986442a519f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8081827072719529800, guid: f0ab30acf69428142ac55986442a519f, type: 3}
       propertyPath: m_text
       value: Display Score
