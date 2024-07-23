@@ -7,6 +7,7 @@ using TMPro;
 using UnityEngine.SceneManagement;
 using System;
 using UnityEditor;
+using System.Linq;
 
 public class GameManager : MonoBehaviour
 {
@@ -22,6 +23,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] gameMode modeSelection;
     [SerializeField] int timerTime;
     [SerializeField] GameObject menuActive;
+    [SerializeField] GameObject menuScore;
     [SerializeField] GameObject menuPause;
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuLose;
@@ -34,6 +36,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] TMP_Text timerText;
     [SerializeField] TMP_Text donutCountUI;
 
+    [SerializeField] TMP_Text scoreBoardPlacementsText;
+    [SerializeField] TMP_Text scoreBoardNamesText;
+    [SerializeField] TMP_Text scoreBoardScoreText;
 
     // JOHN CODE FOR CHECKPOINT
     public GameObject playerSpawn;
@@ -51,6 +56,7 @@ public class GameManager : MonoBehaviour
     public AudioMixer audioMixer;
 
     public bool isPaused;
+    bool gameEnd;
     public int playerHPStart;
     public int playerAmmo;
 
@@ -108,7 +114,7 @@ public class GameManager : MonoBehaviour
             {
                 StateUnpause();
             }
-        }
+        }        
     }
 
     IEnumerator EndGame()
@@ -145,9 +151,12 @@ public class GameManager : MonoBehaviour
 
                 yield return new WaitForSeconds(1);
 
-                timeElapsed--;
+                --timeElapsed;
             }
         }
+        timerText.text = "00:00";
+        gameEnd = true;
+        DonutKingGoal();
     }
 
     //START: enemy&player Tracker Methods
@@ -252,6 +261,25 @@ public class GameManager : MonoBehaviour
             StatePause();
             menuActive = menuWin;
             menuActive.SetActive(isPaused);
+        }
+    }
+
+    public void DonutKingGoal()
+    {
+        if (gameEnd)
+        {
+            StatePause();
+            menuActive = menuScore;
+            menuActive.SetActive(true);
+            scoreBoardNamesText.text = string.Empty;
+            scoreBoardScoreText.text = string.Empty;
+            var scoreBoard = donutCountList.OrderByDescending(pair => pair.Value);
+            foreach (var score in scoreBoard)
+            {
+                scoreBoardNamesText.text += score.Key + '\n';
+                scoreBoardScoreText.text += score.Value.ToString() + '\n';
+            }
+
         }
     }
 
