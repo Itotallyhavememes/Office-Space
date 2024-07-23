@@ -312,46 +312,46 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
     {
         isShooting = true;
 
-        //if (weaponList[selectedWeapon].currentAmmo > 0)
-        //{
-        //    weaponList[selectedWeapon].currentAmmo--;
-        //    UpdateAmmoUI();
+        if (weaponList[selectedWeapon].currentAmmo > 0)
+        {
+            weaponList[selectedWeapon].currentAmmo--;
+            UpdateAmmoUI();
 
-        //    if (weaponList[selectedWeapon].type == WeaponStats.WeaponType.raycast)
-        //    {
-        //        aud.PlayOneShot(audHandFire, audHandFireVol);
+            if (weaponList[selectedWeapon].type == WeaponStats.WeaponType.raycast)
+            {
+                aud.PlayOneShot(audHandFire, audHandFireVol);
 
-        //        RaycastHit hit;
-        //        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, shootDist, ~ignoreMask))
-        //        {
-        //            Debug.Log(hit.collider.name);
+                RaycastHit hit;
+                if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, shootDist, ~ignoreMask))
+                {
+                    Debug.Log(hit.collider.name);
 
-        //            IDamage dmg = hit.collider.GetComponent<IDamage>();
+                    IDamage dmg = hit.collider.GetComponent<IDamage>();
 
-        //            if (hit.transform != transform && dmg != null)
-        //            {
-        //                dmg.takeDamage(shootDamage);
-        //            }
-        //        }
+                    if (hit.transform != transform && dmg != null)
+                    {
+                        dmg.takeDamage(shootDamage);
+                    }
+                }
 
-        //        Debug.Log("Rotating arm");
-        //        weaponModel.transform.Rotate(Vector3.left * raycastRotationRecoil);
+                Debug.Log("Rotating arm");
+                weaponModel.transform.Rotate(Vector3.left * raycastRotationRecoil);
                 yield return new WaitForSeconds(shootRate);
-        //        weaponModel.transform.Rotate(Vector3.right * raycastRotationRecoil);
+                weaponModel.transform.Rotate(Vector3.right * raycastRotationRecoil);
 
-        //    }
-        //    else if (weaponList[selectedWeapon].type == WeaponStats.WeaponType.projectile) //Shuriken
-        //    {
-        //        weaponModel.SetActive(false);
-        //        Instantiate(shurikenProjectile, shurikenSpawnPoint.transform.position, shurikenSpawnPoint.transform.rotation);
-        //        yield return new WaitForSeconds(shootRate);
-        //        weaponModel.SetActive(true);
-        //    }
-        //}
-        //else if (!isReloading && (weaponList[selectedWeapon].currentAmmo <= 0))
-        //{
-        //    StartCoroutine(Reload());
-        //}
+            }
+            else if (weaponList[selectedWeapon].type == WeaponStats.WeaponType.projectile) //Shuriken
+            {
+                weaponModel.SetActive(false);
+                Instantiate(shurikenProjectile, shurikenSpawnPoint.transform.position, shurikenSpawnPoint.transform.rotation);
+                yield return new WaitForSeconds(shootRate);
+                weaponModel.SetActive(true);
+            }
+        }
+        else if (!isReloading && (weaponList[selectedWeapon].currentAmmo <= 0))
+        {
+            StartCoroutine(Reload());
+        }
 
         isShooting = false;
 
@@ -420,7 +420,7 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
 
     public void UpdateAmmoUI()
     {
-            GameManager.instance.playerAmmoBar.fillAmount = (float)weaponList[selectedWeapon].currentAmmo / weaponList[selectedWeapon].startAmmo;
+        GameManager.instance.playerAmmoBar.fillAmount = (float)weaponList[selectedWeapon].currentAmmo / weaponList[selectedWeapon].startAmmo;
 
     }
     //ITarget Specific Methods
@@ -478,8 +478,22 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
 
     public void GetWeaponStats(WeaponStats weapon)
     {
+        int index = -1;
+        foreach (var wep in weaponList)
+        {
+            index++;
+            if (weapon.weaponModel == wep.weaponModel)
+            {
+                weaponList[selectedWeapon].currentAmmo = weaponList[selectedWeapon].startAmmo;
+                selectedWeapon = index;
+                WeaponChange();
+                return;
+            }
+        }
+
         weaponList.Add(weapon);
         selectedWeapon = weaponList.Count - 1;
+        weaponList[selectedWeapon].currentAmmo = weaponList[selectedWeapon].startAmmo;
 
         WeaponChange();
 
@@ -487,27 +501,50 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
 
     void WeaponSelect()
     {
-        if (Input.GetAxis("Mouse ScrollWheel") > 0 && selectedWeapon < weaponList.Count - 1)
+        if (weaponList.Count <= 1)
+            return;
+
+        if (Input.GetAxis("Mouse ScrollWheel") > 0)
         {
             selectedWeapon++;
+
+            if (selectedWeapon > weaponList.Count - 1)
+                selectedWeapon = 0;
+
+
             WeaponChange();
         }
-        else if (Input.GetAxis("Mouse ScrollWheel") < 0 && selectedWeapon > 0)
+        else if (Input.GetAxis("Mouse ScrollWheel") < 0)
         {
             selectedWeapon--;
+
+            if (selectedWeapon < 0)
+                selectedWeapon = weaponList.Count - 1;
+
             WeaponChange();
         }
+
+        UpdateAmmoUI();
     }
 
     void WeaponChange()
     {
 
-        //shootDamage = weaponList[selectedWeapon].shootDamage;
-        //shootDist = weaponList[selectedWeapon].raycastDist;
-        //shootRate = weaponList[selectedWeapon].shootRate;
+        shootDamage = weaponList[selectedWeapon].shootDamage;
+        shootDist = weaponList[selectedWeapon].raycastDist;
+        shootRate = weaponList[selectedWeapon].shootRate;
+        reloadtime = weaponList[selectedWeapon].reloadTime;
 
-        //weaponModel.GetComponent<MeshFilter>().sharedMesh = weaponList[selectedWeapon].weaponModel.GetComponent<MeshFilter>().sharedMesh;
-        //weaponModel.GetComponent<MeshRenderer>().sharedMaterial = weaponList[selectedWeapon].weaponModel.GetComponent<MeshRenderer>().sharedMaterial;
+
+        if (weaponList[selectedWeapon].type == WeaponStats.WeaponType.raycast)
+        {
+            shootDist = weaponList[selectedWeapon].raycastDist;
+            raycastRotationReload = weaponList[selectedWeapon].raycastRotationReload;
+            raycastRotationRecoil = weaponList[selectedWeapon].raycastRotationRecoil;
+        }
+
+        weaponModel.GetComponent<MeshFilter>().sharedMesh = weaponList[selectedWeapon].weaponModel.GetComponent<MeshFilter>().sharedMesh;
+        weaponModel.GetComponent<MeshRenderer>().sharedMaterial = weaponList[selectedWeapon].weaponModel.GetComponent<MeshRenderer>().sharedMaterial;
     }
 
 

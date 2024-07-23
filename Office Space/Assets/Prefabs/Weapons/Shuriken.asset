@@ -9,13 +9,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 71c0adc62b6baef4db7098f081cbe131, type: 3}
+  m_Script: {fileID: 11500000, guid: ec10f6cbc94e25648b80250f087b3926, type: 3}
   m_Name: Shuriken
   m_EditorClassIdentifier: 
-  weaponModel: {fileID: 0}
-  shootRate: 0
-  currentAmmo: 0
-  reloadTime: 0
-  startAmmo: 0
-  shurikenHUD: {fileID: 0}
-  shurikenSpawnPoint: {fileID: 0}
+  type: 1
+  weaponModel: {fileID: 919132149155446097, guid: dfa9e3c36760e014bac951e87569ed89, type: 3}
+  shootRate: 0.5
+  shootDamage: 4
+  currentAmmo: 5
+  reloadTime: 1.5
+  startAmmo: 5
+  hitEffect: {fileID: 0}
+  shootVol: 0.5
+  raycastDist: 0
+  raycastRotationReload: 0
+  raycastRotationRecoil: 0
+  projectileProjectile: {fileID: 919132149155446097, guid: dfa9e3c36760e014bac951e87569ed89, type: 3}

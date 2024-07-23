@@ -10,8 +10,7 @@ public class ItemThrow : MonoBehaviour
     [SerializeField] GameObject itemPrefab;
     [SerializeField] GameObject itemSpawnPoint;
     [SerializeField] PlayerControl player;
-    [SerializeField] GameObject handHUD;
-    [SerializeField] GameObject shurikenHUD;
+    [SerializeField] GameObject weaponHUD;
     [SerializeField] GameObject grenadeHUD;
 
     public int rubberBallCount;
@@ -55,28 +54,14 @@ public class ItemThrow : MonoBehaviour
     {
         player.isShooting = true;
         player.isReloading = true;
-        if (player.weaponSwap)
-        {
-            handHUD.SetActive(false);
-        }
-        else
-        {
-            shurikenHUD.SetActive(false);
-        }
+        weaponHUD.SetActive(false);
         grenadeHUD.SetActive(true);
 
     }
 
     void WeaponToggleOn()
     {
-        if (player.weaponSwap)
-        {
-            handHUD.SetActive(true);
-        }
-        else
-        {
-            shurikenHUD.SetActive(true);
-        }
+        weaponHUD.SetActive(true);
         player.isShooting = false;
         player.isReloading = false;
     }
