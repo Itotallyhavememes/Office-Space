@@ -33,6 +33,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject timerUI;
     [SerializeField] TMP_Text timerText;
     [SerializeField] TMP_Text donutCountUI;
+
+
+    // JOHN CODE FOR CHECKPOINT
+    public GameObject playerSpawn;
+    public GameObject checkPointPos;
+    //
     public TMP_Text grenadeStack;
 
 
@@ -67,6 +73,10 @@ public class GameManager : MonoBehaviour
         Thresh = 29;
         bodyTracker = new List<GameObject>();
         donutCountList = new Dictionary<string, int>();
+        // CHECK POINT
+        playerSpawn = GameObject.FindWithTag("Player Spawn Pos");
+
+        //
         //Transferring Donut UI to here
 
     }

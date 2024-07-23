@@ -98,7 +98,22 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
         DefaultPublicBools();
         //Add self to gameManager's bodyTracker
         GameManager.instance.AddToTracker(this.gameObject);
+        // Call spawnPlayer
+        spawnPlayer();
+        //
     }
+
+
+    // Player Spawn
+    public void spawnPlayer()
+    {
+        HP = HPOrig;
+        UpdatePlayerUI();
+        controller.enabled = false;
+        transform.position = GameManager.instance.playerSpawn.transform.position;
+        controller.enabled = true;
+    }
+    //
 
     // Update is called once per frame
     void Update()
