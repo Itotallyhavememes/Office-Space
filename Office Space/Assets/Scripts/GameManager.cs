@@ -8,6 +8,8 @@ using UnityEngine.SceneManagement;
 using System;
 using UnityEditor;
 using System.Linq;
+using UnityEngine.EventSystems;
+using Unity.VisualScripting;
 
 public class GameManager : MonoBehaviour
 {
@@ -16,7 +18,7 @@ public class GameManager : MonoBehaviour
     public static gameMode currentMode;
     //Dictionary to hold player and NE_enemies along with live/dead stats
 
-    [SerializeField] List<GameObject> bodyTracker;
+    public List<GameObject> bodyTracker;
     [SerializeField] List<string> deadTracker;
     [SerializeField] List<GameObject> spawnPoints;
     public Dictionary<string, int> donutCountList;
@@ -36,6 +38,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject timerUI;
     [SerializeField] TMP_Text timerText;
     [SerializeField] TMP_Text donutCountUI;
+    
 
     [SerializeField] TMP_Text scoreBoardPlacementsText;
     [SerializeField] TMP_Text scoreBoardNamesText;
@@ -103,8 +106,7 @@ public class GameManager : MonoBehaviour
 
     //Update is called once per frame
     void Update()
-    {
-
+    {         
         if (Input.GetButtonDown("Cancel"))
         {
             if (menuActive == null)
