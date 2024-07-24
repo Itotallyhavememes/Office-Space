@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
 
 
 public class PlayerControl : MonoBehaviour, IDamage, ITarget
@@ -23,6 +24,8 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
     [SerializeField] int slideSpeed;
     [SerializeField] float slideLockoutTime;
     [SerializeField] int gravity;
+    [SerializeField] int donutDropDistance;
+    [SerializeField] GameObject donutDropItem;
     int jumpCount;
     int HPOrig;
     float slideLockout;
@@ -33,12 +36,12 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
 
     [Header("----- Weapons -----")]
     [SerializeField] WeaponStats starterWeapon;
-    int selectedWeapon;
     [SerializeField] public List<WeaponStats> weaponList;
     [SerializeField] GameObject weaponModel;
     [SerializeField] float shootRate;
     [SerializeField] int shootDamage;
-    [SerializeField] float reloadtime;
+    [SerializeField] float reloadTime;
+    int selectedWeapon;
 
     [SerializeField] float shootDist;
     [SerializeField] float raycastRotationReload;
@@ -100,15 +103,15 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
         origSpeed = speed;
         origHeight = controller.height;
         slideLockout = slideLockoutTime * 60;
-       
+
         GetWeaponStats(starterWeapon);
         DefaultPublicBools();
         //Add self to gameManager's bodyTracker
         GameManager.instance.AddToTracker(this.gameObject);
         // Call spawnPlayer
         spawnPlayer();
-        
-        
+
+
     }
 
 
@@ -147,7 +150,7 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
                 Slide();
             }
         }
-        if(kill == true )
+        if (kill == true)
         {
             HP = -1;
         }
@@ -162,7 +165,7 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
             //make uI for retryScreen
             spawnPlayer();
         }
-        
+
     }
 
     void Movement()
@@ -339,20 +342,21 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
                 weaponModel.transform.Rotate(Vector3.left * raycastRotationReload);
                 aud.PlayOneShot(audHandReloadBegin, audHandReloadBeginVol);
 
-                yield return new WaitForSeconds(reloadtime);
+                yield return new WaitForSeconds(reloadTime);
                 weaponModel.transform.Rotate(Vector3.right * raycastRotationReload);
                 aud.PlayOneShot(audHandReloadEnd, audHandReloadEndVol);
+                weaponList[selectedWeapon].currentAmmo = weaponList[selectedWeapon].startAmmo;
 
             }
-            else if (weaponList[selectedWeapon].type == WeaponStats.WeaponType.projectile)
-            {
-                weaponModel.SetActive(false);
-                yield return new WaitForSeconds(reloadtime);
-                weaponModel.SetActive(true);
+            //else if (weaponList[selectedWeapon].type == WeaponStats.WeaponType.projectile)
+            //{
+            //    weaponModel.SetActive(false);
+            //    yield return new WaitForSeconds(reloadTime);
+            //    weaponModel.SetActive(true);
 
-            }
+            //}
         }
-        weaponList[selectedWeapon].currentAmmo = weaponList[selectedWeapon].startAmmo;
+
         isReloading = false;
         UpdateAmmoUI();
     }
@@ -417,9 +421,25 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
         UpdatePlayerUI();
         aud.PlayOneShot(audDamage[Random.Range(0, audDamage.Length)], audDamageVol);
 
-        if (HP <= 0)
+        if (HP <= 0 && GameManager.currentMode == GameManager.gameMode.NIGHTSHIFT) // 
         {
             GameManager.instance.YouLose();
+        }
+        else if (HP <= 0 && GameManager.currentMode == GameManager.gameMode.DONUTKING2)
+        {          
+            this.gameObject.SetActive(false);
+            while (GameManager.instance.donutCountList[this.name] > 0)
+            {
+                //creates sphere that's the size of roamDist and selects a random position
+                Vector3 randDropPos = Random.insideUnitSphere * donutDropDistance;
+                randDropPos.y = donutDropItem.transform.position.y;
+                //Prevents getting null reference when creating random point
+                NavMeshHit hit;
+                //The "1" is in refernce to layer mask "1"
+                NavMesh.SamplePosition(randDropPos, out hit, donutDropDistance, 1);
+                Instantiate(donutDropItem, transform.position + randDropPos, donutDropItem.transform.rotation);
+                GameManager.instance.UpdateDonutCount(this.gameObject, -1);
+            }
         }
     }
 
@@ -586,7 +606,7 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
         shootDamage = weaponList[selectedWeapon].shootDamage;
         shootDist = weaponList[selectedWeapon].raycastDist;
         shootRate = weaponList[selectedWeapon].shootRate;
-        reloadtime = weaponList[selectedWeapon].reloadTime;
+        reloadTime = weaponList[selectedWeapon].reloadTime;
 
 
         if (weaponList[selectedWeapon].type == WeaponStats.WeaponType.raycast)

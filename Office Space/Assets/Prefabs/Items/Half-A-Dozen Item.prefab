@@ -261,7 +261,7 @@ GameObject:
   - component: {fileID: 6485950791361552606}
   - component: {fileID: 4009164339005532493}
   m_Layer: 11
-  m_Name: Half-A-Dozen
+  m_Name: Half-A-Dozen Item
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

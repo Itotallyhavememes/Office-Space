@@ -66,13 +66,13 @@ public class SecurityCameraController : MonoBehaviour
             enemyAI enemy = enemies[i].GetComponent<enemyAI>();
             if (!isRoaming)
             {
-                enemy.playerSpotted = true;
+                //enemy.playerSpotted = true;
                 NavMeshAgent agent = enemy.agent;
                 agent.SetDestination(gameObject.transform.position);
             }
             else
             {
-                enemy.playerSpotted = false;
+               // enemy.playerSpotted = false;
                 enemy.GoOnPatrol();
             }
         }

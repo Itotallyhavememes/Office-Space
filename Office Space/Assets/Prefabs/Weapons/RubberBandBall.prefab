@@ -52,7 +52,7 @@ MonoBehaviour:
   explosionEffect: {fileID: 4593184484909914552, guid: 2e1e9506f5904a64b81744324fb7cd50, type: 3}
   blastRadius: 10
   blastForce: 5
-  damageAmount: 13
+  damageAmount: 10
 --- !u!33 &5566336552408166728
 MeshFilter:
   m_ObjectHideFlags: 0

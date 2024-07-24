@@ -248,9 +248,9 @@ public class GameManager : MonoBehaviour
         return null;
     }
 
-    public void UpdateDonutCount(GameObject donutCollector)
+    public void UpdateDonutCount(GameObject donutCollector, int amount)
     {
-        donutCountList[donutCollector.name] += 1;
+        donutCountList[donutCollector.name] += amount;
 
         //For Debugging purposes:
         foreach (KeyValuePair<string, int> pair in donutCountList)

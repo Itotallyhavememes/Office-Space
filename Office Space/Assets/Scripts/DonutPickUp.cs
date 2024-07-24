@@ -13,7 +13,7 @@ public class DonutPickUp : MonoBehaviour
     public static int totalDonuts;
     public static int HPincrease;
 
-
+    [SerializeField] int donutQty;
     [SerializeField] int HpRestoreAmount;
     [SerializeField] float rotationSpeed;
     [SerializeField] int bobSpeed;
@@ -60,11 +60,15 @@ public class DonutPickUp : MonoBehaviour
             GameObject compare = GameManager.instance.ReturnEntity(other.gameObject);
             if (compare != null /*&& compare.transform.position == transform.position*/)
             {
-                GameManager.instance.UpdateDonutCount(other.gameObject);
+                GameManager.instance.UpdateDonutCount(other.gameObject, donutQty);
                 //Keeps from null reference when donut is picked up
                 if (gameObject == GameManager.instance.PriorityPoint)
                     GameManager.instance.PriorityPoint = null;
                 Destroy(gameObject);
+                if (compare.name == "Player")
+                {
+                    GameManager.instance.playerScript.HealthPickup(); // Heals player by HpRestoreAmount 
+                }
                 GameManager.instance.TallyActiveScores();
             }
         }

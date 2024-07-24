@@ -99,7 +99,7 @@ GameObject:
   - component: {fileID: 405815066845627881}
   - component: {fileID: 5580470366450083893}
   m_Layer: 11
-  m_Name: Donut
+  m_Name: Donut King
   m_TagString: Donut King
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -133,7 +133,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49e0f87f105640440815a6d39dcc4aa8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HpRestoreAmount: 5
+  donutQty: 1
+  HpRestoreAmount: 3
   rotationSpeed: 100
   bobSpeed: 3
   bobHeight: 0.3
