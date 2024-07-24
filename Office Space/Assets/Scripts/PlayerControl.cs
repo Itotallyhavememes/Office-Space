@@ -77,6 +77,8 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
     [Range(0, 1)][SerializeField] float audStepVol;
     [SerializeField] AudioClip[] audJump;
     [Range(0, 1)][SerializeField] float audJumpVol;
+    [SerializeField] AudioClip audSlide;
+    [Range(0, 1)][SerializeField] float audSlideVol;
 
     //Damage Audio
     [SerializeField] AudioClip[] audDamage;
