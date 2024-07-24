@@ -14,6 +14,7 @@ public class SpawnPoints : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         GameObject obstruction = GameManager.instance.ReturnEntity(other.gameObject);
+        GameManager.instance.retryAmount = 1;
         if(obstruction != null)
             gameObject.SetActive(false);
         

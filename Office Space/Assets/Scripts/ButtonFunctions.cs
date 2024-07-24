@@ -54,6 +54,16 @@ public class ButtonFunctions : MonoBehaviour
         SceneManager.LoadScene("Title");
     }
 
+    public void retryAmountButtonConfirm()
+    {
+        GameManager.instance.respawn = true;
+    }
+
+    public void retryAmountButtonCancel()
+    {
+        GameManager.instance.YouLose();
+    }
+
     public void quit()
     {
 #if UNITY_EDITOR

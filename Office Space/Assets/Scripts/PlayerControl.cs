@@ -105,6 +105,8 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
         GameManager.instance.AddToTracker(this.gameObject);
         // Call spawnPlayer
         spawnPlayer();
+        
+        
     }
 
 
@@ -116,6 +118,7 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
         controller.enabled = false;
         transform.position = GameManager.instance.playerSpawn.transform.position;
         controller.enabled = true;
+        GameManager.instance.retryAmount = 0;
     }
     //
 
@@ -139,6 +142,19 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
             else if (isSliding)
             {
                 Slide();
+            }
+        }
+        if (GameManager.currentMode == GameManager.gameMode.NIGHTSHIFT)
+        {
+            if(HP == 0 && GameManager.instance.retryAmount < 0)
+            {
+                GameManager.instance.ActivateMenu(GameManager.instance.menuRetryAmount);
+            }
+            if(GameManager.instance.respawn == true)
+            {
+              GameManager.instance.respawn = false;
+              GameManager.instance.playerSpawn = GameManager.instance.checkPointPos;
+              
             }
         }
     }

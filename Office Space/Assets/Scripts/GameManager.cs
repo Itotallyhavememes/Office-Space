@@ -10,6 +10,7 @@ using UnityEditor;
 using System.Linq;
 using UnityEngine.EventSystems;
 using Unity.VisualScripting;
+using JetBrains.Annotations;
 
 public class GameManager : MonoBehaviour
 {
@@ -34,6 +35,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject menuGameModes;
     [SerializeField] GameObject menuSettings;
     [SerializeField] GameObject menuControls;
+    [SerializeField] public GameObject menuRetryAmount;
     [SerializeField] TMP_Text donutCountText;
     [SerializeField] GameObject timerUI;
     [SerializeField] TMP_Text timerText;
@@ -49,6 +51,7 @@ public class GameManager : MonoBehaviour
     // JOHN CODE FOR CHECKPOINT
     public GameObject playerSpawn;
     public GameObject checkPointPos;
+    public int retryAmount;
     //
     public TMP_Text grenadeStack;
     public Transform PriorityPoint;
@@ -74,6 +77,8 @@ public class GameManager : MonoBehaviour
 
     public string PlayerName;
 
+    public bool respawn;
+
     void Awake()
     {
         instance = this;
@@ -87,7 +92,7 @@ public class GameManager : MonoBehaviour
         donutCountList = new Dictionary<string, int>();
         // CHECK POINT
         playerSpawn = GameObject.FindWithTag("Player Spawn Pos");
-
+        respawn = false;
         //
         //Transferring Donut UI to here
 
