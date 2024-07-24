@@ -35,6 +35,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject menuGameModes;
     [SerializeField] GameObject menuSettings;
     [SerializeField] GameObject menuControls;
+    [SerializeField] GameObject gameObjective;
     [SerializeField] public GameObject menuRetryAmount;
     [SerializeField] TMP_Text donutCountText;
     [SerializeField] GameObject timerUI;
