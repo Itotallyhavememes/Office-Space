@@ -132,6 +132,14 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
         GameManager.instance.retryAmount = 0;
     }
     //
+    public void respawnPlayer()
+    {
+        UpdatePlayerUI();
+        controller.enabled = false;
+        transform.position = GameManager.instance.playerSpawn.transform.position;
+        controller.enabled = true;
+        GameManager.instance.retryAmount = 0;
+    }
 
     // Update is called once per frame
     void Update()
