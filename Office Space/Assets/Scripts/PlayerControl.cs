@@ -172,6 +172,7 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
         {
             GameManager.instance.respawn = false;
             GameManager.instance.StateUnpause();
+            respawnPlayer();
         }
 
     }
