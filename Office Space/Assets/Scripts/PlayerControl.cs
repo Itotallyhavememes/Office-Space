@@ -88,6 +88,7 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
     bool isSprinting;
     bool isSliding;
     bool isPlayingStep;
+    [SerializeField] bool kill;
 
     Coroutine speedCoroutine;
 
@@ -99,6 +100,7 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
         origSpeed = speed;
         origHeight = controller.height;
         slideLockout = slideLockoutTime * 60;
+       
         GetWeaponStats(starterWeapon);
         DefaultPublicBools();
         //Add self to gameManager's bodyTracker
@@ -119,6 +121,7 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
         transform.position = GameManager.instance.playerSpawn.transform.position;
         controller.enabled = true;
         GameManager.instance.retryAmount = 0;
+        kill = false;
     }
     //
 
@@ -144,19 +147,22 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
                 Slide();
             }
         }
-        if (GameManager.currentMode == GameManager.gameMode.NIGHTSHIFT)
+        if(kill == true )
         {
-            if(HP == 0 && GameManager.instance.retryAmount < 0)
-            {
-                GameManager.instance.ActivateMenu(GameManager.instance.menuRetryAmount);
-            }
-            if(GameManager.instance.respawn == true)
-            {
-              GameManager.instance.respawn = false;
-              GameManager.instance.playerSpawn = GameManager.instance.checkPointPos;
-              
-            }
+            HP = -1;
         }
+        if (HP <= 0 && GameManager.instance.retryAmount < 0)
+        {
+            GameManager.instance.ActivateMenu(GameManager.instance.menuRetryAmount);
+            GameManager.instance.respawn = true;
+        }
+        if (GameManager.instance.respawn == true)
+        {
+            GameManager.instance.respawn = false;
+            //make uI for retryScreen
+            spawnPlayer();
+        }
+        
     }
 
     void Movement()
