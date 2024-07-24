@@ -26,6 +26,7 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
     [SerializeField] int gravity;
     [SerializeField] int donutDropDistance;
     [SerializeField] GameObject donutDropItem;
+    [SerializeField] Camera deathCamera;
     int jumpCount;
     int HPOrig;
     float slideLockout;
@@ -427,7 +428,8 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
         }
         else if (HP <= 0 && GameManager.currentMode == GameManager.gameMode.DONUTKING2)
         {          
-            this.gameObject.SetActive(false);
+            Camera.main.gameObject.SetActive(false);
+            deathCamera.gameObject.SetActive(true);
             while (GameManager.instance.donutCountList[this.name] > 0)
             {
                 //creates sphere that's the size of roamDist and selects a random position
