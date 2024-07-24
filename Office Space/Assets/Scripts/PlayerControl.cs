@@ -152,25 +152,27 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
                 Slide();
             }
         }
-        if (HP <= 0 && GameManager.instance.retryAmount < 0)
-        {
-            GameManager.instance.ActivateMenu(GameManager.instance.menuRetryAmount);
-            GameManager.instance.respawn = true;
-        }
         if (GameManager.instance.respawn == true)
         {
             GameManager.instance.respawn = false;
-            //make uI for retryScreen
             spawnPlayer();
+            GameManager.instance.StateUnpause();
         }
 
     }
     private void OnTriggerEnter(Collider other)
     {
-       
-        if(other == other.GetComponentInChildren<CapsuleCollider>())
+        if (GameManager.currentMode == GameManager.gameMode.NIGHTSHIFT)
         {
-            takeDamage(1);
+            HP--;
+            UpdatePlayerUI();
+            if (other == other.GetComponentInChildren<CapsuleCollider>() && HP < 0)
+            {
+                GameManager.instance.StatePause();
+
+                GameManager.instance.ActivateMenu(GameManager.instance.menuRetryAmount);
+
+            }
         }
     }
     void Movement()
