@@ -620,6 +620,10 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
         weaponModel.GetComponent<MeshRenderer>().sharedMaterial = weaponList[selectedWeapon].weaponModel.GetComponent<MeshRenderer>().sharedMaterial;
     }
 
+    public void Munch(AudioClip clip, float vol)
+    {
+        aud.PlayOneShot(clip, vol);
+    }
 
 }
 

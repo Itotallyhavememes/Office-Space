@@ -64,9 +64,11 @@ public class DonutPickUp : MonoBehaviour
                 //Keeps from null reference when donut is picked up
                 if (gameObject == GameManager.instance.PriorityPoint)
                     GameManager.instance.PriorityPoint = null;
+
                 Destroy(gameObject);
                 if (compare.name == "Player")
                 {
+                    GameManager.instance.playerScript.Munch(pickupSFX, audPickupVol);
                     GameManager.instance.playerScript.HealthPickup(); // Heals player by HpRestoreAmount 
                 }
                 GameManager.instance.TallyActiveScores();
