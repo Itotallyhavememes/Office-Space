@@ -912,6 +912,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &1198217484 stripped
+Rigidbody:
+  m_CorrespondingSourceObject: {fileID: 6522047962989040488, guid: b12fc89d88f620148bc37429b5399756, type: 3}
+  m_PrefabInstance: {fileID: 1508444078}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1508444078
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -963,6 +968,30 @@ PrefabInstance:
     - target: {fileID: 2129940969073064523, guid: b12fc89d88f620148bc37429b5399756, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 7415348336417281650, guid: b12fc89d88f620148bc37429b5399756, type: 3}
+      propertyPath: rigid
+      value: 
+      objectReference: {fileID: 1198217484}
+    - target: {fileID: 7415348336417281650, guid: b12fc89d88f620148bc37429b5399756, type: 3}
+      propertyPath: speed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7415348336417281650, guid: b12fc89d88f620148bc37429b5399756, type: 3}
+      propertyPath: audSlide
+      value: 
+      objectReference: {fileID: 8300000, guid: 225e326217f04ab4081f540339fe7a74, type: 3}
+    - target: {fileID: 7415348336417281650, guid: b12fc89d88f620148bc37429b5399756, type: 3}
+      propertyPath: audSlideVol
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7415348336417281650, guid: b12fc89d88f620148bc37429b5399756, type: 3}
+      propertyPath: slideCooldown
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7415348336417281650, guid: b12fc89d88f620148bc37429b5399756, type: 3}
+      propertyPath: slideLockoutTime
+      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

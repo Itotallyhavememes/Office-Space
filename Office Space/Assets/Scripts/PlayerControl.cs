@@ -23,6 +23,7 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
     [SerializeField] float crouchLevel;
     [SerializeField] int slideSpeed;
     [SerializeField] float slideLockoutTime;
+    [SerializeField] float slideCooldown;
     [SerializeField] int gravity;
     [SerializeField] int donutDropDistance;
     [SerializeField] GameObject donutDropItem;
@@ -95,6 +96,9 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
     bool isSliding;
     bool isPlayingStep;
     bool isDead;
+    bool canSlide;
+    bool holdingDownCrouch;
+    bool slideSoundPlayed;
 
     Coroutine speedCoroutine;
 
@@ -105,7 +109,8 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
         HPOrig = HP;
         origSpeed = speed;
         origHeight = controller.height;
-        slideLockout = slideLockoutTime * 60;
+        slideLockout = slideLockoutTime;
+        canSlide = true;
 
         GetWeaponStats(starterWeapon);
         DefaultPublicBools();
@@ -114,9 +119,7 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
         // Call spawnPlayer
         spawnPlayer();
 
-
     }
-
 
     // Player Spawn
     public void spawnPlayer()
@@ -136,6 +139,11 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
         Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDist, Color.green);
         if (!GameManager.instance.isPaused && !isDead)
         {
+            if (Input.GetButtonDown("Crouch"))
+                holdingDownCrouch = true;
+            else if (Input.GetButtonUp("Crouch"))
+                holdingDownCrouch = false;
+
             if (!isShooting)
             {
                 WeaponSelect();
@@ -155,7 +163,6 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
         if (GameManager.instance.respawn == true)
         {
             GameManager.instance.respawn = false;
-            spawnPlayer();
             GameManager.instance.StateUnpause();
         }
 
@@ -187,7 +194,7 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
                    Input.GetAxis("Horizontal") * transform.right;
         controller.Move(moveDir * speed * Time.deltaTime);
 
-        if (Input.GetButtonDown("Jump") && jumpCount < 1)
+        if (Input.GetButtonDown("Jump") && jumpCount < 1 && !isCrouching)
         {
             jumpCount++;
             playerVel.y = jumpSpeed;
@@ -260,6 +267,12 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
     }
     void Slide()
     {
+        if (!slideSoundPlayed)
+        {
+            aud.PlayOneShot(audSlide, audSlideVol);
+            slideSoundPlayed = true;
+        }
+
         isCrouching = true;
         isSprinting = false;
 
@@ -279,23 +292,25 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
 
         if (slideLockout > 0)
         {
-            slideLockout--;
+            slideLockout -= Time.deltaTime;
         }
         else if (slideLockout <= 0)
         {
-            slideLockout = slideLockoutTime * 60;
-            controller.height = origHeight;
-            isCrouching = false;
+            if (!holdingDownCrouch)
+                controller.height = origHeight;
+
+            slideSoundPlayed = false;
+            slideLockout = slideLockoutTime;
             isSliding = false;
             playerVel = Vector3.zero;
             speed = origSpeed;
-            Sprint();
+            StartCoroutine(SlideCooldown());
         }
     }
 
     void Crouch()
     {
-        if (isSprinting && Input.GetButtonDown("Crouch"))
+        if (canSlide && isCrouching && Input.GetButtonDown("Jump"))
         {
             isSliding = true;
         }
@@ -312,12 +327,13 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
             isCrouching = false;
         }
 
-        if (isCrouching && (Input.GetButtonDown("Jump") || Input.GetButtonDown("Sprint")))
-        {
-            isCrouching = false;
-            controller.height = origHeight;
-            speed += crouchMod;
-        }
+    }
+
+    IEnumerator SlideCooldown()
+    {
+        canSlide = false;
+        yield return new WaitForSeconds(slideCooldown);
+        canSlide = true;
     }
 
     void Sprint()
@@ -326,18 +342,18 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
         {
             isSprinting = !isSprinting;
 
-            switch (isSprinting)
-            {
-                case true:
-                    speed *= sprintMod;
-                    break;
-                case false:
-                    speed /= sprintMod;
-                    break;
-            }
+            if (!isCrouching)
+                switch (isSprinting)
+                {
+                    case true:
+                        speed *= sprintMod;
+                        break;
+                    case false:
+                        speed /= sprintMod;
+                        break;
+                }
         }
     }
-
     IEnumerator Reload()
     {
         isReloading = true;
@@ -433,7 +449,7 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
             GameManager.instance.YouLose();
         }
         else if (HP <= 0 && GameManager.currentMode == GameManager.gameMode.DONUTKING2)
-        {          
+        {
             //Camera.main.gameObject.SetActive(false);
             isDead = true;
             gameObject.GetComponent<CapsuleCollider>().enabled = false;
