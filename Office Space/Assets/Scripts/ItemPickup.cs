@@ -49,13 +49,17 @@ public class ItemPickup : MonoBehaviour
                     {
                         if (GameManager.instance.playerScript.HP < GameManager.instance.playerScript.GetStartHP())
                         {
+                            GameManager.instance.worldItemCount--;
                             powerupEffect.ApplyBuff();
+                            Destroy(gameObject);
                         }
                         break;
                     }
                 case ItemType.speedBoost:
                     {
                         powerupEffect.ApplyBuff();
+                        GameManager.instance.worldItemCount--;
+                        Destroy(gameObject);
                         break;
                     }
                 case ItemType.rubberBand:
@@ -64,6 +68,8 @@ public class ItemPickup : MonoBehaviour
                         {
                             GameManager.instance.playerScript.GetComponent<ItemThrow>().rubberBallCount++;
                             GameManager.instance.playerScript.GetComponent<ItemThrow>().updateGrenadeUI();
+                            GameManager.instance.worldItemCount--;
+                            Destroy(gameObject);
                         }
 
                         break;
@@ -71,14 +77,14 @@ public class ItemPickup : MonoBehaviour
                 case ItemType.weapon:
                     {
                         GameManager.instance.playerScript.GetWeaponStats(this.weapon);
+                        GameManager.instance.worldItemCount--;
+                        Destroy(gameObject);
 
                         break;
                     }
                 default:
                     break;
             }
-            GameManager.instance.worldItemCount--;
-            Destroy(gameObject);
 
 
         }

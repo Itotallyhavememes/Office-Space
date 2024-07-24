@@ -35,7 +35,10 @@ public class Vending : MonoBehaviour, IVend
     private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Player") && GameManager.instance.canVend && !interactionSprite.activeSelf)
+        {
             interactionSprite.SetActive(true);
+            playerInCollider = true;
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -49,7 +52,8 @@ public class Vending : MonoBehaviour, IVend
 
     public void VendItem()
     {
-        Instantiate(vendingItems[Random.Range(0, vendingItems.Length)], vendPos.transform.position, vendPos.transform.rotation);
+        int selection = Random.Range(0, vendingItems.Length);
+        Instantiate(vendingItems[selection], vendPos.transform.position, vendingItems[selection].transform.rotation);
         GameManager.instance.StartVendingMachineCooldown();
         interactionSprite.SetActive(false);
     }

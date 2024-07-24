@@ -33,14 +33,14 @@ public class RandomizeSpawner : MonoBehaviour
         yield return new WaitForSeconds(spawnTimer);
         isSpawning = false;
 
-        Vector3 randPos = Random.insideUnitSphere * 100;
+        Vector3 randPos = Random.insideUnitSphere * Random.Range(1,100);
 
         NavMeshHit hit;
 
         NavMesh.SamplePosition(randPos, out hit, 100, 1);
 
         Vector3 spawnPos = hit.position;
-        spawnPos.y = 1;
+        spawnPos.y += 1;
 
         Instantiate(items[Random.Range(0, items.Length)], spawnPos, transform.rotation);
 
