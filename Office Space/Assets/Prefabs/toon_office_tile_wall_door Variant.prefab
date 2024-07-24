@@ -12,6 +12,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: toon_office_tile_wall_door Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 2845503119203903026, guid: 11d13692dbe8044e288f982c19e7428a, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 3185895063940660360, guid: 11d13692dbe8044e288f982c19e7428a, type: 3}
       propertyPath: m_LocalScale.x
       value: 2
