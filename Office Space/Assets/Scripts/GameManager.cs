@@ -40,11 +40,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject timerUI;
     [SerializeField] TMP_Text timerText;
     [SerializeField] TMP_Text donutCountUI;
-    
+
 
     [SerializeField] TMP_Text scoreBoardPlacementsText;
     [SerializeField] TMP_Text scoreBoardNamesText;
     [SerializeField] TMP_Text scoreBoardScoreText;
+    [SerializeField] TMP_Text scoreBoardResultText;
     [SerializeField] TMP_Text activeScoreNamesText;
     [SerializeField] TMP_Text activeScoreText;
 
@@ -80,7 +81,7 @@ public class GameManager : MonoBehaviour
     public bool respawn;
 
     public bool canVend;
-    [SerializeField] float VendingCooldown;
+    [SerializeField] public float VendingCooldown;
 
 
     void Awake()
@@ -110,7 +111,7 @@ public class GameManager : MonoBehaviour
             StartCoroutine(Timer());
         }
         playerHPStart = playerScript.HP;
-        if(SceneManager.GetSceneByName("Title") == SceneManager.GetActiveScene())
+        if (SceneManager.GetSceneByName("Title") == SceneManager.GetActiveScene())
         {
             StateUnpause();
         }
@@ -119,7 +120,7 @@ public class GameManager : MonoBehaviour
 
     //Update is called once per frame
     void Update()
-    {         
+    {
         if (Input.GetButtonDown("Cancel"))
         {
             if (menuActive == null)
@@ -138,13 +139,6 @@ public class GameManager : MonoBehaviour
         {
             DisplayInfoScreen();
         }
-    }
-
-    IEnumerator VendingItem()
-    {
-        canVend = false;
-        yield return new WaitForSeconds(VendingCooldown);
-        canVend = true;
     }
 
     IEnumerator EndGame()
@@ -313,19 +307,32 @@ public class GameManager : MonoBehaviour
             StatePause();
             menuActive = menuScore;
             menuActive.SetActive(true);
-            TallyScores();
+            TallyFinalScores();
         }
     }
 
-    void TallyScores()
+    void TallyFinalScores()
     {
         scoreBoardNamesText.text = string.Empty;
         scoreBoardScoreText.text = string.Empty;
         var scoreBoard = donutCountList.OrderByDescending(pair => pair.Value);
+        int scoreIndex = 0;
         foreach (var score in scoreBoard)
         {
+            if (scoreIndex == 0 && score.Key == "Player")
+            {
+                scoreBoardResultText.text = "Congrats! \nDonut King!";
+                scoreBoardResultText.color = Color.green;
+            }
+            else if (scoreIndex == 0 && score.Key != "Player")
+            {
+                scoreBoardResultText.text = "If ya ain't First, You're LAST!";
+                scoreBoardResultText.color = Color.red;
+            }
+
             scoreBoardNamesText.text += score.Key + '\n';
             scoreBoardScoreText.text += score.Value.ToString() + '\n';
+            scoreIndex++;
         }
     }
 

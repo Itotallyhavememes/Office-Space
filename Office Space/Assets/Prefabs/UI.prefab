@@ -2092,7 +2092,7 @@ GameObject:
   - component: {fileID: 4836970185873406914}
   - component: {fileID: 5034831622641283491}
   m_Layer: 5
-  m_Name: Menu Title
+  m_Name: Result Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3455,6 +3455,7 @@ MonoBehaviour:
   menuGameModes: {fileID: 0}
   menuSettings: {fileID: 132010803395148301}
   menuControls: {fileID: 7927998687885562222}
+  menuRetryAmount: {fileID: 0}
   donutCountText: {fileID: 42499501396447299}
   timerUI: {fileID: 2127334586548743669}
   timerText: {fileID: 7642111384215667028}
@@ -3462,10 +3463,12 @@ MonoBehaviour:
   scoreBoardPlacementsText: {fileID: 3357373566320153875}
   scoreBoardNamesText: {fileID: 5205546297152942793}
   scoreBoardScoreText: {fileID: 4969543179145884001}
+  scoreBoardResultText: {fileID: 5034831622641283491}
   activeScoreNamesText: {fileID: 591585977423700876}
   activeScoreText: {fileID: 1469479869871457729}
   playerSpawn: {fileID: 0}
   checkPointPos: {fileID: 0}
+  retryAmount: 0
   grenadeStack: {fileID: 322348989249936782}
   PriorityPoint: {fileID: 0}
   playerHPBar: {fileID: 238028663170282827}
@@ -3480,6 +3483,9 @@ MonoBehaviour:
   enemyCount: 0
   Thresh: 0
   PlayerName: 
+  respawn: 0
+  canVend: 0
+  VendingCooldown: 0
 --- !u!1 &3363124520113123284
 GameObject:
   m_ObjectHideFlags: 0
@@ -10517,7 +10523,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2787361896476226108
 RectTransform:
   m_ObjectHideFlags: 0
@@ -10562,7 +10568,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.5137255}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.9607843}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
