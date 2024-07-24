@@ -1791,7 +1791,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Doughnut King
+  m_text: Donut King
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3555,6 +3555,8 @@ MonoBehaviour:
   modeSelection: 0
   timerTime: 0
   menuActive: {fileID: 2010156821813496173}
+  menuScore: {fileID: 0}
+  scoreDisplay: {fileID: 0}
   menuPause: {fileID: 1310208428}
   menuWin: {fileID: 1310208428}
   menuLose: {fileID: 1310208428}
@@ -3562,11 +3564,23 @@ MonoBehaviour:
   menuGameModes: {fileID: 339040739}
   menuSettings: {fileID: 6376594886593843204}
   menuControls: {fileID: 4012461728770079591}
+  gameObjective: {fileID: 0}
+  menuRetryAmount: {fileID: 0}
   donutCountText: {fileID: 871045357}
   timerUI: {fileID: 0}
   timerText: {fileID: 0}
   donutCountUI: {fileID: 0}
+  scoreBoardPlacementsText: {fileID: 0}
+  scoreBoardNamesText: {fileID: 0}
+  scoreBoardScoreText: {fileID: 0}
+  scoreBoardResultText: {fileID: 0}
+  activeScoreNamesText: {fileID: 0}
+  activeScoreText: {fileID: 0}
+  playerSpawn: {fileID: 0}
+  checkPointPos: {fileID: 0}
+  retryAmount: 0
   grenadeStack: {fileID: 871045357}
+  PriorityPoint: {fileID: 0}
   playerHPBar: {fileID: 1473139986}
   playerAmmoBar: {fileID: 1473139986}
   damageFlash: {fileID: 1310208428}
@@ -3579,6 +3593,9 @@ MonoBehaviour:
   enemyCount: 0
   Thresh: 0
   PlayerName: 
+  respawn: 0
+  canVend: 0
+  VendingCooldown: 0
 --- !u!224 &1578739006288999093
 RectTransform:
   m_ObjectHideFlags: 0
