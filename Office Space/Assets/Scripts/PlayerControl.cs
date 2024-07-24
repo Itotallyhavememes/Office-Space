@@ -92,7 +92,7 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
     bool isSprinting;
     bool isSliding;
     bool isPlayingStep;
-    [SerializeField] bool kill;
+    bool isDead;
 
     Coroutine speedCoroutine;
 
@@ -125,7 +125,6 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
         transform.position = GameManager.instance.playerSpawn.transform.position;
         controller.enabled = true;
         GameManager.instance.retryAmount = 0;
-        kill = false;
     }
     //
 
@@ -133,7 +132,7 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
     void Update()
     {
         Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDist, Color.green);
-        if (!GameManager.instance.isPaused)
+        if (!GameManager.instance.isPaused && !isDead)
         {
             if (!isShooting)
             {
@@ -150,10 +149,6 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
             {
                 Slide();
             }
-        }
-        if (kill == true)
-        {
-            HP = -1;
         }
         if (HP <= 0 && GameManager.instance.retryAmount < 0)
         {
@@ -428,9 +423,11 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
         }
         else if (HP <= 0 && GameManager.currentMode == GameManager.gameMode.DONUTKING2)
         {          
-            Camera.main.gameObject.SetActive(false);
+            //Camera.main.gameObject.SetActive(false);
+            isDead = true;
+            gameObject.GetComponent<CapsuleCollider>().enabled = false;
             deathCamera.gameObject.SetActive(true);
-            while (GameManager.instance.donutCountList[this.name] > 0)
+            while (GameManager.instance.donutCountList[name] > 0)
             {
                 //creates sphere that's the size of roamDist and selects a random position
                 Vector3 randDropPos = Random.insideUnitSphere * donutDropDistance;
@@ -440,7 +437,7 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
                 //The "1" is in refernce to layer mask "1"
                 NavMesh.SamplePosition(randDropPos, out hit, donutDropDistance, 1);
                 Instantiate(donutDropItem, transform.position + randDropPos, donutDropItem.transform.rotation);
-                GameManager.instance.UpdateDonutCount(this.gameObject, -1);
+                GameManager.instance.UpdateDonutCount(gameObject, -1);
             }
         }
     }
@@ -546,6 +543,7 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
     //    return shurikenStartAmmo;
     //}
 
+    //Getters//
     public int GetStartHP()
     {
         return HPOrig;
@@ -572,6 +570,10 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
 
         WeaponChange();
 
+    }
+    public bool GetPlayerStatusBool() //Returns player alive/dead status
+    {
+        return isDead;
     }
 
     void WeaponSelect()

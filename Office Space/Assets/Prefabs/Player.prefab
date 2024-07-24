@@ -317,7 +317,6 @@ MonoBehaviour:
   weaponSwap: 0
   isShooting: 0
   isReloading: 0
-  kill: 0
 --- !u!114 &3164765986891349497
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -627,7 +626,7 @@ GameObject:
   - component: {fileID: 7126532834753136690}
   - component: {fileID: 6555935379413436180}
   - component: {fileID: 8274251688699102626}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: SelectionHUD
   m_TagString: Untagged
   m_Icon: {fileID: 0}
