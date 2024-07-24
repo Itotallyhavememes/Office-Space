@@ -195,6 +195,10 @@ PrefabInstance:
       propertyPath: playerSpawn
       value: 
       objectReference: {fileID: 878626381}
+    - target: {fileID: 5554198125853194504, guid: f0ab30acf69428142ac55986442a519f, type: 3}
+      propertyPath: VendingCooldown
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 6414659824971823736, guid: f0ab30acf69428142ac55986442a519f, type: 3}
       propertyPath: m_Name
       value: UI
