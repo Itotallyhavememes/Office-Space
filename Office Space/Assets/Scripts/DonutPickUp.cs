@@ -59,12 +59,15 @@ public class DonutPickUp : MonoBehaviour
         if (other == other.GetComponentInChildren<CapsuleCollider>())
         {
             GameObject compare = GameManager.instance.ReturnEntity(other.gameObject);
-            if (compare != null /*&& compare.transform.position == transform.position*/)
+            if (compare != null)
             {
                 GameManager.instance.UpdateDonutCount(other.gameObject, donutQty);
                 //Keeps from null reference when donut is picked up
-                if (gameObject == GameManager.instance.PriorityPoint)
-                    GameManager.instance.PriorityPoint = null;
+                for (int i = 0; i < GameManager.instance.PriorityPoint.Count; ++i)
+                {
+                    if (gameObject.transform == GameManager.instance.PriorityPoint[i])
+                        GameManager.instance.PriorityPoint.Remove(GameManager.instance.PriorityPoint[i]);  
+                }
 
                 if (compare.name == "Player")
                 {
@@ -74,6 +77,8 @@ public class DonutPickUp : MonoBehaviour
                 }
                 GameManager.instance.TallyActiveScores();
                 Destroy(gameObject);
+                if(GameManager.instance.worldDonutCount > 0)
+                    --GameManager.instance.worldDonutCount;
             }
         }
     }

@@ -55,7 +55,7 @@ public class GameManager : MonoBehaviour
     public int retryAmount;
     //
     public TMP_Text grenadeStack;
-    public Transform PriorityPoint;
+    public List<Transform> PriorityPoint;
 
     public Image playerHPBar;
     public Image playerAmmoBar;
@@ -98,6 +98,7 @@ public class GameManager : MonoBehaviour
         Thresh = 29;
         bodyTracker = new List<GameObject>();
         donutCountList = new Dictionary<string, int>();
+        PriorityPoint = new List<Transform>();
         // CHECK POINT
         playerSpawn = GameObject.FindWithTag("Player Spawn Pos");
         respawn = false;
@@ -266,8 +267,7 @@ public class GameManager : MonoBehaviour
 
     public void DonutDeclarationDay(GameObject donutOBJ)
     {
-        if (PriorityPoint == null)
-            PriorityPoint = donutOBJ.transform;
+            PriorityPoint.Add(donutOBJ.transform);
     }
 
     //public string GetPlayerDC(GameObject target)

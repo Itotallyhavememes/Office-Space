@@ -72,7 +72,7 @@ public class SecurityCameraController : MonoBehaviour
             }
             else
             {
-               // enemy.playerSpotted = false;
+                //enemy.playerSpotted = false;
                 enemy.GoOnPatrol();
             }
         }
