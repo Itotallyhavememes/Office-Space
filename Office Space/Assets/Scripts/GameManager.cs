@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
     //Dictionary to hold player and NE_enemies along with live/dead stats
 
     public List<GameObject> bodyTracker;
-    [SerializeField] List<string> deadTracker;
+    public List<GameObject> deadTracker;
     [SerializeField] List<GameObject> spawnPoints;
     public Dictionary<string, int> donutCountList;
     [SerializeField] gameMode modeSelection;
@@ -203,26 +203,26 @@ public class GameManager : MonoBehaviour
         }
     }
     //Method for spawner. Also remove object from bodyTracker as new one will be instantiated upon spawn
-    public void DeclareSelfDead(GameObject self, string type)
+    public void DeclareSelfDead(GameObject self)
     {
-        //for (int i = 0; i < bodyTracker.Count; i++)
-        //{
-        //    if(self.GetHashCode() == bodyTracker[i].GetHashCode())
-        //        bodyTracker.Remove(bodyTracker[i]);
-        //}
-        deadTracker.Add(type);
+        for (int i = 0; i < bodyTracker.Count; i++)
+        {
+            if (self.GetHashCode() == bodyTracker[i].GetHashCode())
+                bodyTracker.Remove(bodyTracker[i]);
+        }
+        deadTracker.Add(self);
     }
     //Method called in enemySpawner that returns the first entry in deadTracker
-    public string SpawnTheDead()
-    {
-        //if (deadTracker.Count > 0)
-        //{
-        string returnable = deadTracker[0];
-        deadTracker.RemoveAt(0);
-        return returnable;
-        //}
+    //public string SpawnTheDead()
+    //{
+    //    //if (deadTracker.Count > 0)
+    //    //{
+    //    string returnable = deadTracker[0];
+    //    deadTracker.RemoveAt(0);
+    //    return returnable;
+    //    //}
 
-    }
+    //}
     //method to search through tracker and return object
     public GameObject ReturnEntity(GameObject target)
     {

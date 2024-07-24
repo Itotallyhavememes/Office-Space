@@ -73,7 +73,8 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
     [SerializeField] int dodgeNumber;
     [SerializeField] int detCode;
     [SerializeField] GameObject targetOBJ;
-    [SerializeField] List<GameObject> targets;
+    [SerializeField] int tarOBJhash;
+    //[SerializeField] List<GameObject> targets;
     [Range(5, 12)][SerializeField] int jumpSpeed;
     bool isJumping;
     ITarget target;
@@ -84,6 +85,7 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
     float stoppingDistOrig;
     bool canTarget;
     bool isTargetDead;
+    [SerializeField] int numOfTargets;
     //bool hasPriority;
  
 
@@ -103,6 +105,7 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
         nextPosIndex = 0;
         if(type != enemyType.security)
             GameManager.instance.AddToTracker(this.gameObject);
+        isTargetDead = false;
     }
 
     // Update is called once per frame
@@ -111,28 +114,48 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
         float agentSpeed = agent.velocity.normalized.magnitude;
         anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), agentSpeed, Time.deltaTime * animTransitSpeed));
 
-        if (targets.Count == 1)
-        {
-            if (targets[0] == null && !targetOBJ)
-            {
-                targets.Remove(targets[0].gameObject);
-                if (targetInRange == true)
-                    targetInRange = false;
-            }
-            else
-            {
-                CleanUpList();
-                targetOBJ = PrioritizeTarget();
-            }
-        }
+        //if (targets.Count == 1)
+        //{
+        //    if (targets[0] == null && !targetOBJ)
+        //    {
+        //        targets.Remove(targets[0].gameObject);
+        //        if (targetInRange == true)
+        //            targetInRange = false;
+        //    }
+        //    else
+        //    {
+        //        CleanUpList();
+        //        targetOBJ = PrioritizeTarget();
+        //    }
+        //}
+        if (numOfTargets > 0)
+            targetInRange = true;
+        else targetInRange = false;
+
         if (targetInRange)
         {
-            if (targets.Count > 1 && targetOBJ == null)
+            //if (targets.Count > 1 && targetOBJ == null)
+            //{
+            //    CleanUpList();
+            //    targetOBJ = PrioritizeTarget();
+            //}
+            for (int i = 0; i < GameManager.instance.deadTracker.Count; ++i)
             {
-                CleanUpList();
-                targetOBJ = PrioritizeTarget();
+                if (tarOBJhash == GameManager.instance.deadTracker[i].GetHashCode())
+                {
+                    targetOBJ = null;
+                    isTargetDead = true;
+                    break;
+                }
             }
-
+            if (isTargetDead)
+            {
+                targetOBJ = PrioritizeTarget(targetOBJ);
+                if (targetOBJ != null)
+                    isTargetDead = false;
+            }
+            if (targetOBJ != null)
+                Debug.Log(gameObject.name.ToString() + " says: My New Target-> " + targetOBJ.name.ToString());
             if (canSeePlayer())
             {
                 if (agent.remainingDistance <= agent.stoppingDistance)
@@ -279,112 +302,151 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
     //if potential target enters Sphere
     public void OnTriggerEnter(Collider other)
     {
-
-        target = other.GetComponent<ITarget>();
-        if (target != null && other != this)
+        //if (other == other.GetComponentInChildren<CapsuleCollider>())
+        if (numOfTargets < GameManager.instance.bodyTracker.Count)
         {
-            targetOBJ = other.gameObject;
-            targetInRange = true;
-            TargetDIR = targetOBJ.transform.position - transform.position;
-        }
-        //System for holding multiple targets
-        if (type != enemyType.security)
-        {
-            bool canAdd = false;
-            if (targetInRange && targetOBJ)
+            target = other.GetComponent<ITarget>();
+            if (target != null && other != this)
             {
-                if (targets.Count == 0)
-                    canAdd = true;
-                else if (targets.Count > 0)
+
+                if (numOfTargets == 0)
                 {
-                    CleanUpList();
-                    for (int i = 0; i < targets.Count; ++i)
-                    {
-                        if (targets[i].GetHashCode() == targetOBJ.GetHashCode())
-                        {
-                            canAdd = false;
-                            break;
-                        }
-                        else
-                        {
-
-                            canAdd = true;
-                        }
-                    }
+                    targetOBJ = other.gameObject;
+                    ++numOfTargets;
                 }
-            }
-            //Time to add
-            if (canAdd)
-            {
-                targets.Add(targetOBJ);
-                targetOBJ = PrioritizeTarget();
+                else
+                {
+                    ++numOfTargets;
+                    targetOBJ = PrioritizeTarget(targetOBJ);
+                }
+                //targetInRange = true;
+                //TargetDIR = targetOBJ.transform.position - transform.position;
+                //    targetOBJ = other.gameObject;
+                //    targetInRange = true;
+                //    TargetDIR = targetOBJ.transform.position - transform.position;
+                //}
+                ////System for holding multiple targets
+                //if (type != enemyType.security)
+                //{
+                //bool canAdd = false;
+                //if (targetInRange && targetOBJ)
+                //{
+                //    if (targets.Count == 0)
+                //        canAdd = true;
+                //    else if (targets.Count > 0)
+                //    {
+                //        CleanUpList();
+                //        for (int i = 0; i < targets.Count; ++i)
+                //        {
+                //            if (targets[i].GetHashCode() == targetOBJ.GetHashCode())
+                //            {
+                //                canAdd = false;
+                //                break;
+                //            }
+                //            else
+                //            {
+
+                //                canAdd = true;
+                //            }
+                //        }
+                //    }
+                //}
+                ////Time to add
+                //if (canAdd)
+                //{
+                //    targets.Add(targetOBJ);
+                //    targetOBJ = PrioritizeTarget();
+                //}
             }
         }
     }
-
+    //private void OnTriggerStay(Collider other)
+    //{
+    //    //targetOBJ = PrioritizeTarget(targetOBJ);
+    //}
     //If target exits Sphere
     public void OnTriggerExit(Collider other)
     {
-        target = other.GetComponent<ITarget>();
-        if (target != null)
+        //if (other == other.GetComponentInChildren<CapsuleCollider>() )
+        if (numOfTargets > 0)
         {
-            RemoveFromList(other.gameObject);
-            if (targets.Count == 0)
+            target = other.GetComponent<ITarget>();
+            if (target != null && other != this)
             {
-                targetOBJ = null;
-                target = null;
-                targetInRange = false;
-                agent.stoppingDistance = 0;
-                TargetDIR = Vector3.zero;
-            }
-            else if (targets.Count > 0)
-            {
-                targetOBJ = PrioritizeTarget();
+
+                --numOfTargets;
+                targetOBJ = PrioritizeTarget(targetOBJ);
+                //    RemoveFromList(other.gameObject);
+                //    if (targets.Count == 0)
+                //    {
+                //        targetOBJ = null;
+                //        target = null;
+                //        targetInRange = false;
+                //        agent.stoppingDistance = 0;
+                //        TargetDIR = Vector3.zero;
+                //    }
+                //    else if (targets.Count > 0)
+                //    {
+                //        targetOBJ = PrioritizeTarget();
+                //    }
             }
         }
     }
 
     //Goes through list and checks to see if anything is null
     //If so, delete it from the list
-    public void CleanUpList()
-    {
-        for (int i = 0; i < targets.Count; ++i)
-        {
-            if (targets[i].gameObject == null)
-                targets.Remove(targets[i].gameObject);
-        }
-    }
+    //public void CleanUpList()
+    //{
+    //    for (int i = 0; i < targets.Count; ++i)
+    //    {
+    //        if (targets[i].gameObject == null)
+    //            targets.Remove(targets[i].gameObject);
+    //    }
+    //}
 
-    //List meant to determine who the current targetOBJ should be
-    public GameObject PrioritizeTarget()
+    //takes in currTarget and checks to see if currTarget is closest in relation to GameManager's bodyTracker
+    //if it is, return currTarget, if not: find the closest and return that as priority
+    public GameObject PrioritizeTarget(GameObject currTarget)
     {
-        if (targets.Count > 1 && targetOBJ)
+        
+        GameObject targetHolder = null;
+        float currDist = 0.0f;
+        float compDist = 0.0f;
+        if (currTarget != null)
         {
-            float currDist = Vector3.Distance(transform.position, targetOBJ.transform.position);
-            float compareDist = 0.0f;
-            GameObject currTarget = targetOBJ;
-            //Checks list while holding distance from currTarget
-            for (int i = 0; i < targets.Count; ++i)
+            targetHolder = currTarget;
+        }
+        else
+        {
+            for (int i = 0; i < GameManager.instance.bodyTracker.Count; i++)
             {
-                //Compares targetOBJ position with other targets within targets List and focus on closest
-                compareDist = Vector3.Distance(transform.position, targets[i].gameObject.transform.position);
-                if (compareDist < currDist)
+                if(GameManager.instance.bodyTracker[i].GetHashCode() != gameObject.GetHashCode())
+                    targetHolder = GameManager.instance.bodyTracker[i];
+            }
+        }
+        
+        
+        if (targetHolder)
+        {
+            currDist = Vector3.Distance(transform.position, targetHolder.transform.position);
+            for (int i = 0; i < GameManager.instance.bodyTracker.Count; i++)
+            {
+                if (GameManager.instance.bodyTracker[i].GetHashCode() != gameObject.GetHashCode())
                 {
-                    //Make sure to pass that index gameObject to targetOBJ and its ITarget to target
-                    currTarget = targets[i].gameObject;
-                    target = targets[i].gameObject.GetComponent<ITarget>();
+                    compDist = Vector3.Distance(transform.position, GameManager.instance.bodyTracker[i].transform.position);
+                    if (compDist < currDist)
+                    {
+                        targetHolder = GameManager.instance.bodyTracker[i];
+                        target = targetHolder.GetComponent<ITarget>();
+                        break;
+                    }
                 }
             }
-            detCode = GetDetCode(currTarget);
-            return currTarget;
+            detCode = GetDetCode(targetHolder);
+            tarOBJhash = targetHolder.GetHashCode();
         }
-        else if (targets.Count == 1)
-        {
-            detCode = GetDetCode(targets[0]);
-            return targets[0].gameObject;
-        }
-        //detCode = 0;
-        return null;
+
+        return targetHolder;
     }
 
     int GetDetCode(GameObject target)
@@ -399,18 +461,18 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
         return 0;
     }
 
-    public void RemoveFromList(GameObject targetObj)
-    {
-        for (int i = 0; i < targets.Count; i++)
-        {
-            if (targetObj.GetHashCode() == targets[i].GetHashCode())
-            {
-                targets.Remove(targets[i]);
-                //target = null;
-                break;
-            }
-        }
-    }
+    //public void RemoveFromList(GameObject targetObj)
+    //{
+    //    for (int i = 0; i < targets.Count; i++)
+    //    {
+    //        if (targetObj.GetHashCode() == targets[i].GetHashCode())
+    //        {
+    //            targets.Remove(targets[i]);
+    //            //target = null;
+    //            break;
+    //        }
+    //    }
+    //}
 
     bool canSeePlayer()
     {
@@ -469,13 +531,14 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
         if (type != enemyType.security)
         {
             HP -= amount;
+            Debug.Log(gameObject.name.ToString() + " HP: " + HP.ToString());
 
             StartCoroutine(flashDamage());
-            if (targetOBJ)
-            {
-                targetOBJ = PrioritizeTarget();
-                FaceTarget();
-            }
+            //if (targetOBJ)
+            //{
+            //    targetOBJ = PrioritizeTarget(targetOBJ);
+            //    FaceTarget();
+            //}
 
             //dodgeNumber determines how often this enemy dodges
             if (HP % dodgeNumber == 0)
@@ -487,12 +550,18 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
             {
                 //He's died, so decrement
                 --GameManager.instance.enemyCount;
-                GameManager.instance.DeclareSelfDead(this.gameObject, this.type.ToString());
+                //GameManager.instance.DeclareSelfDead(this.gameObject, this.type.ToString());
                 //Destroy(gameObject);
-                
-                gameObject.SetActive(false);
+
+                gameObject.SetActive(false) ;
                 if (gameObject.activeSelf == false)
                     Debug.Log(gameObject.name.ToString() + " : DEAD");
+                for (int i = 0; i < GameManager.instance.bodyTracker.Count; ++i)
+                {
+                    if (gameObject.GetHashCode() == GameManager.instance.bodyTracker[i].GetHashCode())
+                        GameManager.instance.bodyTracker.Remove(GameManager.instance.bodyTracker[i]);
+                }
+                GameManager.instance.deadTracker.Add(gameObject);
             }
         }
     }
