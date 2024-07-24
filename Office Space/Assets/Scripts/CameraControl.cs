@@ -20,8 +20,8 @@ public class CameraControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!GameManager.instance.playerScript.GetPlayerStatusBool())
-        {
+        //if (!GameManager.instance.playerScript.GetPlayerStatusBool())
+        //{
             //get input
             float mouseY = Input.GetAxis("Mouse Y") * sensitivity * Time.deltaTime;
             float mouseX = Input.GetAxis("Mouse X") * sensitivity * Time.deltaTime;
@@ -39,7 +39,7 @@ public class CameraControl : MonoBehaviour
 
             //rotate the player on the y-axis
             transform.parent.Rotate(Vector3.up * mouseX);
-        }
+        //}
 
     }
 }

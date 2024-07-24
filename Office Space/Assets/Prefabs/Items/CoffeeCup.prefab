@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 76551961979014008}
   - component: {fileID: 7387428692115581037}
   - component: {fileID: 3125065426895973866}
-  - component: {fileID: 67422567513020551}
+  - component: {fileID: 6316290112122230595}
   m_Layer: 11
   m_Name: CoffeeCup
   m_TagString: Untagged
@@ -137,6 +137,7 @@ MonoBehaviour:
   bobSpeed: 3
   bobHeight: 0.3
   powerupEffect: {fileID: 11400000, guid: 4ca6404836521654ba62d54f0fc38381, type: 2}
+  weapon: {fileID: 0}
 --- !u!33 &7387428692115581037
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -189,8 +190,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &67422567513020551
-CapsuleCollider:
+--- !u!135 &6316290112122230595
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -207,8 +208,6 @@ CapsuleCollider:
   m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 1.2
-  m_Height: 4.85
-  m_Direction: 1
+  serializedVersion: 3
+  m_Radius: 2
   m_Center: {x: 0.00000011920929, y: 0.15000004, z: -0.00000011920929}

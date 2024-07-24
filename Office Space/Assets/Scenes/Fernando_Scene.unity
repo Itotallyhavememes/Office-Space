@@ -77240,6 +77240,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 777570342035633878, guid: b12fc89d88f620148bc37429b5399756, type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 4087
+      objectReference: {fileID: 0}
     - target: {fileID: 2129940969073064523, guid: b12fc89d88f620148bc37429b5399756, type: 3}
       propertyPath: m_Name
       value: Player
@@ -77255,6 +77259,10 @@ PrefabInstance:
     - target: {fileID: 7415348336417281650, guid: b12fc89d88f620148bc37429b5399756, type: 3}
       propertyPath: donutDropDistance
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8551271330002583447, guid: b12fc89d88f620148bc37429b5399756, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
