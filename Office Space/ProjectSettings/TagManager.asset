@@ -8,6 +8,8 @@ TagManager:
   - EnemyKO
   - Enemy
   - Player Spawn Pos
+  - FxTemporaire
+  - Donut King
   layers:
   - Default
   - TransparentFX
@@ -23,7 +25,7 @@ TagManager:
   - Item
   - Roof
   - Mini Map Indicator
-  - 
+  - AlwaysVisible
   - 
   - 
   - 

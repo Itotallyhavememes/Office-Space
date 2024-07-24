@@ -81,7 +81,7 @@ public class GameManager : MonoBehaviour
     public bool respawn;
 
     public bool canVend;
-    [SerializeField] public float VendingCooldown;
+    [SerializeField] float VendingCooldown;
 
 
     void Awake()
@@ -105,6 +105,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        canVend = true;
         if (currentMode == gameMode.DONUTKING2)
         {
             timerUI.SetActive(true);
@@ -140,6 +141,19 @@ public class GameManager : MonoBehaviour
             DisplayInfoScreen();
         }
     }
+
+    public void StartVendingMachineCooldown()
+    {
+        StartCoroutine(StartVendingCooldown());
+    }
+
+    IEnumerator StartVendingCooldown()
+    {
+        canVend = false;
+        yield return new WaitForSeconds(VendingCooldown);
+        canVend = true;
+    }
+
 
     IEnumerator EndGame()
     {

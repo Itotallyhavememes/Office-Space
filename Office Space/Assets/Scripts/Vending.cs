@@ -5,7 +5,7 @@ using UnityEngine;
 public class Vending : MonoBehaviour, IVend
 {
     [SerializeField] GameObject interactionSprite;
-    [SerializeField] Transform vendPos;
+    [SerializeField] GameObject vendPos;
     [SerializeField] GameObject[] vendingItems;
     bool playerInCollider;
 
@@ -36,7 +36,11 @@ public class Vending : MonoBehaviour, IVend
     }
 
     public void VendItem()
-    { 
-
+    {
+        Debug.Log(vendPos.transform.position);
+        Instantiate(vendingItems[Random.Range(0, vendingItems.Length)], vendPos.transform.position, vendPos.transform.rotation);
+        GameManager.instance.StartVendingMachineCooldown();
+        interactionSprite.SetActive(false);
+        playerInCollider = false;
     }
 }
