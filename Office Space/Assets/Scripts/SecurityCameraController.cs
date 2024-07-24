@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class SecurityCameraController : MonoBehaviour
 {
     [SerializeField] AudioSource aud;
     [SerializeField] float maxTime;
     [SerializeField] AudioClip detected;
+    [SerializeField] GameObject sphere;
 
     float totalTime;
     bool playerSpotted = false;
@@ -21,12 +23,19 @@ public class SecurityCameraController : MonoBehaviour
             totalTime += Time.deltaTime;
             if(totalTime > maxTime)
             {
-                alertEnemies();
+                updateEnemies(false);
             }
         }
         if (!playerSpotted)
         {
-            totalTime--;//Reduces time in camera but not instantly so if you go out and right back in it compounds
+            if (totalTime > 0)
+            {
+                totalTime--;//Reduces time in camera but not instantly so if you go out and right back in it compounds
+            }
+        }
+        if(totalTime == 0)
+        {
+            updateEnemies(true);
         }
     }
 
@@ -49,8 +58,23 @@ public class SecurityCameraController : MonoBehaviour
 
 
 
-    public void alertEnemies()
+    public void updateEnemies(bool isRoaming)
     {
-
+        List<GameObject> enemies = sphere.GetComponent<CameraSphere>().enemiesInRange;
+        for(int i = 0; i < enemies.Count; i++)
+        {
+            enemyAI enemy = enemies[i].GetComponent<enemyAI>();
+            if (!isRoaming)
+            {
+                enemy.playerSpotted = true;
+                NavMeshAgent agent = enemy.agent;
+                agent.SetDestination(gameObject.transform.position);
+            }
+            else
+            {
+                enemy.playerSpotted = false;
+                enemy.GoOnPatrol();
+            }
+        }
     }
 }
