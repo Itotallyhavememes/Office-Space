@@ -79,6 +79,10 @@ public class GameManager : MonoBehaviour
 
     public bool respawn;
 
+    public bool canVend;
+    [SerializeField] float VendingCooldown;
+
+
     void Awake()
     {
         instance = this;
@@ -134,6 +138,13 @@ public class GameManager : MonoBehaviour
         {
             DisplayInfoScreen();
         }
+    }
+
+    IEnumerator VendingItem()
+    {
+        canVend = false;
+        yield return new WaitForSeconds(VendingCooldown);
+        canVend = true;
     }
 
     IEnumerator EndGame()
