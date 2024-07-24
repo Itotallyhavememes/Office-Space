@@ -163,7 +163,14 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
         }
 
     }
-
+    private void OnTriggerEnter(Collider other)
+    {
+       
+        if(other == other.GetComponentInChildren<CapsuleCollider>())
+        {
+            takeDamage(1);
+        }
+    }
     void Movement()
     {
         if (controller.isGrounded)

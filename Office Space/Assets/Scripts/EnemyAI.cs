@@ -593,14 +593,13 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
 
     IEnumerator shoot()
     {
-        if (type != enemyType.security)
-        {
+        
             isShooting = true;
 
             Instantiate(bullet, shootPos.position, transform.rotation);
             yield return new WaitForSeconds(shootRate);
             isShooting = false;
-        }
+        
     }
 
     public GameObject declareOBJ(GameObject obj)

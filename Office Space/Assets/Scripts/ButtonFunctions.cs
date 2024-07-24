@@ -63,6 +63,11 @@ public class ButtonFunctions : MonoBehaviour
     {
         GameManager.instance.YouLose();
     }
+    public void respawn()
+    {
+        GameManager.instance.playerScript.spawnPlayer();
+        GameManager.instance.StateUnpause();
+    }
     public void startGame()
     {
         GameManager.instance.StateUnpause();
