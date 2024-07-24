@@ -5,6 +5,7 @@ using UnityEngine;
 public class Vending : MonoBehaviour, IVend
 {
     [SerializeField] GameObject interactionSprite;
+    [SerializeField] GameObject spotLight;
     [SerializeField] GameObject vendPos;
     [SerializeField] GameObject[] vendingItems;
     bool playerInCollider;
@@ -15,6 +16,11 @@ public class Vending : MonoBehaviour, IVend
         {
             VendItem();
         }
+
+        if (spotLight.activeSelf && !GameManager.instance.canVend)
+            spotLight.SetActive(false);
+        else if (!spotLight.activeSelf && GameManager.instance.canVend)
+            spotLight.SetActive(true);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -24,6 +30,12 @@ public class Vending : MonoBehaviour, IVend
             interactionSprite.SetActive(true);
             playerInCollider = true;
         }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("Player") && GameManager.instance.canVend && !interactionSprite.activeSelf)
+            interactionSprite.SetActive(true);
     }
 
     private void OnTriggerExit(Collider other)
@@ -40,6 +52,5 @@ public class Vending : MonoBehaviour, IVend
         Instantiate(vendingItems[Random.Range(0, vendingItems.Length)], vendPos.transform.position, vendPos.transform.rotation);
         GameManager.instance.StartVendingMachineCooldown();
         interactionSprite.SetActive(false);
-        playerInCollider = false;
     }
 }

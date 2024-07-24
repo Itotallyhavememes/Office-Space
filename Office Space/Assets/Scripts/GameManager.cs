@@ -84,6 +84,9 @@ public class GameManager : MonoBehaviour
     public bool canVend;
     [SerializeField] float VendingCooldown;
 
+    public int worldDonutCount;
+    public int worldItemCount;
+
 
     void Awake()
     {

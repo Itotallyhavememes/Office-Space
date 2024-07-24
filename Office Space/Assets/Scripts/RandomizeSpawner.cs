@@ -5,8 +5,12 @@ using UnityEngine.AI;
 
 public class RandomizeSpawner : MonoBehaviour
 {
+    [SerializeField] enum itemType { ITEM, OBJECTIVE }
+    [SerializeField] itemType type;
+
     [SerializeField] GameObject[] items;
     [SerializeField] float spawnTimer;
+    [SerializeField] int spawningThreshold;
     bool isSpawning;
 
     void Start()
@@ -17,8 +21,10 @@ public class RandomizeSpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!isSpawning)
-            StartCoroutine(SpawnItem());
+        if ((type == itemType.ITEM && GameManager.instance.worldItemCount < spawningThreshold) ||
+            (type == itemType.OBJECTIVE && GameManager.instance.worldDonutCount < spawningThreshold))
+            if (!isSpawning)
+                StartCoroutine(SpawnItem());
     }
 
     IEnumerator SpawnItem()
@@ -28,10 +34,15 @@ public class RandomizeSpawner : MonoBehaviour
         isSpawning = false;
 
         Vector3 randPos = Random.insideUnitSphere * 100;
-        randPos.y = 1f;
 
         NavMeshHit hit;
+
         NavMesh.SamplePosition(randPos, out hit, 100, 1);
-        Instantiate(items[Random.Range(0, items.Length)], hit.position, transform.rotation);
+
+        Vector3 spawnPos = hit.position;
+        spawnPos.y = 1;
+
+        Instantiate(items[Random.Range(0, items.Length)], spawnPos, transform.rotation);
+
     }
 }

@@ -18,6 +18,7 @@ public class ItemPickup : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        GameManager.instance.worldItemCount++;
         startPos = transform.position;
     }
 
@@ -48,14 +49,12 @@ public class ItemPickup : MonoBehaviour
                     {
                         if (GameManager.instance.playerScript.HP < GameManager.instance.playerScript.GetStartHP())
                         {
-                            Destroy(gameObject);
                             powerupEffect.ApplyBuff();
                         }
                         break;
                     }
                 case ItemType.speedBoost:
                     {
-                        Destroy(gameObject);
                         powerupEffect.ApplyBuff();
                         break;
                     }
@@ -65,7 +64,6 @@ public class ItemPickup : MonoBehaviour
                         {
                             GameManager.instance.playerScript.GetComponent<ItemThrow>().rubberBallCount++;
                             GameManager.instance.playerScript.GetComponent<ItemThrow>().updateGrenadeUI();
-                            Destroy(gameObject);
                         }
 
                         break;
@@ -73,13 +71,14 @@ public class ItemPickup : MonoBehaviour
                 case ItemType.weapon:
                     {
                         GameManager.instance.playerScript.GetWeaponStats(this.weapon);
-                        Destroy(gameObject);
 
                         break;
                     }
                 default:
                     break;
             }
+            GameManager.instance.worldItemCount--;
+            Destroy(gameObject);
 
 
         }
