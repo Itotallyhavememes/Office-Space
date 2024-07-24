@@ -46,7 +46,14 @@ public class RubberBall : MonoBehaviour
             IDamage dmg = nearbyObject.GetComponent<IDamage>();
             if (dmg != null && !hasDamaged)
             {
-                dmg.takeDamage(damageAmount);
+                Vector3 direction = nearbyObject.transform.position - transform.position;
+                float distance = direction.magnitude;
+                //Debug.Log("Distance from the explosion= " + distance);
+                int inflictedDamage = (int)(damageAmount * (1 - distance / blastRadius));
+                //Debug.Log("Damage value= " + inflictedDamage);
+                if (inflictedDamage <= 0)
+                    inflictedDamage = 1;
+                dmg.takeDamage(inflictedDamage);
             }
         }
 
@@ -55,7 +62,7 @@ public class RubberBall : MonoBehaviour
         {
             Rigidbody rb = nearbyObject.GetComponent<Rigidbody>();
 
-            if (rb != null)
+            if (rb != null && nearbyObject.name != "Player")
             {
                 Vector3 direction = nearbyObject.transform.position - transform.position;
                 float distance = direction.magnitude;

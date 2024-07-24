@@ -26,15 +26,15 @@ public class Damage : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(type != damageType.item)
+        if (type != damageType.item)
         {
             if (other.isTrigger)
-            return;
+                return;
 
-        IDamage dmg = other.GetComponent<IDamage>();
+            IDamage dmg = other.GetComponent<IDamage>();
 
-        if (dmg != null && !hasDamaged)
-            dmg.takeDamage(damageAmount);
+            if (dmg != null && !hasDamaged)
+                dmg.takeDamage(damageAmount);
 
             if (type == damageType.stream || type == damageType.projectile)
             {
@@ -47,7 +47,7 @@ public class Damage : MonoBehaviour
     private void OnDestroy()
     {
 
-            Instantiate(GameManager.instance.playerScript.weaponList[GameManager.instance.playerScript.GetSelectedWeaponIndex()].hitEffect, transform.position, Quaternion.identity);
-        
+        Instantiate(GameManager.instance.playerScript.weaponList[GameManager.instance.playerScript.GetSelectedWeaponIndex()].hitEffect, transform.position, Quaternion.identity);
+
     }
 }
