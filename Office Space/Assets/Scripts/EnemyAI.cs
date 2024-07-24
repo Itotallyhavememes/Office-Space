@@ -1,3 +1,4 @@
+using Autodesk.Fbx;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -106,6 +107,7 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
         if(type != enemyType.security)
             GameManager.instance.AddToTracker(this.gameObject);
         isTargetDead = false;
+        agent.stoppingDistance = 0;
     }
 
     // Update is called once per frame
@@ -162,7 +164,7 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
                     FaceTarget();
                 if (!isShooting)
                     StartCoroutine(shoot());
-                agent.stoppingDistance = stoppingDistOrig;
+                //agent.stoppingDistance = stoppingDistOrig;
             }
             else
             {
@@ -510,7 +512,8 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
 
             if (angleToTarget <= viewAngle && canSee)
             {
-                agent.stoppingDistance = stoppingDistOrig;
+                if(type!=enemyType.security)
+                    agent.stoppingDistance = stoppingDistOrig;
                 agent.SetDestination(targetOBJ.transform.position);
                 canTarget = true;
                 anim.SetBool("Aiming", true);
@@ -593,7 +596,11 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
 
     IEnumerator shoot()
     {
+
         if (type != enemyType.security)
+
+        if(type!= enemyType.security)
+
         {
             isShooting = true;
 
@@ -601,6 +608,10 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
             yield return new WaitForSeconds(shootRate);
             isShooting = false;
         }
+
+            
+        
+
     }
 
     public GameObject declareOBJ(GameObject obj)
