@@ -120,9 +120,12 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
         float agentSpeed = agent.velocity.normalized.magnitude;
         anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), agentSpeed, Time.deltaTime * animTransitSpeed));
 
-        if (numOfTargets > 0)
-            targetInRange = true;
-        else targetInRange = false;
+        if (type != enemyType.security)
+        {
+            if (numOfTargets > 0)
+                targetInRange = true;
+            else targetInRange = false;
+        }
 
         if (GameManager.instance.PriorityPoint.Count > 0)
             destPriority = GetPriorityPoint();
