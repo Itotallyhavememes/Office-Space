@@ -3593,7 +3593,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &723279941977103512
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4378,6 +4378,7 @@ MonoBehaviour:
   timerUI: {fileID: 2127334586548743669}
   timerText: {fileID: 7642111384215667028}
   donutCountUI: {fileID: 42499501396447299}
+  respawnTime: 0
   scoreBoardPlacementsText: {fileID: 3357373566320153875}
   scoreBoardNamesText: {fileID: 5205546297152942793}
   scoreBoardScoreText: {fileID: 4969543179145884001}
@@ -4388,7 +4389,8 @@ MonoBehaviour:
   checkPointPos: {fileID: 3686845981990852497}
   retryAmount: 0
   grenadeStack: {fileID: 322348989249936782}
-  PriorityPoint: {fileID: 0}
+  PriorityPoint:
+  - {fileID: 0}
   playerHPBar: {fileID: 238028663170282827}
   playerAmmoBar: {fileID: 1316860190791020327}
   damageFlash: {fileID: 7037176498022196109}
