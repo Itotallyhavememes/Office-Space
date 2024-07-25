@@ -475,6 +475,7 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
                 Instantiate(donutDropItem, transform.position + randDropPos, donutDropItem.transform.rotation);
                 GameManager.instance.UpdateDonutCount(gameObject, -1);
             }
+            GameManager.instance.DeclareSelfDead(gameObject);
         }
     }
 
