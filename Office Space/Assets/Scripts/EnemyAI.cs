@@ -1,4 +1,4 @@
-using Autodesk.Fbx;
+//using Autodesk.Fbx;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -87,6 +87,8 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
     bool canTarget;
     bool isTargetDead;
     [SerializeField] int numOfTargets;
+    public Transform destPriority;
+    bool hasPriority;
     //bool hasPriority;
  
 
@@ -108,6 +110,7 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
             GameManager.instance.AddToTracker(this.gameObject);
         isTargetDead = false;
         agent.stoppingDistance = 0;
+        destPriority = null;
     }
 
     // Update is called once per frame
@@ -116,31 +119,19 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
         float agentSpeed = agent.velocity.normalized.magnitude;
         anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), agentSpeed, Time.deltaTime * animTransitSpeed));
 
-        //if (targets.Count == 1)
-        //{
-        //    if (targets[0] == null && !targetOBJ)
-        //    {
-        //        targets.Remove(targets[0].gameObject);
-        //        if (targetInRange == true)
-        //            targetInRange = false;
-        //    }
-        //    else
-        //    {
-        //        CleanUpList();
-        //        targetOBJ = PrioritizeTarget();
-        //    }
-        //}
         if (numOfTargets > 0)
             targetInRange = true;
         else targetInRange = false;
 
+        if (GameManager.instance.PriorityPoint.Count > 0)
+            destPriority = GetPriorityPoint();
+        if (GameManager.instance.PriorityPoint.Count == 0 && destPriority)
+            destPriority = null;
+       
+
         if (targetInRange)
         {
-            //if (targets.Count > 1 && targetOBJ == null)
-            //{
-            //    CleanUpList();
-            //    targetOBJ = PrioritizeTarget();
-            //}
+
             for (int i = 0; i < GameManager.instance.deadTracker.Count; ++i)
             {
                 if (tarOBJhash == GameManager.instance.deadTracker[i].GetHashCode())
@@ -174,54 +165,40 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
                     {
                         if (!isRoaming)
                         {
-                            if (GameManager.instance.PriorityPoint == null)
+                            if (GameManager.instance.PriorityPoint.Count > 0)
                             {
-                                StartCoroutine(Roam());
-                                //StopCoroutine(GoToPOI());
+                                if(destPriority != null)
+                                    StartCoroutine(GoToPOI());
+                                
                             }
                             else
                             {
-                                StartCoroutine(GoToPOI());
-                                //StopCoroutine(Roam());
+                                StartCoroutine(Roam());
                             }
                         }
-                        //if (!hasPriority && GameManager.instance.PriorityPoint != null)
-                        //    StartCoroutine(GoToPOI());
-                        //if (!isRoaming && GameManager.instance.PriorityPoint == null)
-                        //    StartCoroutine(Roam());
 
-                        //if (!isRoaming)
-                        //    StartCoroutine(Roam());
                     }
                     else if (type == enemyType.security && !isPatrol)
                         StartCoroutine(Patrol());
                 }
-            }
+           }
         }
-        else if (!targetInRange)
+        else if (!targetInRange/* && !destPriority*/)
         {
             if (type != enemyType.security)
             {
                 if (!isRoaming)
                 {
-                    if (GameManager.instance.PriorityPoint == null)
+                    if (GameManager.instance.PriorityPoint.Count > 0)
                     {
-                        StartCoroutine(Roam());
-                        //StopCoroutine(GoToPOI());
+                        if (destPriority != null)
+                            StartCoroutine(GoToPOI());
                     }
                     else
                     {
-                        StartCoroutine(GoToPOI());
-                        //StopCoroutine(Roam());
+                        StartCoroutine(Roam());
                     }
                 }
-                //if (!hasPriority && GameManager.instance.PriorityPoint != null)
-                //    StartCoroutine(GoToPOI());
-                //if (!isRoaming && GameManager.instance.PriorityPoint == null)
-                //    StartCoroutine(Roam());
-
-                //if(!isRoaming)
-                //    StartCoroutine (Roam());
             }
             else
             {
@@ -293,11 +270,11 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
 
     IEnumerator GoToPOI()
     {
-        Debug.Log(gameObject.name.ToString() + "says: Heading For - " + GameManager.instance.PriorityPoint.name.ToString());
+        //Debug.Log(gameObject.name.ToString() + "says: Heading For - " + GameManager.instance.PriorityPoint.name.ToString());
         //hasPriority = true;
         yield return new WaitForSeconds(0.1f);
         agent.stoppingDistance = 0;
-        agent.SetDestination(GameManager.instance.PriorityPoint.position);
+        agent.SetDestination(destPriority.position);
         //hasPriority = false;
     }
 
@@ -451,6 +428,27 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
         return targetHolder;
     }
 
+    public Transform GetPriorityPoint()
+    {
+        Transform closestPoint = null;
+        if (GameManager.instance.PriorityPoint.Count > 0)
+        {
+            Transform enemyT = gameObject.transform;
+            closestPoint = GameManager.instance.PriorityPoint[0];
+            float compDist = Vector3.Distance(enemyT.position, closestPoint.position);
+            float newComp = 0.0f;
+           for(int i = 0; i < GameManager.instance.PriorityPoint.Count; ++i)
+            {
+                newComp = Vector3.Distance(enemyT.position, GameManager.instance.PriorityPoint[i].position);
+                if (compDist > newComp)
+                {
+                    compDist = newComp;
+                    closestPoint = GameManager.instance.PriorityPoint[i];
+                }
+            }
+        }
+        return closestPoint;
+    }
     int GetDetCode(GameObject target)
     {
         if (target != null)
