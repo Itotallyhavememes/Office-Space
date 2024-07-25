@@ -66869,6 +66869,14 @@ PrefabInstance:
       propertyPath: HP
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 7415348336417281650, guid: b12fc89d88f620148bc37429b5399756, type: 3}
+      propertyPath: audSlide
+      value: 
+      objectReference: {fileID: 8300000, guid: 225e326217f04ab4081f540339fe7a74, type: 3}
+    - target: {fileID: 7415348336417281650, guid: b12fc89d88f620148bc37429b5399756, type: 3}
+      propertyPath: audSlideVol
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 8551271330002583447, guid: b12fc89d88f620148bc37429b5399756, type: 3}
       propertyPath: m_IsTrigger
       value: 1
@@ -80111,7 +80119,7 @@ MonoBehaviour:
   modeSelection: 1
   timerTime: 5
   menuActive: {fileID: 0}
-  menuScore: {fileID: 0}
+  menuScore: {fileID: 2483873016321799833}
   scoreDisplay: {fileID: 2741175268034601217}
   menuPause: {fileID: 2764977255120691466}
   menuWin: {fileID: 3702295451210924431}
@@ -83041,7 +83049,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!222 &7474728511293410463
 CanvasRenderer:
   m_ObjectHideFlags: 0

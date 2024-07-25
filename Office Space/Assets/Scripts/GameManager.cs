@@ -122,10 +122,15 @@ public class GameManager : MonoBehaviour
             timerUI.SetActive(true);
             StartCoroutine(Timer());
         }
-        playerHPStart = playerScript.HP;
+
+        if (player != null)
+            playerHPStart = playerScript.HP;
+        else if (player == null)
+            playerHPStart = 5;
+
         if (SceneManager.GetSceneByName("Title") == SceneManager.GetActiveScene())
         {
-            StateUnpause();
+            StatePause();
         }
 
     }
@@ -460,5 +465,9 @@ public class GameManager : MonoBehaviour
         Screen.fullScreen = isFullScreen;
     }
 
-   
+   public void GetNS_GoalScreen()
+    {
+        scoreBoardScoreText.text = (donutCountList[player.name] * 10).ToString();
+        ActivateMenu(menuScore);
+    }
 }

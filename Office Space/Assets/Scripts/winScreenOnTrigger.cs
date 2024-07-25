@@ -11,7 +11,7 @@ public class winScreenOnTrigger : MonoBehaviour
         if(other == playerCollider)
         {
             GameManager.instance.StatePause();
-            GameManager.instance.ActivateMenu(winScore);
+            GameManager.instance.GetNS_GoalScreen();
         }
     }
 

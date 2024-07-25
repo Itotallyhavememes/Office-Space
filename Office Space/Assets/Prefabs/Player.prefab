@@ -265,6 +265,7 @@ MonoBehaviour:
   crouchLevel: 0.3
   slideSpeed: 19
   slideLockoutTime: 3
+  slideCooldown: 0
   gravity: 22
   donutDropDistance: 2
   donutDropItem: {fileID: 7601297108038699415, guid: f70114bd10fc78f4b8b8e9fa300a851f, type: 3}
@@ -299,8 +300,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 4a1b3aa2c10952947961aa621eacbf94, type: 3}
   - {fileID: 8300000, guid: 9ae6b82add3fb5f4c88db0fbfe88b9e7, type: 3}
   audJumpVol: 0.5
-  audSlide: {fileID: 0}
-  audSlideVol: 0
+  audSlide: {fileID: 8300000, guid: 225e326217f04ab4081f540339fe7a74, type: 3}
+  audSlideVol: 0.5
   audDamage:
   - {fileID: 8300000, guid: 1a0f51f03789b0049bf3ed7975f2a5ec, type: 3}
   - {fileID: 8300000, guid: f469e0090cbb7694f8656a816e968478, type: 3}
