@@ -114,6 +114,7 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
     }
 
     // Update is called once per frame
+    //FOR ALL
     void Update()
     {
         float agentSpeed = agent.velocity.normalized.magnitude;
@@ -151,11 +152,11 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
                 Debug.Log(gameObject.name.ToString() + " says: My New Target-> " + targetOBJ.name.ToString());
             if (canSeePlayer())
             {
+                Debug.Log("I see you!");
                 if (agent.remainingDistance <= agent.stoppingDistance)
                     FaceTarget();
                 if (!isShooting)
                     StartCoroutine(shoot());
-                //agent.stoppingDistance = stoppingDistOrig;
             }
             else
             {
@@ -176,7 +177,6 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
                                 StartCoroutine(Roam());
                             }
                         }
-
                     }
                     else if (type == enemyType.security && !isPatrol)
                         StartCoroutine(Patrol());
@@ -208,6 +208,7 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
         }
     }
 
+    //FOR BOTH
     void FaceTarget()
     {
         TargetDIR.y = 0;
@@ -230,6 +231,7 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
     }
     // PATROL POINT CAN NOT BE A CHALDEN OF ENEMY
     // PATROL POINT MUST BE DIG INTO POSITIONS IN EDIT 
+    //ONLY FOR SECURITY
     public void GoOnPatrol()
     {
 
@@ -249,6 +251,8 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
             nextPosIndex = 0;
         }
     }
+
+    //ONLY FOR !SECURITY
     IEnumerator Roam()
     {
         if (type != enemyType.security)
@@ -268,6 +272,7 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
         }
     }
 
+    //FOR BOTH
     IEnumerator GoToPOI()
     {
         //Debug.Log(gameObject.name.ToString() + "says: Heading For - " + GameManager.instance.PriorityPoint.name.ToString());
@@ -279,112 +284,74 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
     }
 
     //if potential target enters Sphere
+    //FOR BOTH
     public void OnTriggerEnter(Collider other)
     {
-        //if (other == other.GetComponentInChildren<CapsuleCollider>())
-        if (numOfTargets < GameManager.instance.bodyTracker.Count)
+        target = other.GetComponent<ITarget>();
+        if (this.type == enemyType.security)
         {
-            target = other.GetComponent<ITarget>();
-            if (target != null && other != this)
+            if (target != null && other.CompareTag("Player"))
             {
-
-                if (numOfTargets == 0)
+                targetOBJ = other.gameObject;
+                targetInRange = true;
+                detCode = 1;
+            }
+        }
+        else
+        {
+            if (numOfTargets < GameManager.instance.bodyTracker.Count)
+            {
+                if (target != null && other != this)
                 {
-                    targetOBJ = other.gameObject;
-                    ++numOfTargets;
-                }
-                else
-                {
-                    ++numOfTargets;
-                    targetOBJ = PrioritizeTarget(targetOBJ);
-                }
-                //targetInRange = true;
-                //TargetDIR = targetOBJ.transform.position - transform.position;
-                //    targetOBJ = other.gameObject;
-                //    targetInRange = true;
-                //    TargetDIR = targetOBJ.transform.position - transform.position;
-                //}
-                ////System for holding multiple targets
-                //if (type != enemyType.security)
-                //{
-                //bool canAdd = false;
-                //if (targetInRange && targetOBJ)
-                //{
-                //    if (targets.Count == 0)
-                //        canAdd = true;
-                //    else if (targets.Count > 0)
-                //    {
-                //        CleanUpList();
-                //        for (int i = 0; i < targets.Count; ++i)
-                //        {
-                //            if (targets[i].GetHashCode() == targetOBJ.GetHashCode())
-                //            {
-                //                canAdd = false;
-                //                break;
-                //            }
-                //            else
-                //            {
 
-                //                canAdd = true;
-                //            }
-                //        }
-                //    }
-                //}
-                ////Time to add
-                //if (canAdd)
-                //{
-                //    targets.Add(targetOBJ);
-                //    targetOBJ = PrioritizeTarget();
-                //}
+                    if (numOfTargets == 0)
+                    {
+                        targetOBJ = other.gameObject;
+                        ++numOfTargets;
+                    }
+                    else
+                    {
+                        ++numOfTargets;
+                        targetOBJ = PrioritizeTarget(targetOBJ);
+                    }
+                }
             }
         }
     }
-    //private void OnTriggerStay(Collider other)
-    //{
-    //    //targetOBJ = PrioritizeTarget(targetOBJ);
-    //}
+
     //If target exits Sphere
+    //FOR BOTH
     public void OnTriggerExit(Collider other)
     {
-        //if (other == other.GetComponentInChildren<CapsuleCollider>() )
-        if (numOfTargets > 0)
+        if (this.type == enemyType.security)
         {
-            target = other.GetComponent<ITarget>();
-            if (target != null && other != this)
+            if (other.CompareTag("Player"))
             {
+                targetOBJ = null;
+                targetInRange = false;
+                TargetDIR = Vector3.zero;
+                detCode = 0;
+            }
+        }
+        else
+        {
+            if (numOfTargets > 0)
+            {
+                target = other.GetComponent<ITarget>();
+                if (target != null && other != this)
+                {
 
-                --numOfTargets;
-                targetOBJ = PrioritizeTarget(targetOBJ);
-                //    RemoveFromList(other.gameObject);
-                //    if (targets.Count == 0)
-                //    {
-                //        targetOBJ = null;
-                //        target = null;
-                //        targetInRange = false;
-                //        agent.stoppingDistance = 0;
-                //        TargetDIR = Vector3.zero;
-                //    }
-                //    else if (targets.Count > 0)
-                //    {
-                //        targetOBJ = PrioritizeTarget();
-                //    }
+                    --numOfTargets;
+                    targetOBJ = PrioritizeTarget(targetOBJ);
+                }
             }
         }
     }
 
-    //Goes through list and checks to see if anything is null
-    //If so, delete it from the list
-    //public void CleanUpList()
-    //{
-    //    for (int i = 0; i < targets.Count; ++i)
-    //    {
-    //        if (targets[i].gameObject == null)
-    //            targets.Remove(targets[i].gameObject);
-    //    }
-    //}
 
     //takes in currTarget and checks to see if currTarget is closest in relation to GameManager's bodyTracker
     //if it is, return currTarget, if not: find the closest and return that as priority
+    //ONLY FOR !SECURITY
     public GameObject PrioritizeTarget(GameObject currTarget)
     {
         
@@ -461,19 +428,6 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
         return 0;
     }
 
-    //public void RemoveFromList(GameObject targetObj)
-    //{
-    //    for (int i = 0; i < targets.Count; i++)
-    //    {
-    //        if (targetObj.GetHashCode() == targets[i].GetHashCode())
-    //        {
-    //            targets.Remove(targets[i]);
-    //            //target = null;
-    //            break;
-    //        }
-    //    }
-    //}
-
     bool canSeePlayer()
     {
         if (targetOBJ)
@@ -535,12 +489,6 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
             Debug.Log(gameObject.name.ToString() + " HP: " + HP.ToString());
 
             StartCoroutine(flashDamage());
-            //if (targetOBJ)
-            //{
-            //    targetOBJ = PrioritizeTarget(targetOBJ);
-            //    FaceTarget();
-            //}
-
             //dodgeNumber determines how often this enemy dodges
             if (HP % dodgeNumber == 0)
                 dodgeThreat();
@@ -551,8 +499,6 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
             {
                 //He's died, so decrement
                 --GameManager.instance.enemyCount;
-                //GameManager.instance.DeclareSelfDead(this.gameObject, this.type.ToString());
-                //Destroy(gameObject);
 
                 gameObject.SetActive(false) ;
                 if (gameObject.activeSelf == false)
