@@ -3552,7 +3552,7 @@ MonoBehaviour:
   bodyTracker: []
   deadTracker: []
   spawnPoints: []
-  modeSelection: 0
+  modeSelection: 2
   timerTime: 0
   menuActive: {fileID: 2010156821813496173}
   menuScore: {fileID: 0}
@@ -3580,7 +3580,8 @@ MonoBehaviour:
   checkPointPos: {fileID: 0}
   retryAmount: 0
   grenadeStack: {fileID: 871045357}
-  PriorityPoint: {fileID: 0}
+  PriorityPoint:
+  - {fileID: 0}
   playerHPBar: {fileID: 1473139986}
   playerAmmoBar: {fileID: 1473139986}
   damageFlash: {fileID: 1310208428}

@@ -17,10 +17,14 @@ public class ButtonFunctions : MonoBehaviour
     public void startDoughnutKing()
     {
         SceneManager.LoadScene("Donut King 2.0");
+        GameManager.currentMode = GameManager.gameMode.DONUTKING2;
+        GameManager.instance.StateUnpause();
     }
     public void startNightShift()
     {
         SceneManager.LoadScene("Corporate Espionage");
+        GameManager.currentMode = GameManager.gameMode.NIGHTSHIFT;
+        GameManager.instance.StateUnpause();
     }
 
     public void restart()

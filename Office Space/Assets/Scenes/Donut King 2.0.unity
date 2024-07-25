@@ -188,6 +188,18 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 488392131920817606, guid: 367bfda2e623faa4397151ee5ca77e3f, type: 3}
+      propertyPath: disMax
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 488392131920817606, guid: 367bfda2e623faa4397151ee5ca77e3f, type: 3}
+      propertyPath: rangeMax
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 488392131920817606, guid: 367bfda2e623faa4397151ee5ca77e3f, type: 3}
+      propertyPath: rangeMin
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 488392131920817606, guid: 367bfda2e623faa4397151ee5ca77e3f, type: 3}
       propertyPath: spawnTimer
       value: 2
       objectReference: {fileID: 0}
@@ -321,6 +333,10 @@ PrefabInstance:
       propertyPath: playerSpawn
       value: 
       objectReference: {fileID: 878626381}
+    - target: {fileID: 5554198125853194504, guid: f0ab30acf69428142ac55986442a519f, type: 3}
+      propertyPath: modeSelection
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5554198125853194504, guid: f0ab30acf69428142ac55986442a519f, type: 3}
       propertyPath: VendingCooldown
       value: 5
@@ -1235,55 +1251,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 48db362738f2d6744a93b6bd49ed02af, type: 3}
---- !u!1 &1955309588
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1955309590}
-  - component: {fileID: 1955309589}
-  m_Layer: 0
-  m_Name: Spawner
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1955309589
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1955309588}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b484844ed501614a8d229eef072662e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  type: 1
-  items:
-  - {fileID: 7601297108038699415, guid: f70114bd10fc78f4b8b8e9fa300a851f, type: 3}
-  spawnTimer: 3
-  spawningThreshold: 10
---- !u!4 &1955309590
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1955309588}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -13.658995, y: 19.678213, z: -0.37836936}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -1293,7 +1260,6 @@ SceneRoots:
   - {fileID: 589380998}
   - {fileID: 406180180}
   - {fileID: 1508444078}
-  - {fileID: 1955309590}
   - {fileID: 895499090}
   - {fileID: 113915148}
   - {fileID: 1578365528}
