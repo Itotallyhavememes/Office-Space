@@ -92,6 +92,8 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
     public Transform destPriority;
     bool hasPriority;
     //bool hasPriority;
+
+    int origHP;
  
 
 
@@ -113,6 +115,7 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
         isTargetDead = false;
         agent.stoppingDistance = 0;
         destPriority = null;
+        origHP = HP;
     }
 
     // Update is called once per frame
@@ -520,7 +523,7 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
                 GameManager.instance.deadTracker.Add(gameObject);//
                 //GameManager.instance.CleanUpDictionary(gameObject);
                 
-                SetHP(10);
+                ResetHP();
 
                
 
@@ -602,8 +605,15 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
         return true;
     }
 
-    public void SetHP(int hp)
+    public void ResetHP()
     {
-        HP = hp;
+        HP = origHP;
+    }
+
+    public void HealHP(int amount)
+    {
+        HP += amount;
+        if (HP > origHP)
+            HP = origHP;
     }
 }

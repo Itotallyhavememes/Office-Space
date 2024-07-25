@@ -267,7 +267,7 @@ MonoBehaviour:
   slideLockoutTime: 3
   slideCooldown: 0
   gravity: 22
-  donutDropDistance: 2
+  donutDropDistance: 1
   donutDropItem: {fileID: 7601297108038699415, guid: f70114bd10fc78f4b8b8e9fa300a851f, type: 3}
   deathCamera: {fileID: 777570342035633878}
   starterWeapon: {fileID: 11400000, guid: a472b3a2a9729e141a2907916827da95, type: 2}

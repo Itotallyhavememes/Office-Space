@@ -73,7 +73,11 @@ public class DonutPickUp : MonoBehaviour
                 {
                     GameManager.instance.playerScript.Munch(pickupSFX, audPickupVol);
                     GameManager.instance.playerScript.HealthPickup(); // Heals player by HpRestoreAmount 
-                    GameManager.instance.worldDonutCount--;
+                    //GameManager.instance.worldDonutCount--;
+                }
+                else
+                {
+                    compare.GetComponent<enemyAI>().HealHP(HpRestoreAmount);
                 }
                 GameManager.instance.TallyActiveScores();
                 Destroy(gameObject);
