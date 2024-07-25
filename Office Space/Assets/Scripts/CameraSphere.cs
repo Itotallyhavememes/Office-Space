@@ -8,14 +8,21 @@ public class CameraSphere : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!other.CompareTag("Player"))
+        if (!other.CompareTag("Player") && other.GetComponent<enemyAI>() != null)
         {
+            for(int i = 0; i < enemiesInRange.Count; i++)
+            {
+                if(other.gameObject.name == enemiesInRange[i].gameObject.name)
+                {
+                    return;
+                }
+            }
             enemiesInRange.Add(other.gameObject);
         }
     }
     private void OnTriggerExit(Collider other)
     {
-        if (!other.CompareTag("Player"))
+        if (!other.CompareTag("Player") && other.GetComponent<enemyAI>() != null)
         {
             enemiesInRange.Remove(other.gameObject);
         }
