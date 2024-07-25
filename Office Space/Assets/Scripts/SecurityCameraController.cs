@@ -1,7 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 
 public class SecurityCameraController : MonoBehaviour
 {
@@ -13,7 +11,6 @@ public class SecurityCameraController : MonoBehaviour
     float totalTime;
     bool playerSpotted = false;
 
-
     // Update is called once per frame
     void Update()
     {
@@ -21,7 +18,7 @@ public class SecurityCameraController : MonoBehaviour
         {
 
             totalTime += Time.deltaTime;
-            if(totalTime > maxTime)
+            if (totalTime > maxTime)
             {
                 updateEnemies(false);
             }
@@ -33,7 +30,7 @@ public class SecurityCameraController : MonoBehaviour
                 totalTime--;//Reduces time in camera but not instantly so if you go out and right back in it compounds
             }
         }
-        if(totalTime == 0)
+        if (totalTime <= 0)
         {
             updateEnemies(true);
         }
@@ -56,24 +53,25 @@ public class SecurityCameraController : MonoBehaviour
         }
     }
 
-
-
     public void updateEnemies(bool isRoaming)
     {
         List<GameObject> enemies = sphere.GetComponent<CameraSphere>().enemiesInRange;
-        for(int i = 0; i < enemies.Count; i++)
+        if (enemies.Count > 0)
         {
-            enemyAI enemy = enemies[i].GetComponent<enemyAI>();
-            if (!isRoaming)
+            for (int i = 0; i < enemies.Count; i++)
             {
-                //enemy.playerSpotted = true;
-                NavMeshAgent agent = enemy.agent;
-                agent.SetDestination(gameObject.transform.position);
-            }
-            else
-            {
-                //enemy.playerSpotted = false;
-                enemy.GoOnPatrol();
+                enemyAI enemy = enemies[i]?.GetComponent<enemyAI>();
+                if (enemy != null)
+                {
+                    if (!isRoaming)
+                    {
+                        GameManager.instance.PriorityPoint.Add(gameObject.transform);
+                    }
+                    else
+                    {
+                        GameManager.instance.PriorityPoint.Remove(gameObject.transform);
+                    }
+                }
             }
         }
     }

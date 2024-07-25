@@ -298,19 +298,19 @@ public class GameManager : MonoBehaviour
 
     public void UpdateDonutCount(GameObject donutCollector, int amount)
     {
-        donutCountList[donutCollector.name] += amount;
+            donutCountList[donutCollector.name] += amount;
 
-        //For Debugging purposes:
-        foreach (KeyValuePair<string, int> pair in donutCountList)
-        {
-            Debug.Log(pair.Key.ToString() + " HAS: " + pair.Value.ToString());
-        }
-        donutCountText.text = donutCountList[player.name].ToString();
-
+            //For Debugging purposes:
+            foreach (KeyValuePair<string, int> pair in donutCountList)
+            {
+                Debug.Log(pair.Key.ToString() + " HAS: " + pair.Value.ToString());
+            }
+            donutCountText.text = donutCountList[player.name].ToString();
     }
 
     public void DonutDeclarationDay(GameObject donutOBJ)
     {
+        if(GameManager.currentMode == gameMode.DONUTKING2)
             PriorityPoint.Add(donutOBJ.transform);
     }
 
