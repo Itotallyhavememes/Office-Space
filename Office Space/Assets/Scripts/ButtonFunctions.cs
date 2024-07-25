@@ -52,6 +52,8 @@ public class ButtonFunctions : MonoBehaviour
     public void returnToTittle()
     {
         SceneManager.LoadScene("Title");
+
+        GameManager.currentMode = GameManager.gameMode.TITLE;
     }
 
     public void retryAmountButtonConfirm()

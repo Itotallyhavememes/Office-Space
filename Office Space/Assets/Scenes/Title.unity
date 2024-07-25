@@ -3596,6 +3596,8 @@ MonoBehaviour:
   respawn: 0
   canVend: 0
   VendingCooldown: 0
+  worldDonutCount: 0
+  worldItemCount: 0
 --- !u!224 &1578739006288999093
 RectTransform:
   m_ObjectHideFlags: 0

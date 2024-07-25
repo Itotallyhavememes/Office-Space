@@ -14,7 +14,7 @@ using Unity.VisualScripting;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
-    public enum gameMode { DONUTKING2, NIGHTSHIFT }
+    public enum gameMode { DONUTKING2, NIGHTSHIFT, TITLE }
     public static gameMode currentMode;
     //Dictionary to hold player and NE_enemies along with live/dead stats
 
