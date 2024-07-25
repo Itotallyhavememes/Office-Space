@@ -223,6 +223,7 @@ public class GameManager : MonoBehaviour
     public void AddToTracker(GameObject self)
     {
         bool canAdd = true;
+
         
         for (int i = 0; i < bodyTracker.Count; i++)
         {
@@ -232,6 +233,8 @@ public class GameManager : MonoBehaviour
                 break;
             }
         }
+        if(donutCountList.ContainsKey(self.name))
+            canAdd = false;
         if (canAdd)
         { 
             bodyTracker.Add(self);
@@ -255,13 +258,17 @@ public class GameManager : MonoBehaviour
         deadTracker.Add(self);
     }
 
-
+    //public void CleanUpDictionary(GameObject self)
+    //{
+    //    if(donutCountList.ContainsKey(self.name))
+    //        donutCountList.Remove(self.name);
+    //}
 
     //Method called in enemySpawner that returns the first entry in deadTracker
     public IEnumerator SpawnTheDead()
     {
         yield return new WaitForSeconds(respawnTime);
-        int spawnIndex = Random.Range(0, deadTracker.Count);
+        int spawnIndex = Random.Range(0, donutCountList.Count);
         if (deadTracker[0].GetHashCode() == player.GetHashCode())
         {
             playerSpawn.transform.position = spawnPoints[spawnIndex].transform.position;
@@ -271,13 +278,11 @@ public class GameManager : MonoBehaviour
         {
             deadTracker[0].transform.position = spawnPoints[spawnIndex].transform.position;
             deadTracker[0].SetActive(true);
-            //deadTracker[0].GetComponent<enemyAI>()
-            //deadTracker[0].transform;
         }
-        AddToTracker(deadTracker[0]);
+        bodyTracker.Add(deadTracker[0]);
         deadTracker.RemoveAt(0); //pop front
 
-
+        coroutine = null;
     }
     //method to search through tracker and return object
     public GameObject ReturnEntity(GameObject target)

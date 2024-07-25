@@ -175,7 +175,6 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
                             {
                                 if(destPriority != null)
                                     StartCoroutine(GoToPOI());
-                                
                             }
                             else
                             {
@@ -503,17 +502,19 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
 
             if (HP <= 0)
             {
+                //int indexx = 0;
                 //He's died, so decrement
                 --GameManager.instance.enemyCount;
-                gameObject.SetActive(false) ;
-                if (gameObject.activeSelf == false)
-                    Debug.Log(gameObject.name.ToString() + " : DEAD");
                 for (int i = 0; i < GameManager.instance.bodyTracker.Count; ++i)
                 {
                     if (gameObject.GetHashCode() == GameManager.instance.bodyTracker[i].GetHashCode())
+                    {
                         GameManager.instance.bodyTracker.Remove(GameManager.instance.bodyTracker[i]);
+                    }
                 }
                 GameManager.instance.deadTracker.Add(gameObject);//
+                //GameManager.instance.CleanUpDictionary(gameObject);
+                
                 SetHP(10);
 
                
@@ -533,9 +534,10 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
                 }
 
 
-                
-                
+
+
                 //GameManager.instance.DeclareSelfDead(gameObject);//
+                gameObject.SetActive(false);
             }
         }
     }

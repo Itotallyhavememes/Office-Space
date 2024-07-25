@@ -487,6 +487,7 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
                     GameManager.instance.UpdateDonutCount(gameObject, -1);
                 }
                 GameManager.instance.DeclareSelfDead(gameObject);
+                //GameManager.instance.donutCountList.Remove(gameObject.name);
             }
         }
     }
