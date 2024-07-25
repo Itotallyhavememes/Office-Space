@@ -71,6 +71,8 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
 
     //TIM CODE
     //public int enemyDonutCount;
+    [SerializeField] int donutDropDistance;
+    [SerializeField] GameObject donutDropItem;
     [SerializeField] int dodgeNumber;
     [SerializeField] int detCode;
     [SerializeField] GameObject targetOBJ;
@@ -491,7 +493,8 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
             HP -= amount;
             Debug.Log(gameObject.name.ToString() + " HP: " + HP.ToString());
 
-            StartCoroutine(flashDamage());
+            if (HP > 0) //Stops them from respawning with their flash color on
+                StartCoroutine(flashDamage());
             //dodgeNumber determines how often this enemy dodges
             if (HP % dodgeNumber == 0)
                 dodgeThreat();
@@ -511,11 +514,33 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
                     if (gameObject.GetHashCode() == GameManager.instance.bodyTracker[i].GetHashCode())
                         GameManager.instance.bodyTracker.Remove(GameManager.instance.bodyTracker[i]);
                 }
-                GameManager.instance.deadTracker.Add(gameObject);
+                GameManager.instance.deadTracker.Add(gameObject);//
+                SetHP(10);
+
+               
+
+                while (GameManager.instance.donutCountList[name] > 0)
+                {
+                    //creates sphere that's the size of roamDist and selects a random position
+                    Vector3 randDropPos = Random.insideUnitSphere * donutDropDistance;
+                    randDropPos.y = donutDropItem.transform.position.y;
+                    //Prevents getting null reference when creating random point
+                    NavMeshHit hit;
+                    //The "1" is in refernce to layer mask "1"
+                    NavMesh.SamplePosition(randDropPos, out hit, donutDropDistance, 1);
+                    Instantiate(donutDropItem, transform.position + randDropPos, donutDropItem.transform.rotation);
+                    GameManager.instance.UpdateDonutCount(gameObject, -1);
+                    
+                }
+
+
+                
+                
+                //GameManager.instance.DeclareSelfDead(gameObject);//
             }
         }
     }
-
+   
     void dodgeThreat()
     {
         FaceTarget();
@@ -569,5 +594,10 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
     public bool declareDeath()
     {
         return true;
+    }
+
+    public void SetHP(int hp)
+    {
+        HP = hp;
     }
 }

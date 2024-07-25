@@ -15,8 +15,7 @@ public class EnemySpawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //GameManager.instance.AddToSpawnList(gameObject);
-
+        GameManager.instance.AddToSpawnList(gameObject);
     }
 
     // Update is called once per frame
@@ -25,8 +24,8 @@ public class EnemySpawner : MonoBehaviour
 
     }
 
-    public void DonutKing2Spawner()
-    {
+    //public void DonutKing2Spawner()
+    //{
         //int rand = Random.Range(0, enemyPrefab.Length);
         //GameObject enemy = enemyPrefab[rand];
         //Instantiate(enemy, transform.position, Quaternion.identity);
@@ -34,7 +33,7 @@ public class EnemySpawner : MonoBehaviour
         //GameManager.instance.enemyCount++;
         
 
-    }
+    //}
 
     //private void SetTimeSpawner()
     //{

@@ -129,7 +129,16 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
         controller.enabled = false;
         transform.position = GameManager.instance.playerSpawn.transform.position;
         controller.enabled = true;
-        GameManager.instance.retryAmount = 0;
+        if (GameManager.currentMode == GameManager.gameMode.NIGHTSHIFT)
+            GameManager.instance.retryAmount = 0;
+        else
+        {
+            gameObject.GetComponent<CapsuleCollider>().enabled = true;
+            deathCamera.gameObject.SetActive(false);
+
+            isDead = false;
+
+        }
     }
     //
     public void respawnPlayer()
@@ -448,34 +457,37 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
 
     public void takeDamage(int amount)
     {
-        HP -= amount;
-        StartCoroutine(flashScreenDamage());
-        UpdatePlayerUI();
-        aud.PlayOneShot(audDamage[Random.Range(0, audDamage.Length)], audDamageVol);
+        if (!isDead)
+        {
+            HP -= amount;
+            StartCoroutine(flashScreenDamage());
+            UpdatePlayerUI();
+            aud.PlayOneShot(audDamage[Random.Range(0, audDamage.Length)], audDamageVol);
 
-        if (HP <= 0 && GameManager.currentMode == GameManager.gameMode.NIGHTSHIFT) // 
-        {
-            GameManager.instance.YouLose();
-        }
-        else if (HP <= 0 && GameManager.currentMode == GameManager.gameMode.DONUTKING2)
-        {
-            //Camera.main.gameObject.SetActive(false);
-            isDead = true;
-            gameObject.GetComponent<CapsuleCollider>().enabled = false;
-            deathCamera.gameObject.SetActive(true);
-            while (GameManager.instance.donutCountList[name] > 0)
+            if (HP <= 0 && GameManager.currentMode == GameManager.gameMode.NIGHTSHIFT) // 
             {
-                //creates sphere that's the size of roamDist and selects a random position
-                Vector3 randDropPos = Random.insideUnitSphere * donutDropDistance;
-                randDropPos.y = donutDropItem.transform.position.y;
-                //Prevents getting null reference when creating random point
-                NavMeshHit hit;
-                //The "1" is in refernce to layer mask "1"
-                NavMesh.SamplePosition(randDropPos, out hit, donutDropDistance, 1);
-                Instantiate(donutDropItem, transform.position + randDropPos, donutDropItem.transform.rotation);
-                GameManager.instance.UpdateDonutCount(gameObject, -1);
+                GameManager.instance.YouLose();
             }
-            GameManager.instance.DeclareSelfDead(gameObject);
+            else if (HP <= 0 && GameManager.currentMode == GameManager.gameMode.DONUTKING2)
+            {
+                //Camera.main.gameObject.SetActive(false);
+                isDead = true;
+                gameObject.GetComponent<CapsuleCollider>().enabled = false;
+                deathCamera.gameObject.SetActive(true);
+                while (GameManager.instance.donutCountList[name] > 0)
+                {
+                    //creates sphere that's the size of roamDist and selects a random position
+                    Vector3 randDropPos = Random.insideUnitSphere * donutDropDistance;
+                    randDropPos.y = donutDropItem.transform.position.y;
+                    //Prevents getting null reference when creating random point
+                    NavMeshHit hit;
+                    //The "1" is in refernce to layer mask "1"
+                    NavMesh.SamplePosition(randDropPos, out hit, donutDropDistance, 1);
+                    Instantiate(donutDropItem, transform.position + randDropPos, donutDropItem.transform.rotation);
+                    GameManager.instance.UpdateDonutCount(gameObject, -1);
+                }
+                GameManager.instance.DeclareSelfDead(gameObject);
+            }
         }
     }
 

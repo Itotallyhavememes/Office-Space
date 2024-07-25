@@ -10,6 +10,7 @@ using UnityEditor;
 using System.Linq;
 using UnityEngine.EventSystems;
 using Unity.VisualScripting;
+using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
 {
@@ -20,7 +21,7 @@ public class GameManager : MonoBehaviour
 
     public List<GameObject> bodyTracker;
     public List<GameObject> deadTracker;
-    [SerializeField] List<GameObject> spawnPoints;
+    public List<GameObject> spawnPoints;
     public Dictionary<string, int> donutCountList;
     [SerializeField] gameMode modeSelection;
     [SerializeField] int timerTime;
@@ -40,6 +41,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject timerUI;
     [SerializeField] TMP_Text timerText;
     [SerializeField] TMP_Text donutCountUI;
+
+    [SerializeField] int respawnTime;
 
 
     [SerializeField] TMP_Text scoreBoardPlacementsText;
@@ -86,12 +89,16 @@ public class GameManager : MonoBehaviour
     public int worldDonutCount;
     public int worldItemCount;
 
+    Coroutine coroutine;
+
 
     void Awake()
     {
         instance = this;
         player = GameObject.FindWithTag("Player");
-        playerScript = player.GetComponent<PlayerControl>();
+
+        if (player != null)
+            playerScript = player.GetComponent<PlayerControl>();
 
         currentMode = modeSelection;
 
@@ -143,6 +150,11 @@ public class GameManager : MonoBehaviour
         if (currentMode == gameMode.DONUTKING2 && !isPaused)
         {
             DisplayInfoScreen();
+        }
+
+        if (deadTracker.Count > 0 && coroutine == null) //spawn logic
+        {
+            StartCoroutine(SpawnTheDead());
         }
     }
 
@@ -220,6 +232,12 @@ public class GameManager : MonoBehaviour
             donutCountList.Add(self.name, 0);
         }
     }
+
+    public void AddToSpawnList(GameObject spawnPoint)
+    {
+        spawnPoints.Add(spawnPoint);
+    }
+
     //Method for spawner. Also remove object from bodyTracker as new one will be instantiated upon spawn
     public void DeclareSelfDead(GameObject self)
     {
@@ -230,17 +248,31 @@ public class GameManager : MonoBehaviour
         }
         deadTracker.Add(self);
     }
-    //Method called in enemySpawner that returns the first entry in deadTracker
-    //public string SpawnTheDead()
-    //{
-    //    //if (deadTracker.Count > 0)
-    //    //{
-    //    string returnable = deadTracker[0];
-    //    deadTracker.RemoveAt(0);
-    //    return returnable;
-    //    //}
 
-    //}
+
+
+    //Method called in enemySpawner that returns the first entry in deadTracker
+    public IEnumerator SpawnTheDead()
+    {
+        yield return new WaitForSeconds(respawnTime);
+        int spawnIndex = Random.Range(0, deadTracker.Count);
+        if (deadTracker[0].GetHashCode() == player.GetHashCode())
+        {
+            playerSpawn.transform.position = spawnPoints[spawnIndex].transform.position;
+            playerScript.spawnPlayer();
+        }
+        else
+        {
+            deadTracker[0].transform.position = spawnPoints[spawnIndex].transform.position;
+            deadTracker[0].SetActive(true);
+            //deadTracker[0].GetComponent<enemyAI>()
+            //deadTracker[0].transform;
+        }
+        AddToTracker(deadTracker[0]);
+        deadTracker.RemoveAt(0); //pop front
+
+
+    }
     //method to search through tracker and return object
     public GameObject ReturnEntity(GameObject target)
     {
@@ -428,4 +460,5 @@ public class GameManager : MonoBehaviour
         Screen.fullScreen = isFullScreen;
     }
 
+   
 }
