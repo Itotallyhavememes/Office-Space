@@ -621,10 +621,6 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
         WeaponChange();
 
     }
-    public bool GetPlayerStatusBool() //Returns player alive/dead status
-    {
-        return isDead;
-    }
 
     void WeaponSelect()
     {

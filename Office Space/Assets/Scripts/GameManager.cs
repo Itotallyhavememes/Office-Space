@@ -35,7 +35,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject menuGameModes;
     [SerializeField] GameObject menuSettings;
     [SerializeField] GameObject menuControls;
-    [SerializeField] GameObject gameObjective;
+    [SerializeField] GameObject menuDK2Objective;
+    [SerializeField] GameObject menuNSObjective;
     [SerializeField] public GameObject menuRetryAmount;
     [SerializeField] TMP_Text donutCountText;
     [SerializeField] GameObject timerUI;
@@ -423,6 +424,7 @@ public class GameManager : MonoBehaviour
 
     public void YouLose()
     {
+        menuActive.SetActive(false);
         StatePause();
         menuActive = menuLose;
         menuActive.SetActive(true);
@@ -475,5 +477,14 @@ public class GameManager : MonoBehaviour
     {
         scoreBoardScoreText.text = (donutCountList[player.name] * 10).ToString();
         ActivateMenu(menuScore);
+    }
+    public void ActivateObjectiveScreen()
+    {
+        if (currentMode == gameMode.DONUTKING2)
+            ActivateMenu(menuDK2Objective);
+        else if (currentMode == gameMode.NIGHTSHIFT)
+            ActivateMenu(menuNSObjective);
+        StatePause();
+
     }
 }
