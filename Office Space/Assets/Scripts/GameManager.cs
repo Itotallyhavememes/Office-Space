@@ -159,7 +159,7 @@ public class GameManager : MonoBehaviour
 
         if (deadTracker.Count > 0 && coroutine == null) //spawn logic
         {
-            StartCoroutine(SpawnTheDead());
+            coroutine = StartCoroutine(SpawnTheDead());
         }
     }
 
@@ -222,17 +222,18 @@ public class GameManager : MonoBehaviour
     //public method to have instantiated objects pass themselves
     public void AddToTracker(GameObject self)
     {
-        bool canAdd = true; ;
+        bool canAdd = true;
+        
         for (int i = 0; i < bodyTracker.Count; i++)
         {
-            if (self.GetHashCode() == bodyTracker[i].GetHashCode())
+            if (self.GetHashCode() == bodyTracker[i].GetHashCode()) ///Take it from here
             {
                 canAdd = false;
                 break;
             }
         }
         if (canAdd)
-        {
+        { 
             bodyTracker.Add(self);
             donutCountList.Add(self.name, 0);
         }

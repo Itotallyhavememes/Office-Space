@@ -2973,6 +2973,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd88741f0d8af4d4cb3837fc4ba68e7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyDonutCount: 0
   type: 0
   agent: {fileID: 8739371496954211365}
   model: {fileID: 4961043819101265646}
@@ -3006,13 +3007,17 @@ MonoBehaviour:
   currentPoint: {fileID: 0}
   romTimer: 0
   Positions: []
+  donutDropDistance: 2
+  donutDropItem: {fileID: 7601297108038699415, guid: f70114bd10fc78f4b8b8e9fa300a851f, type: 3}
   dodgeNumber: 2
   detCode: 0
   targetOBJ: {fileID: 0}
-  targets: []
+  tarOBJhash: 0
   jumpSpeed: 8
   roamDist: 15
   roamTimer: 1
+  numOfTargets: 0
+  destPriority: {fileID: 0}
 --- !u!195 &8739371496954211365
 NavMeshAgent:
   m_ObjectHideFlags: 0
