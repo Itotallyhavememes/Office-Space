@@ -9870,7 +9870,7 @@ GameObject:
   - component: {fileID: 289099495}
   - component: {fileID: 289099494}
   m_Layer: 5
-  m_Name: 'Respawn Button '
+  m_Name: 'Retry Button '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9942,7 +9942,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 786595881634527213}
         m_TargetAssemblyTypeName: ButtonFunctions, Assembly-CSharp
-        m_MethodName: respawn
+        m_MethodName: restart
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -68956,7 +68956,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Respawn
+  m_text: Retry
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -76767,7 +76767,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 786595881634527213}
         m_TargetAssemblyTypeName: ButtonFunctions, Assembly-CSharp
-        m_MethodName: returnToTittle
+        m_MethodName: quit
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -77242,7 +77242,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Retry
+  m_text: Main Menu
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -79064,7 +79064,7 @@ GameObject:
   - component: {fileID: 705043587093293334}
   - component: {fileID: 5428734294608070136}
   m_Layer: 5
-  m_Name: Retry Button
+  m_Name: Main Menu Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -81555,7 +81555,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 786595881634527213}
         m_TargetAssemblyTypeName: ButtonFunctions, Assembly-CSharp
-        m_MethodName: restart
+        m_MethodName: returnToTittle
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
