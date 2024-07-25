@@ -71627,6 +71627,14 @@ PrefabInstance:
       propertyPath: audSlideVol
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 7415348336417281650, guid: b12fc89d88f620148bc37429b5399756, type: 3}
+      propertyPath: slideCooldown
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7415348336417281650, guid: b12fc89d88f620148bc37429b5399756, type: 3}
+      propertyPath: slideLockoutTime
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 8551271330002583447, guid: b12fc89d88f620148bc37429b5399756, type: 3}
       propertyPath: m_IsTrigger
       value: 1
