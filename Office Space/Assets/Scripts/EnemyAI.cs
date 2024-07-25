@@ -128,11 +128,12 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
                 targetInRange = true;
             else targetInRange = false;
         }
+            if (GameManager.instance.PriorityPoint.Count > 0 || !destPriority)
+                destPriority = GetPriorityPoint();
+            if (GameManager.instance.PriorityPoint.Count == 0 && destPriority)
+                destPriority = null;
 
-        if (GameManager.instance.PriorityPoint.Count > 0)
-            destPriority = GetPriorityPoint();
-        if (GameManager.instance.PriorityPoint.Count == 0 && destPriority)
-            destPriority = null;
+        
        
 
         if (targetInRange)
@@ -505,6 +506,10 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
                 //int indexx = 0;
                 //He's died, so decrement
                 --GameManager.instance.enemyCount;
+                if (isShooting)
+                {
+                    isShooting = false;
+                }
                 for (int i = 0; i < GameManager.instance.bodyTracker.Count; ++i)
                 {
                     if (gameObject.GetHashCode() == GameManager.instance.bodyTracker[i].GetHashCode())
