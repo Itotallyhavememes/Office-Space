@@ -6,10 +6,15 @@ public class SecurityCameraController : MonoBehaviour
     [SerializeField] AudioSource aud;
     [SerializeField] float maxTime;
     [SerializeField] AudioClip detected;
-    [SerializeField] GameObject sphere;
+    //[SerializeField] SphereCollider sphere;
 
+    [SerializeField] CameraSphere camSphere;
     float totalTime;
     bool playerSpotted = false;
+
+    void Start()
+    {
+    }
 
     // Update is called once per frame
     void Update()
@@ -55,7 +60,7 @@ public class SecurityCameraController : MonoBehaviour
 
     public void updateEnemies(bool isRoaming)
     {
-        List<GameObject> enemies = sphere.GetComponent<CameraSphere>().enemiesInRange;
+        List<GameObject> enemies = camSphere.enemiesInRange;
         if (enemies.Count > 0)
         {
             for (int i = 0; i < enemies.Count; i++)
