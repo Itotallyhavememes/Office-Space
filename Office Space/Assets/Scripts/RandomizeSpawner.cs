@@ -12,6 +12,9 @@ public class RandomizeSpawner : MonoBehaviour
     [SerializeField] float spawnTimer;
     [SerializeField] int spawningThreshold;
     bool isSpawning;
+    [SerializeField] int rangeMax;
+    [SerializeField] int rangeMin;
+    [SerializeField] int disMax;
 
     void Start()
     {
@@ -33,11 +36,11 @@ public class RandomizeSpawner : MonoBehaviour
         yield return new WaitForSeconds(spawnTimer);
         isSpawning = false;
 
-        Vector3 randPos = Random.insideUnitSphere * Random.Range(1,100);
+        Vector3 randPos = transform.position + Random.insideUnitSphere * Random.Range(rangeMin,rangeMax);
 
         NavMeshHit hit;
 
-        NavMesh.SamplePosition(randPos, out hit, 100, 1);
+        NavMesh.SamplePosition(randPos, out hit, disMax, 1);
 
         Vector3 spawnPos = hit.position;
         spawnPos.y += 1;

@@ -28407,7 +28407,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2873722311774306945, guid: 41f812988f1288b458b6986c1ca06e82, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7587023473073697920, guid: 41f812988f1288b458b6986c1ca06e82, type: 3}
       propertyPath: m_LocalScale.x
@@ -55693,7 +55693,7 @@ GameObject:
   - component: {fileID: 1500290614}
   - component: {fileID: 1500290613}
   m_Layer: 0
-  m_Name: EnemySp
+  m_Name: Dount Sp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -55711,10 +55711,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b484844ed501614a8d229eef072662e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 0
-  items: []
-  spawnTimer: 0
-  spawningThreshold: 0
+  type: 1
+  items:
+  - {fileID: 7601297108038699415, guid: 1e9dd268471c1c4428c7a9d0954cd2a2, type: 3}
+  spawnTimer: 1
+  spawningThreshold: 6
+  rangeMax: 230
+  rangeMin: 1
+  disMax: 230
 --- !u!4 &1500290614
 Transform:
   m_ObjectHideFlags: 0
@@ -55724,7 +55728,7 @@ Transform:
   m_GameObject: {fileID: 1500290612}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 55.19826, y: -12.406015, z: -201.24518}
+  m_LocalPosition: {x: 0, y: 0, z: -237}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
