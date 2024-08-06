@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6430292277346236968}
   m_Layer: 0
-  m_Name: OfficeRoom
+  m_Name: OfficePref-Room
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
