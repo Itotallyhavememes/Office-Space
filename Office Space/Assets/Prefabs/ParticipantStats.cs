@@ -43,6 +43,8 @@ public struct ParticipantStats
 
     public void updateScore(int score) { scorePoints += score; }
 
+    public int getScorePoints() { return scorePoints; }
+
     //Debug Method
     public string getAllStats()
     {
