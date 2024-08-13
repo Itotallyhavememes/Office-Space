@@ -25,8 +25,8 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
     [SerializeField] float slideLockoutTime;
     [SerializeField] float slideCooldown;
     [SerializeField] int gravity;
-    [SerializeField] int donutDropDistance;
-    [SerializeField] GameObject donutDropItem;
+    //[SerializeField] int donutDropDistance;
+    //[SerializeField] GameObject donutDropItem;
     [SerializeField] Camera deathCamera;
     int jumpCount;
     int HPOrig;
@@ -474,19 +474,26 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
                 isDead = true;
                 gameObject.GetComponent<CapsuleCollider>().enabled = false;
                 deathCamera.gameObject.SetActive(true);
-                while (GameManager.instance.donutCountList[name] > 0)
+                //while (GameManager.instance.statsTracker[name] > 0)
+                if (GameManager.instance.statsTracker[name].getDKStatus() == true)
                 {
-                    //creates sphere that's the size of roamDist and selects a random position
-                    Vector3 randDropPos = Random.insideUnitSphere * donutDropDistance;
-                    randDropPos.y = donutDropItem.transform.position.y;
-                    //Prevents getting null reference when creating random point
-                    NavMeshHit hit;
-                    //The "1" is in refernce to layer mask "1"
-                    NavMesh.SamplePosition(randDropPos, out hit, donutDropDistance, 1);
-                    Instantiate(donutDropItem, transform.position + randDropPos, donutDropItem.transform.rotation);
-                    GameManager.instance.UpdateDonutCount(gameObject, -1);
+                    //GROUPED AS GAMEMANAGER METHOD
+                    ////creates sphere that's the size of roamDist and selects a random position
+                    //Vector3 randDropPos = Random.insideUnitSphere * donutDropDistance;
+                    //randDropPos.y = donutDropItem.transform.position.y;
+                    ////Prevents getting null reference when creating random point
+                    //NavMeshHit hit;
+                    ////The "1" is in refernce to layer mask "1"
+                    //NavMesh.SamplePosition(randDropPos, out hit, donutDropDistance, 1);
+                    //Instantiate(donutDropItem, transform.position + randDropPos, donutDropItem.transform.rotation);
+                    //GameManager.instance.UpdateDonutCount(gameObject, -1);
+
+                    GameManager.instance.dropTheDonut(this.gameObject);
                 }
                 GameManager.instance.DeclareSelfDead(gameObject);
+                //Update Death Count in GameManager's statTracker
+                GameManager.instance.statsTracker[name].updateDeaths(1);
+                Debug.Log(name.ToString() + " : " + GameManager.instance.statsTracker[name].getAllStats());
                 //GameManager.instance.donutCountList.Remove(gameObject.name);
             }
         }
@@ -554,7 +561,10 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
     public bool declareDeath()
     {
         if (HP <= 0)
+        {
+            //Increment death by 1 in GameManager's statsTracker dictionary
             return true;
+        }
         else
             return false;
     }

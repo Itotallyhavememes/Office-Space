@@ -71,8 +71,8 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
 
     //TIM CODE
     //public int enemyDonutCount;
-    [SerializeField] int donutDropDistance;
-    [SerializeField] GameObject donutDropItem;
+    //[SerializeField] int donutDropDistance;
+    //[SerializeField] GameObject donutDropItem;
     [SerializeField] int dodgeNumber;
     [SerializeField] int detCode;
     [SerializeField] GameObject targetOBJ;
@@ -525,25 +525,27 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
                 
                 ResetHP();
 
-               
 
-                while (GameManager.instance.donutCountList[name] > 0)
+                //
+                //while (GameManager.instance.statsTracker[name] > 0)
+                if (GameManager.instance.statsTracker[name].getDKStatus() == true)
                 {
-                    //creates sphere that's the size of roamDist and selects a random position
-                    Vector3 randDropPos = Random.insideUnitSphere * donutDropDistance;
-                    randDropPos.y = donutDropItem.transform.position.y;
-                    //Prevents getting null reference when creating random point
-                    NavMeshHit hit;
-                    //The "1" is in refernce to layer mask "1"
-                    NavMesh.SamplePosition(randDropPos, out hit, donutDropDistance, 1);
-                    Instantiate(donutDropItem, transform.position + randDropPos, donutDropItem.transform.rotation);
-                    GameManager.instance.UpdateDonutCount(gameObject, -1);
-                    
+                    //GROUPED AS GAMEMANAGER METHOD
+                    ////creates sphere that's the size of roamDist and selects a random position
+                    //Vector3 randDropPos = Random.insideUnitSphere * donutDropDistance;
+                    //randDropPos.y = donutDropItem.transform.position.y;
+                    ////Prevents getting null reference when creating random point
+                    //NavMeshHit hit;
+                    ////The "1" is in refernce to layer mask "1"
+                    //NavMesh.SamplePosition(randDropPos, out hit, donutDropDistance, 1);
+                    //Instantiate(donutDropItem, transform.position + randDropPos, donutDropItem.transform.rotation);
+                    ////GameManager.instance.UpdateDonutCount(gameObject, -1);
+
+                    ////Sets isDonutKing for current object to false, since initially was true
+                    //GameManager.instance.statsTracker[name].updateDKStatus();
+
+                    GameManager.instance.dropTheDonut(this.gameObject);
                 }
-
-
-
-
                 //GameManager.instance.DeclareSelfDead(gameObject);//
                 gameObject.SetActive(false);
             }
@@ -589,10 +591,6 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
             yield return new WaitForSeconds(shootRate);
             isShooting = false;
         }
-
-            
-        
-
     }
 
     public GameObject declareOBJ(GameObject obj)
