@@ -7,7 +7,11 @@ public class Vending : MonoBehaviour, IVend
     [SerializeField] GameObject interactionSprite;
     [SerializeField] GameObject spotLight;
     [SerializeField] GameObject vendPos;
-    [SerializeField] GameObject[] vendingItems;
+
+    [Header("----- Items -----")]
+    [SerializeField] GameObject[] commonItems;
+    [SerializeField] GameObject[] uncommonItems;
+    [SerializeField] GameObject[] rareItems;
     bool playerInCollider;
 
     void Update()
@@ -52,8 +56,24 @@ public class Vending : MonoBehaviour, IVend
 
     public void VendItem()
     {
-        int selection = Random.Range(0, vendingItems.Length);
-        Instantiate(vendingItems[selection], vendPos.transform.position, vendingItems[selection].transform.rotation);
+        int selection = Random.Range(0, 100);
+
+        if (selection <= 15)
+        {
+            int index = Random.Range(0, rareItems.Length);
+            Instantiate(rareItems[index], vendPos.transform.position, rareItems[index].transform.rotation);
+        }
+        else if (selection <= 40)
+        {
+            int index = Random.Range(0, uncommonItems.Length);
+            Instantiate(uncommonItems[index], vendPos.transform.position, uncommonItems[index].transform.rotation);
+        }
+        else if (selection <= 100)
+        {
+            int index = Random.Range(0, commonItems.Length);
+            Instantiate(commonItems[index], vendPos.transform.position, commonItems[index].transform.rotation);
+        }
+
         GameManager.instance.StartVendingMachineCooldown();
         interactionSprite.SetActive(false);
     }

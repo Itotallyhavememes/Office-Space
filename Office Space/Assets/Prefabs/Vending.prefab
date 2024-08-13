@@ -392,10 +392,13 @@ MonoBehaviour:
   interactionSprite: {fileID: 5599279996700873868}
   spotLight: {fileID: 5385150648611259124}
   vendPos: {fileID: 5542659296814787639}
-  vendingItems:
-  - {fileID: 1487114456331940075, guid: 72007144e1de3ed4eb422ab16e5a1582, type: 3}
-  - {fileID: 8574248834178496464, guid: bb84f77bc408ad44cbee7fcd8fb42066, type: 3}
+  commonItems:
+  - {fileID: 5914725928171986963, guid: 4334b5b8f68819c41a4d494915546de3, type: 3}
+  uncommonItems:
   - {fileID: 9057205224091701416, guid: c85d6c6b7ae3ded4ea81972f54f2f9bc, type: 3}
+  - {fileID: 1487114456331940075, guid: 72007144e1de3ed4eb422ab16e5a1582, type: 3}
+  rareItems:
+  - {fileID: 8574248834178496464, guid: bb84f77bc408ad44cbee7fcd8fb42066, type: 3}
 --- !u!33 &5658444897179046015
 MeshFilter:
   m_ObjectHideFlags: 0
