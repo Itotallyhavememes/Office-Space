@@ -46,6 +46,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject timerUI;
     [SerializeField] TMP_Text timerText;
     [SerializeField] TMP_Text donutCountUI;
+    [SerializeField] GameObject[] vendingMachines;
 
     [SerializeField] int respawnTime;
 
@@ -126,6 +127,7 @@ public class GameManager : MonoBehaviour
         if (currentMode == gameMode.DONUTKING2)
         {
             timerUI.SetActive(true);
+            RandomizeVending();
             StartCoroutine(Timer());
         }
 
@@ -167,6 +169,16 @@ public class GameManager : MonoBehaviour
         {
             coroutine = StartCoroutine(SpawnTheDead());
         }
+    }
+
+    void RandomizeVending()
+    {
+        foreach (GameObject vending in vendingMachines)
+        {
+            vending.SetActive(false);
+        }
+
+        vendingMachines[Random.Range(0, vendingMachines.Length)].SetActive(true);
     }
 
     public void StartVendingMachineCooldown()
