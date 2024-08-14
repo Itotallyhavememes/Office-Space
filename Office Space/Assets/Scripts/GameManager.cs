@@ -64,6 +64,7 @@ public class GameManager : MonoBehaviour
     //
     public TMP_Text grenadeStack;
     public List<Transform> PriorityPoint;
+    public Transform donutFocus;
 
     public Image playerHPBar;
     public Image playerAmmoBar;
@@ -245,9 +246,9 @@ public class GameManager : MonoBehaviour
             bodyTracker.Add(self);
             //ParticipantStats::instantiateStats() returns ParticipantStats struct Object
             //Adds itself to statsTracker's Value field
-            ParticipantStats objStats = new ParticipantStats();
-            objStats = objStats.instantiateStats();
-            statsTracker.Add(self.name, objStats);
+            ParticipantStats objStat = new ParticipantStats();
+            objStat = objStat.instantiateStats();
+            statsTracker.Add(self.name, objStat);
             Debug.Log(self.name.ToString() + " : " + statsTracker[self.name].getAllStats());
             //BELOW: available code for when/if Beta requires username to be displayed, as opposed to Player or Enemy Types
             //statsTracker[self.name].setDisplayName(self.name);
@@ -268,6 +269,13 @@ public class GameManager : MonoBehaviour
                 bodyTracker.Remove(bodyTracker[i]);
         }
         deadTracker.Add(self);
+        //Debug.Log(self.name + "DB: " + statsTracker[self.name].getDeaths().ToString());
+        statsTracker[self.name].updateDeaths();
+       // Debug.Log(self.name + "DA: " + statsTracker[self.name].getDeaths().ToString());
+        //if (statsTracker[self.name].getDKStatus() == true)
+        //    statsTracker[self.name].updateDKStatus();
+        if (statsTracker[self.name].getDeaths() > 0)
+            Debug.Log(self.name.ToString() + " : " + statsTracker[self.name].getAllStats());
     }
 
     //public void CleanUpDictionary(GameObject self)
@@ -324,8 +332,11 @@ public class GameManager : MonoBehaviour
 
     public void DonutDeclarationDay(GameObject donutOBJ)
     {
-        if(GameManager.currentMode == gameMode.DONUTKING2)
+        if (GameManager.currentMode == gameMode.DONUTKING2)
+        {
             PriorityPoint.Add(donutOBJ.transform);
+            //PriorityPoint = donutOBJ.transform;
+        }
     }
 
     //public string GetPlayerDC(GameObject target)
@@ -517,13 +528,6 @@ public class GameManager : MonoBehaviour
         //GameManager.instance.UpdateDonutCount(gameObject, -1);
 
         //Sets isDonutKing for current object to false, since initially was true
-        GameManager.instance.statsTracker[donutDropper.name].updateDKStatus();
-    }
-
-    //DEBUG METHOD: Testing Updates on statsTracker
-    public void displayStatsTracker()
-    {
-        //foreach()
-        
+        statsTracker[donutDropper.name].updateDKStatus();
     }
 }

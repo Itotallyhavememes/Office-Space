@@ -158,10 +158,10 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
                     isTargetDead = false;
             }
             if (targetOBJ != null)
-                Debug.Log(gameObject.name.ToString() + " says: My New Target-> " + targetOBJ.name.ToString());
+                //Debug.Log(gameObject.name.ToString() + " says: My New Target-> " + targetOBJ.name.ToString());
             if (canSeePlayer())
             {
-                Debug.Log("I see you!");
+                //Debug.Log("I see you!");
                 if (agent.remainingDistance <= agent.stoppingDistance)
                     FaceTarget();
                 if (!isShooting)
@@ -494,7 +494,7 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
         if (type != enemyType.security)
         {
             HP -= amount;
-            Debug.Log(gameObject.name.ToString() + " HP: " + HP.ToString());
+            //Debug.Log(gameObject.name.ToString() + " HP: " + HP.ToString());
 
             if (HP > 0) //Stops them from respawning with their flash color on
                 StartCoroutine(flashDamage());
@@ -520,9 +520,7 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
                         GameManager.instance.bodyTracker.Remove(GameManager.instance.bodyTracker[i]);
                     }
                 }
-                GameManager.instance.deadTracker.Add(gameObject);//
-                //GameManager.instance.CleanUpDictionary(gameObject);
-                
+                GameManager.instance.DeclareSelfDead(gameObject);
                 ResetHP();
 
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public struct ParticipantStats
+public class ParticipantStats
 {
     string DisplayName;
     int Kills, Deaths, timeHeld;
@@ -13,6 +13,7 @@ public struct ParticipantStats
 
     public ParticipantStats instantiateStats()
     {
+        Debug.Log("Instantiating StatsTracker Values...");
         Kills = 0;
         Deaths = 0;
         timeHeld = 0;
@@ -25,9 +26,13 @@ public struct ParticipantStats
     //Methods to adjust struct values
     public void setDisplayName(string displayName) { DisplayName = displayName; }
 
-    public void updateKills(int kills) { Kills += kills; }
+    public void updateKills() { ++Kills; }
 
-    public void updateDeaths(int deaths) { Deaths += deaths; }
+    public void updateDeaths() {  ++Deaths; }
+
+    public int getDeaths() { return Deaths; }
+
+    public int getKills() { return Kills; }
 
     public void getKDR() { KDR = Kills / Deaths; }
 

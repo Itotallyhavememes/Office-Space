@@ -418,7 +418,7 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
                 RaycastHit hit;
                 if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, shootDist, ~ignoreMask))
                 {
-                    Debug.Log(hit.collider.name);
+                    //Debug.Log(hit.collider.name);
 
                     IDamage dmg = hit.collider.GetComponent<IDamage>();
 
@@ -432,7 +432,7 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
                     }
                 }
 
-                Debug.Log("Rotating arm");
+                //Debug.Log("Rotating arm");
                 weaponModel.transform.Rotate(Vector3.left * raycastRotationRecoil);
                 yield return new WaitForSeconds(shootRate);
                 weaponModel.transform.Rotate(Vector3.right * raycastRotationRecoil);
@@ -491,10 +491,6 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
                     GameManager.instance.dropTheDonut(this.gameObject);
                 }
                 GameManager.instance.DeclareSelfDead(gameObject);
-                //Update Death Count in GameManager's statTracker
-                GameManager.instance.statsTracker[name].updateDeaths(1);
-                Debug.Log(name.ToString() + " : " + GameManager.instance.statsTracker[name].getAllStats());
-                //GameManager.instance.donutCountList.Remove(gameObject.name);
             }
         }
     }

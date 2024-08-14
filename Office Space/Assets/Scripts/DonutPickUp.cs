@@ -66,8 +66,11 @@ public class DonutPickUp : MonoBehaviour
                 for (int i = 0; i < GameManager.instance.PriorityPoint.Count; ++i)
                 {
                     if (gameObject.transform == GameManager.instance.PriorityPoint[i])
-                        GameManager.instance.PriorityPoint.Remove(GameManager.instance.PriorityPoint[i]);  
+                        GameManager.instance.PriorityPoint.Remove(GameManager.instance.PriorityPoint[i]);
                 }
+
+                //if (gameObject.transform == GameManager.instance.PriorityPoint)
+                //    GameManager.instance.PriorityPoint = other.transform;
 
                 if (compare.name == "Player")
                 {
@@ -79,7 +82,9 @@ public class DonutPickUp : MonoBehaviour
                 {
                     compare.GetComponent<enemyAI>().HealHP(HpRestoreAmount);
                 }
-                GameManager.instance.TallyActiveScores();
+                //GameManager.instance.TallyActiveScores();
+                GameManager.instance.statsTracker[other.name].updateDKStatus();
+                Debug.Log(other.name.ToString() + " : " + GameManager.instance.statsTracker[other.name].getAllStats());
                 Destroy(gameObject);
                 if(GameManager.instance.worldDonutCount > 0)
                     --GameManager.instance.worldDonutCount;
