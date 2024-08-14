@@ -569,6 +569,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd88741f0d8af4d4cb3837fc4ba68e7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyDonutCount: 0
   type: 0
   agent: {fileID: 2505537457165491214}
   model: {fileID: 8328059419578224073}
@@ -597,13 +598,17 @@ MonoBehaviour:
   currentPoint: {fileID: 0}
   romTimer: 0
   Positions: []
+  donutDropDistance: 0
+  donutDropItem: {fileID: 0}
   dodgeNumber: 0
   detCode: 0
   targetOBJ: {fileID: 0}
-  targets: []
-  jumpSpeed: 0
-  roamDist: 0
-  roamTimer: 0
+  tarOBJhash: 0
+  jumpSpeed: 5
+  roamDist: 10
+  roamTimer: 1
+  numOfTargets: 0
+  destPriority: {fileID: 0}
 --- !u!195 &2505537457165491214
 NavMeshAgent:
   m_ObjectHideFlags: 0
