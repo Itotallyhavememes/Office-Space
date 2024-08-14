@@ -9,7 +9,7 @@ public class ParticipantStats
     int Kills, Deaths, timeHeld;
     float KDR;
     bool isDonutKing;
-    int scorePoints;
+    int moneyTotal;
 
     public ParticipantStats instantiateStats()
     {
@@ -19,7 +19,7 @@ public class ParticipantStats
         timeHeld = 0;
         KDR = 0.0f;
         isDonutKing = false;
-        scorePoints = 0;
+        moneyTotal = 0;
         return this;
     }
 
@@ -46,9 +46,11 @@ public class ParticipantStats
             return false;
     }
 
-    public void updateScore(int score) { scorePoints += score; }
+    public void depositMoney(int money) { moneyTotal += money; }
 
-    public int getScorePoints() { return scorePoints; }
+    public void withdrawMoney(int money) { moneyTotal -= money; }
+
+    public int getMoneyTotal() { return moneyTotal; }
 
     //Debug Method
     public string getAllStats()
@@ -59,7 +61,7 @@ public class ParticipantStats
         debugStats += "TH: " + timeHeld.ToString() + " | ";
         debugStats += "KDR: " + KDR.ToString() + " | ";
         debugStats += "DK?: " + isDonutKing.ToString() + " | ";
-        debugStats += "S: " + scorePoints.ToString() + " | ";
+        debugStats += "$" + moneyTotal.ToString() + " | ";
         return debugStats;
     }
 }
