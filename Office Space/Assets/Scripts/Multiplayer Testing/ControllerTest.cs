@@ -42,6 +42,8 @@ public class ControllerTest : MonoBehaviour
     [SerializeField] float mouseSensitivity = 2.0f;
     [SerializeField] float upDownRange = 90.0f;
 
+    [SerializeField] Camera playerCam;
+
     private CharacterController characterController;
     private Vector3 currentMovement;
     private float verticalRotation;
@@ -56,6 +58,7 @@ public class ControllerTest : MonoBehaviour
     InputAction grenadeAction;
     InputAction cycleWeaponAction;
     InputAction joinAction;
+    //InputAction splitCameraAction; //testing
 
     //auto-implemented property with a get and set accessor. Can be read from anywhere (public), but can only be set from within the class (private)
     public Vector2 MovementInput { get; private set; }
@@ -66,6 +69,7 @@ public class ControllerTest : MonoBehaviour
     public bool ReloadTriggered { get; private set; }
     public bool GrenadeTriggered { get; private set; }
     public bool CycleWeaponTriggered { get; private set; }
+    public bool SplitCameraTriggered { get; private set; }
 
     private void Awake()
     {
@@ -83,6 +87,7 @@ public class ControllerTest : MonoBehaviour
         grenadeAction = player.FindAction(grenade);
         cycleWeaponAction = player.FindAction(cycleWeapon);
         joinAction = player.FindAction(join);
+        //splitCameraAction = player.FindAction(splitCamera); //testing
 
         RegisterInputActions();
 
@@ -151,6 +156,7 @@ public class ControllerTest : MonoBehaviour
         grenadeAction.Disable();
         //cycleWeaponAction.Disable();
         joinAction.Disable();
+        //splitCameraAction.started -= CameraSplit;
     }
 
 
@@ -197,10 +203,10 @@ public class ControllerTest : MonoBehaviour
         float mouseXRotation = LookInput.x * mouseSensitivity;
         transform.Rotate(0, mouseXRotation, 0);
 
-
         //verticalRotation -= inputHandler.LookInput.y * mouseSensitivity;
         verticalRotation -= mouseYInput * mouseSensitivity;
         verticalRotation = Mathf.Clamp(verticalRotation, -upDownRange, upDownRange);
         cameraLockOn.transform.localRotation = Quaternion.Euler(verticalRotation, 0, 0);
     }
+
 }

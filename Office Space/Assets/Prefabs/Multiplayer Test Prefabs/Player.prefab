@@ -931,6 +931,7 @@ MonoBehaviour:
   grenade: Grenade
   cycleWeapon: Cycle Weapon
   join: Join
+  splitCamera: Split Camera
   leftStickDeadzoneValue: 0.2
   walkSpeed: 3
   sprintModifier: 2
@@ -940,6 +941,7 @@ MonoBehaviour:
   gravity: 9.81
   mouseSensitivity: 2
   upDownRange: 90
+  playerCam: {fileID: 4931049702864920139}
 --- !u!114 &3703231511216047102
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1039,7 +1041,7 @@ MonoBehaviour:
   m_ActionEvents: []
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: 1a73bec2-363f-4585-86a8-d2c575a47617
+  m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 4931049702864920139}
 --- !u!114 &5423240904944192891
