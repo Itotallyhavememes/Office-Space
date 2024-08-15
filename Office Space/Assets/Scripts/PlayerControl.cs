@@ -425,6 +425,13 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
                     if (hit.transform != transform && dmg != null)
                     {
                         dmg.takeDamage(shootDamage);
+                        //If hit's gameObject is inside the deadTracker, then update Player Kill Count and display
+                        if (GameManager.instance.CallTheDead(hit.collider.name))
+                        {
+                            GameManager.instance.statsTracker[this.gameObject.name].updateKills();
+                            GameManager.instance.DisplayKillMessage(gameObject, hit.collider.gameObject);
+                            Debug.Log(GameManager.instance.statsTracker[this.gameObject.name].getAllStats());
+                        }
                     }
                     else
                     {

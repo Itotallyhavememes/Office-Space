@@ -145,7 +145,6 @@ public class GameManager : MonoBehaviour
         {
             StatePause();
         }
-
     }
 
     //Update is called once per frame
@@ -331,6 +330,16 @@ public class GameManager : MonoBehaviour
                 return bodyTracker[i];
         }
         return null;
+    }
+
+    public bool CallTheDead(string targetName)
+    {
+        for (int i = 0; i < deadTracker.Count; i++)
+        {
+            if (targetName == deadTracker[i].name)
+                return true;
+        }
+        return false;
     }
 
     //CHANGE: Method from updating donut count number to Determining if participant is DonutKing
@@ -577,5 +586,10 @@ public class GameManager : MonoBehaviour
             isThereDonutKing = false;
         StopCoroutine(DKTimer());
         Debug.Log("Ending TIMER!");
+    }
+
+    public void DisplayKillMessage(GameObject winner, GameObject defeated)
+    {
+        Debug.Log(winner.name.ToString() + " KILLED " + defeated.name.ToString());
     }
 }
