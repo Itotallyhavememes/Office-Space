@@ -1,15 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ParticipantStats
 {
-    string DisplayName;
-    int Kills, Deaths, timeHeld;
-    float KDR;
-    bool isDonutKing;
-    int moneyTotal;
+    [SerializeField] string DisplayName;
+    [SerializeField] int Kills, Deaths, timeHeld, moneyTotal, RoundsWon;
+    [SerializeField] float KDR;
+    [SerializeField] bool isDonutKing;
 
     public ParticipantStats instantiateStats()
     {
@@ -36,8 +36,12 @@ public class ParticipantStats
 
     public void getKDR() { KDR = Kills / Deaths; }
 
-    public void updateDKStatus() { isDonutKing = !isDonutKing; }
-
+    public void updateDKStatus() 
+    { 
+        isDonutKing = !isDonutKing;
+        if (!GameManager.instance.isThereDonutKing)
+            GameManager.instance.isThereDonutKing = true;
+    }
     public bool getDKStatus()
     {
         if (isDonutKing)
@@ -47,6 +51,14 @@ public class ParticipantStats
     }
 
     public void depositMoney(int money) { moneyTotal += money; }
+
+    public void updateTimeHeld() { timeHeld++; }
+
+    public void updateRoundsWon() { ++RoundsWon; }
+
+    public int getTimeHeld() { return timeHeld; }
+
+    //public void updateScore(int score) { scorePoints += score; }
 
     public void withdrawMoney(int money) { moneyTotal -= money; }
 
@@ -62,6 +74,7 @@ public class ParticipantStats
         debugStats += "KDR: " + KDR.ToString() + " | ";
         debugStats += "DK?: " + isDonutKing.ToString() + " | ";
         debugStats += "$" + moneyTotal.ToString() + " | ";
+        debugStats += "RW: " + RoundsWon.ToString() + " | ";
         return debugStats;
     }
 }

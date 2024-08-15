@@ -475,6 +475,7 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
                 gameObject.GetComponent<CapsuleCollider>().enabled = false;
                 deathCamera.gameObject.SetActive(true);
                 //while (GameManager.instance.statsTracker[name] > 0)
+                GameManager.instance.DeclareSelfDead(gameObject);
                 if (GameManager.instance.statsTracker[name].getDKStatus() == true)
                 {
                     //GROUPED AS GAMEMANAGER METHOD
@@ -490,7 +491,6 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
 
                     GameManager.instance.dropTheDonut(this.gameObject);
                 }
-                GameManager.instance.DeclareSelfDead(gameObject);
             }
         }
     }

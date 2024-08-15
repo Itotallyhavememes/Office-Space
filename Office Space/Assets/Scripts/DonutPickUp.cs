@@ -83,7 +83,18 @@ public class DonutPickUp : MonoBehaviour
                     compare.GetComponent<enemyAI>().HealHP(HpRestoreAmount);
                 }
                 //GameManager.instance.TallyActiveScores();
+
+                //CODE BIT: Donut King Status Update
+                GameManager.instance.TheDonutKing = other.gameObject;
                 GameManager.instance.statsTracker[other.name].updateDKStatus();
+                if (GameManager.instance.statsTracker[other.name].getDKStatus() == true)
+                {
+                    Debug.Log(other.name + " IS THE DONUT KING!");
+                    GameManager.instance.DeclareTheDonutKing();
+                    //TEST: Does Coroutine Start Timer here?
+                    //StartCoroutine(GameManager.instance.DKTimer());
+                }
+
                 Debug.Log(other.name.ToString() + " : " + GameManager.instance.statsTracker[other.name].getAllStats());
                 Destroy(gameObject);
                 if(GameManager.instance.worldDonutCount > 0)

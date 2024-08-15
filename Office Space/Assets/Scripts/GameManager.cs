@@ -57,7 +57,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] TMP_Text scoreBoardResultText;
     [SerializeField] TMP_Text activeScoreNamesText;
     [SerializeField] TMP_Text activeScoreText;
-
+    //TIM TEST CODE FOR DK
+    public bool isThereDonutKing;
+    public GameObject TheDonutKing;
+    //CODE FOR PJ's SHOP
+    [SerializeField] int moneyForKills, moneyForTimeHeld, moneyForDonutKing;
     // JOHN CODE FOR CHECKPOINT
     public GameObject playerSpawn;
     public GameObject checkPointPos;
@@ -117,7 +121,8 @@ public class GameManager : MonoBehaviour
         playerSpawn = GameObject.FindWithTag("Player Spawn Pos");
         respawn = false;
         //
-        //Transferring Donut UI to here
+        //TIM TEST CODE FOR DKSTATUS
+        isThereDonutKing = false;
 
     }
 
@@ -272,6 +277,7 @@ public class GameManager : MonoBehaviour
         spawnPoints.Add(spawnPoint);
     }
 
+    
     //Method for spawner. Also remove object from bodyTracker as new one will be instantiated upon spawn
     public void DeclareSelfDead(GameObject self)
     {
@@ -286,8 +292,8 @@ public class GameManager : MonoBehaviour
        // Debug.Log(self.name + "DA: " + statsTracker[self.name].getDeaths().ToString());
         //if (statsTracker[self.name].getDKStatus() == true)
         //    statsTracker[self.name].updateDKStatus();
-        if (statsTracker[self.name].getDeaths() > 0)
-            Debug.Log(self.name.ToString() + " : " + statsTracker[self.name].getAllStats());
+        //if (statsTracker[self.name].getDeaths() > 0)
+        //    Debug.Log(self.name.ToString() + " : " + statsTracker[self.name].getAllStats());
     }
 
     //public void CleanUpDictionary(GameObject self)
@@ -538,8 +544,38 @@ public class GameManager : MonoBehaviour
         UnityEngine.AI.NavMesh.SamplePosition(randDropPos, out hit, donutDropDistance, 1);
         Instantiate(donutDropItem, donutDropper.transform.position + randDropPos, donutDropItem.transform.rotation);
         //GameManager.instance.UpdateDonutCount(gameObject, -1);
-
+        Debug.Log(donutDropper.name.ToString() + " DROPPED THE DONUT!");
         //Sets isDonutKing for current object to false, since initially was true
         statsTracker[donutDropper.name].updateDKStatus();
+        DownWithTheDonutKing();
+        Debug.Log(donutDropper.name.ToString() + " : " + statsTracker[donutDropper.name].getAllStats());
+    }
+
+    public IEnumerator DKTimer()
+    {
+        //int timeElapsed = 0;
+        
+        while (isThereDonutKing && !isPaused)
+        {
+            Debug.Log(statsTracker[TheDonutKing.name].getTimeHeld().ToString());
+            yield return new WaitForSeconds(1);
+            statsTracker[TheDonutKing.name].updateTimeHeld();
+            //++timeElapsed;
+        }
+    }
+    public void DeclareTheDonutKing()
+    {
+        if (!isThereDonutKing)
+            isThereDonutKing = true;
+        Debug.Log("Starting TIMER!");
+        StartCoroutine(DKTimer());
+    }
+
+    public void DownWithTheDonutKing()
+    {
+        if(isThereDonutKing)
+            isThereDonutKing = false;
+        StopCoroutine(DKTimer());
+        Debug.Log("Ending TIMER!");
     }
 }
