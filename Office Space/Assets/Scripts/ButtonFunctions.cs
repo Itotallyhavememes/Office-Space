@@ -51,11 +51,16 @@ public class ButtonFunctions : MonoBehaviour
     public void settings()
     {
         GameManager.instance.OpenSettings();
+        GameManager.instance.selectButton(GameManager.instance.settingStartingButton);
     }
 
     public void Controls()
     {
         GameManager.instance.OpenControls();
+    }
+    public void creditsMenu()
+    {
+        GameManager.instance.OpenCredits();
     }
 
     public void returnButton()
@@ -68,6 +73,8 @@ public class ButtonFunctions : MonoBehaviour
         SceneManager.LoadScene("Title");
 
         GameManager.currentMode = GameManager.gameMode.TITLE;
+
+
     }
 
     public void retryAmountButtonConfirm()
@@ -89,6 +96,10 @@ public class ButtonFunctions : MonoBehaviour
     {
         GameManager.instance.StateUnpause();
         GameManager.instance.ReturnFromSettings();
+    }
+    public void returnToTittleMenu()
+    {
+        GameManager.instance.ReturnToTittle();
     }
 
     public void quit()

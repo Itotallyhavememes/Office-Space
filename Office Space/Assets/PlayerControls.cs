@@ -98,6 +98,69 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Aim"",
+                    ""type"": ""Button"",
+                    ""id"": ""727dd3ff-f9f6-4aa2-a75d-da04c5b82d79"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ADS Left"",
+                    ""type"": ""Button"",
+                    ""id"": ""7367f36c-e3cb-49e8-bc3e-1fed12773220"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ADS Right"",
+                    ""type"": ""Button"",
+                    ""id"": ""43bc12d0-bddc-47b9-92f3-849115701e9e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Swap Weapon"",
+                    ""type"": ""Button"",
+                    ""id"": ""f11eada9-70e4-491d-820f-14264ddaf7d2"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Interact"",
+                    ""type"": ""Button"",
+                    ""id"": ""36eef028-41d2-4f9f-803b-e39fcd924711"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Crouch"",
+                    ""type"": ""Button"",
+                    ""id"": ""63d634fa-ddf2-4de1-bb9a-03c17435109c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Scroeboard"",
+                    ""type"": ""Button"",
+                    ""id"": ""f9ece791-0dc6-4a8d-88af-6ebb95513bad"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -269,7 +332,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""d9db7121-2088-4272-82b2-bd0b87ceb3e4"",
-                    ""path"": ""<Keyboard>/e"",
+                    ""path"": ""<Keyboard>/g"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
@@ -342,6 +405,149 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""Join"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6796dec8-bc22-4aad-a46c-5def493eea38"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Aim"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a0100c67-d468-436a-83f7-8117715194c8"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Aim"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""26bcf0ba-17da-4c3d-a071-ead2cb392345"",
+                    ""path"": ""<Gamepad>/leftStickPress"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""ADS Left"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b5101f66-ed3c-4a98-a9ed-7743e1a77eb0"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""ADS Left"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9851e812-84cc-4c98-925a-4c19d3c02b19"",
+                    ""path"": ""<Gamepad>/rightStickPress"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""ADS Right"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b6b86ff7-fdbc-4219-9021-5c3f3899bb68"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""ADS Right"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e9e6770c-5715-4b47-9dd7-a6c6e1fca0e5"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Swap Weapon"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""be729ab3-19f7-47cc-a017-d6061491f0cb"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5c668ada-92bd-482e-8f79-fb8f406e18e1"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8c6249a8-4f3b-4de9-b2f5-db71621da2f9"",
+                    ""path"": ""<Keyboard>/leftCtrl"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Crouch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""02e83f3c-5720-48b0-a593-b89c4d7ccbb5"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Crouch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""159ae400-6d83-45ec-9743-f046c9cd7dbd"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Scroeboard"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d41592b6-3a99-42cd-ba31-a020e43fd45b"",
+                    ""path"": ""<Gamepad>/select"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Scroeboard"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -386,6 +592,13 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Player_Reload = m_Player.FindAction("Reload", throwIfNotFound: true);
         m_Player_Grenade = m_Player.FindAction("Grenade", throwIfNotFound: true);
         m_Player_Join = m_Player.FindAction("Join", throwIfNotFound: true);
+        m_Player_Aim = m_Player.FindAction("Aim", throwIfNotFound: true);
+        m_Player_ADSLeft = m_Player.FindAction("ADS Left", throwIfNotFound: true);
+        m_Player_ADSRight = m_Player.FindAction("ADS Right", throwIfNotFound: true);
+        m_Player_SwapWeapon = m_Player.FindAction("Swap Weapon", throwIfNotFound: true);
+        m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
+        m_Player_Crouch = m_Player.FindAction("Crouch", throwIfNotFound: true);
+        m_Player_Scroeboard = m_Player.FindAction("Scroeboard", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -455,6 +668,13 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Reload;
     private readonly InputAction m_Player_Grenade;
     private readonly InputAction m_Player_Join;
+    private readonly InputAction m_Player_Aim;
+    private readonly InputAction m_Player_ADSLeft;
+    private readonly InputAction m_Player_ADSRight;
+    private readonly InputAction m_Player_SwapWeapon;
+    private readonly InputAction m_Player_Interact;
+    private readonly InputAction m_Player_Crouch;
+    private readonly InputAction m_Player_Scroeboard;
     public struct PlayerActions
     {
         private @PlayerControls m_Wrapper;
@@ -467,6 +687,13 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @Reload => m_Wrapper.m_Player_Reload;
         public InputAction @Grenade => m_Wrapper.m_Player_Grenade;
         public InputAction @Join => m_Wrapper.m_Player_Join;
+        public InputAction @Aim => m_Wrapper.m_Player_Aim;
+        public InputAction @ADSLeft => m_Wrapper.m_Player_ADSLeft;
+        public InputAction @ADSRight => m_Wrapper.m_Player_ADSRight;
+        public InputAction @SwapWeapon => m_Wrapper.m_Player_SwapWeapon;
+        public InputAction @Interact => m_Wrapper.m_Player_Interact;
+        public InputAction @Crouch => m_Wrapper.m_Player_Crouch;
+        public InputAction @Scroeboard => m_Wrapper.m_Player_Scroeboard;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -500,6 +727,27 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Join.started += instance.OnJoin;
             @Join.performed += instance.OnJoin;
             @Join.canceled += instance.OnJoin;
+            @Aim.started += instance.OnAim;
+            @Aim.performed += instance.OnAim;
+            @Aim.canceled += instance.OnAim;
+            @ADSLeft.started += instance.OnADSLeft;
+            @ADSLeft.performed += instance.OnADSLeft;
+            @ADSLeft.canceled += instance.OnADSLeft;
+            @ADSRight.started += instance.OnADSRight;
+            @ADSRight.performed += instance.OnADSRight;
+            @ADSRight.canceled += instance.OnADSRight;
+            @SwapWeapon.started += instance.OnSwapWeapon;
+            @SwapWeapon.performed += instance.OnSwapWeapon;
+            @SwapWeapon.canceled += instance.OnSwapWeapon;
+            @Interact.started += instance.OnInteract;
+            @Interact.performed += instance.OnInteract;
+            @Interact.canceled += instance.OnInteract;
+            @Crouch.started += instance.OnCrouch;
+            @Crouch.performed += instance.OnCrouch;
+            @Crouch.canceled += instance.OnCrouch;
+            @Scroeboard.started += instance.OnScroeboard;
+            @Scroeboard.performed += instance.OnScroeboard;
+            @Scroeboard.canceled += instance.OnScroeboard;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -528,6 +776,27 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Join.started -= instance.OnJoin;
             @Join.performed -= instance.OnJoin;
             @Join.canceled -= instance.OnJoin;
+            @Aim.started -= instance.OnAim;
+            @Aim.performed -= instance.OnAim;
+            @Aim.canceled -= instance.OnAim;
+            @ADSLeft.started -= instance.OnADSLeft;
+            @ADSLeft.performed -= instance.OnADSLeft;
+            @ADSLeft.canceled -= instance.OnADSLeft;
+            @ADSRight.started -= instance.OnADSRight;
+            @ADSRight.performed -= instance.OnADSRight;
+            @ADSRight.canceled -= instance.OnADSRight;
+            @SwapWeapon.started -= instance.OnSwapWeapon;
+            @SwapWeapon.performed -= instance.OnSwapWeapon;
+            @SwapWeapon.canceled -= instance.OnSwapWeapon;
+            @Interact.started -= instance.OnInteract;
+            @Interact.performed -= instance.OnInteract;
+            @Interact.canceled -= instance.OnInteract;
+            @Crouch.started -= instance.OnCrouch;
+            @Crouch.performed -= instance.OnCrouch;
+            @Crouch.canceled -= instance.OnCrouch;
+            @Scroeboard.started -= instance.OnScroeboard;
+            @Scroeboard.performed -= instance.OnScroeboard;
+            @Scroeboard.canceled -= instance.OnScroeboard;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -573,5 +842,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnReload(InputAction.CallbackContext context);
         void OnGrenade(InputAction.CallbackContext context);
         void OnJoin(InputAction.CallbackContext context);
+        void OnAim(InputAction.CallbackContext context);
+        void OnADSLeft(InputAction.CallbackContext context);
+        void OnADSRight(InputAction.CallbackContext context);
+        void OnSwapWeapon(InputAction.CallbackContext context);
+        void OnInteract(InputAction.CallbackContext context);
+        void OnCrouch(InputAction.CallbackContext context);
+        void OnScroeboard(InputAction.CallbackContext context);
     }
 }

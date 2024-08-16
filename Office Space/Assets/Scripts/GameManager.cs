@@ -39,8 +39,15 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject menuGameModes;
     [SerializeField] GameObject menuSettings;
     [SerializeField] GameObject menuControls;
+    [SerializeField] GameObject menuCredits;
     [SerializeField] GameObject menuDK2Objective;
     [SerializeField] GameObject menuNSObjective;
+
+    [SerializeField] public Button tittleStartingButton;
+    [SerializeField] public Button creditsStartingButton;
+    [SerializeField] public Button settingStartingButton;
+    [SerializeField] public Button controlsStartingButton;
+
     [SerializeField] public GameObject menuRetryAmount;
     [SerializeField] TMP_Text donutCountText;
     [SerializeField] GameObject timerUI;
@@ -508,10 +515,27 @@ public class GameManager : MonoBehaviour
         ActivateMenu(menuActive);
     }
 
+    public void OpenCredits()
+    {
+        menuActive = menuCredits;
+        ActivateMenu(menuActive);
+    }
+
     public void ReturnFromSettings()
     {
         menuActive.SetActive(false);
         menuActive = previousScreen;
+    }
+
+    public void ReturnToTittle() 
+    {
+        menuActive = menuTitle;
+        ActivateMenu(menuActive);
+    }
+
+    public void selectButton(Button button)
+    {
+        button.Select();
     }
 
 
