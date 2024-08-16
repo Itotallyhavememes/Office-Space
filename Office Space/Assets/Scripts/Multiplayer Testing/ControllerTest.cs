@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.UI;
+using UnityEngine.UI;
 
 public class ControllerTest : MonoBehaviour
 {
@@ -22,6 +24,8 @@ public class ControllerTest : MonoBehaviour
     [SerializeField] string grenade = "Grenade";
     [SerializeField] string cycleWeapon = "Cycle Weapon";
     [SerializeField] string join = "Join";
+    [SerializeField] string pause = "Pause";
+    [SerializeField] string resume = "Cancel";
 
     [Header("Deadzone Values")]
     [SerializeField] float leftStickDeadzoneValue;
@@ -37,6 +41,28 @@ public class ControllerTest : MonoBehaviour
     [Header("Jump Parameters")]
     [SerializeField] float jumpForce = 8.0f;
     [SerializeField] float gravity = 22.0f;
+
+    [Header("HP Parameters")]
+    public int HP;
+    private int HPOrig;
+
+    [Header("Player UI")]
+    [SerializeField] MultiplayerEventSystem eventSystem;
+    [SerializeField] GameObject menuActive;
+    [SerializeField] GameObject menuPause;
+    [SerializeField] GameObject firstSelectedButtonInPause;
+    public Image playerHPBar;
+    public Image playerAmmoBar;
+
+
+    //[Header("----- Weapons -----")]
+    //[SerializeField] WeaponStats starterWeapon;
+    //[SerializeField] public List<WeaponStats> weaponList;
+    //[SerializeField] GameObject weaponModel;
+    //[SerializeField] float shootRate;
+    //[SerializeField] int shootDamage;
+    //[SerializeField] float reloadTime;
+    //int selectedWeapon;
 
     [Header("Look Sensitivity")]
     [SerializeField] float mouseSensitivity = 2.0f;
@@ -58,6 +84,8 @@ public class ControllerTest : MonoBehaviour
     InputAction grenadeAction;
     InputAction cycleWeaponAction;
     InputAction joinAction;
+    InputAction pauseAction;
+    InputAction resumeAction;
     //InputAction splitCameraAction; //testing
 
     //auto-implemented property with a get and set accessor. Can be read from anywhere (public), but can only be set from within the class (private)
@@ -87,12 +115,28 @@ public class ControllerTest : MonoBehaviour
         grenadeAction = player.FindAction(grenade);
         cycleWeaponAction = player.FindAction(cycleWeapon);
         joinAction = player.FindAction(join);
+        pauseAction = player.FindAction(pause);
+        pauseAction = player.FindAction(pause);
+        resumeAction = inputAsset.FindActionMap("UI").FindAction(resume);
         //splitCameraAction = player.FindAction(splitCamera); //testing
 
         RegisterInputActions();
 
         InputSystem.settings.defaultDeadzoneMin = leftStickDeadzoneValue;
         characterController = GetComponent<CharacterController>();
+
+        eventSystem = FindObjectOfType<MultiplayerEventSystem>();
+    }
+    private void Start()
+    {
+        HPOrig = HP;
+    }
+
+    private void Update()
+    {
+        HandleMovement();
+        HandleRotation();
+        UpdatePlayerUI();
     }
 
     //void PrintDevices()
@@ -143,6 +187,8 @@ public class ControllerTest : MonoBehaviour
         grenadeAction.Enable();
         //cycleWeaponAction.Enable();
         joinAction.Enable();
+        pauseAction.started += OnPauseInput;
+        resumeAction.started += OnPauseInput;
     }
 
     private void OnDisable()
@@ -157,14 +203,11 @@ public class ControllerTest : MonoBehaviour
         //cycleWeaponAction.Disable();
         joinAction.Disable();
         //splitCameraAction.started -= CameraSplit;
+        pauseAction.started -= OnPauseInput;
+        resumeAction.started -= OnPauseInput;
     }
 
 
-    private void Update()
-    {
-        HandleMovement();
-        HandleRotation();
-    }
 
     void HandleMovement()
     {
@@ -209,4 +252,40 @@ public class ControllerTest : MonoBehaviour
         cameraLockOn.transform.localRotation = Quaternion.Euler(verticalRotation, 0, 0);
     }
 
+
+    public void UpdatePlayerUI()
+    {
+        playerHPBar.fillAmount = (float)HP / HPOrig;
+    }
+
+    //public void UpdateAmmoUI()
+    //{
+    //    GameManager.instance.playerAmmoBar.fillAmount = (float)weaponList[selectedWeapon].currentAmmo / weaponList[selectedWeapon].startAmmo;
+
+    //}
+
+    void OnPauseInput(InputAction.CallbackContext obj)
+    {
+
+
+        if (menuActive == null)
+        {
+            actionMapName = "UI";
+            player = inputAsset.FindActionMap(actionMapName);
+            //GameManager.instance.StatePause();
+            menuActive = menuPause;
+            eventSystem.firstSelectedGameObject = firstSelectedButtonInPause;
+            menuActive.SetActive(true);
+        }
+        else if (menuActive == menuPause)
+        {
+            //GameManager.instance.StateUnpause();
+            actionMapName = "Player";
+            player = inputAsset.FindActionMap(actionMapName);
+            menuActive.SetActive(false);
+            menuActive = null;
+
+        }
+
+    }
 }

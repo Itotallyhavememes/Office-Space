@@ -22,21 +22,16 @@ public class PlayerManager : MonoBehaviour
 
     private void Awake()
     {
-        if(instance == null)
-        {
-            instance = this;
-        }
+        //if(instance == null)
+        //{
+        //    instance = this;
+        //}
 
-        if (cameras.Count > 0)
-        {
-            cameras.Clear();
-        }
+        //if (cameras.Count > 0)
+        //{
+        //    cameras.Clear();
+        //}
         playerInputManager = FindObjectOfType<PlayerInputManager>();
-    }
-
-    private void Update()
-    {
-        
     }
 
     private void OnEnable()
@@ -57,14 +52,14 @@ public class PlayerManager : MonoBehaviour
 
         player.GetComponent<PlayerControl>().spawnPlayer();
 
-        Debug.Log(Input.GetJoystickNames().First());
+        //Debug.Log(Input.GetJoystickNames().First());
 
-        if (players.Count == 2)
-        {
-            cameras[0].rect.Set(0, 0.5f, 1, 0.5f);
-            cameras[1].rect.Set(0, 0, 1, 0.5f);
-            Debug.Log("There's 2 players on screen");
-        }
+        //if (players.Count == 2)
+        //{
+        //    cameras[0].rect.Set(0, 0.5f, 1, 0.5f);
+        //    cameras[1].rect.Set(0, 0, 1, 0.5f);
+        //    Debug.Log("There's 2 players on screen");
+        //}
 
         //// converts layer mask (bit) to an int
         //int layerToAdd = (int)Mathf.Log(playerLayers[players.Count - 1].value, 2);
