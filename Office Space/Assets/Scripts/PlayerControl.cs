@@ -106,7 +106,8 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
 
     Coroutine speedCoroutine;
 
-    float agentSpeed;
+    float agentSpeedVert;
+    float agentSpeedHori;
     // Start is called before the first frame update
     void Start()
     {
@@ -159,8 +160,11 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
     {
         Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDist, Color.green);
 
-         agentSpeed = Input.GetAxis("Vertical");
-        anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), agentSpeed, Time.deltaTime * animTransitSpeed));
+         agentSpeedVert = Input.GetAxis("Vertical");
+         agentSpeedHori = Input.GetAxis("Horizontal");
+
+        anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), agentSpeedVert, Time.deltaTime * animTransitSpeed));
+        anim.SetFloat("SpeedHori", Mathf.Lerp(anim.GetFloat("SpeedHori"), agentSpeedHori, Time.deltaTime * animTransitSpeed));
 
         playerAim.transform.position =  Camera.main.transform.position + (Camera.main.transform.forward * aimBallDist);
 

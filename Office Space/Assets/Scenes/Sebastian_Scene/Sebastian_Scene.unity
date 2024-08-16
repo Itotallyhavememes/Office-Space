@@ -3913,6 +3913,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: NMODEL_Player
       objectReference: {fileID: 0}
+    - target: {fileID: 2956853213328285507, guid: 47fd8565a2340a44b90e26dc7c67c18e, type: 3}
+      propertyPath: animTransitSpeed
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 7835243732117820790, guid: 47fd8565a2340a44b90e26dc7c67c18e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 8.22
