@@ -157,9 +157,7 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
     {
         Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDist, Color.green);
 
-        RaycastHit hit;
-        Physics.Raycast(Camera.main.transform.position, transform.forward, out hit, aimBallDist);
-            playerAim.transform.position = hit.point;
+       playerAim.transform.position =  Camera.main.transform.position + (Camera.main.transform.forward * aimBallDist);
 
         if (!GameManager.instance.isPaused && !isDead)
         {
