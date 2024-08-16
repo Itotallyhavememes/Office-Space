@@ -11,6 +11,7 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
     [SerializeField] CharacterController controller;
     [SerializeField] AudioSource aud;
     [SerializeField] LayerMask ignoreMask;
+    [SerializeField] Animator anim;
 
     [Header("----- Variables -----")]
 
@@ -25,6 +26,7 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
     [SerializeField] float slideLockoutTime;
     [SerializeField] float slideCooldown;
     [SerializeField] int gravity;
+    [SerializeField] float animTransitSpeed;
     //[SerializeField] int donutDropDistance;
     //[SerializeField] GameObject donutDropItem;
     [SerializeField] Camera deathCamera;
@@ -104,7 +106,7 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
 
     Coroutine speedCoroutine;
 
-
+    float agentSpeed;
     // Start is called before the first frame update
     void Start()
     {
@@ -157,7 +159,10 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
     {
         Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDist, Color.green);
 
-       playerAim.transform.position =  Camera.main.transform.position + (Camera.main.transform.forward * aimBallDist);
+         agentSpeed = Input.GetAxis("Vertical");
+        anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), agentSpeed, Time.deltaTime * animTransitSpeed));
+
+        playerAim.transform.position =  Camera.main.transform.position + (Camera.main.transform.forward * aimBallDist);
 
         if (!GameManager.instance.isPaused && !isDead)
         {
@@ -219,6 +224,7 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
 
         if (Input.GetButtonDown("Jump") && jumpCount < 1 && !isCrouching)
         {
+            anim.SetTrigger("Jump");
             jumpCount++;
             playerVel.y = jumpSpeed;
             aud.PlayOneShot(audJump[Random.Range(0, audJump.Length)], audJumpVol);
