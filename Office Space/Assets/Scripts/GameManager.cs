@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
     public List<GameObject> bodyTracker;
     public List<GameObject> deadTracker;
     public List<GameObject> spawnPoints;
+    public List<string> CombatMessage;
     //Changed from donutCountList -> statsTracker
     //changed value from int -> ParticipantStats struct object
     public Dictionary<string, ParticipantStats> statsTracker;
@@ -124,6 +125,7 @@ public class GameManager : MonoBehaviour
         bodyTracker = new List<GameObject>();
         statsTracker = new Dictionary<string, ParticipantStats>();
         PriorityPoint = new List<Transform>();
+        CombatMessage = new List<string>();
         // CHECK POINT
         playerSpawn = GameObject.FindWithTag("Player Spawn Pos");
         respawn = false;
@@ -612,8 +614,14 @@ public class GameManager : MonoBehaviour
         Debug.Log("Ending TIMER!");
     }
 
+    //METHOD CREATED TO ADD AND DISPLAY WHO KILLED WHO
     public void DisplayKillMessage(GameObject winner, GameObject defeated)
     {
-        Debug.Log(winner.name.ToString() + " KILLED " + defeated.name.ToString());
+        string cMessage;
+        cMessage = winner.name.ToString() + " KILLED " + defeated.name.ToString();
+        Debug.Log(cMessage);
+        CombatMessage.Add(cMessage);
+        if (CombatMessage.Count > 5)
+            CombatMessage.RemoveAt(0);
     }
 }

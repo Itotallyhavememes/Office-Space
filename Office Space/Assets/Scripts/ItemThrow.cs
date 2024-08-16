@@ -30,8 +30,6 @@ public class ItemThrow : MonoBehaviour
             if (Input.GetButtonDown("Item") && rubberBallCount > 0)
             {
                 StartCoroutine(ThrowItem());
-
-
             }
         }
     }

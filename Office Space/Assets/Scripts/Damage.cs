@@ -11,17 +11,26 @@ public class Damage : MonoBehaviour
     [SerializeField] int damageAmount;
     [SerializeField] int speed;
     [SerializeField] int destroyTime;
-
     bool hasDamaged;
+
+    //TEST VARIABLE FOR KILL COUNT
+    [SerializeField] GameObject dmgSource;
 
     // Start is called before the first frame update
     void Start()
     {
+        
         if (type == damageType.stream || type == damageType.projectile)
         {
             rb.velocity = transform.forward * speed;
             Destroy(gameObject, destroyTime);
         }
+    }
+
+    //METHOD HERE:
+    public GameObject tellMyParents(GameObject deadman)
+    {
+        return null;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -34,7 +43,11 @@ public class Damage : MonoBehaviour
             IDamage dmg = other.GetComponent<IDamage>();
 
             if (dmg != null && !hasDamaged)
+            {
                 dmg.takeDamage(damageAmount);
+                if (GameManager.instance.CallTheDead(other.name)) { }
+                    //Pass name to Parent Method here
+            }
 
             if (type == damageType.stream || type == damageType.projectile)
             {
