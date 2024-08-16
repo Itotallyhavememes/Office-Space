@@ -37,6 +37,8 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
     Vector3 playerVel;
 
     [Header("----- Weapons -----")]
+    [SerializeField] GameObject playerAim;
+    [SerializeField] float aimBallDist;
     [SerializeField] WeaponStats starterWeapon;
     [SerializeField] public List<WeaponStats> weaponList;
     [SerializeField] GameObject weaponModel;
@@ -154,6 +156,11 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
     void Update()
     {
         Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDist, Color.green);
+
+        RaycastHit hit;
+        Physics.Raycast(Camera.main.transform.position, transform.forward, out hit, aimBallDist);
+            playerAim.transform.position = hit.point;
+
         if (!GameManager.instance.isPaused && !isDead)
         {
             if (Input.GetButtonDown("Crouch"))
