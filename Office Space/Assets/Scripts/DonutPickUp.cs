@@ -96,7 +96,7 @@ public class DonutPickUp : MonoBehaviour
                 }
 
                 Debug.Log(other.name.ToString() + " : " + GameManager.instance.statsTracker[other.name].getAllStats());
-                Destroy(gameObject);
+                gameObject.SetActive(false);
                 if(GameManager.instance.worldDonutCount > 0)
                     --GameManager.instance.worldDonutCount;
             }

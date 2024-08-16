@@ -297,6 +297,8 @@ public class GameManager : MonoBehaviour
         deadTracker.Add(self);
         //Debug.Log(self.name + "DB: " + statsTracker[self.name].getDeaths().ToString());
         statsTracker[self.name].updateDeaths();
+        statsTracker[self.name].updateKDR();
+        Debug.Log(self.name.ToString() + statsTracker[self.name].getAllStats().ToString());
        // Debug.Log(self.name + "DA: " + statsTracker[self.name].getDeaths().ToString());
         //if (statsTracker[self.name].getDKStatus() == true)
         //    statsTracker[self.name].updateDKStatus();
@@ -577,7 +579,12 @@ public class GameManager : MonoBehaviour
         UnityEngine.AI.NavMeshHit hit;
         //The "1" is in refernce to layer mask "1"
         UnityEngine.AI.NavMesh.SamplePosition(randDropPos, out hit, donutDropDistance, 1);
-        Instantiate(donutDropItem, donutDropper.transform.position + randDropPos, donutDropItem.transform.rotation);
+            donutDropItem.transform.position = donutDropper.transform.position + randDropPos;
+            if (donutDropItem.transform.position == donutDropper.transform.position)
+                Debug.Log("YAHOO!");
+            donutDropItem.SetActive(true);
+        //Instantiate(donutDropItem, donutDropper.transform.position + randDropPos, donutDropItem.transform.rotation);
+
         //GameManager.instance.UpdateDonutCount(gameObject, -1);
         Debug.Log(donutDropper.name.ToString() + " DROPPED THE DONUT!");
         //Sets isDonutKing for current object to false, since initially was true

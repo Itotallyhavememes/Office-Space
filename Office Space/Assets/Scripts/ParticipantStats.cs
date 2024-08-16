@@ -7,8 +7,9 @@ using UnityEngine;
 public class ParticipantStats
 {
     [SerializeField] string DisplayName;
-    [SerializeField] int Kills, Deaths, timeHeld, moneyTotal, RoundsWon;
-    [SerializeField] float KDR;
+    [SerializeField] int timeHeld, moneyTotal, RoundsWon;
+    //Changed Kills and Deaths to double to allow KDR to show up to the 0.01 decimal place
+    [SerializeField] double Kills, Deaths, KDR;
     [SerializeField] bool isDonutKing;
 
     public ParticipantStats instantiateStats()
@@ -30,11 +31,18 @@ public class ParticipantStats
 
     public void updateDeaths() {  ++Deaths; }
 
-    public int getDeaths() { return Deaths; }
+    public double getDeaths() { return Deaths; }
 
-    public int getKills() { return Kills; }
+    public double getKills() { return Kills; }
 
-    public void getKDR() { KDR = Kills / Deaths; }
+    public void updateKDR() 
+    {
+        double divisDeath;
+        divisDeath = Deaths;
+        if (Deaths == 0.0f)
+            divisDeath = 1;
+        KDR = Kills / divisDeath; 
+    }
 
     public void updateDKStatus() 
     { 
@@ -68,10 +76,10 @@ public class ParticipantStats
     public string getAllStats()
     {
         string debugStats;
-        debugStats = "K: " + Kills.ToString() + " | ";
+        debugStats = "\tK: " + Kills.ToString() + " | ";
         debugStats += "D: " + Deaths.ToString() + " | ";
         debugStats += "TH: " + timeHeld.ToString() + " | ";
-        debugStats += "KDR: " + KDR.ToString() + " | ";
+        debugStats += "KDR: " + KDR.ToString("N2") + "% | ";
         debugStats += "DK?: " + isDonutKing.ToString() + " | ";
         debugStats += "$" + moneyTotal.ToString() + " | ";
         debugStats += "RW: " + RoundsWon.ToString() + " | ";

@@ -506,26 +506,6 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
 
             if (HP <= 0)
             {
-                //int indexx = 0;
-                //He's died, so decrement
-                --GameManager.instance.enemyCount;
-                if (isShooting)
-                {
-                    isShooting = false;
-                }
-                for (int i = 0; i < GameManager.instance.bodyTracker.Count; ++i)
-                {
-                    if (gameObject.GetHashCode() == GameManager.instance.bodyTracker[i].GetHashCode())
-                    {
-                        GameManager.instance.bodyTracker.Remove(GameManager.instance.bodyTracker[i]);
-                    }
-                }
-                GameManager.instance.DeclareSelfDead(gameObject);
-                ResetHP();
-
-
-                //
-                //while (GameManager.instance.statsTracker[name] > 0)
                 if (GameManager.instance.statsTracker[name].getDKStatus() == true)
                 {
                     //GROUPED AS GAMEMANAGER METHOD
@@ -544,6 +524,27 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
 
                     GameManager.instance.dropTheDonut(this.gameObject);
                 }
+                //int indexx = 0;
+                //He's died, so decrement
+                --GameManager.instance.enemyCount;
+                if (isShooting)
+                {
+                    isShooting = false;
+                }
+                //for (int i = 0; i < GameManager.instance.bodyTracker.Count; ++i)
+                //{
+                //    if (gameObject.GetHashCode() == GameManager.instance.bodyTracker[i].GetHashCode())
+                //    {
+                //        GameManager.instance.bodyTracker.Remove(GameManager.instance.bodyTracker[i]);
+                //    }
+                //}
+                GameManager.instance.DeclareSelfDead(gameObject);
+                ResetHP();
+
+
+                //
+                //while (GameManager.instance.statsTracker[name] > 0)
+                
                 //GameManager.instance.DeclareSelfDead(gameObject);//
                 gameObject.SetActive(false);
             }
@@ -577,15 +578,24 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
 
     IEnumerator shoot()
     {
-
         if (type != enemyType.security)
-
-        if(type!= enemyType.security)
-
         {
             isShooting = true;
 
             Instantiate(bullet, shootPos.position, transform.rotation);
+            Damage bulletDmg = bullet.GetComponent<Damage>();
+            bulletDmg.parent = this.gameObject;
+            //Debug.Log(bulletDmg.parent.name.ToString() + " HURT " + bulletDmg.victim.name.ToString());
+            //if (bulletDmg.hasKilled)
+            //{
+            //    Debug.Log(bulletDmg.hasKilled.ToString());
+            //    Debug.Log(bulletDmg.victim.ToString());
+            //    GameManager.instance.statsTracker[this.gameObject.name].updateKills();
+            //    GameManager.instance.statsTracker[this.gameObject.name].updateKDR();
+            //    GameManager.instance.DisplayKillMessage(gameObject, bulletDmg.victim);
+            //    Debug.Log(GameManager.instance.statsTracker[this.gameObject.name].getAllStats());
+            //}
+            //Debug.Log(bulletDmg.parent.ToString() + " --> BULLET!");
             yield return new WaitForSeconds(shootRate);
             isShooting = false;
         }

@@ -434,6 +434,7 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
                         if (GameManager.instance.CallTheDead(hit.collider.name))
                         {
                             GameManager.instance.statsTracker[this.gameObject.name].updateKills();
+                            GameManager.instance.statsTracker[this.gameObject.name].updateKDR();
                             GameManager.instance.DisplayKillMessage(gameObject, hit.collider.gameObject);
                             Debug.Log(GameManager.instance.statsTracker[this.gameObject.name].getAllStats());
                         }
@@ -476,33 +477,20 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
             UpdatePlayerUI();
             aud.PlayOneShot(audDamage[Random.Range(0, audDamage.Length)], audDamageVol);
 
-            if (HP <= 0 && GameManager.currentMode == GameManager.gameMode.NIGHTSHIFT) // 
+            if (HP <= 0 && GameManager.currentMode == GameManager.gameMode.NIGHTSHIFT) 
             {
                 GameManager.instance.YouLose();
             }
             else if (HP <= 0 && GameManager.currentMode == GameManager.gameMode.DONUTKING2)
             {
+                if (GameManager.instance.statsTracker[name].getDKStatus() == true)
+                    GameManager.instance.dropTheDonut(this.gameObject);
                 //Camera.main.gameObject.SetActive(false);
                 isDead = true;
+                GameManager.instance.DeclareSelfDead(gameObject);
                 gameObject.GetComponent<CapsuleCollider>().enabled = false;
                 deathCamera.gameObject.SetActive(true);
-                //while (GameManager.instance.statsTracker[name] > 0)
-                GameManager.instance.DeclareSelfDead(gameObject);
-                if (GameManager.instance.statsTracker[name].getDKStatus() == true)
-                {
-                    //GROUPED AS GAMEMANAGER METHOD
-                    ////creates sphere that's the size of roamDist and selects a random position
-                    //Vector3 randDropPos = Random.insideUnitSphere * donutDropDistance;
-                    //randDropPos.y = donutDropItem.transform.position.y;
-                    ////Prevents getting null reference when creating random point
-                    //NavMeshHit hit;
-                    ////The "1" is in refernce to layer mask "1"
-                    //NavMesh.SamplePosition(randDropPos, out hit, donutDropDistance, 1);
-                    //Instantiate(donutDropItem, transform.position + randDropPos, donutDropItem.transform.rotation);
-                    //GameManager.instance.UpdateDonutCount(gameObject, -1);
-
-                    GameManager.instance.dropTheDonut(this.gameObject);
-                }
+                //while (GameManager.instance.statsTracker[name] > 0)              
             }
         }
     }

@@ -11,6 +11,9 @@ public class Damage : MonoBehaviour
     [SerializeField] int damageAmount;
     [SerializeField] int speed;
     [SerializeField] int destroyTime;
+    public GameObject parent;
+    public GameObject victim;
+    public bool hasKilled;
     bool hasDamaged;
 
     //TEST VARIABLE FOR KILL COUNT
@@ -41,12 +44,24 @@ public class Damage : MonoBehaviour
                 return;
 
             IDamage dmg = other.GetComponent<IDamage>();
-
+            //GameObject victim = other.GetComponent<GameObject>();
+            
             if (dmg != null && !hasDamaged)
             {
+                Debug.Log(parent.name.ToString() + " --> SHOT --> " + other.name.ToString());
                 dmg.takeDamage(damageAmount);
-                if (GameManager.instance.CallTheDead(other.name)) { }
-                    //Pass name to Parent Method here
+                if (GameManager.instance.CallTheDead(other.name))
+                {
+                    //Debug.Log(other.name.ToString() + " DIED!");
+                    hasKilled = true;
+                    victim = other.gameObject;
+                    GameManager.instance.statsTracker[parent.name].updateKills();
+                    GameManager.instance.statsTracker[parent.name].updateKDR();
+                    GameManager.instance.DisplayKillMessage(parent, other.gameObject);
+                    Debug.Log(parent.name.ToString() + GameManager.instance.statsTracker[parent.name].getAllStats());
+                }
+
+
             }
 
             if (type == damageType.stream || type == damageType.projectile)
