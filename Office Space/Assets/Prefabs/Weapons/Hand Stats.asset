@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 0
   weaponModel: {fileID: 919132149155446097, guid: 332e48c2cdfb18e4fb7a2cb11594a42b, type: 3}
-  shootRate: 0.3
+  shootRate: 0.18
   shootDamage: 2
   currentAmmo: 12
   reloadTime: 1.5

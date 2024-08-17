@@ -17,6 +17,7 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
 
     //Player variables
     public int HP;
+    [SerializeField] GameObject DKLight;
     [SerializeField] int speed;
     [SerializeField] int sprintMod;
     [SerializeField] int crouchMod;
@@ -116,14 +117,21 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
         origHeight = controller.height;
         slideLockout = slideLockoutTime;
         canSlide = true;
-
+        DKLight.SetActive(false);
         GetWeaponStats(starterWeapon);
         DefaultPublicBools();
         //Add self to gameManager's bodyTracker
         GameManager.instance.AddToTracker(this.gameObject);
         // Call spawnPlayer
         spawnPlayer();
+    }
 
+    public void ToggleMyLight()
+    {
+        if (DKLight.activeSelf == false)
+            DKLight.SetActive(true);
+        else
+            DKLight.SetActive(false);
     }
 
     // Player Spawn
@@ -588,7 +596,12 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
             return false;
     }
     //END ITarget Methods
-
+    //FOR DONUT KING
+    public void DKPickedUp()
+    {
+        HP = HPOrig;
+        UpdatePlayerUI();
+    }
     public void HealthPickup() //Proto 1 HealthPickup
     {
         int count = 1;

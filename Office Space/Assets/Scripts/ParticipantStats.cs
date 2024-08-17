@@ -64,6 +64,8 @@ public class ParticipantStats
 
     public void updateRoundsWon() { ++RoundsWon; }
 
+    public int getRoundsWon() { return RoundsWon; }
+
     public int getTimeHeld() { return timeHeld; }
 
     //public void updateScore(int score) { scorePoints += score; }
@@ -84,5 +86,14 @@ public class ParticipantStats
         debugStats += "$" + moneyTotal.ToString() + " | ";
         debugStats += "RW: " + RoundsWon.ToString() + " | ";
         return debugStats;
+    }
+
+    //METHOD FOR PRINTING STATS FOR SCOREBOARD
+    public string GetScoreStats()
+    {
+        string scoreStats;
+        scoreStats = " " + timeHeld.ToString() + "|";
+        scoreStats += " R: " + RoundsWon.ToString() + "|";
+        return scoreStats;
     }
 }

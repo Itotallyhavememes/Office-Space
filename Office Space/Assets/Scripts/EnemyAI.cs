@@ -17,7 +17,9 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
     //Enum for distinguishing different enemy types for AI distinction
     [SerializeField] enum enemyType { norm, fast, tank, security };
     [SerializeField] enemyType type;
-
+    [SerializeField] GameObject DKLight;
+    [SerializeField] bool amITheKing;
+    [SerializeField] Vector3 DKRPoint;
     [SerializeField] public NavMeshAgent agent;
     [SerializeField] Renderer model;
     [SerializeField] Animator anim;
@@ -116,6 +118,7 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
         agent.stoppingDistance = 0;
         destPriority = null;
         origHP = HP;
+        DKLight.SetActive(false);
     }
 
     // Update is called once per frame
@@ -131,13 +134,38 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
                 targetInRange = true;
             else targetInRange = false;
         }
-            if (GameManager.instance.PriorityPoint.Count > 0 || !destPriority)
-                destPriority = GetPriorityPoint();
-            if (GameManager.instance.PriorityPoint.Count == 0 && destPriority)
-                destPriority = null;
+        //LOGIC BREAKDOWN:
+        //Enemies should always Prioritize the Following:
+        //The Donut and The Donut King
+        //
+        //Logic changes based on situation:
+        //If The Donut is active, then The Donut King MUST be false
+        //-in this case, enemies attack each other as normal to get to The Donut
+        //Else if, The Donut is inactive, then The Donut King MUST be true
+        //-in this case, enemies ignore each other and only attack The Donut King
+        //Cycle repeats for enemies that are NOT The Donut King
+        //
+        //IF an Enemy BECOMES The Donut King
+        //-Main Priority: Choose a Spawn Location at random and run
+        //-If they BUMP into another enemy, then fight (Work on Complex DK Enemy AI Later)
 
-        
-       
+        //if (GameManager.instance.isThereDonutKing == false/* || !destPriority*/)
+        //{
+        //    destPriority = GameManager.instance.donutDropItem.transform;
+        //    PrioritizeTarget(targetOBJ);
+        //}
+        //else if (GameManager.instance.isThereDonutKing == true/* && destPriority*/)
+        //{
+        //    destPriority = GameManager.instance.TheDonutKing.transform;
+        //    targetOBJ = destPriority.gameObject;
+        //    GetDetCode(targetOBJ);
+        //}
+        //What to do if I'm the king
+        if (!amITheKing)
+            destPriority = GetPriorityPoint();
+        else if (amITheKing)
+            destPriority = null;
+
 
         if (targetInRange)
         {
@@ -159,54 +187,61 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
             }
             if (targetOBJ != null)
                 //Debug.Log(gameObject.name.ToString() + " says: My New Target-> " + targetOBJ.name.ToString());
-            if (canSeePlayer())
-            {
-                //Debug.Log("I see you!");
-                if (agent.remainingDistance <= agent.stoppingDistance)
-                    FaceTarget();
-                if (!isShooting)
-                    StartCoroutine(shoot());
-            }
-            else
-            {
-                if (agent.remainingDistance < 0.05f)
+                if (canSeePlayer())
                 {
-                    if (type != enemyType.security)
-                    {
-                        if (!isRoaming)
-                        {
-                            if (GameManager.instance.PriorityPoint.Count > 0)
-                            {
-                                if(destPriority != null)
-                                    StartCoroutine(GoToPOI());
-                            }
-                            else
-                            {
-                                StartCoroutine(Roam());
-                            }
-                        }
-                    }
-                    else if (type == enemyType.security && !isPatrol)
-                        StartCoroutine(Patrol());
+                    //Debug.Log("I see you!");
+                    if (agent.remainingDistance <= agent.stoppingDistance)
+                        FaceTarget();
+                    if (!isShooting)
+                        StartCoroutine(shoot());
                 }
-           }
+                else
+                {
+                    if (agent.remainingDistance < 0.05f)
+                    {
+                        
+                        if (type != enemyType.security)
+                        {
+                            if (!amITheKing)
+                            {
+                                StartCoroutine(GoToPOI());
+                                //if (GameManager.instance.PriorityPoint.Count > 0)
+                                //{
+                                //    if (destPriority != null)
+                                //        StartCoroutine(GoToPOI());
+                                //}
+                                ////else
+                                ////{
+                                ////    StartCoroutine(Roam());
+                                ////}
+                            }
+                            else if (amITheKing)
+                                StartCoroutine(RunKingRun());
+                        }
+                        else if (type == enemyType.security && !isPatrol)
+                            StartCoroutine(Patrol());
+                    }
+                }
         }
         else if (!targetInRange/* && !destPriority*/)
         {
             if (type != enemyType.security)
             {
-                if (!isRoaming)
+                if (!amITheKing)
                 {
-                    if (GameManager.instance.PriorityPoint.Count > 0)
-                    {
-                        if (destPriority != null)
-                            StartCoroutine(GoToPOI());
-                    }
-                    else
-                    {
-                        StartCoroutine(Roam());
-                    }
+                    StartCoroutine(GoToPOI());
+                    //if (GameManager.instance.PriorityPoint.Count > 0)
+                    //{
+                    //    if (destPriority != null)
+                    //        StartCoroutine(GoToPOI());
+                    //}
+                    ////else
+                    ////{
+                    ////    StartCoroutine(Roam());
+                    ////}
                 }
+                else if (amITheKing)
+                    StartCoroutine(RunKingRun());
             }
             else
             {
@@ -216,6 +251,51 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
         }
     }
 
+    public void ToggleMyLight()
+    {
+        if (DKLight.activeSelf == false)
+            DKLight.SetActive(true);
+        else
+            DKLight.SetActive(false);
+    }
+
+    public void ToggleAmIKing()
+    {
+        amITheKing = !amITheKing;
+    }
+
+    public bool getKingStatus() {  return amITheKing; }
+
+    //METHOD FOR DONUT KING ENEMIES
+    IEnumerator RunKingRun()
+    {
+        isPatrol = true;
+        yield return new WaitForSeconds(romTimer);
+        agent.stoppingDistance = 0;
+        RandomRunPoints();
+        agent.SetDestination(DKRPoint);
+        isPatrol = false;
+    }
+
+    public void RandomRunPoints()
+    {
+        //if (nextPosIndex < Positions.Count)
+        //{
+
+        //    PatrolPoint = Positions[nextPosIndex].transform.position;
+        //    ++nextPosIndex;
+        //}
+        //else if (nextPosIndex >= Positions.Count)
+        //{
+        //    if (nextPosIndex > Positions.Count)
+        //    {
+        //        nextPosIndex = Positions.Count;
+        //    }
+        //    PatrolPoint = StartPoint;
+        //    nextPosIndex = 0;
+        //}
+        DKRPoint = GameManager.instance.spawnPoints[Random.Range(0, GameManager.instance.spawnPoints.Count)].transform.position;
+    }
     //FOR BOTH
     void FaceTarget()
     {
@@ -283,12 +363,9 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
     //FOR BOTH
     IEnumerator GoToPOI()
     {
-        //Debug.Log(gameObject.name.ToString() + "says: Heading For - " + GameManager.instance.PriorityPoint.name.ToString());
-        //hasPriority = true;
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.05f);
         agent.stoppingDistance = 0;
         agent.SetDestination(destPriority.position);
-        //hasPriority = false;
     }
 
     //if potential target enters Sphere
@@ -405,24 +482,32 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
 
     public Transform GetPriorityPoint()
     {
-        Transform closestPoint = null;
-        if (GameManager.instance.PriorityPoint.Count > 0)
-        {
-            Transform enemyT = gameObject.transform;
-            closestPoint = GameManager.instance.PriorityPoint[0];
-            float compDist = Vector3.Distance(enemyT.position, closestPoint.position);
-            float newComp = 0.0f;
-           for(int i = 0; i < GameManager.instance.PriorityPoint.Count; ++i)
-            {
-                newComp = Vector3.Distance(enemyT.position, GameManager.instance.PriorityPoint[i].position);
-                if (compDist > newComp)
-                {
-                    compDist = newComp;
-                    closestPoint = GameManager.instance.PriorityPoint[i];
-                }
-            }
-        }
-        return closestPoint;
+        //Transform closestPoint = null;
+        //if (GameManager.instance.PriorityPoint.Count > 0)
+        //{
+        //    Transform enemyT = gameObject.transform;
+        //    closestPoint = GameManager.instance.PriorityPoint[0];
+        //    float compDist = Vector3.Distance(enemyT.position, closestPoint.position);
+        //    float newComp = 0.0f;
+        //   for(int i = 0; i < GameManager.instance.PriorityPoint.Count; ++i)
+        //    {
+        //        newComp = Vector3.Distance(enemyT.position, GameManager.instance.PriorityPoint[i].position);
+        //        if (compDist > newComp)
+        //        {
+        //            compDist = newComp;
+        //            closestPoint = GameManager.instance.PriorityPoint[i];
+        //        }
+        //    }
+        //}
+        //return closestPoint;
+        Transform PriorityPoint = null;
+        PriorityPoint = GameManager.instance.PriorityPoint[0];
+        //if (!GameManager.instance.isThereDonutKing)
+        //    PriorityPoint = GameManager.instance.donutDropItem.transform;
+        //else if(GameManager.instance.isThereDonutKing)
+        //    PriorityPoint = GameManager.instance.TheDonutKing.transform;
+
+        return PriorityPoint;
     }
     int GetDetCode(GameObject target)
     {
@@ -445,7 +530,8 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
             targeting.transform.position = targetOBJ.transform.position;
             TargetDIR = targeting.transform.position - transform.position;
             angleToTarget = Vector3.Angle(TargetDIR, transform.forward);
-
+            if (GameManager.instance.isThereDonutKing)
+                StopCoroutine(GoToPOI());
             bool canSee = false;
 
             switch (detCode)

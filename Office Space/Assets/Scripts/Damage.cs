@@ -67,9 +67,10 @@ public class Damage : MonoBehaviour
             if (type == damageType.stream || type == damageType.projectile)
             {
                 hasDamaged = true;
-                Destroy(gameObject);
+                
             }
         }
+        Destroy(gameObject);
     }
 
     private void OnDestroy()

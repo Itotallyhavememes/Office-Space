@@ -30,8 +30,9 @@ public class GameManager : MonoBehaviour
 
     //Dictionary to hold player and NE_enemies along with live/dead stats
     //OPTIMIZED: Moving donutDropDistance and donutDropItem from PlayerControl & EnemyAI to here
+    [SerializeField] int NumberOfRounds;
     [SerializeField] int donutDropDistance;
-    [SerializeField] GameObject donutDropItem;
+    public GameObject donutDropItem;
     public List<GameObject> bodyTracker;
     public List<GameObject> deadTracker;
     public List<GameObject> spawnPoints;
@@ -329,6 +330,9 @@ public class GameManager : MonoBehaviour
     //Method called in enemySpawner that returns the first entry in deadTracker
     public IEnumerator SpawnTheDead()
     {
+        //float respawnerTime = statsTracker[deadTracker[0].name].getTimeHeld() / 2;
+        //if (respawnerTime == 0)
+        //    respawnerTime = respawnTime;
         yield return new WaitForSeconds(respawnTime);
         int spawnIndex = Random.Range(0, statsTracker.Count);
         if (deadTracker[0].GetHashCode() == player.GetHashCode())
@@ -370,17 +374,17 @@ public class GameManager : MonoBehaviour
     //CHANGE: Method from updating donut count number to Determining if participant is DonutKing
     //IF true: change priorityTarget in enemyAI to donutKing
     //IF false: stay course on current Donut location (singular)
-    public void UpdateDonutCount(GameObject donutCollector, int amount)
-    {
-            //statsTracker[donutCollector.name] += amount;
+    //public void UpdateDonutCount(GameObject donutCollector, int amount)
+    //{
+    //        //statsTracker[donutCollector.name] += amount;
 
-            ////For Debugging purposes:
-            //foreach (KeyValuePair<string, int> pair in statsTracker)
-            //{
-            //    Debug.Log(pair.Key.ToString() + " HAS: " + pair.Value.ToString());
-            //}
-            //donutCountText.text = statsTracker[player.name].ToString();
-    }
+    //        ////For Debugging purposes:
+    //        //foreach (KeyValuePair<string, int> pair in statsTracker)
+    //        //{
+    //        //    Debug.Log(pair.Key.ToString() + " HAS: " + pair.Value.ToString());
+    //        //}
+    //        //donutCountText.text = statsTracker[player.name].ToString();
+    //}
 
     public void DonutDeclarationDay(GameObject donutOBJ)
     {
@@ -453,35 +457,52 @@ public class GameManager : MonoBehaviour
     {
         scoreBoardNamesText.text = string.Empty;
         scoreBoardScoreText.text = string.Empty;
-        var scoreBoard = statsTracker.OrderByDescending(pair => pair.Value);
+        var scoreBoard = statsTracker.OrderByDescending(pair => pair.Value.getTimeHeld());
         int scoreIndex = 0;
+        string winnerName = null;
+        bool isThereTrueKing = false;
         foreach (var score in scoreBoard)
         {
-            if (scoreIndex == 0 && score.Key == "Player")
-            {
-                scoreBoardResultText.text = "Congrats! \nDonut King!";
-                scoreBoardResultText.color = Color.green;
-            }
-            else if (scoreIndex == 0 && score.Key != "Player")
-            {
-                scoreBoardResultText.text = "If ya ain't First, You're LAST!";
-                scoreBoardResultText.color = Color.red;
-            }
+            if (scoreIndex == 0)
+                winnerName = score.Key;
+            //if (scoreIndex == 0 && score.Key == "Player")
+            //{
+            //    scoreBoardResultText.text = "Congrats! \nDonut King!";
+            //    scoreBoardResultText.color = Color.green;
+            //}
+            //else if (scoreIndex == 0 && score.Key != "Player")
+            //{
+            //    scoreBoardResultText.text = "If ya ain't First, You're LAST!";
+            //    scoreBoardResultText.color = Color.red;
+            //}
 
             scoreBoardNamesText.text += score.Key + '\n';
             //scoreBoardScoreText.text += score.Value.ToString() + '\n';
             scoreIndex++;
         }
+        statsTracker[winnerName].updateRoundsWon();
+        isThereTrueKing = CheckTrueWinner();
+    }
+
+    bool CheckTrueWinner()
+    {
+        foreach (var participant in statsTracker)
+        {
+            if (participant.Value.getRoundsWon() == NumberOfRounds)
+                return true;
+        }
+        return false;
     }
 
     public void TallyActiveScores()
     {
         activeScoreNamesText.text = string.Empty;
         activeScoreText.text = string.Empty;
-        var scoreBoard = statsTracker.OrderByDescending(pair => pair.Value);
+        var scoreBoard = statsTracker.OrderByDescending(pair => pair.Value.getTimeHeld());
         foreach (var score in scoreBoard)
         {
-            activeScoreNamesText.text += score.Key + '\n';
+
+            activeScoreNamesText.text += score + score.Value.GetScoreStats();
             //activeScoreText.text += score.Value.ToString() + '\n';
         }
     }
@@ -616,22 +637,37 @@ public class GameManager : MonoBehaviour
     public void dropTheDonut(GameObject donutDropper)
     {
         //creates sphere that's the size of roamDist and selects a random position
-        Vector3 randDropPos = Random.insideUnitSphere * donutDropDistance;
-        randDropPos.y = donutDropItem.transform.position.y;
-        //Prevents getting null reference when creating random point
-        UnityEngine.AI.NavMeshHit hit;
-        //The "1" is in refernce to layer mask "1"
-        UnityEngine.AI.NavMesh.SamplePosition(randDropPos, out hit, donutDropDistance, 1);
-            donutDropItem.transform.position = donutDropper.transform.position + randDropPos;
-            if (donutDropItem.transform.position == donutDropper.transform.position)
-                Debug.Log("YAHOO!");
-            donutDropItem.SetActive(true);
+        //Vector3 randDropPos = Random.insideUnitSphere * donutDropDistance;
+        //randDropPos.y = donutDropItem.transform.position.y;
+        ////Prevents getting null reference when creating random point
+        //UnityEngine.AI.NavMeshHit hit;
+        ////The "1" is in refernce to layer mask "1"
+        //UnityEngine.AI.NavMesh.SamplePosition(randDropPos, out hit, donutDropDistance, 1);
+        Debug.Log(donutDropper.name.ToString() + " DROPPED THE DONUT!");
+        donutDropItem.transform.position = donutDropper.transform.position;
+        if (donutDropItem.transform.position == donutDropper.transform.position)
+            Debug.Log("YAHOO!");
+        donutDropItem.SetActive(true);
         //Instantiate(donutDropItem, donutDropper.transform.position + randDropPos, donutDropItem.transform.rotation);
 
         //GameManager.instance.UpdateDonutCount(gameObject, -1);
-        Debug.Log(donutDropper.name.ToString() + " DROPPED THE DONUT!");
+        
         //Sets isDonutKing for current object to false, since initially was true
+        //METHOD TO TOGGLE LIGHT SWITCH
+        PlayerControl lightSwitchP = donutDropper.GetComponent<PlayerControl>();
+        if (lightSwitchP != null)
+            lightSwitchP.ToggleMyLight();
+        else
+        {
+            enemyAI lightSwitchE = donutDropper.GetComponent<enemyAI>();
+            lightSwitchE.ToggleMyLight();
+            lightSwitchE.ToggleAmIKing();
+            if (!lightSwitchE.getKingStatus())
+                Debug.Log(donutDropper.name + " IS DETHRONED!!!");
+        }
         statsTracker[donutDropper.name].updateDKStatus();
+        PriorityPoint.Clear();
+        PriorityPoint.Add(donutDropItem.transform);
         DownWithTheDonutKing();
         Debug.Log(donutDropper.name.ToString() + " : " + statsTracker[donutDropper.name].getAllStats());
     }
@@ -662,6 +698,14 @@ public class GameManager : MonoBehaviour
             isThereDonutKing = false;
         StopCoroutine(DKTimer());
         Debug.Log("Ending TIMER!");
+    }
+
+    public void DKLightSwitch(GameObject theDonutKing)
+    {
+        if (statsTracker[theDonutKing.name].GetHashCode() == player.GetHashCode())
+        {
+            playerScript.ToggleMyLight();
+        }
     }
 
     //METHOD CREATED TO ADD AND DISPLAY WHO KILLED WHO

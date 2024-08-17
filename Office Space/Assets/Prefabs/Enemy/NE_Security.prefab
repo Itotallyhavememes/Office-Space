@@ -3599,6 +3599,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyDonutCount: 0
   type: 3
+  DKLight: {fileID: 0}
+  amITheKing: 0
+  DKRPoint: {x: 0, y: 0, z: 0}
   agent: {fileID: 7911479136020618891}
   model: {fileID: 1970679927613358573}
   anim: {fileID: 1788303583466100995}
@@ -3629,8 +3632,6 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  donutDropDistance: 0
-  donutDropItem: {fileID: 0}
   dodgeNumber: 0
   detCode: 0
   targetOBJ: {fileID: 0}
@@ -3650,7 +3651,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 1.5
-  m_Speed: 3.5
+  m_Speed: 5.8
   m_Acceleration: 32
   avoidancePriority: 50
   m_AngularSpeed: 200
