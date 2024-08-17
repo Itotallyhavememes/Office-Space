@@ -163,6 +163,19 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
          agentSpeedVert = Input.GetAxis("Vertical");
          agentSpeedHori = Input.GetAxis("Horizontal");
 
+        if (!isCrouching)
+        {
+            anim.SetLayerWeight(1, 1);
+            anim.SetLayerWeight(2, 1);
+            anim.SetLayerWeight(3, 0);
+            anim.SetLayerWeight(4, 0);
+        } else if (isCrouching)
+        {
+            anim.SetLayerWeight(1, 0);
+            anim.SetLayerWeight(2, 0);
+            anim.SetLayerWeight(3, 1);
+            anim.SetLayerWeight(4, 1);
+        }
         anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), agentSpeedVert, Time.deltaTime * animTransitSpeed));
         anim.SetFloat("SpeedHori", Mathf.Lerp(anim.GetFloat("SpeedHori"), agentSpeedHori, Time.deltaTime * animTransitSpeed));
 
