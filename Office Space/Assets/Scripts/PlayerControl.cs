@@ -104,6 +104,7 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
     bool canSlide;
     bool holdingDownCrouch;
     bool slideSoundPlayed;
+    bool slideAnimPlayed;
 
     Coroutine speedCoroutine;
 
@@ -327,6 +328,12 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
             slideSoundPlayed = true;
         }
 
+        if (!slideAnimPlayed)
+        {
+            anim.SetTrigger("Slide");
+            slideAnimPlayed = true;
+        }
+
         isCrouching = true;
         isSprinting = false;
 
@@ -354,6 +361,7 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
                 controller.height = origHeight;
 
             slideSoundPlayed = false;
+            slideAnimPlayed = false;
             slideLockout = slideLockoutTime;
             isSliding = false;
             playerVel = Vector3.zero;
