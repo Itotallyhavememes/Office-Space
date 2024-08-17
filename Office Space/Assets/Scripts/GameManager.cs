@@ -226,14 +226,14 @@ public class GameManager : MonoBehaviour
             bodyTracker[i].transform.position = spawnPoints[i].transform.position;
             SpawnIndex++;
         }
-        
+
         //Reset Positions and Health/Ammo of all Dead Participants
-        if(SpawnIndex < 4)
+        if (SpawnIndex < 4)
         {
-            for(int i = SpawnIndex; i < deadTracker.Count; ++i)
+            for (int i = SpawnIndex; i < deadTracker.Count; ++i)
             {
                 playerBody = deadTracker[i].GetComponent<PlayerControl>();
-                if(playerBody != null)
+                if (playerBody != null)
                 {
                     playerBody.ResetPlayer();
                     playerBody = null;
@@ -251,7 +251,7 @@ public class GameManager : MonoBehaviour
         StartCoroutine(Timer());
         //Unpause the game
         isPaused = false;
-        if(menuActive = menuScore2)
+        if (menuActive = menuScore2)
             menuScore2.SetActive(false);
     }
 
@@ -326,7 +326,7 @@ public class GameManager : MonoBehaviour
     {
         bool canAdd = true;
 
-        
+
         for (int i = 0; i < bodyTracker.Count; i++)
         {
             if (self.GetHashCode() == bodyTracker[i].GetHashCode()) ///Take it from here
@@ -335,10 +335,10 @@ public class GameManager : MonoBehaviour
                 break;
             }
         }
-        if(statsTracker.ContainsKey(self.name))
+        if (statsTracker.ContainsKey(self.name))
             canAdd = false;
         if (canAdd)
-        { 
+        {
             bodyTracker.Add(self);
             //ParticipantStats::instantiateStats() returns ParticipantStats struct Object
             //Adds itself to statsTracker's Value field
@@ -356,7 +356,7 @@ public class GameManager : MonoBehaviour
         spawnPoints.Add(spawnPoint);
     }
 
-    
+
     //Method for spawner. Also remove object from bodyTracker as new one will be instantiated upon spawn
     public void DeclareSelfDead(GameObject self)
     {
@@ -370,7 +370,7 @@ public class GameManager : MonoBehaviour
         statsTracker[self.name].updateDeaths();
         statsTracker[self.name].updateKDR();
         Debug.Log(self.name.ToString() + statsTracker[self.name].getAllStats().ToString());
-       // Debug.Log(self.name + "DA: " + statsTracker[self.name].getDeaths().ToString());
+        // Debug.Log(self.name + "DA: " + statsTracker[self.name].getDeaths().ToString());
         //if (statsTracker[self.name].getDKStatus() == true)
         //    statsTracker[self.name].updateDKStatus();
         //if (statsTracker[self.name].getDeaths() > 0)
@@ -506,9 +506,9 @@ public class GameManager : MonoBehaviour
             StatePause();
             TallyFinalScores();
             isThereTrueKing = CheckTrueWinner();
-            if(isThereTrueKing)
+            if (isThereTrueKing)
                 menuActive = menuScore;
-            else if(!isThereTrueKing)
+            else if (!isThereTrueKing)
                 menuActive = menuScore2;
             menuActive.SetActive(true);
         }
@@ -541,7 +541,7 @@ public class GameManager : MonoBehaviour
             scoreIndex++;
         }
         statsTracker[winnerName].updateRoundsWon();
-        
+
     }
 
     bool CheckTrueWinner()
@@ -561,8 +561,23 @@ public class GameManager : MonoBehaviour
         var scoreBoard = statsTracker.OrderByDescending(pair => pair.Value.getTimeHeld());
         foreach (var score in scoreBoard)
         {
+            int timeElapsed = score.Value.timeHeld;
+            int timerMinutes = timeElapsed / 60;
+            int timerSeconds = timeElapsed % 60;
+            string timeText = "";
 
-            activeScoreNamesText.text += score.Key + "|" + score.Value.timeHeld + "|" + score.Value.getRoundsWon();
+            if (timerMinutes == 0 || timerMinutes < 10)
+                timeText = "0";
+
+            timeText += timerMinutes.ToString() + ":";
+
+            if (timerSeconds == 0 || timerSeconds < 10)
+                timeText += "0";
+
+            timeText += timerSeconds.ToString();
+
+
+            activeScoreNamesText.text += score.Key + "|" + timeText + "|" + score.Value.getRoundsWon();
             if (score.Value.getDKStatus())
                 activeScoreNamesText.text += " (K)";
             activeScoreText.text += '\n';
@@ -621,7 +636,7 @@ public class GameManager : MonoBehaviour
 
     public void OpenCreateMatch()
     {
-        previousScreen = menuActive;        
+        previousScreen = menuActive;
         menuActive = menuCreateMatch;
         ActivateMenu(menuActive);
         EventSystem.current.SetSelectedGameObject(createMatchFirst);
@@ -639,12 +654,12 @@ public class GameManager : MonoBehaviour
         menuActive = previousScreen;
     }
 
-    public void ReturnToTittle() 
+    public void ReturnToTittle()
     {
         menuActive = menuTitle;
         ActivateMenu(menuActive);
     }
-    
+
     public void ReturnToMainFromTitle()
     {
         menuActive.SetActive(false);
@@ -663,7 +678,7 @@ public class GameManager : MonoBehaviour
         Screen.fullScreen = isFullScreen;
     }
 
-   public void GetNS_GoalScreen()
+    public void GetNS_GoalScreen()
     {
         //scoreBoardScoreText.text = (statsTracker[player.name] * 10).ToString();
         //ActivateMenu(menuScore);
@@ -673,7 +688,7 @@ public class GameManager : MonoBehaviour
     {
         botCount = count;
     }
-    
+
     public void SetRounds(int rounds)
     {
         roundsToPlay = rounds;
@@ -713,7 +728,7 @@ public class GameManager : MonoBehaviour
         //Instantiate(donutDropItem, donutDropper.transform.position + randDropPos, donutDropItem.transform.rotation);
 
         //GameManager.instance.UpdateDonutCount(gameObject, -1);
-        
+
         //Sets isDonutKing for current object to false, since initially was true
         //METHOD TO TOGGLE LIGHT SWITCH
         PlayerControl lightSwitchP = donutDropper.GetComponent<PlayerControl>();
@@ -737,7 +752,7 @@ public class GameManager : MonoBehaviour
     public IEnumerator DKTimer()
     {
         //int timeElapsed = 0;
-        
+
         while (isThereDonutKing && !isPaused)
         {
             Debug.Log(statsTracker[TheDonutKing.name].getTimeHeld().ToString());
@@ -756,7 +771,7 @@ public class GameManager : MonoBehaviour
 
     public void DownWithTheDonutKing()
     {
-        if(isThereDonutKing)
+        if (isThereDonutKing)
             isThereDonutKing = false;
         StopCoroutine(DKTimer());
         Debug.Log("Ending TIMER!");
