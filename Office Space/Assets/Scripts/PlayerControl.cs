@@ -28,6 +28,9 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
     [SerializeField] float slideCooldown;
     [SerializeField] int gravity;
     [SerializeField] float animTransitSpeed;
+    [SerializeField] SkinnedMeshRenderer playerMeshRenderer;
+    [SerializeField] Color dmgColor;
+    Color origColor;
     //[SerializeField] int donutDropDistance;
     //[SerializeField] GameObject donutDropItem;
     [SerializeField] Camera deathCamera;
@@ -118,6 +121,7 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
         origHeight = controller.height;
         slideLockout = slideLockoutTime;
         canSlide = true;
+        origColor = playerMeshRenderer.material.color;
         DKLight.SetActive(false);
         GetWeaponStats(starterWeapon);
         DefaultPublicBools();
@@ -142,6 +146,7 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
         if (isDead)
         {
             gameObject.GetComponent<CapsuleCollider>().enabled = true;
+            playerMeshRenderer.enabled = true;
             deathCamera.gameObject.SetActive(false);
             isDead = false;
         }
@@ -154,6 +159,7 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
         controller.enabled = false;
         transform.position = GameManager.instance.playerSpawn.transform.position;
         controller.enabled = true;
+        playerMeshRenderer.enabled = true;
         if (GameManager.currentMode == GameManager.gameMode.NIGHTSHIFT)
             GameManager.instance.retryAmount = 0;
         else
@@ -180,8 +186,8 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
     {
         Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDist, Color.green);
 
-         agentSpeedVert = Input.GetAxis("Vertical");
-         agentSpeedHori = Input.GetAxis("Horizontal");
+        agentSpeedVert = Input.GetAxis("Vertical");
+        agentSpeedHori = Input.GetAxis("Horizontal");
 
         if (!isCrouching)
         {
@@ -189,7 +195,8 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
             anim.SetLayerWeight(2, 1);
             anim.SetLayerWeight(3, 0);
             anim.SetLayerWeight(4, 0);
-        } else if (isCrouching)
+        }
+        else if (isCrouching)
         {
             anim.SetLayerWeight(1, 0);
             anim.SetLayerWeight(2, 0);
@@ -199,7 +206,7 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
         anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), agentSpeedVert, Time.deltaTime * animTransitSpeed));
         anim.SetFloat("SpeedHori", Mathf.Lerp(anim.GetFloat("SpeedHori"), agentSpeedHori, Time.deltaTime * animTransitSpeed));
 
-        playerAim.transform.position =  Camera.main.transform.position + (Camera.main.transform.forward * aimBallDist);
+        playerAim.transform.position = Camera.main.transform.position + (Camera.main.transform.forward * aimBallDist);
 
         if (!GameManager.instance.isPaused && !isDead)
         {
@@ -527,7 +534,7 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
             UpdatePlayerUI();
             aud.PlayOneShot(audDamage[Random.Range(0, audDamage.Length)], audDamageVol);
 
-            if (HP <= 0 && GameManager.currentMode == GameManager.gameMode.NIGHTSHIFT) 
+            if (HP <= 0 && GameManager.currentMode == GameManager.gameMode.NIGHTSHIFT)
             {
                 GameManager.instance.YouLose();
             }
@@ -539,6 +546,7 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
                 isDead = true;
                 GameManager.instance.DeclareSelfDead(gameObject);
                 gameObject.GetComponent<CapsuleCollider>().enabled = false;
+                playerMeshRenderer.enabled = false;
                 deathCamera.gameObject.SetActive(true);
                 //while (GameManager.instance.statsTracker[name] > 0)              
             }
@@ -548,7 +556,9 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
     IEnumerator flashScreenDamage()
     {
         GameManager.instance.damageFlash.SetActive(true);
+        playerMeshRenderer.material.color = dmgColor;
         yield return new WaitForSeconds(0.2f);
+        playerMeshRenderer.material.color = origColor;
         GameManager.instance.damageFlash.SetActive(false);
     }
 

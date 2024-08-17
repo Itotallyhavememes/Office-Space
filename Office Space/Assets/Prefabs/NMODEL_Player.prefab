@@ -1805,6 +1805,8 @@ MonoBehaviour:
   slideCooldown: 0
   gravity: 22
   animTransitSpeed: 10
+  playerMeshRenderer: {fileID: 6268629496894949658}
+  dmgColor: {r: 0.7169812, g: 0, b: 0, a: 1}
   deathCamera: {fileID: 7532941921966850233}
   playerAim: {fileID: 2108755235465321697}
   aimBallDist: 5
