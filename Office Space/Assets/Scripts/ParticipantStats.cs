@@ -7,7 +7,8 @@ using UnityEngine;
 public class ParticipantStats
 {
     [SerializeField] string DisplayName;
-    [SerializeField] int timeHeld, moneyTotal, RoundsWon;
+    [SerializeField] int moneyTotal, RoundsWon;
+    public int timeHeld;
     //Changed Kills and Deaths to double to allow KDR to show up to the 0.01 decimal place
     [SerializeField] double Kills, Deaths, KDR;
     [SerializeField] bool isDonutKing;

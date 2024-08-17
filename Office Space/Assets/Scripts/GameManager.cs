@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
 
     //Dictionary to hold player and NE_enemies along with live/dead stats
     //OPTIMIZED: Moving donutDropDistance and donutDropItem from PlayerControl & EnemyAI to here
+    [SerializeField] int MaxPlayers;
     [SerializeField] int NumberOfRounds;
     [SerializeField] int donutDropDistance;
     public GameObject donutDropItem;
@@ -48,7 +49,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] int roundsToPlay;
 
     [SerializeField] GameObject menuActive;
-    [SerializeField] GameObject menuScore;
+    [SerializeField] GameObject menuScore; //Shows Game Over - we have a true winner
+    [SerializeField] GameObject menuScore2;//Shows Round Over - round won gets updated
     [SerializeField] GameObject scoreDisplay;
     [SerializeField] GameObject menuPause;
     [SerializeField] GameObject menuWin;
@@ -197,6 +199,60 @@ public class GameManager : MonoBehaviour
         {
             coroutine = StartCoroutine(SpawnTheDead());
         }
+    }
+
+    //METHOD FOR RESETTING EVERYTHING WITHOUT RESETTING PARTICPANTSTATS
+    public void ResetTheRound()
+    {
+        //Pause game
+        isPaused = true;
+        int SpawnIndex = 0;
+        PlayerControl playerBody = null;
+        enemyAI enemyBody = null;
+        //Reset Positions and Health/Ammo of all Live Participants
+        for (int i = 0; i < bodyTracker.Count; ++i)
+        {
+            playerBody = bodyTracker[i].GetComponent<PlayerControl>();
+            if (playerBody != null)
+            {
+                playerBody.ResetPlayer();
+                playerBody = null;
+            }
+            else
+            {
+                enemyBody = bodyTracker[i].GetComponent<enemyAI>();
+                enemyBody.ResetHP();
+            }
+            bodyTracker[i].transform.position = spawnPoints[i].transform.position;
+            SpawnIndex++;
+        }
+        
+        //Reset Positions and Health/Ammo of all Dead Participants
+        if(SpawnIndex < 4)
+        {
+            for(int i = SpawnIndex; i < deadTracker.Count; ++i)
+            {
+                playerBody = deadTracker[i].GetComponent<PlayerControl>();
+                if(playerBody != null)
+                {
+                    playerBody.ResetPlayer();
+                    playerBody = null;
+                }
+                else
+                {
+                    enemyBody = deadTracker[i].GetComponent<enemyAI>();
+                    enemyBody.ResetHP();
+                    if (deadTracker[i].activeSelf == false)
+                        deadTracker[i].SetActive(true);
+                }
+            }
+        }
+        //Restart the Timer???
+        StartCoroutine(Timer());
+        //Unpause the game
+        isPaused = false;
+        if(menuActive = menuScore2)
+            menuScore2.SetActive(false);
     }
 
     void RandomizeVending()
@@ -443,13 +499,18 @@ public class GameManager : MonoBehaviour
 
     public void DonutKingGoal() //Donut King 2 Goal
     {
+        bool isThereTrueKing = false;
         if (gameEnd)
         {
             scoreDisplay.SetActive(false);
             StatePause();
-            menuActive = menuScore;
-            menuActive.SetActive(true);
             TallyFinalScores();
+            isThereTrueKing = CheckTrueWinner();
+            if(isThereTrueKing)
+                menuActive = menuScore;
+            else if(!isThereTrueKing)
+                menuActive = menuScore2;
+            menuActive.SetActive(true);
         }
     }
 
@@ -460,7 +521,6 @@ public class GameManager : MonoBehaviour
         var scoreBoard = statsTracker.OrderByDescending(pair => pair.Value.getTimeHeld());
         int scoreIndex = 0;
         string winnerName = null;
-        bool isThereTrueKing = false;
         foreach (var score in scoreBoard)
         {
             if (scoreIndex == 0)
@@ -481,7 +541,7 @@ public class GameManager : MonoBehaviour
             scoreIndex++;
         }
         statsTracker[winnerName].updateRoundsWon();
-        isThereTrueKing = CheckTrueWinner();
+        
     }
 
     bool CheckTrueWinner()
@@ -502,8 +562,10 @@ public class GameManager : MonoBehaviour
         foreach (var score in scoreBoard)
         {
 
-            activeScoreNamesText.text += score + score.Value.GetScoreStats();
-            //activeScoreText.text += score.Value.ToString() + '\n';
+            activeScoreNamesText.text += score.Key + "|" + score.Value.timeHeld + "|" + score.Value.getRoundsWon();
+            if (score.Value.getDKStatus())
+                activeScoreNamesText.text += " (K)";
+            activeScoreText.text += '\n';
         }
     }
 

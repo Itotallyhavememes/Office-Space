@@ -135,6 +135,17 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
             DKLight.SetActive(false);
     }
 
+    public void ResetPlayer()
+    {
+        HP = HPOrig;
+        UpdatePlayerUI();
+        if (isDead)
+        {
+            gameObject.GetComponent<CapsuleCollider>().enabled = true;
+            deathCamera.gameObject.SetActive(false);
+            isDead = false;
+        }
+    }
     // Player Spawn
     public void spawnPlayer()
     {
