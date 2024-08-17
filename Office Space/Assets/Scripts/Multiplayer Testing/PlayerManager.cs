@@ -7,6 +7,7 @@ using UnityEngine.Rendering.Universal;
 using UnityEditor.Rendering;
 using Unity.VisualScripting;
 using System.Linq;
+using UnityEngine.UI;
 
 
 public class PlayerManager : MonoBehaviour
@@ -16,17 +17,17 @@ public class PlayerManager : MonoBehaviour
     public List<PlayerInput> players = new List<PlayerInput>();
     [SerializeField] List<Transform> spawnPoints;
     [SerializeField] List<LayerMask> playerLayers;
-    public List<Camera> cameras;
+    //public List<Camera> cameras;
+
+    [SerializeField] List<Toggle> playerToggles;
+    [SerializeField] List<GameObject> playerIcons;
+    [SerializeField] List<Text> playerTogglesText;
+    List<Color> playerToggleColors = new List<Color> { Color.red, Color.blue, Color.yellow, Color.green };
 
     private PlayerInputManager playerInputManager;
 
     private void Awake()
     {
-        //if(instance == null)
-        //{
-        //    instance = this;
-        //}
-
         //if (cameras.Count > 0)
         //{
         //    cameras.Clear();
@@ -47,10 +48,16 @@ public class PlayerManager : MonoBehaviour
     void AddPlayer(PlayerInput player)
     {
         players.Add(player);
-        cameras.Add(player.GetComponentInChildren<Camera>());
+        //cameras.Add(player.GetComponentInChildren<Camera>());
         GameManager.instance.playerSpawn.transform.position = spawnPoints[players.Count - 1].position;
 
         player.GetComponent<PlayerControl>().spawnPlayer();
+
+        playerIcons[players.Count - 1].GetComponent<Image>().color = playerToggleColors[players.Count - 1];
+        //playerToggles[players.Count - 1].colors.selectedColor.Equals(Color.red);
+        //playerToggles[players.Count - 1].Select();
+        playerTogglesText[players.Count - 1].text = "P" + players.Count.ToString();
+        playerTogglesText[players.Count - 1].color = Color.white;
 
         //Debug.Log(Input.GetJoystickNames().First());
 

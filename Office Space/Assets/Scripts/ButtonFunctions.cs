@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
 
@@ -48,10 +49,21 @@ public class ButtonFunctions : MonoBehaviour
     {
         GameManager.instance.OpenGameModes();
     }
+
+    public void createMatch()
+    {
+        GameManager.instance.OpenCreateMatch();
+    }
+    
+    public void loadWageCage()
+    {
+        SceneManager.LoadScene("Fernando_Scene2");
+        //GameManager.currentMode = GameManager.gameMode.DONUTKING2;
+    }
+
     public void settings()
     {
         GameManager.instance.OpenSettings();
-        GameManager.instance.selectButton(GameManager.instance.settingStartingButton);
     }
 
     public void Controls()
@@ -74,7 +86,11 @@ public class ButtonFunctions : MonoBehaviour
 
         GameManager.currentMode = GameManager.gameMode.TITLE;
 
-
+    }
+    
+    public void returnToMainFromTitle()
+    {
+        GameManager.instance.ReturnToMainFromTitle();
     }
 
     public void retryAmountButtonConfirm()

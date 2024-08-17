@@ -17,6 +17,17 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     public enum gameMode { DONUTKING2, NIGHTSHIFT, TITLE }
     public static gameMode currentMode;
+
+    [Header("Main Menu First Selected Options")]
+    [SerializeField] GameObject mainMenuFirst;
+    [SerializeField] GameObject createMatchFirst;
+    [SerializeField] GameObject settingsFirst;
+    [SerializeField] GameObject controlsFirst;
+    [SerializeField] GameObject mapSelectScreenFirst;
+
+    [Header("Match Settings Selected Option")]
+    [SerializeField] GameObject matchSettingsFirst;
+
     //Dictionary to hold player and NE_enemies along with live/dead stats
     //OPTIMIZED: Moving donutDropDistance and donutDropItem from PlayerControl & EnemyAI to here
     [SerializeField] int donutDropDistance;
@@ -29,7 +40,12 @@ public class GameManager : MonoBehaviour
     //changed value from int -> ParticipantStats struct object
     public Dictionary<string, ParticipantStats> statsTracker;
     [SerializeField] gameMode modeSelection;
+
+    [Header("DK Match Settings")]
     [SerializeField] int timerTime;
+    [SerializeField] int botCount;
+    [SerializeField] int roundsToPlay;
+
     [SerializeField] GameObject menuActive;
     [SerializeField] GameObject menuScore;
     [SerializeField] GameObject scoreDisplay;
@@ -38,16 +54,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject menuLose;
     [SerializeField] GameObject menuTitle;
     [SerializeField] GameObject menuGameModes;
+    [SerializeField] GameObject menuCreateMatch;
     [SerializeField] GameObject menuSettings;
     [SerializeField] GameObject menuControls;
     [SerializeField] GameObject menuCredits;
     [SerializeField] GameObject menuDK2Objective;
     [SerializeField] GameObject menuNSObjective;
-
-    [SerializeField] public Button tittleStartingButton;
-    [SerializeField] public Button creditsStartingButton;
-    [SerializeField] public Button settingStartingButton;
-    [SerializeField] public Button controlsStartingButton;
 
     [SerializeField] public GameObject menuRetryAmount;
     [SerializeField] TMP_Text donutCountText;
@@ -140,6 +152,7 @@ public class GameManager : MonoBehaviour
         canVend = true;
         if (currentMode == gameMode.DONUTKING2)
         {
+            EventSystem.current.SetSelectedGameObject(matchSettingsFirst);
             timerUI.SetActive(true);
             RandomizeVending();
             StartCoroutine(Timer());
@@ -153,6 +166,7 @@ public class GameManager : MonoBehaviour
         if (SceneManager.GetSceneByName("Title") == SceneManager.GetActiveScene())
         {
             StatePause();
+            EventSystem.current.SetSelectedGameObject(mainMenuFirst);
         }
     }
 
@@ -503,6 +517,8 @@ public class GameManager : MonoBehaviour
     {
         menuActive = menuControls;
         ActivateMenu(menuActive);
+        EventSystem.current.SetSelectedGameObject(controlsFirst);
+
     }
 
     public void OpenSettings()
@@ -510,6 +526,7 @@ public class GameManager : MonoBehaviour
         previousScreen = menuActive;
         menuActive = menuSettings;
         ActivateMenu(menuActive);
+        EventSystem.current.SetSelectedGameObject(settingsFirst);
     }
 
     public void OpenGameModes()
@@ -517,6 +534,14 @@ public class GameManager : MonoBehaviour
         previousScreen = menuActive;
         menuActive = menuGameModes;
         ActivateMenu(menuActive);
+    }
+
+    public void OpenCreateMatch()
+    {
+        previousScreen = menuActive;        
+        menuActive = menuCreateMatch;
+        ActivateMenu(menuActive);
+        EventSystem.current.SetSelectedGameObject(createMatchFirst);
     }
 
     public void OpenCredits()
@@ -536,12 +561,14 @@ public class GameManager : MonoBehaviour
         menuActive = menuTitle;
         ActivateMenu(menuActive);
     }
-
-    public void selectButton(Button button)
+    
+    public void ReturnToMainFromTitle()
     {
-        button.Select();
+        menuActive.SetActive(false);
+        menuActive = menuTitle;
+        ActivateMenu(menuActive);
+        EventSystem.current.SetSelectedGameObject(mainMenuFirst);
     }
-
 
     public void SetVolume(float volume)
     {
@@ -558,6 +585,22 @@ public class GameManager : MonoBehaviour
         //scoreBoardScoreText.text = (statsTracker[player.name] * 10).ToString();
         //ActivateMenu(menuScore);
     }
+
+    public void SetBotCount(int count)
+    {
+        botCount = count;
+    }
+    
+    public void SetRounds(int rounds)
+    {
+        roundsToPlay = rounds;
+    }
+
+    public void SetDKTimer(int time) //Made public timer setter to access it from the Match Settings
+    {
+        timerTime = time; //Timer format is in seconds
+    }
+
     public void ActivateObjectiveScreen()
     {
         if (currentMode == gameMode.DONUTKING2)
