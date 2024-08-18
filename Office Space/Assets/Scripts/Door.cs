@@ -19,13 +19,12 @@ public class Door : MonoBehaviour
     void Start()
     {
         close = true;
-      
-        Instruction.SetActive(false);
+        //Instruction.SetActive(false);
 
     }
     IEnumerator CloseDoor()
     {
-        close = false;
+        //close = false;
         yield return new WaitForSeconds(3f);
         Debug.Log("door is Close");
         AnimeObject.GetComponent<Animator>().Play("Close");
@@ -36,7 +35,7 @@ public class Door : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Player"))
+        if(other.CompareTag("Player") && close)
         {
             Debug.Log("Enter");
             Instruction.SetActive(true);
@@ -58,6 +57,7 @@ public class Door : MonoBehaviour
             {
                 Debug.Log("door is open");
                 Instruction.SetActive(false );
+                close = false;
                 AnimeObject.GetComponent<Animator>().Play("Open");
               StartCoroutine(CloseDoor());
                 Action = false;

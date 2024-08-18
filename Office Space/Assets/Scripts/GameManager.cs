@@ -474,18 +474,21 @@ public class GameManager : MonoBehaviour
         //    respawnerTime = respawnTime;
         yield return new WaitForSeconds(respawnTime);
         int spawnIndex = Random.Range(0, statsTracker.Count);
-        if (deadTracker[0].GetHashCode() == player.GetHashCode())
+        if (deadTracker.Count > 0 && deadTracker[0].GetHashCode() == player.GetHashCode())
         {
             playerSpawn.transform.position = spawnPoints[spawnIndex].transform.position;
             playerScript.spawnPlayer();
         }
-        else
+        else if(deadTracker.Count > 0 && deadTracker[0].GetHashCode() != player.GetHashCode())
         {
             deadTracker[0].transform.position = spawnPoints[spawnIndex].transform.position;
             deadTracker[0].SetActive(true);
         }
-        bodyTracker.Add(deadTracker[0]);
-        deadTracker.RemoveAt(0); //pop front
+        if (deadTracker.Count > 0)
+        {
+            bodyTracker.Add(deadTracker[0]);
+            deadTracker.RemoveAt(0); //pop front
+        }
 
         coroutine = null;
     }

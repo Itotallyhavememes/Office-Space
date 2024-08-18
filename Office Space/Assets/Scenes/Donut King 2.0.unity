@@ -468,6 +468,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 47fd8565a2340a44b90e26dc7c67c18e, type: 3}
+--- !u!1 &351846672 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8678336859361386620, guid: d77942b8cbc6b6345950d210534f9d5f, type: 3}
+  m_PrefabInstance: {fileID: 589380998}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &406180180
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1543,6 +1548,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fb7d009777c4fae448d110c840b59d80, type: 3}
+--- !u!1 &667794647 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1282653147042747606, guid: d77942b8cbc6b6345950d210534f9d5f, type: 3}
+  m_PrefabInstance: {fileID: 589380998}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &671657787
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1683,6 +1693,22 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
       value: Play
       objectReference: {fileID: 0}
+    - target: {fileID: 8754997016133161887, guid: d3513e0bf77cac44ca54f4d9070420fb, type: 3}
+      propertyPath: vendingMachines.Array.data[0]
+      value: 
+      objectReference: {fileID: 667794647}
+    - target: {fileID: 8754997016133161887, guid: d3513e0bf77cac44ca54f4d9070420fb, type: 3}
+      propertyPath: vendingMachines.Array.data[1]
+      value: 
+      objectReference: {fileID: 924126954}
+    - target: {fileID: 8754997016133161887, guid: d3513e0bf77cac44ca54f4d9070420fb, type: 3}
+      propertyPath: vendingMachines.Array.data[2]
+      value: 
+      objectReference: {fileID: 2125192960}
+    - target: {fileID: 8754997016133161887, guid: d3513e0bf77cac44ca54f4d9070420fb, type: 3}
+      propertyPath: vendingMachines.Array.data[3]
+      value: 
+      objectReference: {fileID: 351846672}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 5514753108700818204, guid: d3513e0bf77cac44ca54f4d9070420fb, type: 3}
@@ -2054,6 +2080,11 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!1 &924126954 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1969615808710262151, guid: d77942b8cbc6b6345950d210534f9d5f, type: 3}
+  m_PrefabInstance: {fileID: 589380998}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &991354348
 GameObject:
   m_ObjectHideFlags: 0
@@ -2826,6 +2857,11 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: -1.95, y: -2.91, z: -1.54}
   m_Center: {x: 2.04, y: 0, z: -0.5}
+--- !u!1 &2125192960 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1745319010991619932, guid: d77942b8cbc6b6345950d210534f9d5f, type: 3}
+  m_PrefabInstance: {fileID: 589380998}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &19300652355780997
 PrefabInstance:
   m_ObjectHideFlags: 0
