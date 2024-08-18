@@ -3087,7 +3087,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6183033710671287551}
-  - component: {fileID: 8358872233377891269}
   m_Layer: 5
   m_Name: AudioSlider
   m_TagString: Untagged
@@ -3117,22 +3116,6 @@ RectTransform:
   m_AnchoredPosition: {x: 43.500004, y: -33}
   m_SizeDelta: {x: 160, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &8358872233377891269
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1440635103861844876}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 49811ab010207a44096fbca17cb5bfc3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  audioMixer: {fileID: 24100000, guid: 491cca7fefc6f3f418f639a8b44c47aa, type: 2}
-  MusterSider: {fileID: 5241724363332529605}
-  musicSider: {fileID: 9205234600946102856}
-  SFXSider: {fileID: 4115239487016622527}
 --- !u!1 &1528765462864837783
 GameObject:
   m_ObjectHideFlags: 0
@@ -6867,6 +6850,7 @@ GameObject:
   - component: {fileID: 4955453820265267503}
   - component: {fileID: 7648788008067658178}
   - component: {fileID: 8754997016133161887}
+  - component: {fileID: 4975885303340357338}
   m_Layer: 5
   m_Name: GameManager
   m_TagString: Untagged
@@ -6993,6 +6977,22 @@ MonoBehaviour:
   VendingCooldown: 5
   worldDonutCount: 0
   worldItemCount: 0
+--- !u!114 &4975885303340357338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2723493355477635918}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49811ab010207a44096fbca17cb5bfc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioMixer: {fileID: 24100000, guid: 491cca7fefc6f3f418f639a8b44c47aa, type: 2}
+  MusterSider: {fileID: 5241724363332529605}
+  musicSider: {fileID: 9205234600946102856}
+  SFXSider: {fileID: 4115239487016622527}
 --- !u!1 &2848658101819151286
 GameObject:
   m_ObjectHideFlags: 0
@@ -14902,7 +14902,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8358872233377891269}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Volume, Assembly-CSharp
         m_MethodName: SetMusicVolume
         m_Mode: 1
@@ -15557,7 +15557,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8358872233377891269}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Volume, Assembly-CSharp
         m_MethodName: SetFXSVolume
         m_Mode: 1
@@ -21608,7 +21608,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8358872233377891269}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Volume, Assembly-CSharp
         m_MethodName: SetMusterVolume
         m_Mode: 1
