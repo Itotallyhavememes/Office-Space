@@ -62,7 +62,7 @@ public class RubberBall : MonoBehaviour
         {
             Rigidbody rb = nearbyObject.GetComponent<Rigidbody>();
 
-            if (rb != null && nearbyObject.name != "Player")
+            if (rb != null && !nearbyObject.CompareTag("Player"))
             {
                 Vector3 direction = nearbyObject.transform.position - transform.position;
                 float distance = direction.magnitude;

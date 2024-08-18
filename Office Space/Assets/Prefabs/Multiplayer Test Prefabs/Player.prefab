@@ -2456,6 +2456,9 @@ MonoBehaviour:
   firstSelectedButtonInPause: {fileID: 835094759883916620}
   playerHPBar: {fileID: 2590300170928597278}
   playerAmmoBar: {fileID: 3038625234871028334}
+  controller: {fileID: 3699981176912638389}
+  deathCamera: {fileID: 1420481731820697602}
+  isDead: 0
   mouseSensitivity: 2
   upDownRange: 90
   playerCam: {fileID: 4931049702864920139}
@@ -2538,7 +2541,9 @@ MonoBehaviour:
   ignoreMask:
     serializedVersion: 2
     m_Bits: 8
+  anim: {fileID: 0}
   HP: 13
+  DKLight: {fileID: 0}
   speed: 6
   sprintMod: 2
   crouchMod: 4
@@ -2548,7 +2553,12 @@ MonoBehaviour:
   slideLockoutTime: 3
   slideCooldown: 0
   gravity: 22
+  animTransitSpeed: 0
+  playerMeshRenderer: {fileID: 0}
+  dmgColor: {r: 0, g: 0, b: 0, a: 0}
   deathCamera: {fileID: 1420481731820697602}
+  playerAim: {fileID: 0}
+  aimBallDist: 0
   starterWeapon: {fileID: 11400000, guid: a472b3a2a9729e141a2907916827da95, type: 2}
   weaponList: []
   weaponModel: {fileID: 6213340593204560219}

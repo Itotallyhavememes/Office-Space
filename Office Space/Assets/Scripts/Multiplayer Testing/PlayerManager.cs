@@ -71,7 +71,7 @@ public class PlayerManager : MonoBehaviour
             //cameras.Add(player.GetComponentInChildren<Camera>());
             GameManager.instance.playerSpawn.transform.position = spawnPoints[players.Count - 1].position;
 
-            player.GetComponent<PlayerControl>().spawnPlayer();
+            player.GetComponent<ControllerTest>().spawnPlayer();
             player.GetComponent<ControllerTest>().enabled = false; //Needs to change to new controller
             player.name = "Player " + players.Count.ToString();
             maxBots--;
