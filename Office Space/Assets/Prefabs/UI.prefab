@@ -4742,7 +4742,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Donut King
+  m_text: '1st
 
     2nd
 
@@ -4811,7 +4811,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -195.2496, y: -30.983032, z: 83.891785, w: -183.40067}
+  m_margin: {x: -195.2496, y: -30.983032, z: 162.86096, w: -183.40067}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -6747,30 +6747,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c9a642d26ac12746982503ded1eac8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  RoundsWon: 0
+  mainMenuFirst: {fileID: 0}
+  createMatchFirst: {fileID: 0}
+  settingsFirst: {fileID: 0}
+  controlsFirst: {fileID: 0}
+  mapSelectScreenFirst: {fileID: 0}
+  matchSettingsFirst: {fileID: 0}
+  MaxPlayers: 0
+  NumberOfRounds: 0
   donutDropDistance: 0
   donutDropItem: {fileID: 0}
   bodyTracker: []
   deadTracker: []
   spawnPoints: []
+  CombatMessage: []
   modeSelection: 0
   timerTime: 150
+  botCount: 0
+  roundsToPlay: 0
   menuActive: {fileID: 0}
   menuScore: {fileID: 2912214111203061515}
+  menuScore2: {fileID: 0}
   scoreDisplay: {fileID: 750167623841100312}
   menuPause: {fileID: 3680602538115992826}
   menuWin: {fileID: 1188636188115976847}
   menuLose: {fileID: 4990998327781735400}
   menuTitle: {fileID: 4982759946880053243}
   menuGameModes: {fileID: 0}
+  menuCreateMatch: {fileID: 0}
   menuSettings: {fileID: 4803527845111553040}
   menuControls: {fileID: 6486129539482940190}
   menuCredits: {fileID: 4162002951137531139}
   menuDK2Objective: {fileID: 1528765462864837783}
   menuNSObjective: {fileID: 5854868650532576218}
-  tittleStartingButton: {fileID: 1672945299717588990}
-  creditsStartingButton: {fileID: 0}
-  settingStartingButton: {fileID: 5527079158232533049}
-  controlsStartingButton: {fileID: 5704533320071629459}
   menuRetryAmount: {fileID: 7274153499393001797}
   donutCountText: {fileID: 4010693431967661779}
   timerUI: {fileID: 4756381507667274610}
@@ -16298,7 +16308,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -195.2496, y: -30.983032, z: 83.891785, w: -183.40067}
+  m_margin: {x: -219.52298, y: -30.983032, z: 62.463806, w: -183.40067}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -18856,7 +18866,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '10
+  m_text: '00:00|0
 
     8
 
@@ -18925,7 +18935,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -195.2496, y: -30.983032, z: 94.92084, w: -183.40067}
+  m_margin: {x: -90.41904, y: -30.983032, z: 94.92084, w: -183.40067}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0

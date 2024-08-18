@@ -1052,6 +1052,10 @@ PrefabInstance:
       propertyPath: m_cached_TextElement.m_Glyph.m_Metrics.m_HorizontalBearingY
       value: 59
       objectReference: {fileID: 0}
+    - target: {fileID: 2723493355477635918, guid: d3513e0bf77cac44ca54f4d9070420fb, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2912214111203061515, guid: d3513e0bf77cac44ca54f4d9070420fb, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -1071,6 +1075,10 @@ PrefabInstance:
     - target: {fileID: 6439273989355305507, guid: d3513e0bf77cac44ca54f4d9070420fb, type: 3}
       propertyPath: m_Name
       value: UI
+      objectReference: {fileID: 0}
+    - target: {fileID: 7124321997002221626, guid: d3513e0bf77cac44ca54f4d9070420fb, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8754997016133161887, guid: d3513e0bf77cac44ca54f4d9070420fb, type: 3}
       propertyPath: player

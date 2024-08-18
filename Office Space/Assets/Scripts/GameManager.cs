@@ -179,6 +179,9 @@ public class GameManager : MonoBehaviour
     //Update is called once per frame
     void Update()
     {
+        if (!isPaused)
+            TallyActiveScores();
+
         if (Input.GetButtonDown("Cancel"))
         {
             if (menuActive == null)
@@ -577,6 +580,23 @@ public class GameManager : MonoBehaviour
             scoreBoardNamesText.text += score.Key + '\n';
             //scoreBoardScoreText.text += score.Value.ToString() + '\n';
             scoreIndex++;
+
+            //int timeElapsed = score.Value.timeHeld;
+            //int timerMinutes = timeElapsed / 60;
+            //int timerSeconds = timeElapsed % 60;
+            //string timeText = "";
+
+            //if (timerMinutes == 0 || timerMinutes < 10)
+            //    timeText = "0";
+
+            //timeText += timerMinutes.ToString() + ":";
+
+            //if (timerSeconds == 0 || timerSeconds < 10)
+            //    timeText += "0";
+
+            //timeText += timerSeconds.ToString();
+
+            //scoreBoardScoreText.text += timeText + "|" + score.Value.getRoundsWon() + '\n';
         }
         statsTracker[winnerName].updateRoundsWon();
         Debug.Log(winnerName + " : " + statsTracker[winnerName].getAllStats());
@@ -620,11 +640,12 @@ public class GameManager : MonoBehaviour
 
             timeText += timerSeconds.ToString();
 
-
-            activeScoreNamesText.text += score.Key + "|" + timeText + "|" + score.Value.getRoundsWon();
+            activeScoreNamesText.text += score.Key;
             if (score.Value.getDKStatus())
                 activeScoreNamesText.text += " (K)";
-            activeScoreText.text += '\n';
+            activeScoreNamesText.text += '\n';
+
+            activeScoreText.text += "|" + timeText + '\n';
         }
     }
 
