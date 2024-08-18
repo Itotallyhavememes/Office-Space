@@ -259,7 +259,8 @@ PrefabInstance:
       propertyPath: vendingMachines.Array.data[3]
       value: 
       objectReference: {fileID: 750254456}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8358872233377891269, guid: d3513e0bf77cac44ca54f4d9070420fb, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

@@ -179,7 +179,7 @@ public class GameManager : MonoBehaviour
     //Update is called once per frame
     void Update()
     {
-        if (!isPaused)
+        if (currentMode == gameMode.DONUTKING2 && !isPaused)
             TallyActiveScores();
 
         if (Input.GetButtonDown("Cancel"))
