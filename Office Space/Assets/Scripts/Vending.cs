@@ -31,6 +31,7 @@ public class Vending : MonoBehaviour, IVend
     {
         if (other.CompareTag("Player") && GameManager.instance.canVend)
         {
+          
             interactionSprite.SetActive(true);
             playerInCollider = true;
         }
