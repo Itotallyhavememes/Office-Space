@@ -93,6 +93,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9160049249777394985}
+  - component: {fileID: 3983934098459680516}
+  - component: {fileID: 236688391785330532}
+  - component: {fileID: 7193863428896548525}
   m_Layer: 0
   m_Name: Dooropen
   m_TagString: Untagged
@@ -116,6 +119,62 @@ Transform:
   - {fileID: 8865038266788561957}
   m_Father: {fileID: 3185895063940660360}
   m_LocalEulerAnglesHint: {x: 0, y: 94.648, z: 0}
+--- !u!65 &3983934098459680516
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4344973878184770302}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &236688391785330532
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4344973878184770302}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 756a7c835e66233468c06173fcc61b42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Instruction: {fileID: 0}
+  AnimeObject: {fileID: 4344973878184770302}
+--- !u!95 &7193863428896548525
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4344973878184770302}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f82b92ebfdb9a6d46830faa79da64127, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &3478329677687990000
 PrefabInstance:
   m_ObjectHideFlags: 0
