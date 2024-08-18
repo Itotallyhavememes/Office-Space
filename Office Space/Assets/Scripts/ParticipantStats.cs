@@ -69,6 +69,8 @@ public class ParticipantStats
 
     public int getTimeHeld() { return timeHeld; }
 
+    public void resetTimeHeld() { timeHeld = 0; }
+
     //public void updateScore(int score) { scorePoints += score; }
 
     public void withdrawMoney(int money) { moneyTotal -= money; }

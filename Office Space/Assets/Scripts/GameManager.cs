@@ -15,6 +15,8 @@ using Random = UnityEngine.Random;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
+    //Test Variable
+    public int RoundsWon;
     public enum gameMode { DONUTKING2, NIGHTSHIFT, TITLE }
     public static gameMode currentMode;
 
@@ -147,7 +149,7 @@ public class GameManager : MonoBehaviour
         //
         //TIM TEST CODE FOR DKSTATUS
         isThereDonutKing = false;
-
+        Debug.Log("Did we restart?");
     }
 
     void Start()
@@ -171,6 +173,7 @@ public class GameManager : MonoBehaviour
             StatePause();
             EventSystem.current.SetSelectedGameObject(mainMenuFirst);
         }
+        Debug.Log("Restarted did we?");
     }
 
     //Update is called once per frame
@@ -204,55 +207,90 @@ public class GameManager : MonoBehaviour
     //METHOD FOR RESETTING EVERYTHING WITHOUT RESETTING PARTICPANTSTATS
     public void ResetTheRound()
     {
-        //Pause game
-        isPaused = true;
-        int SpawnIndex = 0;
-        PlayerControl playerBody = null;
-        enemyAI enemyBody = null;
-        //Reset Positions and Health/Ammo of all Live Participants
-        for (int i = 0; i < bodyTracker.Count; ++i)
+        
+        if (menuActive = menuScore2)
+            menuScore2.SetActive(false);
+        StateUnpause();
+        ////Pause game
+        //isPaused = true;
+        //int SpawnIndex = 0;
+        //PlayerControl playerBody = null;
+        //enemyAI enemyBody = null;
+        if (isThereDonutKing)
+            dropTheDonut(TheDonutKing);
+        while (bodyTracker.Count > 0)
         {
-            playerBody = bodyTracker[i].GetComponent<PlayerControl>();
-            if (playerBody != null)
-            {
-                playerBody.ResetPlayer();
-                playerBody = null;
-            }
-            else
-            {
-                enemyBody = bodyTracker[i].GetComponent<enemyAI>();
-                enemyBody.ResetHP();
-            }
-            bodyTracker[i].transform.position = spawnPoints[i].transform.position;
-            SpawnIndex++;
+            deadTracker.Add(bodyTracker[0]);
+            bodyTracker.RemoveAt(0);
         }
-
-        //Reset Positions and Health/Ammo of all Dead Participants
-        if (SpawnIndex < 4)
+        int deadTrackTemp = deadTracker.Count;
+        while (deadTracker.Count > 0)
         {
-            for (int i = SpawnIndex; i < deadTracker.Count; ++i)
+
+            for (int i = 0; i < deadTrackTemp; i++)
             {
-                playerBody = deadTracker[i].GetComponent<PlayerControl>();
-                if (playerBody != null)
+                if (deadTracker[0].GetHashCode() == player.GetHashCode())
                 {
-                    playerBody.ResetPlayer();
-                    playerBody = null;
+                    playerSpawn.transform.position = spawnPoints[i].transform.position;
+                    playerScript.spawnPlayer();
                 }
                 else
                 {
-                    enemyBody = deadTracker[i].GetComponent<enemyAI>();
-                    enemyBody.ResetHP();
-                    if (deadTracker[i].activeSelf == false)
-                        deadTracker[i].SetActive(true);
+                    deadTracker[0].transform.position = spawnPoints[i].transform.position;
+                    deadTracker[0].SetActive(true);
                 }
+                bodyTracker.Add(deadTracker[0]);
+                deadTracker.RemoveAt(0); //pop front
             }
         }
-        //Restart the Timer???
+        
+        //Reset Positions and Health/Ammo of all Live Participants
+        //for (int i = 0; i < bodyTracker.Count; ++i)
+        //{
+        //    playerBody = bodyTracker[i].GetComponent<PlayerControl>();
+        //    if (playerBody != null)
+        //    {
+        //        playerBody.ResetPlayer();
+        //        playerBody = null;
+        //    }
+        //    else
+        //    {
+        //        enemyBody = bodyTracker[i].GetComponent<enemyAI>();
+        //        enemyBody.ResetHP();
+        //    }
+        //    bodyTracker[i].transform.position = spawnPoints[i].transform.position;
+        //    SpawnIndex++;
+        //}
+
+        ////Reset Positions and Health/Ammo of all Dead Participants
+        //if (SpawnIndex < 4)
+        //{
+        //    for (int i = SpawnIndex; i < deadTracker.Count; ++i)
+        //    {
+        //        playerBody = deadTracker[i].GetComponent<PlayerControl>();
+        //        if (playerBody != null)
+        //        {
+        //            playerBody.ResetPlayer();
+        //            playerBody = null;
+        //        }
+        //        else
+        //        {
+        //            enemyBody = deadTracker[i].GetComponent<enemyAI>();
+        //            enemyBody.ResetHP();
+        //            if (deadTracker[i].activeSelf == false)
+        //                deadTracker[i].SetActive(true);
+        //        }
+        //    }
+        //}
+        ////Restart the Timer???
         StartCoroutine(Timer());
-        //Unpause the game
-        isPaused = false;
-        if (menuActive = menuScore2)
-            menuScore2.SetActive(false);
+        ////Unpause the game
+        //isPaused = false;
+        
+        //StopCoroutine(Timer());
+        //StartCoroutine(Timer());
+        //
+
     }
 
     void RandomizeVending()
@@ -505,8 +543,7 @@ public class GameManager : MonoBehaviour
             scoreDisplay.SetActive(false);
             StatePause();
             TallyFinalScores();
-            isThereTrueKing = CheckTrueWinner();
-            if (isThereTrueKing)
+            if (isThereTrueKing = CheckTrueWinner())
                 menuActive = menuScore;
             else if (!isThereTrueKing)
                 menuActive = menuScore2;
@@ -525,6 +562,7 @@ public class GameManager : MonoBehaviour
         {
             if (scoreIndex == 0)
                 winnerName = score.Key;
+            score.Value.resetTimeHeld();
             //if (scoreIndex == 0 && score.Key == "Player")
             //{
             //    scoreBoardResultText.text = "Congrats! \nDonut King!";
@@ -541,6 +579,8 @@ public class GameManager : MonoBehaviour
             scoreIndex++;
         }
         statsTracker[winnerName].updateRoundsWon();
+        Debug.Log(winnerName + " : " + statsTracker[winnerName].getAllStats());
+        ++RoundsWon;
 
     }
 
@@ -548,8 +588,12 @@ public class GameManager : MonoBehaviour
     {
         foreach (var participant in statsTracker)
         {
+            Debug.Log(participant.Key + " : " + participant.Value.getAllStats());
             if (participant.Value.getRoundsWon() == NumberOfRounds)
+            {
+                Debug.Log(participant.Key + " WINS THE GAME!");
                 return true;
+            }
         }
         return false;
     }
