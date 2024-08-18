@@ -11,6 +11,7 @@ using System.Linq;
 using UnityEngine.EventSystems;
 using Unity.VisualScripting;
 using Random = UnityEngine.Random;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class GameManager : MonoBehaviour
 {
@@ -51,8 +52,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] int roundsToPlay;
 
     [SerializeField] GameObject menuActive;
-    [SerializeField] GameObject menuScore; //Shows Game Over - we have a true winner
-    [SerializeField] GameObject menuScore2;//Shows Round Over - round won gets updated
+    [SerializeField] GameObject menuScore; //The UI for when a Round Ends & For when Game Ends
     [SerializeField] GameObject scoreDisplay;
     [SerializeField] GameObject menuPause;
     [SerializeField] GameObject menuWin;
@@ -75,13 +75,18 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] int respawnTime;
 
-
+    [SerializeField] TMP_Text scoreBoardTitleText;
+    [SerializeField] TMP_Text scoreBoardWLMessageText;
     [SerializeField] TMP_Text scoreBoardPlacementsText;
     [SerializeField] TMP_Text scoreBoardNamesText;
     [SerializeField] TMP_Text scoreBoardScoreText;
+    [SerializeField] TMP_Text scoreBoardRWText;
     [SerializeField] TMP_Text scoreBoardResultText;
     [SerializeField] TMP_Text activeScoreNamesText;
     [SerializeField] TMP_Text activeScoreText;
+    [SerializeField] GameObject RetryButton;
+    [SerializeField] GameObject NextRoundButton;
+
     //TIM TEST CODE FOR DK
     public bool isThereDonutKing;
     public GameObject TheDonutKing;
@@ -173,7 +178,9 @@ public class GameManager : MonoBehaviour
             StatePause();
             EventSystem.current.SetSelectedGameObject(mainMenuFirst);
         }
-        Debug.Log("Restarted did we?");
+        Debug.Log(bodyTracker.Count.ToString() + " PLAYERS LOADED");
+        //if (currentMode == gameMode.DONUTKING2)
+        //    InstantiateScoreBoard();
     }
 
     //Update is called once per frame
@@ -207,12 +214,47 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    //INSTANTIATING SCOREBOARD PLACEMENTS BASED OFF NUMBER OF PLAYERS:
+    public void InstantiateScoreBoard()
+    {
+        scoreBoardPlacementsText.text = string.Empty;
+        for(int i = 0; i < statsTracker.Count; ++i)
+        {
+            scoreBoardPlacementsText.text += i + 1;
+            switch (i)
+            {
+                case 0:
+                    {
+                        scoreBoardPlacementsText.text += "st";
+                        break;
+                    }
+                case 1:
+                    {
+                        scoreBoardPlacementsText.text += "nd";
+                        break;
+                    }
+                case 2:
+                    {
+                        scoreBoardPlacementsText.text += "rd";
+                        break;
+                    }
+                default:
+                    {
+                        scoreBoardPlacementsText.text += "th";
+                        break;
+                    }
+            }
+            scoreBoardPlacementsText.text += '\n';
+        }
+        scoreBoardPlacementsText.color = Color.yellow;
+    }
     //METHOD FOR RESETTING EVERYTHING WITHOUT RESETTING PARTICPANTSTATS
     public void ResetTheRound()
     {
-        
-        if (menuActive = menuScore2)
-            menuScore2.SetActive(false);
+        //Changed to reflect that menuScore IS ALSO for Round Over
+        if (menuActive = menuScore)
+            menuScore.SetActive(false);
+        //CHANGE END
         StateUnpause();
         ////Pause game
         //isPaused = true;
@@ -540,16 +582,12 @@ public class GameManager : MonoBehaviour
 
     public void DonutKingGoal() //Donut King 2 Goal
     {
-        bool isThereTrueKing = false;
         if (gameEnd)
         {
             scoreDisplay.SetActive(false);
             StatePause();
-            TallyFinalScores();
-            if (isThereTrueKing = CheckTrueWinner())
-                menuActive = menuScore;
-            else if (!isThereTrueKing)
-                menuActive = menuScore2;
+            TallyFinalScores();           
+            menuActive = menuScore;
             menuActive.SetActive(true);
         }
     }
@@ -558,53 +596,96 @@ public class GameManager : MonoBehaviour
     {
         scoreBoardNamesText.text = string.Empty;
         scoreBoardScoreText.text = string.Empty;
+        scoreBoardWLMessageText.text = string.Empty;
+        scoreBoardRWText.text = string.Empty;
+        scoreBoardTitleText.text = string.Empty;
+        scoreBoardResultText.text = string.Empty;
         var scoreBoard = statsTracker.OrderByDescending(pair => pair.Value.getTimeHeld());
         int scoreIndex = 0;
         string winnerName = null;
-        foreach (var score in scoreBoard)
-        {
-            if (scoreIndex == 0)
-                winnerName = score.Key;
-            score.Value.resetTimeHeld();
-            //if (scoreIndex == 0 && score.Key == "Player")
-            //{
-            //    scoreBoardResultText.text = "Congrats! \nDonut King!";
-            //    scoreBoardResultText.color = Color.green;
-            //}
-            //else if (scoreIndex == 0 && score.Key != "Player")
-            //{
-            //    scoreBoardResultText.text = "If ya ain't First, You're LAST!";
-            //    scoreBoardResultText.color = Color.red;
-            //}
-
-            scoreBoardNamesText.text += score.Key + '\n';
-            //scoreBoardScoreText.text += score.Value.ToString() + '\n';
-            scoreIndex++;
-
-            //int timeElapsed = score.Value.timeHeld;
-            //int timerMinutes = timeElapsed / 60;
-            //int timerSeconds = timeElapsed % 60;
-            //string timeText = "";
-
-            //if (timerMinutes == 0 || timerMinutes < 10)
-            //    timeText = "0";
-
-            //timeText += timerMinutes.ToString() + ":";
-
-            //if (timerSeconds == 0 || timerSeconds < 10)
-            //    timeText += "0";
-
-            //timeText += timerSeconds.ToString();
-
-            //scoreBoardScoreText.text += timeText + "|" + score.Value.getRoundsWon() + '\n';
-        }
+        string TheTrueKing = null;
+        //Check for Winner HERE:
+        winnerName = scoreBoard.ElementAt(0).Key;
         statsTracker[winnerName].updateRoundsWon();
+        
+        if(RetryButton.activeSelf == true)
+            RetryButton.SetActive(false);
+        if(NextRoundButton.activeSelf == true)
+            NextRoundButton.SetActive(false);
+        TheTrueKing = CheckTrueWinner();
+        if (TheTrueKing != null)
+        {
+            //GAME OVER:
+            //Make Changes to Text here For:
+            //Change ScoreBoard Title to "ALL HAIL:"
+            //Grab First Place Winner's:
+            //-Name
+            //-TimeHeld for Round
+            //-Rounds Won
+            //SetActive(true) for Win/Lose Message in relation to PLAYER
+            //RESULT SUBMENU:
+            //-Change Result Text to say GAME OVER
+            //-SetActive(true) for RETRY
+            scoreBoardTitleText.text = "ALL HAIL:";
+            scoreBoardPlacementsText.text = "1st";
+            scoreBoardNamesText.text = TheTrueKing;
+            scoreBoardScoreText.text = statsTracker[TheTrueKing].getTimeHeld().ToString();
+            scoreBoardRWText.text = statsTracker[TheTrueKing].getRoundsWon().ToString();
+            if(player.name == TheTrueKing)
+            {
+                scoreBoardWLMessageText.text = "Enjoy Your Donut!";
+                scoreBoardWLMessageText.color = Color.green;
+            }
+            else
+            {
+                scoreBoardWLMessageText.text = "No Donut For You :(";
+                scoreBoardWLMessageText.color = Color.red;
+            }
+            RetryButton.SetActive(true);
+            scoreBoardResultText.text = "GAME OVER";
+        }
+        else
+        {
+            //ROUND OVER:
+
+            //Display:
+            //All placements (applicable number)
+            //All names
+            //All TimeHeld for Round
+            //All Rounds Won
+            //keep SetActive(false) for Win/Lose message
+            //RESULT SUBMENU:
+            //-Change Result Text to say ROUND OVER
+            //-SetActive(true) for NEXT ROUND
+            InstantiateScoreBoard();
+            scoreBoardTitleText.text = "TIME'S UP!";
+            foreach (var score in scoreBoard)
+            {
+                //if (scoreIndex == 0)
+                //{
+                //    winnerName = score.Key;
+                //    statsTracker[winnerName].updateRoundsWon();
+                //}
+                score.Value.resetTimeHeld();
+                scoreBoardNamesText.text += score.Key + '\n';
+                scoreBoardScoreText.text += score.Value.getTimeHeld().ToString() + '\n';
+                scoreBoardRWText.text += score.Value.getRoundsWon().ToString() + '\n';
+                scoreIndex++;
+            }
+            NextRoundButton.SetActive(true);
+            scoreBoardResultText.text = "ROUND OVER";
+        }
+        //    menuActive = menuScore;
+        //else if (!isThereTrueKing)
+        //    menuActive = menuScore2;
+        
+        
         Debug.Log(winnerName + " : " + statsTracker[winnerName].getAllStats());
         ++RoundsWon;
 
     }
 
-    bool CheckTrueWinner()
+    string CheckTrueWinner()
     {
         foreach (var participant in statsTracker)
         {
@@ -612,10 +693,10 @@ public class GameManager : MonoBehaviour
             if (participant.Value.getRoundsWon() == NumberOfRounds)
             {
                 Debug.Log(participant.Key + " WINS THE GAME!");
-                return true;
+                return participant.Key;
             }
         }
-        return false;
+        return null;
     }
 
     public void TallyActiveScores()
