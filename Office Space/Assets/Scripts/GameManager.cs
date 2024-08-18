@@ -65,6 +65,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject menuCredits;
     [SerializeField] GameObject menuDK2Objective;
     [SerializeField] GameObject menuNSObjective;
+    [SerializeField] GameObject menuShop;
 
     [SerializeField] public GameObject menuRetryAmount;
     [SerializeField] TMP_Text donutCountText;
@@ -91,7 +92,7 @@ public class GameManager : MonoBehaviour
     public bool isThereDonutKing;
     public GameObject TheDonutKing;
     //CODE FOR PJ's SHOP
-    [SerializeField] int moneyForKills, moneyForTimeHeld, moneyForDonutKing;
+    [SerializeField] public int moneyForKills, moneyForTimeHeld, moneyForDonutKing;
     // JOHN CODE FOR CHECKPOINT
     public GameObject playerSpawn;
     public GameObject checkPointPos;
@@ -107,6 +108,7 @@ public class GameManager : MonoBehaviour
     public GameObject damageFlash;
     public GameObject player;
     public PlayerControl playerScript;
+    public ItemThrow playerThrowScript;
     public AudioMixer audioMixer;
 
     public bool isPaused;
@@ -132,6 +134,7 @@ public class GameManager : MonoBehaviour
 
     Coroutine coroutine;
 
+    bool isShopDisplayed;
 
     void Awake()
     {
@@ -139,8 +142,10 @@ public class GameManager : MonoBehaviour
         player = GameObject.FindWithTag("Player");
 
         if (player != null)
+        {
             playerScript = player.GetComponent<PlayerControl>();
-
+            playerThrowScript = player.GetComponent<ItemThrow>();
+        }
         currentMode = modeSelection;
 
         Thresh = 29;
@@ -181,11 +186,21 @@ public class GameManager : MonoBehaviour
         Debug.Log(bodyTracker.Count.ToString() + " PLAYERS LOADED");
         //if (currentMode == gameMode.DONUTKING2)
         //    InstantiateScoreBoard();
+
+        
+
     }
 
     //Update is called once per frame
     void Update()
     {
+        if (currentMode == gameMode.DONUTKING2 && !isShopDisplayed)
+        {
+            //PJ's shop code
+            ActivateMenu(menuShop);
+            StatePause();
+            isShopDisplayed = true;
+        }
         if (currentMode == gameMode.DONUTKING2 && !isPaused)
             TallyActiveScores();
 
@@ -331,11 +346,13 @@ public class GameManager : MonoBehaviour
         StartCoroutine(Timer());
         ////Unpause the game
         //isPaused = false;
-        
+
         //StopCoroutine(Timer());
         //StartCoroutine(Timer());
         //
 
+        //PJ's shop code
+        isShopDisplayed = false;
     }
 
     void RandomizeVending()
@@ -943,5 +960,12 @@ public class GameManager : MonoBehaviour
         CombatMessage.Add(cMessage);
         if (CombatMessage.Count > 5)
             CombatMessage.RemoveAt(0);
+    }
+
+    public void shopDoneButton()
+    {
+        Debug.Log("done");
+        //menuActive.SetActive(false);
+        StateUnpause();
     }
 }

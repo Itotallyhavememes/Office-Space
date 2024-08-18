@@ -59,9 +59,13 @@ public class ParticipantStats
             return false;
     }
 
-    public void depositMoney(int money) { moneyTotal += money; }
+    
 
-    public void updateTimeHeld() { timeHeld++; }
+    public void updateTimeHeld()
+    {
+        timeHeld++;
+        depositMoney(GameManager.instance.moneyForTimeHeld);
+    }
 
     public void updateRoundsWon() { ++RoundsWon; }
 
@@ -73,9 +77,13 @@ public class ParticipantStats
 
     //public void updateScore(int score) { scorePoints += score; }
 
+    public void depositMoney(int money) { moneyTotal += money; }
+
     public void withdrawMoney(int money) { moneyTotal -= money; }
 
     public int getMoneyTotal() { return moneyTotal; }
+
+    public string getMoneyTotalString() { return moneyTotal.ToString(); }
 
     //Debug Method
     public string getAllStats()

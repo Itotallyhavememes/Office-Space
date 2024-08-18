@@ -34,6 +34,11 @@ public class ItemThrow : MonoBehaviour
         }
     }
 
+    public int GetRubberBallMax()
+    {
+        return rubberBallMaxCount;
+    }
+
     IEnumerator ThrowItem()
     {
         WeaponToggleOff();
