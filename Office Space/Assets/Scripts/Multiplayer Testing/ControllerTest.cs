@@ -100,6 +100,16 @@ public class ControllerTest : MonoBehaviour
     [SerializeField] AudioClip audSlide;
     [Range(0, 1)][SerializeField] float audSlideVol;
 
+    [Header("---- Grenade ----")]
+    [SerializeField] float throwForce;
+    [SerializeField] float throwDelay;
+    [SerializeField] GameObject itemPrefab;
+    [SerializeField] GameObject itemSpawnPoint;
+    [SerializeField] GameObject weaponHUD;
+    [SerializeField] GameObject grenadeHUD;
+
+    public int rubberBallCount;
+    int rubberBallMaxCount;
 
     [Header("----- Shuriken -----")]
     //Shuriken Variables
@@ -134,6 +144,8 @@ public class ControllerTest : MonoBehaviour
     [SerializeField] AudioSource aud;
 
     [SerializeField] LayerMask ignoreMask;
+
+    ItemThrow item;
 
 
     InputActionMap player;
@@ -224,6 +236,8 @@ public class ControllerTest : MonoBehaviour
         //Add self to gameManager's bodyTracker
         GameManager.instance.AddToTracker(this.gameObject);
         // Call spawnPlayer
+        rubberBallMaxCount = rubberBallCount;
+        updateGrenadeUI();
     }
 
     private void Update()
@@ -232,7 +246,15 @@ public class ControllerTest : MonoBehaviour
        // Vector3 inputDirection = new Vector3(MovementInput.x, 0f, MovementInput.y);
        // Vector3 worldDirection = transform.TransformDirection(inputDirection);
         HandleRotation();
-        UpdatePlayerUI();    
+        UpdatePlayerUI();
+
+        if (!isShooting && !isReloading)
+        {
+            if (GrenadeTriggered && rubberBallCount > 0)
+            {
+                StartCoroutine(ThrowItem());
+            }
+        }
     }
     
     //void PrintDevices()
@@ -750,6 +772,11 @@ public class ControllerTest : MonoBehaviour
 
     }
 
+    public void updateGrenadeUI()
+    {
+        GameManager.instance.grenadeStack.text = (rubberBallCount).ToString();
+    }
+
     public void GetWeaponStats(WeaponStats weapon)
     {
         int index = -1;
@@ -819,5 +846,38 @@ public class ControllerTest : MonoBehaviour
         }
 
         UpdateAmmoUI();
+    }
+    IEnumerator ThrowItem()
+    {
+        WeaponToggleOff();
+        yield return new WaitForSeconds(throwDelay);
+        GameObject item = Instantiate(itemPrefab, itemSpawnPoint.transform.position, itemSpawnPoint.transform.rotation);
+        Rigidbody rb = item.GetComponent<Rigidbody>();
+        rb.velocity = Camera.main.transform.forward * throwForce;
+        grenadeHUD.SetActive(false);
+        rubberBallCount--;
+        updateGrenadeUI();
+        yield return new WaitForSeconds(throwDelay);
+        WeaponToggleOn();
+    }
+
+    void WeaponToggleOff()
+    {
+        isShooting = true;
+        isReloading = true;
+        weaponHUD.SetActive(false);
+        grenadeHUD.SetActive(true);
+
+    }
+
+    void WeaponToggleOn()
+    {
+        weaponHUD.SetActive(true);
+        isShooting = false;
+        isReloading = false;
+    }
+    public int GetMaxBallCount()
+    {
+        return rubberBallMaxCount;
     }
 }
