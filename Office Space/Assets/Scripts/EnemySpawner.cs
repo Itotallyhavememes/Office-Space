@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    //[SerializeField] GameObject[] enemyPrefab;
     //[SerializeField] float min;
     //[SerializeField] float max;
     //[SerializeField] float stopTime;

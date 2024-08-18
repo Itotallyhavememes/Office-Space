@@ -89,6 +89,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 268fcdb885b5e1a4e8357630ca5d29e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  players: []
   spawnPoints:
   - {fileID: 0}
   - {fileID: 0}
@@ -103,3 +104,19 @@ MonoBehaviour:
     m_Bits: 131072
   - serializedVersion: 2
     m_Bits: 262144
+  playerIcons:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  playerTogglesText:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  botsDropdown: {fileID: 0}
+  matchSettingsMenu: {fileID: 0}
+  enemyPrefabs:
+  - {fileID: 66639171892398607, guid: 48db362738f2d6744a93b6bd49ed02af, type: 3}
+  - {fileID: 8401946793163134991, guid: 273690cd15ecdc642a9b38d24934d43a, type: 3}
+  - {fileID: 8357165618867339889, guid: fb7d009777c4fae448d110c840b59d80, type: 3}

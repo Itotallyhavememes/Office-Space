@@ -61,6 +61,11 @@ public class ButtonFunctions : MonoBehaviour
         //GameManager.currentMode = GameManager.gameMode.DONUTKING2;
     }
 
+    public void startMatch()
+    {
+        PlayerManager.instance.StartMatch();
+    }
+
     public void settings()
     {
         GameManager.instance.OpenSettings();
