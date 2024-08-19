@@ -27,6 +27,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject settingsFirst;
     [SerializeField] GameObject controlsFirst;
     [SerializeField] GameObject mapSelectScreenFirst;
+    [SerializeField] GameObject pauseFirst;
+    [SerializeField] GameObject inGameSettingsFirst;
+    [SerializeField] GameObject nextRoundFirst;
+    [SerializeField] GameObject gameEndFirst;
 
     [Header("Match Settings Selected Option")]
     [SerializeField] GameObject matchSettingsFirst;
@@ -167,7 +171,7 @@ public class GameManager : MonoBehaviour
         canVend = true;
         if (currentMode == gameMode.DONUTKING2)
         {
-            EventSystem.current.SetSelectedGameObject(matchSettingsFirst);
+            //EventSystem.current.SetSelectedGameObject(matchSettingsFirst); //Match settings
             timerUI.SetActive(true);
             RandomizeVending();
             StartCoroutine(Timer());
@@ -194,13 +198,13 @@ public class GameManager : MonoBehaviour
     //Update is called once per frame
     void Update()
     {
-        if (currentMode == gameMode.DONUTKING2 && !isShopDisplayed)
-        {
-            //PJ's shop code
-            ActivateMenu(menuShop);
-            StatePause();
-            isShopDisplayed = true;
-        }
+        //if (currentMode == gameMode.DONUTKING2 && !isShopDisplayed)
+        //{
+        //    //PJ's shop code
+        //    ActivateMenu(menuShop);
+        //    StatePause();
+        //    isShopDisplayed = true;
+        //}
         if (currentMode == gameMode.DONUTKING2 && !isPaused)
             TallyActiveScores();
 
@@ -211,6 +215,7 @@ public class GameManager : MonoBehaviour
                 StatePause();
                 menuActive = menuPause;
                 menuActive.SetActive(isPaused);
+                EventSystem.current.SetSelectedGameObject(pauseFirst);
             }
             else if (menuActive == menuPause)
             {
@@ -609,6 +614,7 @@ public class GameManager : MonoBehaviour
             TallyFinalScores();           
             menuActive = menuScore;
             menuActive.SetActive(true);
+            EventSystem.current.SetSelectedGameObject(gameEndFirst);
         }
     }
 
@@ -662,6 +668,7 @@ public class GameManager : MonoBehaviour
                 scoreBoardWLMessageText.color = Color.red;
             }
             RetryButton.SetActive(true);
+
             scoreBoardResultText.text = "GAME OVER";
         }
         else
@@ -693,6 +700,7 @@ public class GameManager : MonoBehaviour
                 scoreIndex++;
             }
             NextRoundButton.SetActive(true);
+            EventSystem.current.SetSelectedGameObject(nextRoundFirst);
             scoreBoardResultText.text = "ROUND OVER";
         }
         //    menuActive = menuScore;
@@ -702,6 +710,8 @@ public class GameManager : MonoBehaviour
         
         Debug.Log(winnerName + " : " + statsTracker[winnerName].getAllStats());
         ++RoundsWon;
+
+        
 
     }
 
@@ -790,7 +800,10 @@ public class GameManager : MonoBehaviour
         previousScreen = menuActive;
         menuActive = menuSettings;
         ActivateMenu(menuActive);
-        EventSystem.current.SetSelectedGameObject(settingsFirst);
+        if(currentMode == gameMode.DONUTKING2)
+            EventSystem.current.SetSelectedGameObject(inGameSettingsFirst);
+        else
+            EventSystem.current.SetSelectedGameObject(settingsFirst);
     }
 
     public void OpenGameModes()
@@ -818,6 +831,7 @@ public class GameManager : MonoBehaviour
     {
         menuActive.SetActive(false);
         menuActive = previousScreen;
+        EventSystem.current.SetSelectedGameObject(pauseFirst);
     }
 
     public void ReturnToTittle()

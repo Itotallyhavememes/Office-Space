@@ -276,9 +276,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4750651423156825801}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: ButtonFunctions, Assembly-CSharp
-        m_MethodName: creditsMenu
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -648,7 +648,7 @@ MonoBehaviour:
   m_Navigation:
     m_Mode: 4
     m_WrapAround: 0
-    m_SelectOnUp: {fileID: 3386566201918374421}
+    m_SelectOnUp: {fileID: 1881930701}
     m_SelectOnDown: {fileID: 7663344391165163183}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
@@ -1792,7 +1792,7 @@ MonoBehaviour:
   m_Navigation:
     m_Mode: 4
     m_WrapAround: 0
-    m_SelectOnUp: {fileID: 3386566201918374421}
+    m_SelectOnUp: {fileID: 3076564760140222965}
     m_SelectOnDown: {fileID: 552936936}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
@@ -3976,8 +3976,8 @@ RectTransform:
   - {fileID: 2517037686132117327}
   - {fileID: 8195464475501774131}
   - {fileID: 6113863538231324452}
-  - {fileID: 5818558645246268554}
   - {fileID: 1045425937}
+  - {fileID: 5818558645246268554}
   m_Father: {fileID: 4075557328266847243}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -9679,7 +9679,7 @@ MonoBehaviour:
   m_Navigation:
     m_Mode: 4
     m_WrapAround: 0
-    m_SelectOnUp: {fileID: 3076564760140222965}
+    m_SelectOnUp: {fileID: 552936936}
     m_SelectOnDown: {fileID: 3386566201918374421}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
@@ -9867,7 +9867,6 @@ MonoBehaviour:
   roundsToPlay: 0
   menuActive: {fileID: 1298038910665943891}
   menuScore: {fileID: 0}
-  menuScore2: {fileID: 0}
   scoreDisplay: {fileID: 0}
   menuPause: {fileID: 8479201531142303392}
   menuWin: {fileID: 8479201531142303392}
@@ -9880,6 +9879,7 @@ MonoBehaviour:
   menuCredits: {fileID: 0}
   menuDK2Objective: {fileID: 3158992334291975435}
   menuNSObjective: {fileID: 687579524954175997}
+  menuShop: {fileID: 0}
   menuRetryAmount: {fileID: 0}
   donutCountText: {fileID: 5556174576590738360}
   timerUI: {fileID: 0}
@@ -9887,12 +9887,17 @@ MonoBehaviour:
   donutCountUI: {fileID: 0}
   vendingMachines: []
   respawnTime: 0
+  scoreBoardTitleText: {fileID: 0}
+  scoreBoardWLMessageText: {fileID: 0}
   scoreBoardPlacementsText: {fileID: 0}
   scoreBoardNamesText: {fileID: 0}
   scoreBoardScoreText: {fileID: 0}
+  scoreBoardRWText: {fileID: 0}
   scoreBoardResultText: {fileID: 0}
   activeScoreNamesText: {fileID: 0}
   activeScoreText: {fileID: 0}
+  RetryButton: {fileID: 0}
+  NextRoundButton: {fileID: 0}
   isThereDonutKing: 0
   TheDonutKing: {fileID: 0}
   moneyForKills: 0
@@ -9910,6 +9915,7 @@ MonoBehaviour:
   damageFlash: {fileID: 8479201531142303392}
   player: {fileID: 8479201531142303392}
   playerScript: {fileID: 0}
+  playerThrowScript: {fileID: 0}
   audioMixer: {fileID: 24100000, guid: 491cca7fefc6f3f418f639a8b44c47aa, type: 2}
   isPaused: 0
   playerHPStart: 0

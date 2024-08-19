@@ -57,13 +57,19 @@ public class ButtonFunctions : MonoBehaviour
     
     public void loadWageCage()
     {
-        SceneManager.LoadScene("Fernando_Scene2");
+        SceneManager.LoadScene("Donut King 3");
+        GameManager.instance.StateUnpause();
         //GameManager.currentMode = GameManager.gameMode.DONUTKING2;
     }
 
     public void startMatch()
     {
         PlayerManager.instance.StartMatch();
+    }
+
+    public void startSinglePlayer()
+    {
+        PlayerManager.instance.StartSinglePlayer();
     }
 
     public void settings()

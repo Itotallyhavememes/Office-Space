@@ -37,7 +37,9 @@ public class PlayerManager : MonoBehaviour
     [Header("Start Match")]
     [SerializeField] GameObject matchSettingsMenu;
     [SerializeField] GameObject[] enemyPrefabs;
-    private bool matchStarted;
+    public bool matchStarted;
+    [SerializeField] bool isMultiplayer;
+    private int singlePlayerCount;
 
 
     private PlayerInputManager playerInputManager;
@@ -46,11 +48,23 @@ public class PlayerManager : MonoBehaviour
     {
         instance = this;
 
-        playerInputManager = FindObjectOfType<PlayerInputManager>();
+        if (isMultiplayer)
+        {
+            playerInputManager = FindObjectOfType<PlayerInputManager>();
+        }
+        else
+        {
+            GameManager.instance.player.GetComponent<CharacterController>().enabled = false;
+            singlePlayerCount = 1;
+        }
+
         defaultBackgroundColor = playerIcons[0].GetComponent<Image>().color;
         defaultTextColor = playerTogglesText[0].color;
 
         botsDropdownValue = botsDropdown.GetComponent<TMP_Dropdown>();
+        matchStarted = false;
+
+        RefreshUI();
     }
 
     private void OnEnable()
@@ -114,18 +128,34 @@ public class PlayerManager : MonoBehaviour
             playerTogglesText[i].color = defaultTextColor;
         }
 
-        for (int i = 0; i < players.Count; i++)
+        if (isMultiplayer)
         {
-            playerIcons[i].GetComponent<Image>().color = playerToggleColors[i];
-            playerTogglesText[i].text = "P" + (i + 1).ToString();
-            playerTogglesText[i].color = activePlayerTxtColor;
-        }
+            for (int i = 0; i < players.Count; i++)
+            {
+                playerIcons[i].GetComponent<Image>().color = playerToggleColors[i];
+                playerTogglesText[i].text = "P" + (i + 1).ToString();
+                playerTogglesText[i].color = activePlayerTxtColor;
+            }
 
-        for (int j = players.Count; j < players.Count + botCount; j++) //Bots toggle
+            for (int j = players.Count; j < players.Count + botCount; j++) //Bots toggle
+            {
+                playerIcons[j].GetComponent<Image>().color = activeBotColor;
+                playerTogglesText[j].text = "CPU";
+                playerTogglesText[j].color = activePlayerTxtColor;
+            }
+        }
+        else //singlePlayer
         {
-            playerIcons[j].GetComponent<Image>().color = activeBotColor;
-            playerTogglesText[j].text = "CPU";
-            playerTogglesText[j].color = activePlayerTxtColor;
+            playerIcons[0].GetComponent<Image>().color = playerToggleColors[0];
+            playerTogglesText[0].text = "P" + (0 + 1).ToString();
+            playerTogglesText[0].color = activePlayerTxtColor;
+
+            for (int j = singlePlayerCount; j < players.Count + botCount; j++) //Bots toggle
+            {
+                playerIcons[j].GetComponent<Image>().color = activeBotColor;
+                playerTogglesText[j].text = "CPU";
+                playerTogglesText[j].color = activePlayerTxtColor;
+            }
         }
 
         botsDropdownValue.value = botCount;
@@ -146,13 +176,13 @@ public class PlayerManager : MonoBehaviour
         RefreshUI();
     }
 
-    public void DonutKing2Spawner()
+    public void BotSpawner()
     {
         for (int i = players.Count; i < players.Count + botCount; i++)
         {
             int rand = Random.Range(0, enemyPrefabs.Length);
             GameObject enemy = enemyPrefabs[rand];
-            Instantiate(enemy, spawnPoints[i].position, spawnPoints[i].rotation);            
+            Instantiate(enemy, spawnPoints[i].position, spawnPoints[i].rotation);
             //enemy.transform.position = new Vector3(transform.position.x + transform.forward.x, transform.position.y, transform.position.z);
         }
 
@@ -162,16 +192,26 @@ public class PlayerManager : MonoBehaviour
     {
         if (players.Count > 0 && players.Count + botCount > 1)
         {
-            DonutKing2Spawner();
+            BotSpawner();
 
             for (int i = 0; i < players.Count; i++)
             {
                 players[i].GetComponent<ControllerTest>().enabled = true;
+                players[i].GetComponent<Animator>().enabled = true;
+
             }
 
             matchSettingsMenu.SetActive(false);
             matchStarted = true;
         }
+    }
+
+    public void StartSinglePlayer()
+    {
+        BotSpawner();
+        GameManager.instance.player.GetComponent<CharacterController>().enabled = true;
+        matchSettingsMenu.SetActive(false);
+        matchStarted = true;
     }
 
 }

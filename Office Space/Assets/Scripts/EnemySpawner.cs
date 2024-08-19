@@ -23,7 +23,7 @@ public class EnemySpawner : MonoBehaviour
 
     }
 
-    //public void DonutKing2Spawner()
+    //public void BotSpawner()
     //{
         //int rand = Random.Range(0, enemyPrefab.Length);
         //GameObject enemy = enemyPrefab[rand];
