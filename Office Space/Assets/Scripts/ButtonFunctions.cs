@@ -129,6 +129,11 @@ public class ButtonFunctions : MonoBehaviour
         GameManager.instance.ReturnToTittle();
     }
 
+    public void openDK3Objective()
+    {
+        GameManager.instance.ActivateObjectiveScreen();
+    }
+
     public void quit()
     {
 #if UNITY_EDITOR
