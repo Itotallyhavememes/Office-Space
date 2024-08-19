@@ -48,17 +48,17 @@ public class Damage : MonoBehaviour
             
             if (dmg != null && !hasDamaged)
             {
-                Debug.Log(parent.name.ToString() + " --> SHOT --> " + other.name.ToString());
+                //Debug.Log(parent.name.ToString() + " --> SHOT --> " + other.name.ToString());
                 dmg.takeDamage(damageAmount);
                 if (GameManager.instance.CallTheDead(other.name))
                 {
                     //Debug.Log(other.name.ToString() + " DIED!");
                     hasKilled = true;
                     victim = other.gameObject;
-                    GameManager.instance.statsTracker[parent.name].updateKills();
-                    GameManager.instance.statsTracker[parent.name].updateKDR();
-                    GameManager.instance.DisplayKillMessage(parent, other.gameObject);
-                    Debug.Log(parent.name.ToString() + GameManager.instance.statsTracker[parent.name].getAllStats());
+                    //GameManager.instance.statsTracker[parent.name].updateKills();
+                    //GameManager.instance.statsTracker[parent.name].updateKDR();
+                    //GameManager.instance.DisplayKillMessage(parent, other.gameObject);
+                    //Debug.Log(parent.name.ToString() + GameManager.instance.statsTracker[parent.name].getAllStats());
                 }
 
 
