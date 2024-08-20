@@ -9958,12 +9958,12 @@ MonoBehaviour:
   RoundsWon: 0
   mainMenuFirst: {fileID: 2548675225137638615}
   createMatchFirst: {fileID: 4830679415997371419}
-  objectiveFirst: {fileID: 789690739}
   settingsFirst: {fileID: 2858155514389150285}
   controlsFirst: {fileID: 6217463042703136427}
   mapSelectScreenFirst: {fileID: 4830679415997371419}
   pauseFirst: {fileID: 0}
   inGameSettingsFirst: {fileID: 0}
+  objectiveFirst: {fileID: 789690739}
   nextRoundFirst: {fileID: 0}
   gameEndFirst: {fileID: 0}
   matchSettingsFirst: {fileID: 0}
@@ -10000,6 +10000,7 @@ MonoBehaviour:
   timerText: {fileID: 0}
   donutCountUI: {fileID: 0}
   vendingMachines: []
+  doors: []
   respawnTime: 0
   scoreBoardTitleText: {fileID: 0}
   scoreBoardWLMessageText: {fileID: 0}

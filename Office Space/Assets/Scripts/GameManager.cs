@@ -24,12 +24,12 @@ public class GameManager : MonoBehaviour
     [Header("Main Menu First Selected Options")]
     [SerializeField] GameObject mainMenuFirst;
     [SerializeField] GameObject createMatchFirst;
-    [SerializeField] GameObject objectiveFirst;
     [SerializeField] GameObject settingsFirst;
     [SerializeField] GameObject controlsFirst;
     [SerializeField] GameObject mapSelectScreenFirst;
     [SerializeField] GameObject pauseFirst;
     [SerializeField] GameObject inGameSettingsFirst;
+    [SerializeField] GameObject objectiveFirst;
     [SerializeField] GameObject nextRoundFirst;
     [SerializeField] GameObject gameEndFirst;
 
@@ -78,6 +78,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] TMP_Text timerText;
     [SerializeField] TMP_Text donutCountUI;
     [SerializeField] GameObject[] vendingMachines;
+    [SerializeField] GameObject[] doors;
 
     [SerializeField] int respawnTime;
 
@@ -192,7 +193,7 @@ public class GameManager : MonoBehaviour
         //if (currentMode == gameMode.DONUTKING2)
         //    InstantiateScoreBoard();
 
-
+        
 
     }
 
@@ -239,7 +240,7 @@ public class GameManager : MonoBehaviour
     public void InstantiateScoreBoard()
     {
         scoreBoardPlacementsText.text = string.Empty;
-        for (int i = 0; i < statsTracker.Count; ++i)
+        for(int i = 0; i < statsTracker.Count; ++i)
         {
             scoreBoardPlacementsText.text += i + 1;
             switch (i)
@@ -272,6 +273,7 @@ public class GameManager : MonoBehaviour
     //METHOD FOR RESETTING EVERYTHING WITHOUT RESETTING PARTICPANTSTATS
     public void ResetTheRound()
     {
+        Debug.Log("GM: RESET ROUND!");
         //Changed to reflect that menuScore IS ALSO for Round Over
         if (menuActive = menuScore)
             menuScore.SetActive(false);
@@ -292,7 +294,8 @@ public class GameManager : MonoBehaviour
         int deadTrackTemp = deadTracker.Count;
         while (deadTracker.Count > 0)
         {
-
+            //TIM BUG:
+            //LOOK HERE TO FIX ENEMIES NOT SPAWNING APPROPRIATELY ON SPAWN POINTS
             for (int i = 0; i < deadTrackTemp; i++)
             {
                 if (deadTracker[0].GetHashCode() == player.GetHashCode())
@@ -309,47 +312,55 @@ public class GameManager : MonoBehaviour
                 deadTracker.RemoveAt(0); //pop front
             }
         }
+        //Section to reset door positions at the start of each round
+        //Door doorComp = null;
+        foreach (GameObject door in doors)
+        {
+            Debug.Log("GM: Resetting DOORS!");
+            Door doorComp = door.GetComponent<Door>();
+            //if(doorComp)
+                doorComp.ResetDoors();
+        }
+            //Reset Positions and Health/Ammo of all Live Participants
+            //for (int i = 0; i < bodyTracker.Count; ++i)
+            //{
+            //    playerBody = bodyTracker[i].GetComponent<PlayerControl>();
+            //    if (playerBody != null)
+            //    {
+            //        playerBody.ResetPlayer();
+            //        playerBody = null;
+            //    }
+            //    else
+            //    {
+            //        enemyBody = bodyTracker[i].GetComponent<enemyAI>();
+            //        enemyBody.ResetHP();
+            //    }
+            //    bodyTracker[i].transform.position = spawnPoints[i].transform.position;
+            //    SpawnIndex++;
+            //}
 
-        //Reset Positions and Health/Ammo of all Live Participants
-        //for (int i = 0; i < bodyTracker.Count; ++i)
-        //{
-        //    playerBody = bodyTracker[i].GetComponent<PlayerControl>();
-        //    if (playerBody != null)
-        //    {
-        //        playerBody.ResetPlayer();
-        //        playerBody = null;
-        //    }
-        //    else
-        //    {
-        //        enemyBody = bodyTracker[i].GetComponent<enemyAI>();
-        //        enemyBody.ResetHP();
-        //    }
-        //    bodyTracker[i].transform.position = spawnPoints[i].transform.position;
-        //    SpawnIndex++;
-        //}
-
-        ////Reset Positions and Health/Ammo of all Dead Participants
-        //if (SpawnIndex < 4)
-        //{
-        //    for (int i = SpawnIndex; i < deadTracker.Count; ++i)
-        //    {
-        //        playerBody = deadTracker[i].GetComponent<PlayerControl>();
-        //        if (playerBody != null)
-        //        {
-        //            playerBody.ResetPlayer();
-        //            playerBody = null;
-        //        }
-        //        else
-        //        {
-        //            enemyBody = deadTracker[i].GetComponent<enemyAI>();
-        //            enemyBody.ResetHP();
-        //            if (deadTracker[i].activeSelf == false)
-        //                deadTracker[i].SetActive(true);
-        //        }
-        //    }
-        //}
-        ////Restart the Timer???
-        StartCoroutine(Timer());
+            ////Reset Positions and Health/Ammo of all Dead Participants
+            //if (SpawnIndex < 4)
+            //{
+            //    for (int i = SpawnIndex; i < deadTracker.Count; ++i)
+            //    {
+            //        playerBody = deadTracker[i].GetComponent<PlayerControl>();
+            //        if (playerBody != null)
+            //        {
+            //            playerBody.ResetPlayer();
+            //            playerBody = null;
+            //        }
+            //        else
+            //        {
+            //            enemyBody = deadTracker[i].GetComponent<enemyAI>();
+            //            enemyBody.ResetHP();
+            //            if (deadTracker[i].activeSelf == false)
+            //                deadTracker[i].SetActive(true);
+            //        }
+            //    }
+            //}
+            ////Restart the Timer???
+            StartCoroutine(Timer());
         ////Unpause the game
         //isPaused = false;
 
@@ -502,7 +513,7 @@ public class GameManager : MonoBehaviour
             playerSpawn.transform.position = spawnPoints[spawnIndex].transform.position;
             playerScript.spawnPlayer();
         }
-        else if (deadTracker.Count > 0 && deadTracker[0].GetHashCode() != player.GetHashCode())
+        else if(deadTracker.Count > 0 && deadTracker[0].GetHashCode() != player.GetHashCode())
         {
             deadTracker[0].transform.position = spawnPoints[spawnIndex].transform.position;
             deadTracker[0].SetActive(true);
@@ -612,7 +623,7 @@ public class GameManager : MonoBehaviour
         {
             scoreDisplay.SetActive(false);
             StatePause();
-            TallyFinalScores();
+            TallyFinalScores();           
             menuActive = menuScore;
             menuActive.SetActive(true);
             EventSystem.current.SetSelectedGameObject(gameEndFirst);
@@ -634,10 +645,10 @@ public class GameManager : MonoBehaviour
         //Check for Winner HERE:
         winnerName = scoreBoard.ElementAt(0).Key;
         statsTracker[winnerName].updateRoundsWon();
-
-        if (RetryButton.activeSelf == true)
+        
+        if(RetryButton.activeSelf == true)
             RetryButton.SetActive(false);
-        if (NextRoundButton.activeSelf == true)
+        if(NextRoundButton.activeSelf == true)
             NextRoundButton.SetActive(false);
         TheTrueKing = CheckTrueWinner();
         if (TheTrueKing != null)
@@ -658,7 +669,7 @@ public class GameManager : MonoBehaviour
             scoreBoardNamesText.text = TheTrueKing;
             scoreBoardScoreText.text = statsTracker[TheTrueKing].getTimeHeld().ToString();
             scoreBoardRWText.text = statsTracker[TheTrueKing].getRoundsWon().ToString();
-            if (player.name == TheTrueKing)
+            if(player.name == TheTrueKing)
             {
                 scoreBoardWLMessageText.text = "Enjoy Your Donut!";
                 scoreBoardWLMessageText.color = Color.green;
@@ -707,12 +718,12 @@ public class GameManager : MonoBehaviour
         //    menuActive = menuScore;
         //else if (!isThereTrueKing)
         //    menuActive = menuScore2;
-
-
+        
+        
         Debug.Log(winnerName + " : " + statsTracker[winnerName].getAllStats());
         ++RoundsWon;
 
-
+        
 
     }
 
@@ -801,7 +812,7 @@ public class GameManager : MonoBehaviour
         previousScreen = menuActive;
         menuActive = menuSettings;
         ActivateMenu(menuActive);
-        if (currentMode == gameMode.DONUTKING2)
+        if(currentMode == gameMode.DONUTKING2)
             EventSystem.current.SetSelectedGameObject(inGameSettingsFirst);
         else
             EventSystem.current.SetSelectedGameObject(settingsFirst);
@@ -882,6 +893,11 @@ public class GameManager : MonoBehaviour
 
     public void ActivateObjectiveScreen()
     {
+        if (currentMode == gameMode.DONUTKING2)
+            ActivateMenu(menuDK2Objective);
+        else if (currentMode == gameMode.NIGHTSHIFT)
+            ActivateMenu(menuNSObjective);
+        StatePause();
         ActivateMenu(menuDK2Objective);
         EventSystem.current.SetSelectedGameObject(objectiveFirst);
 
@@ -980,5 +996,4 @@ public class GameManager : MonoBehaviour
         //menuActive.SetActive(false);
         StateUnpause();
     }
-
 }

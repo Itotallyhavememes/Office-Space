@@ -245,8 +245,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1353041895440961255}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.49995, y: 0}
-  m_AnchorMax: {x: 0.49995, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -3348,7 +3348,7 @@ RectTransform:
   m_Father: {fileID: 2013663169371451384}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0.49995, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -5103,7 +5103,7 @@ MonoBehaviour:
   gameEndFirst: {fileID: 6626692109011410343}
   matchSettingsFirst: {fileID: 0}
   MaxPlayers: 0
-  NumberOfRounds: 2
+  NumberOfRounds: 3
   donutDropDistance: 2
   donutDropItem: {fileID: 0}
   bodyTracker: []
@@ -5111,7 +5111,7 @@ MonoBehaviour:
   spawnPoints: []
   CombatMessage: []
   modeSelection: 0
-  timerTime: 20
+  timerTime: 5
   botCount: 0
   roundsToPlay: 0
   menuActive: {fileID: 0}
@@ -5135,6 +5135,11 @@ MonoBehaviour:
   timerText: {fileID: 3497632897084555934}
   donutCountUI: {fileID: 4010693431967661779}
   vendingMachines:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  doors:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -9517,7 +9522,7 @@ RectTransform:
   m_Father: {fileID: 914788765750846965}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0.49995, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -13982,7 +13987,7 @@ RectTransform:
   m_Father: {fileID: 3909637318849677544}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0.49995, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -16800,8 +16805,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 261648582983785642}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.49995, y: 0}
-  m_AnchorMax: {x: 0.49995, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -18278,8 +18283,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 64455298033112909}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.49995, y: 0}
-  m_AnchorMax: {x: 0.49995, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
