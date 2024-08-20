@@ -37,9 +37,7 @@ public class PlayerManager : MonoBehaviour
     [Header("Start Match")]
     [SerializeField] GameObject matchSettingsMenu;
     [SerializeField] GameObject[] enemyPrefabs;
-    public bool matchStarted;
-    [SerializeField] bool isMultiplayer;
-    private int singlePlayerCount;
+    private bool matchStarted;
 
 
     private PlayerInputManager playerInputManager;
@@ -48,23 +46,17 @@ public class PlayerManager : MonoBehaviour
     {
         instance = this;
 
-        if (isMultiplayer)
-        {
-            playerInputManager = FindObjectOfType<PlayerInputManager>();
-        }
-        else
-        {
-            GameManager.instance.player.GetComponent<CharacterController>().enabled = false;
-            singlePlayerCount = 1;
-        }
-
+        playerInputManager = FindObjectOfType<PlayerInputManager>();
         defaultBackgroundColor = playerIcons[0].GetComponent<Image>().color;
         defaultTextColor = playerTogglesText[0].color;
 
         botsDropdownValue = botsDropdown.GetComponent<TMP_Dropdown>();
-        matchStarted = false;
 
-        RefreshUI();
+    }
+
+    private void Start()
+    {
+        GameManager.instance.StatePause();
     }
 
     private void OnEnable()
@@ -128,34 +120,18 @@ public class PlayerManager : MonoBehaviour
             playerTogglesText[i].color = defaultTextColor;
         }
 
-        if (isMultiplayer)
+        for (int i = 0; i < players.Count; i++)
         {
-            for (int i = 0; i < players.Count; i++)
-            {
-                playerIcons[i].GetComponent<Image>().color = playerToggleColors[i];
-                playerTogglesText[i].text = "P" + (i + 1).ToString();
-                playerTogglesText[i].color = activePlayerTxtColor;
-            }
-
-            for (int j = players.Count; j < players.Count + botCount; j++) //Bots toggle
-            {
-                playerIcons[j].GetComponent<Image>().color = activeBotColor;
-                playerTogglesText[j].text = "CPU";
-                playerTogglesText[j].color = activePlayerTxtColor;
-            }
+            playerIcons[i].GetComponent<Image>().color = playerToggleColors[i];
+            playerTogglesText[i].text = "P" + (i + 1).ToString();
+            playerTogglesText[i].color = activePlayerTxtColor;
         }
-        else //singlePlayer
-        {
-            playerIcons[0].GetComponent<Image>().color = playerToggleColors[0];
-            playerTogglesText[0].text = "P" + (0 + 1).ToString();
-            playerTogglesText[0].color = activePlayerTxtColor;
 
-            for (int j = singlePlayerCount; j < players.Count + botCount; j++) //Bots toggle
-            {
-                playerIcons[j].GetComponent<Image>().color = activeBotColor;
-                playerTogglesText[j].text = "CPU";
-                playerTogglesText[j].color = activePlayerTxtColor;
-            }
+        for (int j = players.Count; j < players.Count + botCount; j++) //Bots toggle
+        {
+            playerIcons[j].GetComponent<Image>().color = activeBotColor;
+            playerTogglesText[j].text = "CPU";
+            playerTogglesText[j].color = activePlayerTxtColor;
         }
 
         botsDropdownValue.value = botCount;
@@ -182,7 +158,7 @@ public class PlayerManager : MonoBehaviour
         {
             int rand = Random.Range(0, enemyPrefabs.Length);
             GameObject enemy = enemyPrefabs[rand];
-            Instantiate(enemy, spawnPoints[i].position, spawnPoints[i].rotation);
+            Instantiate(enemy, spawnPoints[i].position, spawnPoints[i].rotation);            
             //enemy.transform.position = new Vector3(transform.position.x + transform.forward.x, transform.position.y, transform.position.z);
         }
 
@@ -203,15 +179,8 @@ public class PlayerManager : MonoBehaviour
 
             matchSettingsMenu.SetActive(false);
             matchStarted = true;
+            GameManager.instance.StateUnpause();
         }
-    }
-
-    public void StartSinglePlayer()
-    {
-        BotSpawner();
-        GameManager.instance.player.GetComponent<CharacterController>().enabled = true;
-        matchSettingsMenu.SetActive(false);
-        matchStarted = true;
     }
 
 }

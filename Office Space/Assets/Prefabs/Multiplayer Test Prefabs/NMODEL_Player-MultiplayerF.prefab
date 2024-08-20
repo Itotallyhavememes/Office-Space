@@ -399,12 +399,12 @@ GameObject:
   - component: {fileID: 2979110028611397876}
   - component: {fileID: 6120095310063693333}
   - component: {fileID: 6180894738504849728}
+  - component: {fileID: 6237680595163970506}
   - component: {fileID: 8175737247693227080}
   - component: {fileID: 6598862704074440449}
   - component: {fileID: 339064837180620918}
   - component: {fileID: 205442294717596096}
   - component: {fileID: 1594933262123011160}
-  - component: {fileID: 6237680595163970506}
   m_Layer: 3
   m_Name: NMODEL_Player-MultiplayerF
   m_TagString: Player
@@ -452,7 +452,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputAsset: {fileID: 0}
-  deathCamera: {fileID: 6557330449660377003}
   characterController: {fileID: 8175737247693227080}
   aud: {fileID: 339064837180620918}
   ignoreMask:
@@ -462,52 +461,41 @@ MonoBehaviour:
   playerMeshRenderer: {fileID: 5892147064852502340}
   dmgColor: {r: 0.7169812, g: 0, b: 0, a: 1}
   DKLight: {fileID: 4054478004205456150}
-  actionMapName: Player
-  movement: Movement
-  look: Look
-  jump: Jump
-  sprint: Sprint
-  shoot: Shoot
-  reload: Reload
-  grenade: Grenade
-  cycleWeapon: Cycle Weapon
-  join: Join
-  pause: Pause
-  resume: Cancel
-  crouch: Crouch
-  aim: Aim
-  adsLeft: ADS Left
-  adsRight: ADS Right
-  swapWeapons: Swap Weapon
-  interact: Interact
-  scoreboard: Scroeboard
-  leftStickDeadzoneValue: 0.2
-  speed: 3
+  speed: 6
   sprintModifier: 2
-  cameraLockOn: {fileID: 8078530457849970204}
-  invertYAxis: 0
+  crouchLevel: 0.3
+  crouchMod: 4
   jumpForce: 8
   gravity: 22
-  HP: 5
-  crouchLevel: 0
-  CrouchMod: 0
+  slideSpeed: 19
+  slideLockoutTime: 1
+  slideCooldown: 0
+  playerCamera: {fileID: 5018801600766032129}
+  cameraLockOn: {fileID: 8078530457849970204}
+  invertYAxis: 0
+  HP: 200
   eventSystem: {fileID: 0}
   menuActive: {fileID: 0}
   menuPause: {fileID: 0}
   firstSelectedButtonInPause: {fileID: 0}
   playerHPBar: {fileID: 7384612064159632506}
   playerAmmoBar: {fileID: 1812737734512437336}
+  deathCamera: {fileID: 6557330449660377003}
+  weaponHUD: {fileID: 0}
   starterWeapon: {fileID: 11400000, guid: a472b3a2a9729e141a2907916827da95, type: 2}
-  weaponList: []
+  weaponList:
+  - {fileID: 11400000, guid: 21641470c5893094896493a45be6e766, type: 2}
   weaponModel: {fileID: 3997627584081395518}
   shootRate: 0
   shootDamage: 0
   reloadTime: 0
   shootDist: 0
-  isReloading: 0
-  isShooting: 0
   raycastRotationRecoil: 0
   raycastRotationReload: 0
+  shurikenSpawnPoint: {fileID: 8433792936503639719}
+  shurikenProjectile: {fileID: 9051712137437555885, guid: 427abf216183ff34e8d038c29d5910a8, type: 3}
+  isReloading: 0
+  isShooting: 0
   audHandFire: {fileID: 8300000, guid: eb4729c1bd2536048af59271b18847ae, type: 3}
   audHandFireVol: 0
   audHandReloadBegin: {fileID: 8300000, guid: 96d8af6f777f08249bc9d4bc3b03e476, type: 3}
@@ -536,21 +524,35 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 9b7a78212bfb060429e3697a82574c93, type: 3}
   - {fileID: 8300000, guid: 87d1afcb45928044db032422cc026b14, type: 3}
   audDamageVol: 0
-  throwForce: 0
-  throwDelay: 0
+  grenadeHUD: {fileID: 0}
   itemPrefab: {fileID: 0}
   itemSpawnPoint: {fileID: 0}
-  weaponHUD: {fileID: 0}
-  grenadeHUD: {fileID: 0}
+  throwForce: 0
+  throwDelay: 0
   rubberBallCount: 0
-  shurikenSpawnPoint: {fileID: 8433792936503639719}
-  shurikenProjectile: {fileID: 0}
   mouseSensitivity: 2
   upDownRange: 90
   playerCam: {fileID: 5018801600766032129}
-  slideSpeed: 0
-  slideLockoutTime: 0
-  slideCooldown: 0
+  actionMapName: Player
+  movement: Movement
+  look: Look
+  jump: Jump
+  sprint: Sprint
+  shoot: Shoot
+  reload: Reload
+  grenade: Grenade
+  join: Join
+  pause: Pause
+  resume: Cancel
+  crouch: Crouch
+  aim: Aim
+  adsLeft: ADS Left
+  adsRight: ADS Right
+  swapWeaponsCont: Swap Weapon
+  swapWeaponsScroll: Swap Weapon Scroll
+  interact: Interact
+  scoreboard: Scroeboard
+  leftStickDeadzoneValue: 0.2
 --- !u!114 &2979110028611397876
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -656,7 +658,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 403883271711309938}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 897b34267f422c1499700402763d096e, type: 3}
   m_Controller: {fileID: 9100000, guid: ce91b560fe9b96e4ab021ef42db2f771, type: 2}
   m_CullingMode: 1
@@ -669,6 +671,36 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &6237680595163970506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 403883271711309938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 1acd5144362277a4e9ad483c81247dda, type: 3}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 4554876357409485805}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents: []
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Player
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 5018801600766032129}
 --- !u!143 &8175737247693227080
 CharacterController:
   m_ObjectHideFlags: 0
@@ -865,36 +897,6 @@ MonoBehaviour:
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0}
     m_Visible: 1
---- !u!114 &6237680595163970506
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 403883271711309938}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: 1acd5144362277a4e9ad483c81247dda, type: 3}
-  m_NotificationBehavior: 0
-  m_UIInputModule: {fileID: 4554876357409485805}
-  m_DeviceLostEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_DeviceRegainedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ControlsChangedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ActionEvents: []
-  m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
-  m_DefaultActionMap: Player
-  m_SplitScreenIndex: -1
-  m_Camera: {fileID: 5018801600766032129}
 --- !u!1 &534945650093137323
 GameObject:
   m_ObjectHideFlags: 0

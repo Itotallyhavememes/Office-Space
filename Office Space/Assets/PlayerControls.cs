@@ -170,6 +170,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Swap Weapon Scroll"",
+                    ""type"": ""Value"",
+                    ""id"": ""8f37456d-ce38-4133-883a-fbff916de237"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -577,6 +586,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ab2b11ee-7526-4c1f-875c-e15c2718f553"",
+                    ""path"": ""<Mouse>/scroll"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Swap Weapon Scroll"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1147,6 +1167,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Player_Crouch = m_Player.FindAction("Crouch", throwIfNotFound: true);
         m_Player_Scroeboard = m_Player.FindAction("Scroeboard", throwIfNotFound: true);
         m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
+        m_Player_SwapWeaponScroll = m_Player.FindAction("Swap Weapon Scroll", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1236,6 +1257,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Crouch;
     private readonly InputAction m_Player_Scroeboard;
     private readonly InputAction m_Player_Pause;
+    private readonly InputAction m_Player_SwapWeaponScroll;
     public struct PlayerActions
     {
         private @PlayerControls m_Wrapper;
@@ -1256,6 +1278,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @Crouch => m_Wrapper.m_Player_Crouch;
         public InputAction @Scroeboard => m_Wrapper.m_Player_Scroeboard;
         public InputAction @Pause => m_Wrapper.m_Player_Pause;
+        public InputAction @SwapWeaponScroll => m_Wrapper.m_Player_SwapWeaponScroll;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1313,6 +1336,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Pause.started += instance.OnPause;
             @Pause.performed += instance.OnPause;
             @Pause.canceled += instance.OnPause;
+            @SwapWeaponScroll.started += instance.OnSwapWeaponScroll;
+            @SwapWeaponScroll.performed += instance.OnSwapWeaponScroll;
+            @SwapWeaponScroll.canceled += instance.OnSwapWeaponScroll;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -1365,6 +1391,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Pause.started -= instance.OnPause;
             @Pause.performed -= instance.OnPause;
             @Pause.canceled -= instance.OnPause;
+            @SwapWeaponScroll.started -= instance.OnSwapWeaponScroll;
+            @SwapWeaponScroll.performed -= instance.OnSwapWeaponScroll;
+            @SwapWeaponScroll.canceled -= instance.OnSwapWeaponScroll;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -1536,6 +1565,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnCrouch(InputAction.CallbackContext context);
         void OnScroeboard(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
+        void OnSwapWeaponScroll(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

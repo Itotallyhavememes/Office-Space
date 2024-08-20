@@ -4515,6 +4515,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5799939630979975580}
+  - component: {fileID: 3465000665489560730}
   - component: {fileID: 7526630443427397445}
   - component: {fileID: 887851734483351821}
   - component: {fileID: 4082514754491947661}
@@ -4523,7 +4524,6 @@ GameObject:
   - component: {fileID: 820849662816533180}
   - component: {fileID: 1484766542673881782}
   - component: {fileID: 7227083836415831066}
-  - component: {fileID: 3465000665489560730}
   - component: {fileID: 727205447972572807}
   m_Layer: 3
   m_Name: NMODEL_Player  multiplayer
@@ -4558,6 +4558,104 @@ Transform:
   - {fileID: 7878160723425712024}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3465000665489560730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4965336467124004439}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8de1652e9ed57d142bc6c71a881286aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputAsset: {fileID: -944628639613478452, guid: 1acd5144362277a4e9ad483c81247dda, type: 3}
+  characterController: {fileID: 2145775410977821114}
+  aud: {fileID: 0}
+  ignoreMask:
+    serializedVersion: 2
+    m_Bits: 0
+  anim: {fileID: 0}
+  playerMeshRenderer: {fileID: 0}
+  dmgColor: {r: 0, g: 0, b: 0, a: 0}
+  DKLight: {fileID: 0}
+  speed: 3
+  sprintModifier: 2
+  crouchLevel: 0.3
+  crouchMod: 0
+  jumpForce: 20
+  gravity: 22
+  slideSpeed: 19
+  slideLockoutTime: 3
+  slideCooldown: 0
+  cameraLockOn: {fileID: 8762116643699024217}
+  invertYAxis: 0
+  HP: 0
+  eventSystem: {fileID: 0}
+  menuActive: {fileID: 0}
+  menuPause: {fileID: 0}
+  firstSelectedButtonInPause: {fileID: 0}
+  playerHPBar: {fileID: 0}
+  playerAmmoBar: {fileID: 0}
+  deathCamera: {fileID: 0}
+  weaponHUD: {fileID: 0}
+  starterWeapon: {fileID: 0}
+  weaponList: []
+  weaponModel: {fileID: 0}
+  shootRate: 0
+  shootDamage: 0
+  reloadTime: 0
+  shootDist: 0
+  raycastRotationRecoil: 0
+  raycastRotationReload: 0
+  isReloading: 0
+  isShooting: 0
+  audHandFire: {fileID: 0}
+  audHandFireVol: 0
+  audHandReloadBegin: {fileID: 0}
+  audHandReloadBeginVol: 0
+  audHandReloadEnd: {fileID: 0}
+  audHandReloadEndVol: 0
+  audStep: []
+  audStepVol: 0
+  audJump: []
+  audJumpVol: 0
+  audSlide: {fileID: 0}
+  audSlideVol: 0
+  audDamage: []
+  audDamageVol: 0
+  grenadeHUD: {fileID: 0}
+  itemPrefab: {fileID: 0}
+  itemSpawnPoint: {fileID: 0}
+  throwForce: 0
+  throwDelay: 0
+  rubberBallCount: 0
+  shurikenSpawnPoint: {fileID: 0}
+  shurikenProjectile: {fileID: 0}
+  mouseSensitivity: 2
+  upDownRange: 90
+  playerCam: {fileID: 2376661861460711729}
+  actionMapName: Player
+  movement: Movement
+  look: Look
+  jump: Jump
+  sprint: Sprint
+  shoot: Shoot
+  reload: Reload
+  grenade: Grenade
+  join: Join
+  pause: Pause
+  resume: Cancel
+  crouch: Crouch
+  aim: Aim
+  adsLeft: ADS Left
+  adsRight: ADS Right
+  swapWeaponsCont: Swap Weapon
+  swapWeaponsScroll: Swap Weapon Scroll
+  interact: Interact
+  scoreboard: Scroeboard
+  leftStickDeadzoneValue: 0.2
 --- !u!114 &7526630443427397445
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4872,65 +4970,6 @@ MonoBehaviour:
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0}
     m_Visible: 1
---- !u!114 &3465000665489560730
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4965336467124004439}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8de1652e9ed57d142bc6c71a881286aa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  inputAsset: {fileID: -944628639613478452, guid: 1acd5144362277a4e9ad483c81247dda, type: 3}
-  actionMapName: Player
-  movement: Movement
-  look: Look
-  jump: Jump
-  sprint: Sprint
-  shoot: Shoot
-  reload: Reload
-  grenade: Grenade
-  cycleWeapon: Cycle Weapon
-  join: Join
-  pause: Pause
-  resume: Cancel
-  crouch: Crouch
-  aim: Aim
-  adsLeft: ADS Left
-  adsRight: ADS Right
-  swapWeapons: Swap Weapon
-  interact: Interact
-  scoreboard: Scroeboard
-  leftStickDeadzoneValue: 0.2
-  walkSpeed: 3
-  sprintModifier: 2
-  cameraLockOn: {fileID: 8762116643699024217}
-  invertYAxis: 0
-  jumpForce: 20
-  gravity: 22
-  HP: 0
-  crouchLevel: 0.3
-  CrouchMod: 2
-  eventSystem: {fileID: 0}
-  menuActive: {fileID: 0}
-  menuPause: {fileID: 0}
-  firstSelectedButtonInPause: {fileID: 0}
-  playerHPBar: {fileID: 0}
-  playerAmmoBar: {fileID: 0}
-  mouseSensitivity: 2
-  upDownRange: 90
-  playerCam: {fileID: 2376661861460711729}
-  characterController: {fileID: 2145775410977821114}
-  slideSpeed: 19
-  slideLockoutTime: 3
-  slideCooldown: 0
-  anim: {fileID: 0}
-  audJump: []
-  audJumpVol: 0
-  aud: {fileID: 0}
 --- !u!114 &727205447972572807
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -138,6 +138,14 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2122495711558483397, guid: 19b61a91fbed45f459b20074eb103a7a, type: 3}
+      propertyPath: vendingMachines.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2122495711558483397, guid: 19b61a91fbed45f459b20074eb103a7a, type: 3}
+      propertyPath: vendingMachines.Array.data[0]
+      value: 
+      objectReference: {fileID: 8427269268593691419, guid: bbb58bb2605ff0a4496ef9792321c3e1, type: 3}
     - target: {fileID: 4051779342851130417, guid: 19b61a91fbed45f459b20074eb103a7a, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -1560,6 +1568,10 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2094891529103808507, guid: d77942b8cbc6b6345950d210534f9d5f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.011
+      objectReference: {fileID: 0}
     - target: {fileID: 2139565841831899275, guid: d77942b8cbc6b6345950d210534f9d5f, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 8
@@ -2227,6 +2239,7 @@ PrefabInstance:
     - {fileID: 2989859321838418287, guid: d77942b8cbc6b6345950d210534f9d5f, type: 3}
     - {fileID: 8147314742918976672, guid: d77942b8cbc6b6345950d210534f9d5f, type: 3}
     - {fileID: 5244416711253081002, guid: d77942b8cbc6b6345950d210534f9d5f, type: 3}
+    - {fileID: 4635234712633270166, guid: d77942b8cbc6b6345950d210534f9d5f, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 3150150243648259743, guid: d77942b8cbc6b6345950d210534f9d5f, type: 3}
       insertIndex: -1
@@ -3529,7 +3542,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5341964678908996961, guid: 88de89a2bc501a8419a3ada0bbd376cc, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4095,6 +4108,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: NMODEL_Player
       objectReference: {fileID: 0}
+    - target: {fileID: 4965336467124004439, guid: 47fd8565a2340a44b90e26dc7c67c18e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5799939630979975580, guid: 47fd8565a2340a44b90e26dc7c67c18e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 8.22
@@ -4602,7 +4619,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5842973221146393058, guid: fa7313a0f0434464b8c185b78cce7912, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5842973221146393058, guid: fa7313a0f0434464b8c185b78cce7912, type: 3}
       propertyPath: m_PlayerPrefab
