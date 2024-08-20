@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Animations.Rigging;
 
 
 public class PlayerControl : MonoBehaviour, IDamage, ITarget
@@ -30,6 +31,7 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
     [SerializeField] float animTransitSpeed;
     [SerializeField] SkinnedMeshRenderer playerMeshRenderer;
     [SerializeField] Color dmgColor;
+    public Rig playerRig;
     Color origColor;
     //[SerializeField] int donutDropDistance;
     //[SerializeField] GameObject donutDropItem;
