@@ -13,11 +13,6 @@ public class Door : MonoBehaviour
     [SerializeField] GameObject OuterPoint;
     [SerializeField] GameObject InnerPoint;
     [SerializeField] GameObject LastInDoor;//Entity who intially triggered my doorway
-
-  
-   
-
-
     bool Action;
     bool close;
 

@@ -96,6 +96,8 @@ public class ButtonFunctions : MonoBehaviour
         SceneManager.LoadScene("Title");
 
         GameManager.currentMode = GameManager.gameMode.TITLE;
+        if (GameManager.instance.isPaused)
+            GameManager.instance.StateUnpause();
 
     }
     
@@ -132,6 +134,7 @@ public class ButtonFunctions : MonoBehaviour
     public void openDK3Objective()
     {
         GameManager.instance.ActivateObjectiveScreen();
+        GameManager.instance.StatePause();
     }
 
     public void quit()

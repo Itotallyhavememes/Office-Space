@@ -186,7 +186,7 @@ public class GameManager : MonoBehaviour
 
         if (SceneManager.GetSceneByName("Title") == SceneManager.GetActiveScene())
         {
-            StatePause();
+            //StatePause();
             EventSystem.current.SetSelectedGameObject(mainMenuFirst);
         }
         Debug.Log(bodyTracker.Count.ToString() + " PLAYERS LOADED");
