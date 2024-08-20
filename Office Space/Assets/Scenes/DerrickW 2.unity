@@ -122,6 +122,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 23800000, guid: bed66f86bf4026446be4e69df3a6a263, type: 2}
+--- !u!1 &66686618 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5184523875368541105, guid: a89494afb61da2243b2b111d97142e36, type: 3}
+  m_PrefabInstance: {fileID: 88748401}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &88748401
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -136,7 +141,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 887851734483351821, guid: a89494afb61da2243b2b111d97142e36, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2145775410977821114, guid: a89494afb61da2243b2b111d97142e36, type: 3}
       propertyPath: m_Enabled
@@ -171,9 +176,21 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3465000665489560730, guid: a89494afb61da2243b2b111d97142e36, type: 3}
+      propertyPath: aud
+      value: 
+      objectReference: {fileID: 1741427360}
+    - target: {fileID: 3465000665489560730, guid: a89494afb61da2243b2b111d97142e36, type: 3}
       propertyPath: anim
       value: 
       objectReference: {fileID: 1741427355}
+    - target: {fileID: 3465000665489560730, guid: a89494afb61da2243b2b111d97142e36, type: 3}
+      propertyPath: DKLight
+      value: 
+      objectReference: {fileID: 427207631}
+    - target: {fileID: 3465000665489560730, guid: a89494afb61da2243b2b111d97142e36, type: 3}
+      propertyPath: audSlide
+      value: 
+      objectReference: {fileID: 8300000, guid: 225e326217f04ab4081f540339fe7a74, type: 3}
     - target: {fileID: 3465000665489560730, guid: a89494afb61da2243b2b111d97142e36, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -191,9 +208,21 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3465000665489560730, guid: a89494afb61da2243b2b111d97142e36, type: 3}
+      propertyPath: weaponHUD
+      value: 
+      objectReference: {fileID: 66686618}
+    - target: {fileID: 3465000665489560730, guid: a89494afb61da2243b2b111d97142e36, type: 3}
+      propertyPath: grenadeHUD
+      value: 
+      objectReference: {fileID: 118243476}
+    - target: {fileID: 3465000665489560730, guid: a89494afb61da2243b2b111d97142e36, type: 3}
       propertyPath: inputAsset
       value: 
       objectReference: {fileID: -944628639613478452, guid: 1acd5144362277a4e9ad483c81247dda, type: 3}
+    - target: {fileID: 3465000665489560730, guid: a89494afb61da2243b2b111d97142e36, type: 3}
+      propertyPath: itemPrefab
+      value: 
+      objectReference: {fileID: 3822187847243570803, guid: 14ce3eaf9a276fa49ba840ba1115eff7, type: 3}
     - target: {fileID: 3465000665489560730, guid: a89494afb61da2243b2b111d97142e36, type: 3}
       propertyPath: menuActive
       value: 
@@ -202,6 +231,22 @@ PrefabInstance:
       propertyPath: reloadTime
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3465000665489560730, guid: a89494afb61da2243b2b111d97142e36, type: 3}
+      propertyPath: throwDelay
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3465000665489560730, guid: a89494afb61da2243b2b111d97142e36, type: 3}
+      propertyPath: throwForce
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3465000665489560730, guid: a89494afb61da2243b2b111d97142e36, type: 3}
+      propertyPath: audHandFire
+      value: 
+      objectReference: {fileID: 8300000, guid: eb4729c1bd2536048af59271b18847ae, type: 3}
+    - target: {fileID: 3465000665489560730, guid: a89494afb61da2243b2b111d97142e36, type: 3}
+      propertyPath: deathCamera
+      value: 
+      objectReference: {fileID: 938116788}
     - target: {fileID: 3465000665489560730, guid: a89494afb61da2243b2b111d97142e36, type: 3}
       propertyPath: eventSystem
       value: 
@@ -227,9 +272,29 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: a472b3a2a9729e141a2907916827da95, type: 2}
     - target: {fileID: 3465000665489560730, guid: a89494afb61da2243b2b111d97142e36, type: 3}
+      propertyPath: itemSpawnPoint
+      value: 
+      objectReference: {fileID: 1744577186}
+    - target: {fileID: 3465000665489560730, guid: a89494afb61da2243b2b111d97142e36, type: 3}
+      propertyPath: rubberBallCount
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3465000665489560730, guid: a89494afb61da2243b2b111d97142e36, type: 3}
+      propertyPath: audHandReloadEnd
+      value: 
+      objectReference: {fileID: 8300000, guid: 9c4ba0e68ded5434393f03275608ef9a, type: 3}
+    - target: {fileID: 3465000665489560730, guid: a89494afb61da2243b2b111d97142e36, type: 3}
       propertyPath: ignoreMask.m_Bits
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 3465000665489560730, guid: a89494afb61da2243b2b111d97142e36, type: 3}
+      propertyPath: audHandReloadBegin
+      value: 
+      objectReference: {fileID: 8300000, guid: 96d8af6f777f08249bc9d4bc3b03e476, type: 3}
+    - target: {fileID: 3465000665489560730, guid: a89494afb61da2243b2b111d97142e36, type: 3}
+      propertyPath: playerMeshRenderer
+      value: 
+      objectReference: {fileID: 298966651}
     - target: {fileID: 3465000665489560730, guid: a89494afb61da2243b2b111d97142e36, type: 3}
       propertyPath: shurikenProjectile
       value: 
@@ -238,6 +303,10 @@ PrefabInstance:
       propertyPath: shurikenSpawnPoint
       value: 
       objectReference: {fileID: 640531549}
+    - target: {fileID: 3465000665489560730, guid: a89494afb61da2243b2b111d97142e36, type: 3}
+      propertyPath: interactAction.m_Name
+      value: Interact
+      objectReference: {fileID: 0}
     - target: {fileID: 3465000665489560730, guid: a89494afb61da2243b2b111d97142e36, type: 3}
       propertyPath: raycastRotationRecoil
       value: 3
@@ -314,11 +383,20 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7526630443427397445, guid: a89494afb61da2243b2b111d97142e36, type: 3}
+      propertyPath: playerMeshRenderer
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a89494afb61da2243b2b111d97142e36, type: 3}
+--- !u!1 &118243476 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2478422088836464121, guid: a89494afb61da2243b2b111d97142e36, type: 3}
+  m_PrefabInstance: {fileID: 88748401}
+  m_PrefabAsset: {fileID: 0}
 --- !u!43 &138349027
 Mesh:
   m_ObjectHideFlags: 0
@@ -474,6 +552,11 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!137 &298966651 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 6268629496894949658, guid: a89494afb61da2243b2b111d97142e36, type: 3}
+  m_PrefabInstance: {fileID: 88748401}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &406180180
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1588,6 +1671,11 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!20 &938116788 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 7532941921966850233, guid: a89494afb61da2243b2b111d97142e36, type: 3}
+  m_PrefabInstance: {fileID: 88748401}
+  m_PrefabAsset: {fileID: 0}
 --- !u!43 &1060284856
 Mesh:
   m_ObjectHideFlags: 0
@@ -1966,6 +2054,16 @@ GameObject:
 --- !u!95 &1741427355 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 4082514754491947661, guid: a89494afb61da2243b2b111d97142e36, type: 3}
+  m_PrefabInstance: {fileID: 88748401}
+  m_PrefabAsset: {fileID: 0}
+--- !u!82 &1741427360 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 820849662816533180, guid: a89494afb61da2243b2b111d97142e36, type: 3}
+  m_PrefabInstance: {fileID: 88748401}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1744577186 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1816182811130589193, guid: a89494afb61da2243b2b111d97142e36, type: 3}
   m_PrefabInstance: {fileID: 88748401}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1947105445 stripped
@@ -11328,7 +11426,6 @@ MonoBehaviour:
   roundsToPlay: 0
   menuActive: {fileID: 0}
   menuScore: {fileID: 8077523583204340308}
-  menuScore2: {fileID: 0}
   scoreDisplay: {fileID: 2741175268075297363}
   menuPause: {fileID: 2764977254885743192}
   menuWin: {fileID: 3702295451228699357}
@@ -11348,12 +11445,17 @@ MonoBehaviour:
   donutCountUI: {fileID: 42499501885563639}
   vendingMachines: []
   respawnTime: 5
+  scoreBoardTitleText: {fileID: 0}
+  scoreBoardWLMessageText: {fileID: 0}
   scoreBoardPlacementsText: {fileID: 3357373565737658279}
   scoreBoardNamesText: {fileID: 5205546296579866749}
   scoreBoardScoreText: {fileID: 4969543179703174101}
+  scoreBoardRWText: {fileID: 0}
   scoreBoardResultText: {fileID: 5034831622075515671}
   activeScoreNamesText: {fileID: 591585976856990008}
   activeScoreText: {fileID: 1469479869373904757}
+  RetryButton: {fileID: 0}
+  NextRoundButton: {fileID: 0}
   isThereDonutKing: 0
   TheDonutKing: {fileID: 0}
   moneyForKills: 0
@@ -17596,7 +17698,7 @@ SceneRoots:
   - {fileID: 613169799}
   - {fileID: 1672612394}
   - {fileID: 819266802}
-  - {fileID: 6206846002605481250}
   - {fileID: 3418799377651943266}
+  - {fileID: 6206846002605481250}
   - {fileID: 88748401}
   - {fileID: 427207632}
