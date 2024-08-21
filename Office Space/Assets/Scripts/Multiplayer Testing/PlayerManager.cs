@@ -57,6 +57,7 @@ public class PlayerManager : MonoBehaviour
     private void Start()
     {
         GameManager.instance.StatePause();
+        GameManager.instance.ActivateMenu(matchSettingsMenu);
     }
 
     private void OnEnable()

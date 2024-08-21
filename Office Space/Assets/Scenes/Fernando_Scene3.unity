@@ -132,11 +132,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 796131263464398757, guid: 19b61a91fbed45f459b20074eb103a7a, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2008268535298228731, guid: 19b61a91fbed45f459b20074eb103a7a, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2122495711558483397, guid: 19b61a91fbed45f459b20074eb103a7a, type: 3}
       propertyPath: vendingMachines.Array.size
@@ -236,7 +236,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7024775708904203908, guid: 19b61a91fbed45f459b20074eb103a7a, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

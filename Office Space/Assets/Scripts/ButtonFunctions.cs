@@ -12,9 +12,6 @@ using UnityEngine.UI;
 
 public class ButtonFunctions : MonoBehaviour
 {
-    
-
-   
     // Start is called before the first frame update
     public void resume()
     {
@@ -132,6 +129,25 @@ public class ButtonFunctions : MonoBehaviour
         GameManager.instance.ReturnToTittle();
     }
 
+    public void mainStartButton()
+    {
+        GameManager.instance.ChangeTargetCamera();
+        StartCoroutine(GameManager.instance.StartObjectiveScreen());
+    }
+
+    public void credits()
+    {
+        GameManager.instance.ChangeTargetCamera();
+        StartCoroutine(GameManager.instance.StartCreditScreen());
+    }
+
+    public void back()
+    {
+
+        GameManager.instance.ChangeTargetCamera();
+        StartCoroutine(GameManager.instance.BackToMain());
+    }
+
     IEnumerator loadingAsync()
     {
         
@@ -147,7 +163,7 @@ public class ButtonFunctions : MonoBehaviour
     }
 
     public void openDK3Objective()
-    {
+    {        
         GameManager.instance.loadingMenu();
         StartCoroutine(loadingAsync());
         GameManager.instance.ActivateObjectiveScreen();

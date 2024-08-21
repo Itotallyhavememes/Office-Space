@@ -458,6 +458,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   anim: {fileID: 6180894738504849728}
+  animTransitSpeed: 10
   playerMeshRenderer: {fileID: 5892147064852502340}
   dmgColor: {r: 0.7169812, g: 0, b: 0, a: 1}
   DKLight: {fileID: 4054478004205456150}
@@ -481,6 +482,8 @@ MonoBehaviour:
   playerHPBar: {fileID: 7384612064159632506}
   playerAmmoBar: {fileID: 1812737734512437336}
   deathCamera: {fileID: 6557330449660377003}
+  playerAim: {fileID: 8432964258101734896}
+  aimBallDist: 5
   weaponHUD: {fileID: 0}
   starterWeapon: {fileID: 11400000, guid: a472b3a2a9729e141a2907916827da95, type: 2}
   weaponList:
@@ -585,6 +588,7 @@ MonoBehaviour:
   animTransitSpeed: 10
   playerMeshRenderer: {fileID: 5892147064852502340}
   dmgColor: {r: 0.7169812, g: 0, b: 0, a: 1}
+  playerRig: {fileID: 0}
   deathCamera: {fileID: 6557330449660377003}
   playerAim: {fileID: 8432964258101734896}
   aimBallDist: 5

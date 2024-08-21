@@ -75,8 +75,8 @@ public class Damage : MonoBehaviour
 
     private void OnDestroy()
     {
-        if (!gameObject.CompareTag("Enemy"))
-        Instantiate(GameManager.instance.playerScript.weaponList[GameManager.instance.playerScript.GetSelectedWeaponIndex()].hitEffect, transform.position, Quaternion.identity);
+        //if (!gameObject.CompareTag("Enemy"))
+        //Instantiate(GameManager.instance.playerScript.weaponList[GameManager.instance.playerScript.GetSelectedWeaponIndex()].hitEffect, transform.position, Quaternion.identity);
 
     }
 }

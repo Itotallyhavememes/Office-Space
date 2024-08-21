@@ -12,6 +12,7 @@ using UnityEngine.EventSystems;
 using Unity.VisualScripting;
 using Random = UnityEngine.Random;
 using UnityEngine.SocialPlatforms.Impl;
+using Cinemachine;
 
 public class GameManager : MonoBehaviour
 {
@@ -27,11 +28,20 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject settingsFirst;
     [SerializeField] GameObject controlsFirst;
     [SerializeField] GameObject mapSelectScreenFirst;
+
+    [Header("In-Game First Selected")]
     [SerializeField] GameObject pauseFirst;
     [SerializeField] GameObject inGameSettingsFirst;
-    [SerializeField] GameObject objectiveFirst;
     [SerializeField] GameObject nextRoundFirst;
     [SerializeField] GameObject gameEndFirst;
+    [SerializeField] GameObject objectiveFirst;
+    [SerializeField] GameObject creditsMenuFirst;
+
+    [Header("Title Screen Cinemachine")]
+    [SerializeField] CinemachineVirtualCamera primaryCamera;
+    [SerializeField] CinemachineVirtualCamera monitorCamera;
+    [SerializeField] CinemachineVirtualCamera[] virtualCameras;
+    private bool isCamonMonitor;
 
     [Header("Match Settings Selected Option")]
     [SerializeField] GameObject matchSettingsFirst;
@@ -56,6 +66,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] int botCount;
     [SerializeField] int roundsToPlay;
 
+    [Header("Menu Variables")]
     [SerializeField] GameObject menuActive;
     [SerializeField] GameObject menuScore; //The UI for when a Round Ends & For when Game Ends
     [SerializeField] GameObject scoreDisplay;
@@ -68,9 +79,14 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject menuSettings;
     [SerializeField] GameObject menuControls;
     [SerializeField] GameObject menuCredits;
+    [SerializeField] GameObject mainMenuStart;
     [SerializeField] GameObject menuDK2Objective;
     [SerializeField] GameObject menuNSObjective;
     [SerializeField] GameObject menuShop;
+
+    [Header("Cam Switch")]
+    [SerializeField] GameObject Title;
+    [SerializeField] int menuTimeDelay;
 
     [SerializeField] public GameObject menuRetryAmount;
     [SerializeField] TMP_Text donutCountText;
@@ -199,7 +215,7 @@ public class GameManager : MonoBehaviour
         //if (currentMode == gameMode.DONUTKING2)
         //    InstantiateScoreBoard();
 
-        
+
 
     }
 
@@ -246,7 +262,7 @@ public class GameManager : MonoBehaviour
     public void InstantiateScoreBoard()
     {
         scoreBoardPlacementsText.text = string.Empty;
-        for(int i = 0; i < statsTracker.Count; ++i)
+        for (int i = 0; i < statsTracker.Count; ++i)
         {
             scoreBoardPlacementsText.text += i + 1;
             switch (i)
@@ -325,48 +341,48 @@ public class GameManager : MonoBehaviour
             Debug.Log("GM: Resetting DOORS!");
             Door doorComp = door.GetComponent<Door>();
             //if(doorComp)
-                doorComp.ResetDoors();
+            doorComp.ResetDoors();
         }
-            //Reset Positions and Health/Ammo of all Live Participants
-            //for (int i = 0; i < bodyTracker.Count; ++i)
-            //{
-            //    playerBody = bodyTracker[i].GetComponent<PlayerControl>();
-            //    if (playerBody != null)
-            //    {
-            //        playerBody.ResetPlayer();
-            //        playerBody = null;
-            //    }
-            //    else
-            //    {
-            //        enemyBody = bodyTracker[i].GetComponent<enemyAI>();
-            //        enemyBody.ResetHP();
-            //    }
-            //    bodyTracker[i].transform.position = spawnPoints[i].transform.position;
-            //    SpawnIndex++;
-            //}
+        //Reset Positions and Health/Ammo of all Live Participants
+        //for (int i = 0; i < bodyTracker.Count; ++i)
+        //{
+        //    playerBody = bodyTracker[i].GetComponent<PlayerControl>();
+        //    if (playerBody != null)
+        //    {
+        //        playerBody.ResetPlayer();
+        //        playerBody = null;
+        //    }
+        //    else
+        //    {
+        //        enemyBody = bodyTracker[i].GetComponent<enemyAI>();
+        //        enemyBody.ResetHP();
+        //    }
+        //    bodyTracker[i].transform.position = spawnPoints[i].transform.position;
+        //    SpawnIndex++;
+        //}
 
-            ////Reset Positions and Health/Ammo of all Dead Participants
-            //if (SpawnIndex < 4)
-            //{
-            //    for (int i = SpawnIndex; i < deadTracker.Count; ++i)
-            //    {
-            //        playerBody = deadTracker[i].GetComponent<PlayerControl>();
-            //        if (playerBody != null)
-            //        {
-            //            playerBody.ResetPlayer();
-            //            playerBody = null;
-            //        }
-            //        else
-            //        {
-            //            enemyBody = deadTracker[i].GetComponent<enemyAI>();
-            //            enemyBody.ResetHP();
-            //            if (deadTracker[i].activeSelf == false)
-            //                deadTracker[i].SetActive(true);
-            //        }
-            //    }
-            //}
-            ////Restart the Timer???
-            StartCoroutine(Timer());
+        ////Reset Positions and Health/Ammo of all Dead Participants
+        //if (SpawnIndex < 4)
+        //{
+        //    for (int i = SpawnIndex; i < deadTracker.Count; ++i)
+        //    {
+        //        playerBody = deadTracker[i].GetComponent<PlayerControl>();
+        //        if (playerBody != null)
+        //        {
+        //            playerBody.ResetPlayer();
+        //            playerBody = null;
+        //        }
+        //        else
+        //        {
+        //            enemyBody = deadTracker[i].GetComponent<enemyAI>();
+        //            enemyBody.ResetHP();
+        //            if (deadTracker[i].activeSelf == false)
+        //                deadTracker[i].SetActive(true);
+        //        }
+        //    }
+        //}
+        ////Restart the Timer???
+        StartCoroutine(Timer());
         ////Unpause the game
         //isPaused = false;
 
@@ -514,16 +530,30 @@ public class GameManager : MonoBehaviour
         //    respawnerTime = respawnTime;
         yield return new WaitForSeconds(respawnTime);
         int spawnIndex = Random.Range(0, statsTracker.Count);
+        //CHECK TO SEE WHO IS IN deadTracker[0]
+        //PlayerControl deadController = deadTracker[0].GetComponent<PlayerControl>();
+        //if(deadController != null){
+        //Cycle through PlayerManager.instance.players LIST and see if any of their GetHashCode matches deadTracker[0].GetHashCode()
+        //If it's a match: 
+        //playerSpawn.transform.position = spawnPoints[spawnIndex].transform.position;
+        //deadTracker[0].spawnPlayer();
+        //}
+        //else{
+        //*it's an enemy, so:
+        //deadTracker[0].transform.position = spawnPoints[spawnIndex].transform.position;
+        //deadTracker[0].SetActive(true);
+        //}
         if (deadTracker.Count > 0 && deadTracker[0].GetHashCode() == player.GetHashCode())
         {
             playerSpawn.transform.position = spawnPoints[spawnIndex].transform.position;
             playerScript.spawnPlayer();
         }
-        else if(deadTracker.Count > 0 && deadTracker[0].GetHashCode() != player.GetHashCode())
+        else if (deadTracker.Count > 0 && deadTracker[0].GetHashCode() != player.GetHashCode())
         {
             deadTracker[0].transform.position = spawnPoints[spawnIndex].transform.position;
             deadTracker[0].SetActive(true);
         }
+        //Leave this portion alone
         if (deadTracker.Count > 0)
         {
             bodyTracker.Add(deadTracker[0]);
@@ -629,7 +659,7 @@ public class GameManager : MonoBehaviour
         {
             scoreDisplay.SetActive(false);
             StatePause();
-            TallyFinalScores();           
+            TallyFinalScores();
             menuActive = menuScore;
             menuActive.SetActive(true);
             EventSystem.current.SetSelectedGameObject(gameEndFirst);
@@ -651,10 +681,10 @@ public class GameManager : MonoBehaviour
         //Check for Winner HERE:
         winnerName = scoreBoard.ElementAt(0).Key;
         statsTracker[winnerName].updateRoundsWon();
-        
-        if(RetryButton.activeSelf == true)
+
+        if (RetryButton.activeSelf == true)
             RetryButton.SetActive(false);
-        if(NextRoundButton.activeSelf == true)
+        if (NextRoundButton.activeSelf == true)
             NextRoundButton.SetActive(false);
         TheTrueKing = CheckTrueWinner();
         if (TheTrueKing != null)
@@ -675,7 +705,7 @@ public class GameManager : MonoBehaviour
             scoreBoardNamesText.text = TheTrueKing;
             scoreBoardScoreText.text = statsTracker[TheTrueKing].getTimeHeld().ToString();
             scoreBoardRWText.text = statsTracker[TheTrueKing].getRoundsWon().ToString();
-            if(player.name == TheTrueKing)
+            if (player.name == TheTrueKing)
             {
                 scoreBoardWLMessageText.text = "Enjoy Your Donut!";
                 scoreBoardWLMessageText.color = Color.green;
@@ -724,12 +754,12 @@ public class GameManager : MonoBehaviour
         //    menuActive = menuScore;
         //else if (!isThereTrueKing)
         //    menuActive = menuScore2;
-        
-        
+
+
         Debug.Log(winnerName + " : " + statsTracker[winnerName].getAllStats());
         ++RoundsWon;
 
-        
+
 
     }
 
@@ -818,7 +848,7 @@ public class GameManager : MonoBehaviour
         previousScreen = menuActive;
         menuActive = menuSettings;
         ActivateMenu(menuActive);
-        if(currentMode == gameMode.DONUTKING2)
+        if (currentMode == gameMode.DONUTKING2)
             EventSystem.current.SetSelectedGameObject(inGameSettingsFirst);
         else
             EventSystem.current.SetSelectedGameObject(settingsFirst);
@@ -992,6 +1022,53 @@ public class GameManager : MonoBehaviour
             playerScript.ToggleMyLight();
         }
     }
+
+    //---------Menu Title Camera Transitions----------- 
+    public void ChangeTargetCamera()
+    {
+        if (!isCamonMonitor)
+        {
+            foreach (CinemachineVirtualCamera virCam in virtualCameras)
+            {
+                virCam.enabled = virCam == monitorCamera;
+            }
+            isCamonMonitor = true;
+        }
+        else
+        {
+            foreach (CinemachineVirtualCamera virCam in virtualCameras)
+            {
+                virCam.enabled = virCam == primaryCamera;
+            }
+            isCamonMonitor = false;
+        }
+    }
+
+    public IEnumerator StartObjectiveScreen()
+    {
+        Title.SetActive(false);
+        yield return new WaitForSeconds(menuTimeDelay);
+        mainMenuStart.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(objectiveFirst);
+    }
+
+    public IEnumerator StartCreditScreen()
+    {
+        Title.SetActive(false);
+        yield return new WaitForSeconds(menuTimeDelay);
+        menuCredits.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(creditsMenuFirst);
+    }
+
+    public IEnumerator BackToMain()
+    {
+        mainMenuStart.SetActive(false);
+        yield return new WaitForSeconds(menuTimeDelay);
+        Title.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(mainMenuFirst);
+        yield return new WaitForSeconds(menuTimeDelay);
+    }
+    //----------------------------------------------------------------//
 
     //METHOD CREATED TO ADD AND DISPLAY WHO KILLED WHO
     public void DisplayKillMessage(GameObject winner, GameObject defeated)

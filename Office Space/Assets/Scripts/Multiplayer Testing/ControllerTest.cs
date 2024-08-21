@@ -17,6 +17,9 @@ public class ControllerTest : MonoBehaviour //ITarget //, IDamage
     [SerializeField] AudioSource aud;
     [SerializeField] LayerMask ignoreMask;
     [SerializeField] Animator anim;
+    [SerializeField] float animTransitSpeed;
+    float agentSpeedVert;
+    float agentSpeedHori;
 
     [Header("Player Mesh and Player Effects")]
     [SerializeField] SkinnedMeshRenderer playerMeshRenderer;
@@ -25,8 +28,9 @@ public class ControllerTest : MonoBehaviour //ITarget //, IDamage
     Color origColor;
 
     [Header("Movement Parameters")]
-    [SerializeField] float speed = 3.0f;
-    [SerializeField] float sprintModifier = 6.0f;
+    [SerializeField] float speed = 6.0f;
+    [SerializeField] float sprintModifier = 2.0f;
+    private Vector3 currentMovement;
     float origSpeed;
     float originSpeed;
 
@@ -76,6 +80,8 @@ public class ControllerTest : MonoBehaviour //ITarget //, IDamage
     bool isDead;
 
     [Header("----- Weapons -----")]
+    [SerializeField] GameObject playerAim;
+    [SerializeField] float aimBallDist;
     [SerializeField] GameObject weaponHUD;
     [SerializeField] WeaponStats starterWeapon;
     [SerializeField] public List<WeaponStats> weaponList;
@@ -124,9 +130,8 @@ public class ControllerTest : MonoBehaviour //ITarget //, IDamage
     [SerializeField] float mouseSensitivity = 2.0f;
     [SerializeField] float upDownRange = 90.0f;
     [SerializeField] Camera playerCam;
-
-    private Vector3 currentMovement;
     private float verticalRotation;
+
 
     //added to match playerControl
 
@@ -259,30 +264,47 @@ public class ControllerTest : MonoBehaviour //ITarget //, IDamage
 
     private void Update()
     {
+        Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDist, Color.green);
+
         HandleMovement();
+        //HandleMovement();
         // Vector3 inputDirection = new Vector3(MovementInput.x, 0f, MovementInput.y);
         // Vector3 worldDirection = transform.TransformDirection(inputDirection);
         HandleRotation();
         UpdatePlayerUI();
 
-        if (!isShooting && !isReloading)
+        //----------------This should NOT be here--------------------
+        //if (!isShooting && !isReloading)
+        //{
+        //    if (GrenadeTriggered && rubberBallCount > 0)
+        //    {
+        //        StartCoroutine(ThrowItem());
+        //    }
+        //}
+        //----------------This should NOT be here--------------------
+
+        if (!isCrouching)
         {
-            if (GrenadeTriggered && rubberBallCount > 0)
-            {
-                StartCoroutine(ThrowItem());
-            }
+            anim.SetLayerWeight(1, 1);
+            anim.SetLayerWeight(2, 1);
+            anim.SetLayerWeight(3, 0);
+            anim.SetLayerWeight(4, 0);
         }
+        else if (isCrouching)
+        {
+            anim.SetLayerWeight(1, 0);
+            anim.SetLayerWeight(2, 0);
+            anim.SetLayerWeight(3, 1);
+            anim.SetLayerWeight(4, 1);
+        }
+        anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), agentSpeedVert, Time.deltaTime * animTransitSpeed));
+        anim.SetFloat("SpeedHori", Mathf.Lerp(anim.GetFloat("SpeedHori"), agentSpeedHori, Time.deltaTime * animTransitSpeed));
+
+        playerAim.transform.position = Camera.main.transform.position + (Camera.main.transform.forward * aimBallDist);
+
     }
 
-    //void PrintDevices()
-    //{
-    //    foreach (var devices in InputSystem.devices)
-    //    {
-
-    //    }
-    //}
-
-    //Registers each action and assigns them a value
+    //Registers each action and assigns them a value (Event Table)
     void RegisterInputActions()
     {
         movementAction.performed += context => MovementInput = context.ReadValue<Vector2>();
@@ -326,15 +348,18 @@ public class ControllerTest : MonoBehaviour //ITarget //, IDamage
 
         scoreboardAction.performed += context => ScoreboardTriggered = true;
         scoreboardAction.canceled += context => ScoreboardTriggered = false;
-        //cycleWeaponAction.performed += context => CycleWeaponTriggered = true;
-        //cycleWeaponAction.canceled += context => CycleWeaponTriggered = false;
+
     }
 
     //On Enable and Disable is required as this input manager uses an event handler
     private void OnEnable()
     {
+        //movementAction.performed += OnMovement;
+        //movementAction.canceled += OnMovementStop;
         movementAction.Enable();
+
         lookAction.Enable();
+        //jumpAction.performed += OnJumpStart;
         jumpAction.Enable();
         crouchAction.Enable();
         sprintAction.Enable();
@@ -355,8 +380,11 @@ public class ControllerTest : MonoBehaviour //ITarget //, IDamage
 
     private void OnDisable()
     {
+        //movementAction.performed -= OnMovement;
+        //movementAction.canceled -= OnMovementStop;
         movementAction.Disable();
         lookAction.Disable();
+        //jumpAction.performed -= OnJumpStart;
         jumpAction.Disable();
         crouchAction.Disable();
         sprintAction.Disable();
@@ -375,10 +403,11 @@ public class ControllerTest : MonoBehaviour //ITarget //, IDamage
         scoreboardAction.Disable();
     }
 
-
-
     void HandleMovement()
     {
+        agentSpeedVert = Input.GetAxis("Vertical"); ///This is needed for animations add it to serialized field
+        agentSpeedHori = Input.GetAxis("Horizontal");
+
         if (characterController.isGrounded)
         {
             jumpCount = 0;
@@ -395,21 +424,6 @@ public class ControllerTest : MonoBehaviour //ITarget //, IDamage
 
         Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDist, Color.green);
 
-
-        if (!isCrouching)
-        {
-            anim.SetLayerWeight(1, 1);
-            anim.SetLayerWeight(2, 1);
-            anim.SetLayerWeight(3, 0);
-            anim.SetLayerWeight(4, 0);
-        }
-        else if (isCrouching)
-        {
-            anim.SetLayerWeight(1, 0);
-            anim.SetLayerWeight(2, 0);
-            anim.SetLayerWeight(3, 1);
-            anim.SetLayerWeight(4, 1);
-        }
 
         if (JumpTriggered && jumpCount < 1 && !isCrouching)
         {
