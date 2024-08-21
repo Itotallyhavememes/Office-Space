@@ -1479,9 +1479,9 @@ RectTransform:
   - {fileID: 4230692045309140839}
   m_Father: {fileID: 9125662210475468071}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 374, y: -1005}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 374, y: 75}
   m_SizeDelta: {x: 371.5, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5758693613896724724
@@ -4190,7 +4190,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 185.6, y: -15.000015}
+  m_AnchoredPosition: {x: 185.6, y: -15}
   m_SizeDelta: {x: 366.5, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6925293700055578519
@@ -5099,6 +5099,7 @@ MonoBehaviour:
   mapSelectScreenFirst: {fileID: 0}
   pauseFirst: {fileID: 794985920012363250}
   inGameSettingsFirst: {fileID: 4053615918021608579}
+  objectiveFirst: {fileID: 0}
   nextRoundFirst: {fileID: 6626692109011410343}
   gameEndFirst: {fileID: 6626692109011410343}
   matchSettingsFirst: {fileID: 0}
@@ -8473,7 +8474,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 263, y: -15.000015}
+  m_AnchoredPosition: {x: 263, y: -15}
   m_SizeDelta: {x: 526, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8359196123280480213
@@ -17753,9 +17754,9 @@ RectTransform:
   - {fileID: 2992644751271876165}
   m_Father: {fileID: 9125662210475468071}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 405, y: -970}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 405, y: 110}
   m_SizeDelta: {x: 526, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7544997186716229921
