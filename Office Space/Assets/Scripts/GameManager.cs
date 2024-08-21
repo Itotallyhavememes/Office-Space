@@ -893,14 +893,15 @@ public class GameManager : MonoBehaviour
 
     public void ActivateObjectiveScreen()
     {
+        previousScreen = menuActive;
         if (currentMode == gameMode.DONUTKING2)
             ActivateMenu(menuDK2Objective);
         else if (currentMode == gameMode.NIGHTSHIFT)
             ActivateMenu(menuNSObjective);
-        StatePause();
+        //StatePause();
         ActivateMenu(menuDK2Objective);
         EventSystem.current.SetSelectedGameObject(objectiveFirst);
-
+        previousScreen.SetActive(false);
     }
 
     //TIM ADDED METHODS FOR statsTracker
