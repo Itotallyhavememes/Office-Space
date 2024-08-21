@@ -447,7 +447,7 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
     {
         isReloading = true;
 
-        if (weaponList[selectedWeapon].currentAmmo < weaponList[selectedWeapon].startAmmo)
+        if (weaponList[selectedWeapon].style != WeaponStats.ThrowStyle.chestOut && weaponList[selectedWeapon].currentAmmo < weaponList[selectedWeapon].startAmmo)
         {
             if (weaponList[selectedWeapon].type == WeaponStats.WeaponType.raycast)
             {
@@ -539,7 +539,7 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
             StartCoroutine(Reload());
         }
 
-        if (weaponList[selectedWeapon].style != WeaponStats.ThrowStyle.chestOut)
+        if (weaponList[selectedWeapon].style != WeaponStats.ThrowStyle.chestOut || weaponList[selectedWeapon].currentAmmo <= 0)
             isShooting = false;
 
     }
