@@ -10,7 +10,12 @@ public class RubberBall : MonoBehaviour
     [SerializeField] float blastRadius;
     [SerializeField] float blastForce;
     [SerializeField] int damageAmount;
-   
+
+    [Header("----- Sounds -----")]
+    [SerializeField] AudioClip rubberBall;
+    [SerializeField] AudioSource rubberOut;
+    [Range(0, 1)][SerializeField] float why;
+
     float countdown;
     bool hasExploded;
 
@@ -29,20 +34,40 @@ public class RubberBall : MonoBehaviour
         if (countdown <= 0f && !hasExploded)
         {
             Explode();
+           // rubberOut.PlayOneShot(rubberBall, why);
             hasExploded = false;
 
         }
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+       
+        Debug.Log("Pick up");
+        StartCoroutine(bom());
+    }
+    IEnumerator bom()
+    {
+      
+        yield return new WaitForSeconds(1.5f);
+        rubberOut.PlayOneShot(rubberBall, why);
+
+
+    }
+
+        
+
     void Explode()
     {
-
+       
         // show effect
         Instantiate(explosionEffect, transform.position, transform.rotation);
+
         // Collider array stores the info of every collider in the blast radius
         Collider[] collidersToDestroy = Physics.OverlapSphere(transform.position, blastRadius);
         foreach (Collider nearbyObject in collidersToDestroy)
         {
+            
             IDamage dmg = nearbyObject.GetComponent<IDamage>();
             if (dmg != null && !hasDamaged)
             {
