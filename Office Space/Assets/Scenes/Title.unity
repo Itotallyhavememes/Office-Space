@@ -5623,7 +5623,7 @@ MonoBehaviour:
   m_BlendUpdateMethod: 1
   m_DefaultBlend:
     m_Style: 2
-    m_Time: 2
+    m_Time: 1
     m_CustomCurve:
       serializedVersion: 2
       m_Curve: []
@@ -8122,9 +8122,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7729711834160596301}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: ReturnToMainFromTitle
+      - m_Target: {fileID: 4750651423156825801}
+        m_TargetAssemblyTypeName: ButtonFunctions, Assembly-CSharp
+        m_MethodName: back
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -12564,14 +12564,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AnimeObject: {fileID: 966141597168875109}
-  audDoorOpen: {fileID: 0}
-  audDoorClose: {fileID: 0}
   isSomeoneThere: 0
   isOutward: 0
   isInward: 0
   OuterPoint: {fileID: 5278406055650753935}
   InnerPoint: {fileID: 6061137480458845442}
   LastInDoor: {fileID: 0}
+  audDoorOpen: {fileID: 0}
+  audDoorOpenVol: 0
+  audDoorClose: {fileID: 0}
+  audDoorCloseVol: 0
 --- !u!23 &525310813526731206
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -14786,14 +14788,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AnimeObject: {fileID: 5827337837514563399}
-  audDoorOpen: {fileID: 0}
-  audDoorClose: {fileID: 0}
   isSomeoneThere: 0
   isOutward: 0
   isInward: 0
   OuterPoint: {fileID: 2206987480685904631}
   InnerPoint: {fileID: 994866921834128674}
   LastInDoor: {fileID: 0}
+  audDoorOpen: {fileID: 0}
+  audDoorOpenVol: 0
+  audDoorClose: {fileID: 0}
+  audDoorCloseVol: 0
 --- !u!224 &1342680763282099018
 RectTransform:
   m_ObjectHideFlags: 0
@@ -18279,14 +18283,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AnimeObject: {fileID: 2101539145908420609}
-  audDoorOpen: {fileID: 0}
-  audDoorClose: {fileID: 0}
   isSomeoneThere: 0
   isOutward: 0
   isInward: 0
   OuterPoint: {fileID: 8883963005756407127}
   InnerPoint: {fileID: 7294763664863802037}
   LastInDoor: {fileID: 0}
+  audDoorOpen: {fileID: 0}
+  audDoorOpenVol: 0
+  audDoorClose: {fileID: 0}
+  audDoorCloseVol: 0
 --- !u!222 &2502328518147739738
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -18730,14 +18736,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AnimeObject: {fileID: 1927174521190399585}
-  audDoorOpen: {fileID: 0}
-  audDoorClose: {fileID: 0}
   isSomeoneThere: 0
   isOutward: 0
   isInward: 0
   OuterPoint: {fileID: 5760169513138249505}
   InnerPoint: {fileID: 2883465048664727486}
   LastInDoor: {fileID: 0}
+  audDoorOpen: {fileID: 0}
+  audDoorOpenVol: 0
+  audDoorClose: {fileID: 0}
+  audDoorCloseVol: 0
 --- !u!23 &2730028053458696751
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -30444,6 +30452,7 @@ MonoBehaviour:
   menuNSObjective: {fileID: 687579524954175997}
   menuShop: {fileID: 0}
   Title: {fileID: 4490490888435361631}
+  menuTimeDelay: 1
   menuRetryAmount: {fileID: 0}
   donutCountText: {fileID: 0}
   timerUI: {fileID: 0}
@@ -30463,6 +30472,10 @@ MonoBehaviour:
   activeScoreText: {fileID: 0}
   RetryButton: {fileID: 0}
   NextRoundButton: {fileID: 0}
+  loadingScreen: {fileID: 0}
+  loadingBar: {fileID: 0}
+  fillSpeed: 0
+  loadSpeed: 0
   isThereDonutKing: 0
   TheDonutKing: {fileID: 0}
   moneyForKills: 0

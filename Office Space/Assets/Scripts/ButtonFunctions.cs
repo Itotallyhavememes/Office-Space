@@ -143,7 +143,6 @@ public class ButtonFunctions : MonoBehaviour
 
     public void back()
     {
-
         GameManager.instance.ChangeTargetCamera();
         StartCoroutine(GameManager.instance.BackToMain());
     }
