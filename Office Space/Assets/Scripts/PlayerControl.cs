@@ -46,6 +46,7 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
 
     [Header("----- Weapons -----")]
     [SerializeField] GameObject playerAim;
+    [SerializeField] GameObject playerhandRotation;
     [SerializeField] float aimBallDist;
     [SerializeField] WeaponStats starterWeapon;
     [SerializeField] public List<WeaponStats> weaponList;
@@ -216,6 +217,7 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
         anim.SetFloat("SpeedHori", Mathf.Lerp(anim.GetFloat("SpeedHori"), agentSpeedHori, Time.deltaTime * animTransitSpeed));
 
         playerAim.transform.position = Camera.main.transform.position + (Camera.main.transform.forward * aimBallDist);
+        playerAim.transform.rotation = Camera.main.transform.rotation;
 
         if (!GameManager.instance.isPaused && !isDead)
         {
