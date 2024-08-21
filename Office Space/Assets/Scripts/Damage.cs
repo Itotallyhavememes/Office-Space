@@ -6,7 +6,6 @@ public class Damage : MonoBehaviour
 {
     [SerializeField] enum damageType { stream, stationary, projectile, item }
     [SerializeField] damageType type;
-
     [SerializeField] Rigidbody rb;
     [SerializeField] int damageAmount;
     [SerializeField] int speed;
@@ -38,6 +37,7 @@ public class Damage : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+
         if (type != damageType.item)
         {
             if (other.isTrigger)

@@ -12,7 +12,11 @@ public class ItemPickup : MonoBehaviour
     [SerializeField] PowerUpEffect powerupEffect;
     [SerializeField] WeaponStats weapon;
 
-
+    [Header("----- Sounds -----")]
+    [SerializeField] AudioClip rubberBall;
+    [SerializeField] AudioSource rubberOut;
+    [Range(0, 1)][SerializeField] float why;
+    
     Vector3 startPos;
 
     // Start is called before the first frame update
@@ -49,6 +53,7 @@ public class ItemPickup : MonoBehaviour
                     {
                         if (GameManager.instance.playerScript.HP < GameManager.instance.playerScript.GetStartHP())
                         {
+                           
                             GameManager.instance.worldItemCount--;
                             powerupEffect.ApplyBuff();
                             Destroy(gameObject);
@@ -57,6 +62,7 @@ public class ItemPickup : MonoBehaviour
                     }
                 case ItemType.speedBoost:
                     {
+                        GameManager.instance.playerScript.Munch(rubberBall, why);
                         powerupEffect.ApplyBuff();
                         GameManager.instance.worldItemCount--;
                         Destroy(gameObject);
@@ -66,6 +72,8 @@ public class ItemPickup : MonoBehaviour
                     {
                         if (GameManager.instance.playerScript.GetComponent<ItemThrow>().rubberBallCount < GameManager.instance.playerScript.GetComponent<ItemThrow>().GetMaxBallCount())
                         {
+                            
+                            GameManager.instance.playerScript.Munch(rubberBall, why);
                             GameManager.instance.playerScript.GetComponent<ItemThrow>().rubberBallCount++;
                             GameManager.instance.playerScript.GetComponent<ItemThrow>().updateGrenadeUI();
                             GameManager.instance.worldItemCount--;
@@ -76,6 +84,7 @@ public class ItemPickup : MonoBehaviour
                     }
                 case ItemType.weapon:
                     {
+                        GameManager.instance.playerScript.Munch(rubberBall, why);
                         GameManager.instance.playerScript.GetWeaponStats(this.weapon);
                         GameManager.instance.worldItemCount--;
                         Destroy(gameObject);

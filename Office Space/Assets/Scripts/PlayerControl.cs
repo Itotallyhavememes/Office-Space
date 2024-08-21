@@ -91,6 +91,8 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
     [Range(0, 1)][SerializeField] float audJumpVol;
     [SerializeField] AudioClip audSlide;
     [Range(0, 1)][SerializeField] float audSlideVol;
+    [SerializeField] AudioClip audShurikenFire;
+    [Range(0, 1)][SerializeField] float audShurikenFireVol;
 
     //Damage Audio
     [SerializeField] AudioClip[] audDamage;
@@ -523,13 +525,16 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
             {
                 if (weaponList[selectedWeapon].style == WeaponStats.ThrowStyle.chestOut)
                 {
+                    aud.PlayOneShot(audShurikenFire, audShurikenFireVol);
                     playerRig.weight = 0;
                     anim.SetLayerWeight(8, 1f);
                     anim.SetTrigger("ThrowShuriken");
                 }
                 else
                 {
+                    
                     weaponModel.SetActive(false);
+                    
                     Instantiate(shurikenProjectile, shurikenSpawnPoint.transform.position, shurikenSpawnPoint.transform.rotation);
                     yield return new WaitForSeconds(shootRate);
                     weaponModel.SetActive(true);

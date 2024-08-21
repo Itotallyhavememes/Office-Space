@@ -54,6 +54,10 @@ MonoBehaviour:
   damageAmount: 4
   speed: 45
   destroyTime: 3
+  parent: {fileID: 0}
+  victim: {fileID: 0}
+  hasKilled: 0
+  dmgSource: {fileID: 0}
 --- !u!33 &312377961391748602
 MeshFilter:
   m_ObjectHideFlags: 0

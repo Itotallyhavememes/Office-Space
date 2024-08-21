@@ -1,14 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
+using Unity.Loading;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 
 
 public class ButtonFunctions : MonoBehaviour
 {
+    
+
+   
     // Start is called before the first frame update
     public void resume()
     {
@@ -126,11 +132,28 @@ public class ButtonFunctions : MonoBehaviour
         GameManager.instance.ReturnToTittle();
     }
 
+    IEnumerator loadingAsync()
+    {
+        
+        Debug.Log("Loading menu open");
+        while (GameManager.instance.loadingBar.fillOrigin >= GameManager.instance.loadingBar.fillAmount)
+        {
+            yield return new WaitForSeconds(GameManager.instance.loadSpeed);
+            GameManager.instance.loadingBar.fillAmount += GameManager.instance.fillSpeed;
+            Debug.Log("Waiting");
+        }
+        yield return new WaitForSeconds(1);
+        GameManager.instance.loadingScreen.SetActive(false);
+    }
+
     public void openDK3Objective()
     {
+        GameManager.instance.loadingMenu();
+        StartCoroutine(loadingAsync());
         GameManager.instance.ActivateObjectiveScreen();
         GameManager.instance.StatePause();
     }
+    
 
     public void quit()
     {
