@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Animations.Rigging;
 
 
 public class PlayerControl : MonoBehaviour, IDamage, ITarget
@@ -30,6 +31,7 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
     [SerializeField] float animTransitSpeed;
     [SerializeField] SkinnedMeshRenderer playerMeshRenderer;
     [SerializeField] Color dmgColor;
+    public Rig playerRig;
     Color origColor;
     //[SerializeField] int donutDropDistance;
     //[SerializeField] GameObject donutDropItem;
@@ -108,6 +110,7 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
     bool holdingDownCrouch;
     bool slideSoundPlayed;
     bool slideAnimPlayed;
+    bool throwAnimDone;
 
     Coroutine speedCoroutine;
 
@@ -184,6 +187,12 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
     // Update is called once per frame
     void Update()
     {
+        if (throwAnimDone)
+        {
+            playerRig.weight = 1;
+            throwAnimDone = false;
+        }
+
         Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDist, Color.green);
 
         agentSpeedVert = Input.GetAxis("Vertical");
@@ -510,10 +519,19 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
             }
             else if (weaponList[selectedWeapon].type == WeaponStats.WeaponType.projectile) //Shuriken
             {
-                weaponModel.SetActive(false);
-                Instantiate(shurikenProjectile, shurikenSpawnPoint.transform.position, shurikenSpawnPoint.transform.rotation);
-                yield return new WaitForSeconds(shootRate);
-                weaponModel.SetActive(true);
+                if (weaponList[selectedWeapon].style == WeaponStats.ThrowStyle.chestOut)
+                {
+                    playerRig.weight = 0;
+                    anim.SetLayerWeight(8, 1f);
+                    anim.SetTrigger("ThrowShuriken");
+                }
+                else
+                {
+                    weaponModel.SetActive(false);
+                    Instantiate(shurikenProjectile, shurikenSpawnPoint.transform.position, shurikenSpawnPoint.transform.rotation);
+                    yield return new WaitForSeconds(shootRate);
+                    weaponModel.SetActive(true);
+                }
             }
         }
         else if (!isReloading && (weaponList[selectedWeapon].currentAmmo <= 0))
@@ -521,8 +539,23 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
             StartCoroutine(Reload());
         }
 
-        isShooting = false;
+        if (weaponList[selectedWeapon].style != WeaponStats.ThrowStyle.chestOut)
+            isShooting = false;
 
+    }
+
+    public void AnimThrowWeapon()
+    {
+        weaponModel.SetActive(false);
+        Instantiate(shurikenProjectile, shurikenSpawnPoint.transform.position, shurikenSpawnPoint.transform.rotation);
+    }
+
+    public void AnimThrowDone()
+    {
+        throwAnimDone = true;
+        anim.SetLayerWeight(8, 0);
+        weaponModel.SetActive(true);
+        isShooting = false;
     }
 
     public void takeDamage(int amount)

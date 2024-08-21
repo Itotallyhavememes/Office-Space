@@ -6,14 +6,11 @@ using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
 using UnityEngine.UI;
 
-public class ControllerTest : MonoBehaviour, IDamage, ITarget
+public class ControllerTest : MonoBehaviour //ITarget //, IDamage 
 {
     [Header("Input Action Asset")]
     [SerializeField] InputActionAsset inputAsset;
 
-    [Header("Death Cam")]
-    [SerializeField] Camera deathCamera;
-    bool isDead;
 
     [Header("----- Components -----")]
     [SerializeField] CharacterController characterController;
@@ -27,55 +24,44 @@ public class ControllerTest : MonoBehaviour, IDamage, ITarget
     [SerializeField] GameObject DKLight;
     Color origColor;
 
-    [Header("Action Map Name References")]
-    [SerializeField] string actionMapName = "Player";
-
-    [Header("Action Name References")]
-    [SerializeField] string movement = "Movement";
-    [SerializeField] string look = "Look";
-    [SerializeField] string jump = "Jump";
-    [SerializeField] string sprint = "Sprint";
-    [SerializeField] string shoot = "Shoot";
-    [SerializeField] string reload = "Reload";
-    [SerializeField] string grenade = "Grenade";
-    [SerializeField] string cycleWeapon = "Cycle Weapon";
-    [SerializeField] string join = "Join";
-    [SerializeField] string pause = "Pause";
-    [SerializeField] string resume = "Cancel";
-    [SerializeField] string crouch = "Crouch";
-    [SerializeField] string aim = "Aim";
-    [SerializeField] string adsLeft = "ADS Left";
-    [SerializeField] string adsRight = "ADS Right";
-    [SerializeField] string swapWeapons = "Swap Weapon";
-    [SerializeField] string interact = "Interact";
-    [SerializeField] string scoreboard = "Scroeboard";
-
-    [Header("Deadzone Values")]
-    [SerializeField] float leftStickDeadzoneValue = 0.2f;
-
-    [Header("Movement Speeds")]
+    [Header("Movement Parameters")]
     [SerializeField] float speed = 3.0f;
     [SerializeField] float sprintModifier = 6.0f;
     float origSpeed;
+    float originSpeed;
 
-    [Header("Camera Settings")]
-    [SerializeField] GameObject cameraLockOn;
-    [SerializeField] bool invertYAxis = false;
+    [Header("Crouch Parameters")]
+    [SerializeField] float crouchLevel;
+    [SerializeField] float crouchMod;
+    bool isCrouching;
+    float origHeight;
 
     [Header("Jump Parameters")]
     [SerializeField] float jumpForce = 8.0f;
     [SerializeField] float gravity = 22.0f;
 
+    [Header("Sliding Parameters")]
+    [SerializeField] int slideSpeed;
+    [SerializeField] float slideLockoutTime;
+    [SerializeField] float slideCooldown;
+    bool slideSoundPlayed;
+
+    [Header("Camera Settings")]
+    [SerializeField] Camera playerCamera;
+    [SerializeField] GameObject cameraLockOn;
+    [SerializeField] bool invertYAxis = false;
+
+
     [Header("HP Parameters")]
     public int HP;
     private int HPOrig;
 
-    [Header("Height Parameters")]
-    float OriginHeight;
-    [SerializeField] float crouchLevel;
-    [SerializeField] float CrouchMod;
-    bool isCrouching;
-    float origHeight;
+    int jumpCount;
+    float slideLockout;
+    bool isSliding;
+    bool canSlide;
+
+    float crouchSpeed;
 
     [Header("Player UI")]
     [SerializeField] MultiplayerEventSystem eventSystem;
@@ -85,8 +71,12 @@ public class ControllerTest : MonoBehaviour, IDamage, ITarget
     public Image playerHPBar;
     public Image playerAmmoBar;
 
+    [Header("Death Cam")]
+    [SerializeField] Camera deathCamera;
+    bool isDead;
 
     [Header("----- Weapons -----")]
+    [SerializeField] GameObject weaponHUD;
     [SerializeField] WeaponStats starterWeapon;
     [SerializeField] public List<WeaponStats> weaponList;
     [SerializeField] GameObject weaponModel;
@@ -94,12 +84,14 @@ public class ControllerTest : MonoBehaviour, IDamage, ITarget
     [SerializeField] int shootDamage;
     [SerializeField] float reloadTime;
     [SerializeField] float shootDist;
-    public bool isReloading;
-    public bool isShooting;
-
-    int selectedWeapon;
     [SerializeField] float raycastRotationRecoil;
     [SerializeField] float raycastRotationReload;
+    [Header("----- Shuriken -----")]
+    [SerializeField] GameObject shurikenSpawnPoint;
+    [SerializeField] GameObject shurikenProjectile;
+    public bool isReloading;
+    public bool isShooting;
+    int selectedWeapon;
 
     [Header("----- Sounds -----")]
     [SerializeField] AudioClip audHandFire;
@@ -118,48 +110,51 @@ public class ControllerTest : MonoBehaviour, IDamage, ITarget
     [Range(0, 1)][SerializeField] float audDamageVol;
 
     [Header("---- Grenade ----")]
-    [SerializeField] float throwForce;
-    [SerializeField] float throwDelay;
+    [SerializeField] GameObject grenadeHUD;
     [SerializeField] GameObject itemPrefab;
     [SerializeField] GameObject itemSpawnPoint;
-    [SerializeField] GameObject weaponHUD;
-    [SerializeField] GameObject grenadeHUD;
-
+    [SerializeField] float throwForce;
+    [SerializeField] float throwDelay;
     public int rubberBallCount;
     int rubberBallMaxCount;
+    ItemThrow item;
 
-    [Header("----- Shuriken -----")]
-    //Shuriken Variables
-    [SerializeField] GameObject shurikenSpawnPoint;
-    [SerializeField] GameObject shurikenProjectile;
 
     [Header("Look Sensitivity")]
     [SerializeField] float mouseSensitivity = 2.0f;
     [SerializeField] float upDownRange = 90.0f;
-
     [SerializeField] Camera playerCam;
 
     private Vector3 currentMovement;
     private float verticalRotation;
 
-
     //added to match playerControl
-    int jumpCount;
-    [SerializeField] int slideSpeed;
-    float slideLockout;
-    bool slideSoundPlayed;
-    bool isSliding;
-    [SerializeField] float slideLockoutTime;
-    bool canSlide;
-    [SerializeField] float slideCooldown;
 
-    float originSpeed;
-    float crouchSpeed;
+    [Header("Action Map Name References")]
+    [SerializeField] string actionMapName = "Player";
 
-    
+    [Header("Action Name References")]
+    [SerializeField] string movement = "Movement";
+    [SerializeField] string look = "Look";
+    [SerializeField] string jump = "Jump";
+    [SerializeField] string sprint = "Sprint";
+    [SerializeField] string shoot = "Shoot";
+    [SerializeField] string reload = "Reload";
+    [SerializeField] string grenade = "Grenade";
+    [SerializeField] string join = "Join";
+    [SerializeField] string pause = "Pause";
+    [SerializeField] string resume = "Cancel";
+    [SerializeField] string crouch = "Crouch";
+    [SerializeField] string aim = "Aim";
+    [SerializeField] string adsLeft = "ADS Left";
+    [SerializeField] string adsRight = "ADS Right";
+    [SerializeField] string swapWeaponsCont = "Swap Weapon";
+    [SerializeField] string swapWeaponsScroll = "Swap Weapon Scroll";
+    [SerializeField] string interact = "Interact";
+    [SerializeField] string scoreboard = "Scroeboard";
 
-    ItemThrow item;
-
+    [Header("Deadzone Values")]
+    [SerializeField] float leftStickDeadzoneValue = 0.2f;
 
     InputActionMap player;
     InputAction movementAction;
@@ -177,7 +172,8 @@ public class ControllerTest : MonoBehaviour, IDamage, ITarget
     InputAction aimAction;
     InputAction adsLeftAction;
     InputAction adsRightAction;
-    InputAction swapWeaponsAction;
+    InputAction swapWeaponsContAction;
+    InputAction swapWeaponsScrollAction;
     InputAction interactAction;
     InputAction scoreboardAction;
 
@@ -216,15 +212,14 @@ public class ControllerTest : MonoBehaviour, IDamage, ITarget
         shootAction = player.FindAction(shoot);
         reloadAction = player.FindAction(reload);
         grenadeAction = player.FindAction(grenade);
-        cycleWeaponAction = player.FindAction(cycleWeapon);
         joinAction = player.FindAction(join);
         pauseAction = player.FindAction(pause);
         pauseAction = player.FindAction(pause);
-        resumeAction = inputAsset.FindActionMap("UI").FindAction(resume);
         aimAction = player.FindAction(aim);
         adsLeftAction = player.FindAction(adsLeft);
         adsRightAction = player.FindAction(adsRight);
-        swapWeaponsAction = player.FindAction(swapWeapons);
+        swapWeaponsContAction = player.FindAction(swapWeaponsCont);
+        swapWeaponsScrollAction = player.FindAction(swapWeaponsScroll);
         interactAction = player.FindAction(interact);
         scoreboardAction = player.FindAction(scoreboard);
         //splitCameraAction = player.FindAction(splitCamera); //testing
@@ -249,11 +244,11 @@ public class ControllerTest : MonoBehaviour, IDamage, ITarget
     private void Start()
     {
         HPOrig = HP;
-        OriginHeight = characterController.height;
+        origHeight = characterController.height;
         originSpeed = speed;
         canSlide = true;
         slideLockout = slideLockoutTime;
-        crouchSpeed = speed - CrouchMod;
+        crouchSpeed = speed - crouchMod;
         GetWeaponStats(starterWeapon);
         //Add self to gameManager's bodyTracker
         GameManager.instance.AddToTracker(this.gameObject);
@@ -326,9 +321,6 @@ public class ControllerTest : MonoBehaviour, IDamage, ITarget
         adsRightAction.performed += context => adsRightTriggered = true;
         adsRightAction.canceled += context => adsRightTriggered = false;
 
-        swapWeaponsAction.performed += context => SwapWeaponsTriggered = true;
-        swapWeaponsAction.canceled += context => SwapWeaponsTriggered = false;
-
         interactAction.performed += context => InteractTriggered = true;
         interactAction.canceled += context => InteractTriggered = false;
 
@@ -349,14 +341,14 @@ public class ControllerTest : MonoBehaviour, IDamage, ITarget
         shootAction.Enable();
         reloadAction.Enable();
         grenadeAction.Enable();
-        //cycleWeaponAction.Enable();
         joinAction.Enable();
-        pauseAction.started += OnPauseInput;
-        resumeAction.started += OnPauseInput;
+        //pauseAction.started += OnPauseInput;
+        //resumeAction.started += OnPauseInput;
         aimAction.Enable();
         adsLeftAction.Enable();
         adsRightAction.Enable();
-        swapWeaponsAction.Enable();
+        swapWeaponsContAction.performed += WeaponSelectController;
+        swapWeaponsScrollAction.performed += WeaponSelectMouse;
         interactAction.Enable();
         scoreboardAction.Enable();
     }
@@ -371,15 +363,14 @@ public class ControllerTest : MonoBehaviour, IDamage, ITarget
         shootAction.Disable();
         reloadAction.Disable();
         grenadeAction.Disable();
-        //cycleWeaponAction.Disable();
         joinAction.Disable();
-        //splitCameraAction.started -= CameraSplit;
-        pauseAction.started -= OnPauseInput;
-        resumeAction.started -= OnPauseInput;
+        //pauseAction.started -= OnPauseInput;
+        //resumeAction.started -= OnPauseInput;
         aimAction.Disable();
         adsLeftAction.Disable();
         adsRightAction.Disable();
-        swapWeaponsAction.Disable();
+        swapWeaponsContAction.performed -= WeaponSelectController;
+        swapWeaponsScrollAction.performed -= WeaponSelectMouse;
         interactAction.Disable();
         scoreboardAction.Disable();
     }
@@ -422,14 +413,10 @@ public class ControllerTest : MonoBehaviour, IDamage, ITarget
 
         if (JumpTriggered && jumpCount < 1 && !isCrouching)
         {
-
-
-
             // anim.SetTrigger("Jump");
             jumpCount++;
             currentMovement.y = jumpForce;
-            // aud.PlayOneShot(audJump[Random.Range(0, audJump.Length)], audJumpVol);
-
+            aud.PlayOneShot(audJump[Random.Range(0, audJump.Length)], audJumpVol);
 
         }
         // Debug.Log("not jumping");
@@ -465,27 +452,27 @@ public class ControllerTest : MonoBehaviour, IDamage, ITarget
 
     }
 
-    void HandleJumping()
-    {
+    //void HandleJumping() //Was going to be the jump action but couldn't figure it out
+    //{
 
 
 
-        //if (characterController.isGrounded)
-        //{
+    //    //if (characterController.isGrounded)
+    //    //{
 
-        //    currentMovement.y = -0.5f;
-        //    if (JumpTriggered || Input.GetButton("Jump")) ;
-        //    {
-        //        anim.SetTrigger("Jump");
-        //        jumpCount++;
-        //        currentMovement.y = jumpForce;
-        //    }
-        //}
-        //else
-        //{
-        //    currentMovement.y -= gravity * Time.deltaTime;
-        //}
-    }
+    //    //    currentMovement.y = -0.5f;
+    //    //    if (JumpTriggered || Input.GetButton("Jump")) ;
+    //    //    {
+    //    //        anim.SetTrigger("Jump");
+    //    //        jumpCount++;
+    //    //        currentMovement.y = jumpForce;
+    //    //    }
+    //    //}
+    //    //else
+    //    //{
+    //    //    currentMovement.y -= gravity * Time.deltaTime;
+    //    //}
+    //}
 
     void HandleCrouch()
     {
@@ -511,7 +498,7 @@ public class ControllerTest : MonoBehaviour, IDamage, ITarget
         }
         else if (isCrouching && (!CrouchTrigger))
         {
-            characterController.height = OriginHeight;
+            characterController.height = origHeight;
             speed = originSpeed;
             isCrouching = false;
         }
@@ -561,7 +548,7 @@ public class ControllerTest : MonoBehaviour, IDamage, ITarget
             {
                 Debug.Log("no errors");
                 if (!CrouchTrigger)
-                    characterController.height = OriginHeight;
+                    characterController.height = origHeight;
 
                 //slideSoundPlayed = false;
                 //slideAnimPlayed = false;
@@ -656,7 +643,7 @@ public class ControllerTest : MonoBehaviour, IDamage, ITarget
         //verticalRotation -= inputHandler.LookInput.y * mouseSensitivity;
         verticalRotation -= mouseYInput * mouseSensitivity;
         verticalRotation = Mathf.Clamp(verticalRotation, -upDownRange, upDownRange);
-        cameraLockOn.transform.localRotation = Quaternion.Euler(verticalRotation, 0, 0);
+        playerCamera.transform.localRotation = Quaternion.Euler(verticalRotation, 0, 0);
     }
 
 
@@ -671,30 +658,30 @@ public class ControllerTest : MonoBehaviour, IDamage, ITarget
 
     //}
 
-    void OnPauseInput(InputAction.CallbackContext obj)
-    {
+    //void OnPauseInput(InputAction.CallbackContext obj)
+    //{
 
 
-        if (menuActive == null)
-        {
-            actionMapName = "UI";
-            player = inputAsset.FindActionMap(actionMapName);
-            //GameManager.instance.StatePause();
-            menuActive = menuPause;
-            eventSystem.firstSelectedGameObject = firstSelectedButtonInPause;
-            menuActive.SetActive(true);
-        }
-        else if (menuActive == menuPause)
-        {
-            //GameManager.instance.StateUnpause();
-            actionMapName = "Player";
-            player = inputAsset.FindActionMap(actionMapName);
-            menuActive.SetActive(false);
-            menuActive = null;
+    //    if (menuActive == null)
+    //    {
+    //        actionMapName = "UI";
+    //        player = inputAsset.FindActionMap(actionMapName);
+    //        //GameManager.instance.StatePause();
+    //        menuActive = menuPause;
+    //        eventSystem.firstSelectedGameObject = firstSelectedButtonInPause;
+    //        menuActive.SetActive(true);
+    //    }
+    //    else if (menuActive == menuPause)
+    //    {
+    //        //GameManager.instance.StateUnpause();
+    //        actionMapName = "Player";
+    //        player = inputAsset.FindActionMap(actionMapName);
+    //        menuActive.SetActive(false);
+    //        menuActive = null;
 
-        }
+    //    }
 
-    }
+    //}
     IEnumerator Shoot()
     {
         isShooting = true;
@@ -842,12 +829,27 @@ public class ControllerTest : MonoBehaviour, IDamage, ITarget
         weaponModel.GetComponent<MeshRenderer>().sharedMaterial = weaponList[selectedWeapon].weaponModel.GetComponent<MeshRenderer>().sharedMaterial;
     }
 
-    void WeaponSelect()
+    void WeaponSelectController(InputAction.CallbackContext context) //Making this to work with the controller
     {
         if (weaponList.Count <= 1)
             return;
 
-        if (Input.GetAxis("Mouse ScrollWheel") > 0)
+        selectedWeapon++;
+
+        if (selectedWeapon > weaponList.Count - 1)
+            selectedWeapon = 0;
+
+        WeaponChange();
+        UpdateAmmoUI();
+    }
+    void WeaponSelectMouse(InputAction.CallbackContext context) //Making this to work with the 
+    {
+        if (weaponList.Count <= 1)
+            return;
+
+        float scrollValue = context.ReadValue<Vector2>().y;
+
+        if (scrollValue > 0)
         {
             selectedWeapon++;
 
@@ -857,7 +859,7 @@ public class ControllerTest : MonoBehaviour, IDamage, ITarget
 
             WeaponChange();
         }
-        else if (Input.GetAxis("Mouse ScrollWheel") < 0)
+        else if (scrollValue < 0)
         {
             selectedWeapon--;
 
@@ -869,6 +871,7 @@ public class ControllerTest : MonoBehaviour, IDamage, ITarget
 
         UpdateAmmoUI();
     }
+
     IEnumerator ThrowItem()
     {
         WeaponToggleOff();
@@ -921,21 +924,22 @@ public class ControllerTest : MonoBehaviour, IDamage, ITarget
     }
 
     //ITarget Specific Methods
-    public GameObject declareOBJ(GameObject obj)
-    {
-        return gameObject;
-    }
+    //public GameObject declareOBJ(GameObject obj)
+    //{
+    //    return gameObject;
+    //}
 
-    public bool declareDeath()
-    {
-        if (HP <= 0)
-        {
-            //Increment death by 1 in GameManager's statsTracker dictionary
-            return true;
-        }
-        else
-            return false;
-    }
+    //public bool declareDeath()
+    //{
+    //    if (HP <= 0)
+    //    {
+    //        //Increment death by 1 in GameManager's statsTracker dictionary
+    //        return true;
+    //    }
+    //    else
+    //        return false;
+    //}
+
     //END ITarget Methods
 
     //FOR DONUT KING
@@ -965,31 +969,31 @@ public class ControllerTest : MonoBehaviour, IDamage, ITarget
     }
 
     //IDamage Method
-    public void takeDamage(int amount)
-    {
-        if (!isDead)
-        {
-            HP -= amount;
-            StartCoroutine(flashScreenDamage());
-            UpdatePlayerUI();
-            aud.PlayOneShot(audDamage[Random.Range(0, audDamage.Length)], audDamageVol);
+    //public void takeDamage(int amount)
+    //{
+    //    if (!isDead)
+    //    {
+    //        HP -= amount;
+    //        StartCoroutine(flashScreenDamage());
+    //        UpdatePlayerUI();
+    //        aud.PlayOneShot(audDamage[Random.Range(0, audDamage.Length)], audDamageVol);
 
-            if (HP <= 0 && GameManager.currentMode == GameManager.gameMode.NIGHTSHIFT)
-            {
-                GameManager.instance.YouLose();
-            }
-            else if (HP <= 0 && GameManager.currentMode == GameManager.gameMode.DONUTKING2)
-            {
-                if (GameManager.instance.statsTracker[name].getDKStatus() == true)
-                    GameManager.instance.dropTheDonut(this.gameObject);
-                //Camera.main.gameObject.SetActive(false);
-                isDead = true;
-                GameManager.instance.DeclareSelfDead(gameObject);
-                gameObject.GetComponent<CapsuleCollider>().enabled = false;
-                playerMeshRenderer.enabled = false;
-                deathCamera.gameObject.SetActive(true);
-                //while (GameManager.instance.statsTracker[name] > 0)              
-            }
-        }
-    }
+    //        if (HP <= 0 && GameManager.currentMode == GameManager.gameMode.NIGHTSHIFT)
+    //        {
+    //            GameManager.instance.YouLose();
+    //        }
+    //        else if (HP <= 0 && GameManager.currentMode == GameManager.gameMode.DONUTKING2)
+    //        {
+    //            if (GameManager.instance.statsTracker[name].getDKStatus() == true)
+    //                GameManager.instance.dropTheDonut(this.gameObject);
+    //            //Camera.main.gameObject.SetActive(false);
+    //            isDead = true;
+    //            GameManager.instance.DeclareSelfDead(gameObject);
+    //            gameObject.GetComponent<CapsuleCollider>().enabled = false;
+    //            playerMeshRenderer.enabled = false;
+    //            deathCamera.gameObject.SetActive(true);
+    //            //while (GameManager.instance.statsTracker[name] > 0)              
+    //        }
+    //    }
+    //}
 }

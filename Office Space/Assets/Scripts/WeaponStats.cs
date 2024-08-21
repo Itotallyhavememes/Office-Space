@@ -6,7 +6,9 @@ using UnityEngine;
 public class WeaponStats : ScriptableObject
 {
     public enum WeaponType { raycast, projectile }
+    public enum ThrowStyle { none, overhead, chestOut }
     public WeaponType type;
+    public ThrowStyle style;
     public GameObject weaponModel;
     public float shootRate;
     public int shootDamage;

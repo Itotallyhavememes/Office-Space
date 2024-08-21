@@ -67,11 +67,6 @@ public class ButtonFunctions : MonoBehaviour
         PlayerManager.instance.StartMatch();
     }
 
-    public void startSinglePlayer()
-    {
-        PlayerManager.instance.StartSinglePlayer();
-    }
-
     public void settings()
     {
         GameManager.instance.OpenSettings();

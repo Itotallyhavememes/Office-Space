@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Animations.Rigging;
 
 public class ItemThrow : MonoBehaviour
 {
@@ -15,23 +16,50 @@ public class ItemThrow : MonoBehaviour
 
     public int rubberBallCount;
     int rubberBallMaxCount;
-
+    Animator anim;
+    bool animationDone;
     void Start()
     {
         rubberBallMaxCount = rubberBallCount;
         updateGrenadeUI();
-
+        anim = player.GetComponent<Animator>();
     }
     // Update is called once per frame
     void Update()
     {
+        if (animationDone)
+        {
+            player.playerRig.weight = 1;
+            animationDone = false;
+        }
+
         if (!player.isShooting && !player.isReloading)
         {
             if (Input.GetButtonDown("Item") && rubberBallCount > 0)
             {
-                StartCoroutine(ThrowItem());
+                //StartCoroutine(ThrowItem());
+
+                player.playerRig.weight = 0;
+                anim.SetLayerWeight(8, 1f);
+                anim.SetTrigger("ThrowGrenade");
             }
         }
+    }
+
+    public void AnimationDone()
+    {
+        animationDone = true;
+        anim.SetLayerWeight(8, 0);
+        WeaponToggleOn();
+    }
+    public void ThrowGrenade()
+    {
+        grenadeHUD.SetActive(false);
+        GameObject item = Instantiate(itemPrefab, itemSpawnPoint.transform.position, itemSpawnPoint.transform.rotation);
+        Rigidbody rb = item.GetComponent<Rigidbody>();
+        rb.velocity = Camera.main.transform.forward * throwForce;
+        rubberBallCount--;
+        updateGrenadeUI();
     }
 
     public int GetRubberBallMax()
