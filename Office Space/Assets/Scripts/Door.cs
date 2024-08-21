@@ -7,12 +7,16 @@ public class Door : MonoBehaviour
 
     //public GameObject Instruction;
     public GameObject AnimeObject;
-    [SerializeField] GameObject audDoorOpen;
-    [SerializeField] GameObject audDoorClose;
+   
     [SerializeField] bool isSomeoneThere, isOutward, isInward; //Indicates whether someone is STILL inside there
     [SerializeField] GameObject OuterPoint;
     [SerializeField] GameObject InnerPoint;
     [SerializeField] GameObject LastInDoor;//Entity who intially triggered my doorway
+    [Header("----- Sounds -----")]
+    [SerializeField] AudioClip audDoorOpen;
+    [Range(0f, 1f)][SerializeField] float audDoorOpenVol;
+    [SerializeField] AudioClip audDoorClose;
+    [Range (0f, 1f)] [SerializeField] float audDoorCloseVol;
     bool Action;
     bool close;
 
@@ -80,11 +84,13 @@ public class Door : MonoBehaviour
                 PointToInner = Vector3.Distance(InnerPoint.transform.position, other.gameObject.transform.position);
                 if (PointToOuter > PointToInner && other.gameObject != LastInDoor)
                 {
+                    GameManager.instance.playerScript.Munch(audDoorOpen, audDoorOpenVol);
                     AnimeObject.GetComponent<Animator>().Play("Open");
                     isOutward = true;
                 }
                 else
                 {
+                    GameManager.instance.playerScript.Munch(audDoorOpen, audDoorOpenVol);
                     AnimeObject.GetComponent<Animator>().Play("InsideOpenDoor");
                     isInward = true;
                 }
@@ -132,12 +138,14 @@ public class Door : MonoBehaviour
                 //Play Close(from Outward)
                 isOutward = false;
                 //StartCoroutine(CloseDoor()); //Currently meant to close FromOutward
+                GameManager.instance.playerScript.Munch(audDoorClose, audDoorCloseVol);
                 AnimeObject.GetComponent<Animator>().Play("Close");
             }
             else if (isInward)
             {
                 Debug.Log("AD: CLOSING!");
                 //Play Close(From Inward)
+                GameManager.instance.playerScript.Munch(audDoorClose, audDoorCloseVol);
                 AnimeObject.GetComponent<Animator>().Play("CloseInsideDoor");
                 isInward = false;
             }

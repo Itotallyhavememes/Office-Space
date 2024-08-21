@@ -13,7 +13,10 @@ public class ItemThrow : MonoBehaviour
     [SerializeField] PlayerControl player;
     [SerializeField] GameObject weaponHUD;
     [SerializeField] GameObject grenadeHUD;
-
+    [Header("----- Sounds -----")]
+    [SerializeField] AudioClip audRubberBall;
+    [SerializeField] AudioSource aud;
+    [Range(0, 1)][SerializeField] float audRubberBallVol;
     public int rubberBallCount;
     int rubberBallMaxCount;
     Animator anim;
@@ -38,9 +41,9 @@ public class ItemThrow : MonoBehaviour
             if (Input.GetButtonDown("Item") && rubberBallCount > 0)
             {
                 //StartCoroutine(ThrowItem());
-
                 player.playerRig.weight = 0;
                 anim.SetLayerWeight(8, 1f);
+                GameManager.instance.playerScript.Munch(audRubberBall, audRubberBallVol);
                 anim.SetTrigger("ThrowGrenade");
             }
         }
@@ -54,6 +57,7 @@ public class ItemThrow : MonoBehaviour
     }
     public void ThrowGrenade()
     {
+         
         grenadeHUD.SetActive(false);
         GameObject item = Instantiate(itemPrefab, itemSpawnPoint.transform.position, itemSpawnPoint.transform.rotation);
         Rigidbody rb = item.GetComponent<Rigidbody>();

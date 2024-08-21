@@ -135,6 +135,11 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 334601393}
   m_Enabled: 1
+--- !u!82 &334601406 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 820849662816533180, guid: 47fd8565a2340a44b90e26dc7c67c18e, type: 3}
+  m_PrefabInstance: {fileID: 896059974}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &393200079 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4740945717850404848, guid: 47fd8565a2340a44b90e26dc7c67c18e, type: 3}
@@ -597,6 +602,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 514445204154842289, guid: d77942b8cbc6b6345950d210534f9d5f, type: 3}
+      propertyPath: audDoorOpen
+      value: 
+      objectReference: {fileID: 8300000, guid: ab384642aa9657d4fb8d6c44082726ba, type: 3}
+    - target: {fileID: 514445204154842289, guid: d77942b8cbc6b6345950d210534f9d5f, type: 3}
+      propertyPath: audDoorClose
+      value: 
+      objectReference: {fileID: 8300000, guid: a1350748e0dbbdc4ea1baa4612180a0b, type: 3}
+    - target: {fileID: 514445204154842289, guid: d77942b8cbc6b6345950d210534f9d5f, type: 3}
+      propertyPath: audDoorOpenVol
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 514445204154842289, guid: d77942b8cbc6b6345950d210534f9d5f, type: 3}
+      propertyPath: audDoorCloseVol
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2092226021465860848, guid: d77942b8cbc6b6345950d210534f9d5f, type: 3}
       propertyPath: commonItems.Array.size
       value: 2
@@ -605,6 +626,22 @@ PrefabInstance:
       propertyPath: commonItems.Array.data[1]
       value: 
       objectReference: {fileID: 9057205224091701416, guid: c85d6c6b7ae3ded4ea81972f54f2f9bc, type: 3}
+    - target: {fileID: 2488850554079176435, guid: d77942b8cbc6b6345950d210534f9d5f, type: 3}
+      propertyPath: audDoorOpen
+      value: 
+      objectReference: {fileID: 8300000, guid: ab384642aa9657d4fb8d6c44082726ba, type: 3}
+    - target: {fileID: 2488850554079176435, guid: d77942b8cbc6b6345950d210534f9d5f, type: 3}
+      propertyPath: audDoorClose
+      value: 
+      objectReference: {fileID: 8300000, guid: a1350748e0dbbdc4ea1baa4612180a0b, type: 3}
+    - target: {fileID: 2488850554079176435, guid: d77942b8cbc6b6345950d210534f9d5f, type: 3}
+      propertyPath: audDoorOpenVol
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2488850554079176435, guid: d77942b8cbc6b6345950d210534f9d5f, type: 3}
+      propertyPath: audDoorCloseVol
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 6464187071130029392, guid: d77942b8cbc6b6345950d210534f9d5f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -894,6 +931,18 @@ PrefabInstance:
       propertyPath: OutputAudioMixerGroup
       value: 
       objectReference: {fileID: -8678566210064012743, guid: 491cca7fefc6f3f418f639a8b44c47aa, type: 2}
+    - target: {fileID: 887851734483351821, guid: 47fd8565a2340a44b90e26dc7c67c18e, type: 3}
+      propertyPath: aud
+      value: 
+      objectReference: {fileID: 334601406}
+    - target: {fileID: 887851734483351821, guid: 47fd8565a2340a44b90e26dc7c67c18e, type: 3}
+      propertyPath: audRubberBall
+      value: 
+      objectReference: {fileID: 8300000, guid: 8b363cee3cf49ae418f32ed13e3eaca0, type: 3}
+    - target: {fileID: 887851734483351821, guid: 47fd8565a2340a44b90e26dc7c67c18e, type: 3}
+      propertyPath: audRubberBallVol
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 4964016532888414168, guid: 47fd8565a2340a44b90e26dc7c67c18e, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -1083,18 +1132,18 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -8678566210064012743, guid: 491cca7fefc6f3f418f639a8b44c47aa, type: 2}
-  m_audioClip: {fileID: 8300000, guid: 63c1269548bf9984392bc3b479e854b1, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 5a6e46b8b01fe82438953a432aa64e7c, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 0.2
-  MaxDistance: 2
+  MinDistance: 1
+  MaxDistance: 5
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0
@@ -1414,18 +1463,18 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -8678566210064012743, guid: 491cca7fefc6f3f418f639a8b44c47aa, type: 2}
-  m_audioClip: {fileID: 8300000, guid: 63c1269548bf9984392bc3b479e854b1, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 5a6e46b8b01fe82438953a432aa64e7c, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 0.2
-  MaxDistance: 0.202
+  MinDistance: 1
+  MaxDistance: 5
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0
@@ -1515,18 +1564,18 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -8678566210064012743, guid: 491cca7fefc6f3f418f639a8b44c47aa, type: 2}
-  m_audioClip: {fileID: 8300000, guid: 0aa0e720ba4b19a4db2be2ffed5f46c7, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 5a6e46b8b01fe82438953a432aa64e7c, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 0.2
-  MaxDistance: 2.02
+  MinDistance: 1
+  MaxDistance: 5
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0
@@ -1621,18 +1670,18 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -8678566210064012743, guid: 491cca7fefc6f3f418f639a8b44c47aa, type: 2}
-  m_audioClip: {fileID: 8300000, guid: 0aa0e720ba4b19a4db2be2ffed5f46c7, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 5a6e46b8b01fe82438953a432aa64e7c, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 0.2
-  MaxDistance: 2
+  MinDistance: 1
+  MaxDistance: 5
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0
