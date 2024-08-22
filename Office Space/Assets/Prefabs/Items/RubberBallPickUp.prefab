@@ -54,9 +54,9 @@ MonoBehaviour:
   bobHeight: 0.3
   powerupEffect: {fileID: 0}
   weapon: {fileID: 0}
-  rubberBall: {fileID: 8300000, guid: 7028db3e3872bd742a1e25fcde562225, type: 3}
+  PuickUpSound: {fileID: 0}
   rubberOut: {fileID: -2990280576236562934}
-  why: 0.5
+  volume: 1
 --- !u!33 &7344145003352327136
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -138,7 +138,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -8678566210064012743, guid: 491cca7fefc6f3f418f639a8b44c47aa, type: 2}
-  m_audioClip: {fileID: 8300000, guid: 63c1269548bf9984392bc3b479e854b1, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1

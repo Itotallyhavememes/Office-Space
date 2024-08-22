@@ -14,7 +14,7 @@ public class RubberBall : MonoBehaviour
     [Header("----- Sounds -----")]
     [SerializeField] AudioClip rubberBall;
     [SerializeField] AudioSource rubberOut;
-    [Range(0, 1)][SerializeField] float why;
+    [Range(0, 1)][SerializeField] float volume;
 
     float countdown;
     bool hasExploded;
@@ -59,7 +59,7 @@ public class RubberBall : MonoBehaviour
 
     void Explode()
     {
-       
+        GameManager.instance.playerScript.Munch(rubberBall, volume);
         // show effect
         Instantiate(explosionEffect, transform.position, transform.rotation);
 

@@ -54,9 +54,9 @@ MonoBehaviour:
   bobHeight: 0.3
   powerupEffect: {fileID: 0}
   weapon: {fileID: 11400000, guid: 21641470c5893094896493a45be6e766, type: 2}
-  rubberBall: {fileID: 8300000, guid: 8cfc68988435aa04999c4027c945c326, type: 3}
-  rubberOut: {fileID: -3289976538979643506}
-  why: 1
+  PuickUpSound: {fileID: 8300000, guid: 8cfc68988435aa04999c4027c945c326, type: 3}
+  auidSource: {fileID: 0}
+  volume: 1
 --- !u!33 &9179441603636853133
 MeshFilter:
   m_ObjectHideFlags: 0

@@ -94,8 +94,7 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
     [SerializeField] AudioClip audShurikenFire;
     [Range(0, 1)][SerializeField] float audShurikenFireVol;
     [SerializeField] AudioClip rubberBall;
-    [SerializeField] AudioSource rubberOut;
-    [Range(0, 1)][SerializeField] float why;
+    [Range(0, 1)][SerializeField] float volume;
 
     //Damage Audio
     [SerializeField] AudioClip[] audDamage;
