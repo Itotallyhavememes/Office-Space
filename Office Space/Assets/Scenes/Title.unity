@@ -4277,7 +4277,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.4811321, g: 0.2246796, b: 0.4368319, a: 0.078431375}
+  m_Color: {r: 0.4811321, g: 0.2246796, b: 0.4368319, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -5901,7 +5901,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.4245283, g: 0.03404237, b: 0.22762501, a: 0.20392157}
+  m_Color: {r: 0.4245283, g: 0.03404237, b: 0.22762501, a: 0}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -10794,7 +10794,7 @@ MeshRenderer:
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c4c56e562ec21294a8e1125c1e2b957a, type: 2}
+  - {fileID: 2100000, guid: 97a1aa4100cba4f4bad136b0b03dacac, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -13084,7 +13084,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.4811321, g: 0.2246796, b: 0.4368319, a: 0.078431375}
+  m_Color: {r: 0.4811321, g: 0.2246796, b: 0.4368319, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -15967,7 +15967,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.4245283, g: 0.03404237, b: 0.22762501, a: 0.20392157}
+  m_Color: {r: 0.4245283, g: 0.03404237, b: 0.22762501, a: 0}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -24057,7 +24057,7 @@ Light:
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 1, g: 0.9062874, b: 0.6556604, a: 1}
-  m_Intensity: 4000
+  m_Intensity: 1500
   m_Range: 2000
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208

@@ -52,6 +52,10 @@ MonoBehaviour:
   damageAmount: 1
   speed: 50
   destroyTime: 1
+  parent: {fileID: 0}
+  victim: {fileID: 0}
+  hasKilled: 0
+  dmgSource: {fileID: 0}
 --- !u!54 &6051074458531916221
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -173,15 +177,15 @@ TrailRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 0.3238992, g: 0.3238992, b: 1, a: 1}
-      key1: {r: 0, g: 0, b: 1, a: 1}
+      key0: {r: 1, g: 0.8160377, b: 0.90514445, a: 1}
+      key1: {r: 1, g: 0.3030913, b: 0, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
       key5: {r: 0, g: 0, b: 0, a: 0}
       key6: {r: 0, g: 0, b: 0, a: 0}
       key7: {r: 0, g: 0, b: 0, a: 0}
-      ctime0: 0
+      ctime0: 24865
       ctime1: 65535
       ctime2: 0
       ctime3: 0
@@ -197,8 +201,8 @@ TrailRenderer:
       atime5: 0
       atime6: 0
       atime7: 0
-      m_Mode: 0
-      m_ColorSpace: -1
+      m_Mode: 2
+      m_ColorSpace: 0
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
     numCornerVertices: 0
