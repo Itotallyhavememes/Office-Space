@@ -20,6 +20,7 @@ public class ControllerTest : MonoBehaviour //ITarget //, IDamage
     [SerializeField] float animTransitSpeed;
     float agentSpeedVert;
     float agentSpeedHori;
+    bool throwAnimDone;
 
     [Header("Player Mesh and Player Effects")]
     [SerializeField] SkinnedMeshRenderer playerMeshRenderer;
@@ -39,33 +40,31 @@ public class ControllerTest : MonoBehaviour //ITarget //, IDamage
     [SerializeField] float crouchMod;
     bool isCrouching;
     float origHeight;
+    float crouchSpeed;
 
     [Header("Jump Parameters")]
     [SerializeField] float jumpForce = 8.0f;
     [SerializeField] float gravity = 22.0f;
+    int jumpCount;
 
     [Header("Sliding Parameters")]
     [SerializeField] int slideSpeed;
     [SerializeField] float slideLockoutTime;
     [SerializeField] float slideCooldown;
     bool slideSoundPlayed;
+    bool slideAnimPlayed;
+    float slideLockout;
+    bool isSliding;
+    bool canSlide;
 
     [Header("Camera Settings")]
     [SerializeField] Camera playerCamera;
     [SerializeField] GameObject cameraLockOn;
     [SerializeField] bool invertYAxis = false;
 
-
     [Header("HP Parameters")]
     public int HP;
     private int HPOrig;
-
-    int jumpCount;
-    float slideLockout;
-    bool isSliding;
-    bool canSlide;
-
-    float crouchSpeed;
 
     [Header("Player UI")]
     [SerializeField] MultiplayerEventSystem eventSystem;
@@ -92,6 +91,7 @@ public class ControllerTest : MonoBehaviour //ITarget //, IDamage
     [SerializeField] float shootDist;
     [SerializeField] float raycastRotationRecoil;
     [SerializeField] float raycastRotationReload;
+
     [Header("----- Shuriken -----")]
     [SerializeField] GameObject shurikenSpawnPoint;
     [SerializeField] GameObject shurikenProjectile;
@@ -131,9 +131,6 @@ public class ControllerTest : MonoBehaviour //ITarget //, IDamage
     [SerializeField] float upDownRange = 90.0f;
     [SerializeField] Camera playerCam;
     private float verticalRotation;
-
-
-    //added to match playerControl
 
     [Header("Action Map Name References")]
     [SerializeField] string actionMapName = "Player";
@@ -190,7 +187,6 @@ public class ControllerTest : MonoBehaviour //ITarget //, IDamage
     public bool CrouchTrigger { get; private set; }
     public float SprintValue { get; private set; }
     public bool ShootTriggered { get; private set; }
-    public bool ReloadTriggered { get; private set; }
     public bool GrenadeTriggered { get; private set; }
     public bool CycleWeaponTriggered { get; private set; }
     public bool SplitCameraTriggered { get; private set; }
@@ -266,12 +262,9 @@ public class ControllerTest : MonoBehaviour //ITarget //, IDamage
     {
         Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDist, Color.green);
 
-        HandleMovement();
-        //HandleMovement();
-        // Vector3 inputDirection = new Vector3(MovementInput.x, 0f, MovementInput.y);
-        // Vector3 worldDirection = transform.TransformDirection(inputDirection);
-        HandleRotation();
-        UpdatePlayerUI();
+        Movement();
+        
+        Rotation();
 
         //----------------This should NOT be here--------------------
         //if (!isShooting && !isReloading)
@@ -301,10 +294,11 @@ public class ControllerTest : MonoBehaviour //ITarget //, IDamage
         anim.SetFloat("SpeedHori", Mathf.Lerp(anim.GetFloat("SpeedHori"), agentSpeedHori, Time.deltaTime * animTransitSpeed));
 
         playerAim.transform.position = Camera.main.transform.position + (Camera.main.transform.forward * aimBallDist);
+        playerAim.transform.rotation = Camera.main.transform.rotation;
 
     }
 
-    //Registers each action and assigns them a value (Event Table)
+    //Registers each action and assigns them a value (Event Table) Only for actions not mapped to a method
     void RegisterInputActions()
     {
         movementAction.performed += context => MovementInput = context.ReadValue<Vector2>();
@@ -325,11 +319,11 @@ public class ControllerTest : MonoBehaviour //ITarget //, IDamage
         sprintAction.performed += context => SprintTrigger = true;
         sprintAction.canceled += context => SprintTrigger = false;
 
-        shootAction.performed += context => ShootTriggered = true;
-        shootAction.canceled += context => ShootTriggered = false;
+        //shootAction.performed += context => ShootTriggered = true;
+        //shootAction.canceled += context => ShootTriggered = false;
 
-        reloadAction.performed += context => ReloadTriggered = true;
-        reloadAction.canceled += context => ReloadTriggered = false;
+        //reloadAction.performed += context => ReloadTriggered = true;
+        //reloadAction.canceled += context => ReloadTriggered = false;
 
         grenadeAction.performed += context => GrenadeTriggered = true;
         grenadeAction.canceled += context => GrenadeTriggered = false;
@@ -363,8 +357,8 @@ public class ControllerTest : MonoBehaviour //ITarget //, IDamage
         jumpAction.Enable();
         crouchAction.Enable();
         sprintAction.Enable();
-        shootAction.Enable();
-        reloadAction.Enable();
+        shootAction.performed += ShootEvent;
+        reloadAction.performed += ReloadEvent;
         grenadeAction.Enable();
         joinAction.Enable();
         //pauseAction.started += OnPauseInput;
@@ -388,8 +382,8 @@ public class ControllerTest : MonoBehaviour //ITarget //, IDamage
         jumpAction.Disable();
         crouchAction.Disable();
         sprintAction.Disable();
-        shootAction.Disable();
-        reloadAction.Disable();
+        shootAction.performed -= ShootEvent;
+        reloadAction.performed -= ReloadEvent;
         grenadeAction.Disable();
         joinAction.Disable();
         //pauseAction.started -= OnPauseInput;
@@ -403,10 +397,10 @@ public class ControllerTest : MonoBehaviour //ITarget //, IDamage
         scoreboardAction.Disable();
     }
 
-    void HandleMovement()
+    void Movement()
     {
-        agentSpeedVert = Input.GetAxis("Vertical"); ///This is needed for animations add it to serialized field
-        agentSpeedHori = Input.GetAxis("Horizontal");
+        agentSpeedVert = MovementInput.y; ///This is needed for animations add it to serialized field
+        agentSpeedHori = MovementInput.x;
 
         if (characterController.isGrounded)
         {
@@ -427,42 +421,21 @@ public class ControllerTest : MonoBehaviour //ITarget //, IDamage
 
         if (JumpTriggered && jumpCount < 1 && !isCrouching)
         {
-            // anim.SetTrigger("Jump");
+            anim.SetTrigger("Jump");
             jumpCount++;
             currentMovement.y = jumpForce;
             aud.PlayOneShot(audJump[Random.Range(0, audJump.Length)], audJumpVol);
 
         }
-        // Debug.Log("not jumping");
+
         characterController.Move(currentMovement * Time.deltaTime);
         currentMovement.y -= gravity * Time.deltaTime;
 
-        if (!isShooting && !isReloading)
-        {
-
-            if (ShootTriggered)
-            {
-
-                StartCoroutine(Shoot());
-
-            }
-            Debug.Log("between methods");
-            if (ReloadTriggered)
-            {
-                Debug.Log("before reload");
-                StartCoroutine(Reload());
-                Debug.Log("after reload");
-            }
-
-
-
-        }
         if (characterController.isGrounded)
         {
             HandleCrouch();
         }
         // HandleShoot();
-        HandlePlayerInteraction();
 
     }
 
@@ -581,76 +554,14 @@ public class ControllerTest : MonoBehaviour //ITarget //, IDamage
 
     IEnumerator SlideCooldown()
     {
-        Debug.Log("incorutine");
         canSlide = false;
         yield return new WaitForSeconds(slideCooldown);
         canSlide = true;
         isSliding = false;
     }
-    void HandleShoot()
+    
+    void Rotation()
     {
-
-
-        if (AimTriggered)
-        {
-            Debug.Log("Aimming");
-        }
-
-        if (AimTriggered && adsRightTriggered)
-        {
-
-            Debug.Log("ADS Right");
-        }
-
-        if (AimTriggered && AdsLeftTriggered)
-        {
-
-            Debug.Log("ADS Left");
-        }
-
-        if (SwapWeaponsTriggered)
-        {
-
-
-        }
-
-
-
-
-        if (ReloadTriggered)
-        {
-
-            Debug.Log("reloading");
-        }
-
-        if (GrenadeTriggered)
-        {
-
-            Debug.Log("Throwing Grenade");
-        }
-
-
-
-    }
-    void HandlePlayerInteraction()
-    {
-        if (InteractTriggered)
-        {
-            Debug.Log("interact");
-        }
-
-        if (ScoreboardTriggered)
-        {
-
-            Debug.Log("scoreboard");
-        }
-    }
-
-
-
-    void HandleRotation()
-    {
-
         float mouseYInput = invertYAxis ? -LookInput.y : LookInput.y;
         float mouseXRotation = LookInput.x * mouseSensitivity;
         transform.Rotate(0, mouseXRotation, 0);
@@ -696,10 +607,18 @@ public class ControllerTest : MonoBehaviour //ITarget //, IDamage
     //    }
 
     //}
+
+    void ShootEvent(InputAction.CallbackContext context)
+    {
+        if (!isShooting && !isReloading)
+        {
+            StartCoroutine(Shoot());
+        }
+    }
+
     IEnumerator Shoot()
     {
         isShooting = true;
-        Debug.Log("shooting");
         if (weaponList[selectedWeapon].currentAmmo > 0)
         {
             weaponList[selectedWeapon].currentAmmo--;
@@ -746,7 +665,6 @@ public class ControllerTest : MonoBehaviour //ITarget //, IDamage
                 Instantiate(shurikenProjectile, shurikenSpawnPoint.transform.position, shurikenSpawnPoint.transform.rotation);
                 yield return new WaitForSeconds(shootRate);
                 weaponModel.SetActive(true);
-                Debug.Log("Shoot");
             }
         }
         else if (!isReloading && (weaponList[selectedWeapon].currentAmmo <= 0))
@@ -755,7 +673,14 @@ public class ControllerTest : MonoBehaviour //ITarget //, IDamage
         }
 
         isShooting = false;
-        Debug.Log("Done shooting");
+    }
+
+    void ReloadEvent(InputAction.CallbackContext context)
+    {
+        if (!isReloading && !isShooting)
+        {
+            StartCoroutine(Reload());
+        }
     }
 
     IEnumerator Reload()
@@ -768,11 +693,11 @@ public class ControllerTest : MonoBehaviour //ITarget //, IDamage
             if (weaponList[selectedWeapon].type == WeaponStats.WeaponType.raycast)
             {
                 weaponModel.transform.Rotate(Vector3.left * raycastRotationReload);
-                //aud.PlayOneShot(audHandReloadBegin, audHandReloadBeginVol);
+                aud.PlayOneShot(audHandReloadBegin, audHandReloadBeginVol);
 
                 yield return new WaitForSeconds(reloadTime);
                 weaponModel.transform.Rotate(Vector3.right * raycastRotationReload);
-                // aud.PlayOneShot(audHandReloadEnd, audHandReloadEndVol);
+                aud.PlayOneShot(audHandReloadEnd, audHandReloadEndVol);
                 weaponList[selectedWeapon].currentAmmo = weaponList[selectedWeapon].startAmmo;
 
             }
@@ -1010,4 +935,21 @@ public class ControllerTest : MonoBehaviour //ITarget //, IDamage
     //        }
     //    }
     //}
+    public void AnimThrowWeapon()
+    {
+        weaponModel.SetActive(false);
+        Instantiate(shurikenProjectile, shurikenSpawnPoint.transform.position, shurikenSpawnPoint.transform.rotation);
+    }
+
+    public void AnimThrowDone()
+    {
+        throwAnimDone = true;
+        anim.SetLayerWeight(8, 0);
+        weaponModel.SetActive(true);
+        isShooting = false;
+    }
+    public void Munch(AudioClip clip, float vol)
+    {
+        aud.PlayOneShot(clip, vol);
+    }
 }

@@ -115,6 +115,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   botsDropdown: {fileID: 0}
+  enemyMapIndicator: {fileID: 2100000, guid: 3b3b4a3216f32d74b84e6a817a55b2bf, type: 2}
   matchSettingsMenu: {fileID: 0}
   enemyPrefabs:
   - {fileID: 66639171892398607, guid: 48db362738f2d6744a93b6bd49ed02af, type: 3}
