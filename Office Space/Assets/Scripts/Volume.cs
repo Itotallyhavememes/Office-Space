@@ -17,72 +17,86 @@ public class Volume : MonoBehaviour
 
     private void Awake()
     {
+        musicSider.value = 10f;
+        MusterSider.value = 10f;
+        SFXSider.value = 10f;
         musicSider.onValueChanged.AddListener(HandleSider);
         MusterSider.onValueChanged.AddListener (SilderMaster);
         SFXSider.onValueChanged.AddListener(SilderSFX);
+        Debug.Log("Awake");
     }
 
 
     private void OnDisable()
     {
-        PlayerPrefs.SetFloat("music", musicSider.value);
-        PlayerPrefs.SetFloat("Master", MusterSider.value);
-        PlayerPrefs.SetFloat("SFX", SFXSider.value);
+        PlayerPrefs.SetFloat("music", -80f);
+        PlayerPrefs.SetFloat("Master", -80f);
+        PlayerPrefs.SetFloat("SFX", -80f);
     }
     private void HandleSider(float value)
     {
-        audioMixer.SetFloat("music", Mathf.Log10(value) * 20f);
+        if (musicSider.value == 0)
+            audioMixer.SetFloat("music", -80f);
+        else
+            audioMixer.SetFloat("music", Mathf.Log10(value) * 10f);
     }
     private void SilderSFX(float value)
     {
-        audioMixer.SetFloat("SFX", Mathf.Log10(value) * 20f);
+        if (SFXSider.value == 0)
+            audioMixer.SetFloat("SFX", -80f);
+        else
+            audioMixer.SetFloat("SFX", Mathf.Log10(value) * 10f);
     }
     private void SilderMaster(float value)
     {
-        audioMixer.SetFloat("Master", Mathf.Log10(value) * 20f);
+        if (MusterSider.value == 0)
+            audioMixer.SetFloat("Master", -80f);
+        else
+            audioMixer.SetFloat("Master", Mathf.Log10(value) * 10f);
     }
     private void Start()
     {
-        changeAudio = false;
-        musicSider.value = PlayerPrefs.GetFloat("music", 0f);
-        MusterSider.value = PlayerPrefs.GetFloat("Master",0f);
-        SFXSider.value = PlayerPrefs.GetFloat("SFX", SFXSider.value);
 
-      
-      
-        SFXSider.onValueChanged.AddListener((v)=>{
-            changeAudio = false;
-        });
+       // changeAudio = false;
+        Debug.Log("Start");
 
-        MusterSider.onValueChanged.AddListener((v) => {
-            changeAudio = false;
-        });
-        musicSider.onValueChanged.AddListener((v) => {
-            changeAudio = false;
-        });
+
+        //SFXSider.onValueChanged.AddListener((v) =>
+        //{
+        //    changeAudio = false;
+        //});
+
+        //MusterSider.onValueChanged.AddListener((v) =>
+        //{
+        //    changeAudio = false;
+        //});
+        //musicSider.onValueChanged.AddListener((v) =>
+        //{
+        //    changeAudio = false;
+        //});
     }
 
 
 
-    public void SetMusterVolume()
-    {
-        Debug.Log("Chnage in Master");
-        float volume = MusterSider.value;
-        audioMixer.SetFloat("Master", Mathf.Log10(volume) * 20);
+    //public void SetMusterVolume()
+    //{
+    //    Debug.Log("Chnage in Master");
+    //    float volume = MusterSider.value;
+    //    audioMixer.SetFloat("Master", Mathf.Log10(volume) * 20);
 
-    }
-    public void SetMusicVolume()
-    {
-        float volume = musicSider.value;
-        audioMixer.SetFloat("music", Mathf.Log10(volume) * 20);
+    //}
+    //public void SetMusicVolume()
+    //{
+    //    float volume = musicSider.value;
+    //    audioMixer.SetFloat("music", Mathf.Log10(volume) * 20);
 
-    }
-    public void SetFXSVolume()
-    {
-        float volume = SFXSider.value;
-        audioMixer.SetFloat("SFX", Mathf.Log10(volume) * 20);
+    //}
+    //public void SetFXSVolume()
+    //{
+    //    float volume = SFXSider.value;
+    //    audioMixer.SetFloat("SFX", Mathf.Log10(volume) * 20);
 
-    }
+    //}
 
 
 
@@ -98,19 +112,19 @@ public class Volume : MonoBehaviour
     //    PlayerPrefs.SetFloat("MusterVolume", MusterSider.value);
     //    changeAudio = true;
     //}
-    public void myReturn()
-    {
-        if(!changeAudio)
-        {
-            Debug.Log("return was call");
+    //public void myReturn()
+    //{
+    //    if(!changeAudio)
+    //    {
+    //        Debug.Log("return was call");
          //   SFXSider.value = PlayerPrefs.GetFloat("SFXVolume");
            // musicSider.value = PlayerPrefs.GetFloat("MusicVolume");
          //   MusterSider.value = PlayerPrefs.GetFloat("MusterVolume");
           //  SetFXSVolume();
          //   SetMusterVolume();
           //  SetMusicVolume();
-        }
+    //    }
       
-            GameManager.instance.ReturnFromSettings();
-    }
+    //        GameManager.instance.ReturnFromSettings();
+    //}
 }

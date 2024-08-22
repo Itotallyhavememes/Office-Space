@@ -50,7 +50,7 @@ public class RubberBall : MonoBehaviour
     {
       
         yield return new WaitForSeconds(1.5f);
-        rubberOut.PlayOneShot(rubberBall, why);
+        
 
 
     }

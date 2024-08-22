@@ -605,18 +605,34 @@ PrefabInstance:
     - target: {fileID: 514445204154842289, guid: d77942b8cbc6b6345950d210534f9d5f, type: 3}
       propertyPath: audDoorOpen
       value: 
-      objectReference: {fileID: 8300000, guid: ab384642aa9657d4fb8d6c44082726ba, type: 3}
+      objectReference: {fileID: 8300000, guid: cb812129f07a5ed42a252ea8fd180f82, type: 3}
     - target: {fileID: 514445204154842289, guid: d77942b8cbc6b6345950d210534f9d5f, type: 3}
       propertyPath: audDoorClose
       value: 
-      objectReference: {fileID: 8300000, guid: a1350748e0dbbdc4ea1baa4612180a0b, type: 3}
+      objectReference: {fileID: 8300000, guid: 0653919eebadb2548834c0644bfa6fda, type: 3}
     - target: {fileID: 514445204154842289, guid: d77942b8cbc6b6345950d210534f9d5f, type: 3}
       propertyPath: audDoorOpenVol
-      value: 1
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 514445204154842289, guid: d77942b8cbc6b6345950d210534f9d5f, type: 3}
       propertyPath: audDoorCloseVol
-      value: 1
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1337161171967814441, guid: d77942b8cbc6b6345950d210534f9d5f, type: 3}
+      propertyPath: audDoorOpen
+      value: 
+      objectReference: {fileID: 8300000, guid: cb812129f07a5ed42a252ea8fd180f82, type: 3}
+    - target: {fileID: 1337161171967814441, guid: d77942b8cbc6b6345950d210534f9d5f, type: 3}
+      propertyPath: audDoorClose
+      value: 
+      objectReference: {fileID: 8300000, guid: 0653919eebadb2548834c0644bfa6fda, type: 3}
+    - target: {fileID: 1337161171967814441, guid: d77942b8cbc6b6345950d210534f9d5f, type: 3}
+      propertyPath: audDoorOpenVol
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1337161171967814441, guid: d77942b8cbc6b6345950d210534f9d5f, type: 3}
+      propertyPath: audDoorCloseVol
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 2092226021465860848, guid: d77942b8cbc6b6345950d210534f9d5f, type: 3}
       propertyPath: commonItems.Array.size
@@ -629,16 +645,32 @@ PrefabInstance:
     - target: {fileID: 2488850554079176435, guid: d77942b8cbc6b6345950d210534f9d5f, type: 3}
       propertyPath: audDoorOpen
       value: 
-      objectReference: {fileID: 8300000, guid: ab384642aa9657d4fb8d6c44082726ba, type: 3}
+      objectReference: {fileID: 8300000, guid: cb812129f07a5ed42a252ea8fd180f82, type: 3}
     - target: {fileID: 2488850554079176435, guid: d77942b8cbc6b6345950d210534f9d5f, type: 3}
       propertyPath: audDoorClose
       value: 
-      objectReference: {fileID: 8300000, guid: a1350748e0dbbdc4ea1baa4612180a0b, type: 3}
+      objectReference: {fileID: 8300000, guid: 0653919eebadb2548834c0644bfa6fda, type: 3}
     - target: {fileID: 2488850554079176435, guid: d77942b8cbc6b6345950d210534f9d5f, type: 3}
       propertyPath: audDoorOpenVol
       value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 2488850554079176435, guid: d77942b8cbc6b6345950d210534f9d5f, type: 3}
+      propertyPath: audDoorCloseVol
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2727191973430505521, guid: d77942b8cbc6b6345950d210534f9d5f, type: 3}
+      propertyPath: audDoorOpen
+      value: 
+      objectReference: {fileID: 8300000, guid: cb812129f07a5ed42a252ea8fd180f82, type: 3}
+    - target: {fileID: 2727191973430505521, guid: d77942b8cbc6b6345950d210534f9d5f, type: 3}
+      propertyPath: audDoorClose
+      value: 
+      objectReference: {fileID: 8300000, guid: 0653919eebadb2548834c0644bfa6fda, type: 3}
+    - target: {fileID: 2727191973430505521, guid: d77942b8cbc6b6345950d210534f9d5f, type: 3}
+      propertyPath: audDoorOpenVol
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2727191973430505521, guid: d77942b8cbc6b6345950d210534f9d5f, type: 3}
       propertyPath: audDoorCloseVol
       value: 0.5
       objectReference: {fileID: 0}
@@ -688,7 +720,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8406627459048545882, guid: d77942b8cbc6b6345950d210534f9d5f, type: 3}
       propertyPath: commonItems.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8406627459048545882, guid: d77942b8cbc6b6345950d210534f9d5f, type: 3}
       propertyPath: commonItems.Array.data[1]
@@ -1450,7 +1482,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 937878098718933261, guid: f70114bd10fc78f4b8b8e9fa300a851f, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 937878098718933261, guid: f70114bd10fc78f4b8b8e9fa300a851f, type: 3}
       propertyPath: m_audioClip
@@ -2468,9 +2500,17 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8933170834537829896, guid: 5804d67f34d01754ebffbd18a4f4064a, type: 3}
+      propertyPath: m_Volume
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 8933170834537829896, guid: 5804d67f34d01754ebffbd18a4f4064a, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8933170834537829896, guid: 5804d67f34d01754ebffbd18a4f4064a, type: 3}
       propertyPath: m_audioClip
       value: 
-      objectReference: {fileID: 8300000, guid: 06535aa69a4d669458a7ae32f25cad42, type: 3}
+      objectReference: {fileID: 8300000, guid: b2f860e8832d05941b775be09451c43a, type: 3}
     m_RemovedComponents:
     - {fileID: 4019318914196015917, guid: 5804d67f34d01754ebffbd18a4f4064a, type: 3}
     m_RemovedGameObjects: []
