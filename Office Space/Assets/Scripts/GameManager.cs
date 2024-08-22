@@ -505,6 +505,13 @@ public class GameManager : MonoBehaviour
                 bodyTracker.Remove(bodyTracker[i]);
         }
         deadTracker.Add(self);
+        //Start CHECKING if doors need to remove their dead from the list
+        Door doorCMP;
+        foreach(var door in doors)
+        {
+            doorCMP = door.GetComponent<Door>();
+            doorCMP.RemoveFromDoorList(self);
+        }
         //Debug.Log(self.name + "DB: " + statsTracker[self.name].getDeaths().ToString());
         statsTracker[self.name].updateDeaths();
         statsTracker[self.name].updateKDR();
