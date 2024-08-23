@@ -37,7 +37,7 @@ public class PlayerManager : MonoBehaviour
     [Header("Start Match")]
     [SerializeField] GameObject matchSettingsMenu;
     [SerializeField] GameObject[] enemyPrefabs;
-    private bool matchStarted;
+    public bool matchStarted;
 
 
     private PlayerInputManager playerInputManager;
@@ -51,7 +51,7 @@ public class PlayerManager : MonoBehaviour
         defaultTextColor = playerTogglesText[0].color;
 
         botsDropdownValue = botsDropdown.GetComponent<TMP_Dropdown>();
-
+        matchStarted = false;
     }
 
     private void Start()
@@ -72,25 +72,22 @@ public class PlayerManager : MonoBehaviour
 
     void AddPlayer(PlayerInput player)
     {
-        if (!matchStarted)
+        players.Add(player);
+        //cameras.Add(player.GetComponentInChildren<Camera>());
+        GameManager.instance.playerSpawn.transform.position = spawnPoints[players.Count - 1].position;
+
+        player.GetComponent<ControllerTest>().spawnPlayer();
+        player.name = "Player " + players.Count.ToString();
+        maxBots--;
+
+        while (players.Count + botCount > maxPlayers)
         {
-            players.Add(player);
-            //cameras.Add(player.GetComponentInChildren<Camera>());
-            GameManager.instance.playerSpawn.transform.position = spawnPoints[players.Count - 1].position;
-
-            player.GetComponent<ControllerTest>().spawnPlayer();
-            player.GetComponent<ControllerTest>().enabled = false; //Needs to change to new controller
-            player.name = "Player " + players.Count.ToString();
-            maxBots--;
-
-            while (players.Count + botCount > maxPlayers)
-            {
-                botCount--;
-            }
-
-            RefreshUI();
-
+            botCount--;
         }
+
+        RefreshUI();
+
+
 
         //Debug.Log(Input.GetJoystickNames().First());
 
@@ -159,7 +156,7 @@ public class PlayerManager : MonoBehaviour
         {
             int rand = Random.Range(0, enemyPrefabs.Length);
             GameObject enemy = enemyPrefabs[rand];
-            Instantiate(enemy, spawnPoints[i].position, spawnPoints[i].rotation);            
+            Instantiate(enemy, spawnPoints[i].position, spawnPoints[i].rotation);
             //enemy.transform.position = new Vector3(transform.position.x + transform.forward.x, transform.position.y, transform.position.z);
         }
 
@@ -167,15 +164,14 @@ public class PlayerManager : MonoBehaviour
 
     public void StartMatch()
     {
+        playerInputManager.DisableJoining();
         if (players.Count > 0 && players.Count + botCount > 1)
         {
             BotSpawner();
 
             for (int i = 0; i < players.Count; i++)
             {
-                players[i].GetComponent<ControllerTest>().enabled = true;
                 players[i].GetComponent<Animator>().enabled = true;
-
             }
 
             matchSettingsMenu.SetActive(false);

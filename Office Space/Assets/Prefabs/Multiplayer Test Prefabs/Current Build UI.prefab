@@ -12593,17 +12593,17 @@ MonoBehaviour:
   m_MoveRepeatDelay: 0.5
   m_MoveRepeatRate: 0.1
   m_XRTrackingOrigin: {fileID: 0}
-  m_ActionsAsset: {fileID: -944628639613478452, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_PointAction: {fileID: -1654692200621890270, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_MoveAction: {fileID: -8784545083839296357, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_SubmitAction: {fileID: 392368643174621059, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_CancelAction: {fileID: 7727032971491509709, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_LeftClickAction: {fileID: 3001919216989983466, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_MiddleClickAction: {fileID: -2185481485913320682, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_RightClickAction: {fileID: -4090225696740746782, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_ScrollWheelAction: {fileID: 6240969308177333660, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_TrackedDevicePositionAction: {fileID: 6564999863303420839, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_TrackedDeviceOrientationAction: {fileID: 7970375526676320489, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_ActionsAsset: {fileID: -944628639613478452, guid: 1acd5144362277a4e9ad483c81247dda, type: 3}
+  m_PointAction: {fileID: -4447884000269428642, guid: 1acd5144362277a4e9ad483c81247dda, type: 3}
+  m_MoveAction: {fileID: -131787840422630804, guid: 1acd5144362277a4e9ad483c81247dda, type: 3}
+  m_SubmitAction: {fileID: 7175358050819194080, guid: 1acd5144362277a4e9ad483c81247dda, type: 3}
+  m_CancelAction: {fileID: 3034634735736969698, guid: 1acd5144362277a4e9ad483c81247dda, type: 3}
+  m_LeftClickAction: {fileID: 5442054981305986036, guid: 1acd5144362277a4e9ad483c81247dda, type: 3}
+  m_MiddleClickAction: {fileID: -5401895528706580626, guid: 1acd5144362277a4e9ad483c81247dda, type: 3}
+  m_RightClickAction: {fileID: -2686596157136775552, guid: 1acd5144362277a4e9ad483c81247dda, type: 3}
+  m_ScrollWheelAction: {fileID: 8472729161231797658, guid: 1acd5144362277a4e9ad483c81247dda, type: 3}
+  m_TrackedDevicePositionAction: {fileID: -5729521923778204534, guid: 1acd5144362277a4e9ad483c81247dda, type: 3}
+  m_TrackedDeviceOrientationAction: {fileID: 507002278114033889, guid: 1acd5144362277a4e9ad483c81247dda, type: 3}
   m_DeselectOnBackgroundClick: 1
   m_PointerBehavior: 0
   m_CursorLockBehavior: 0
@@ -20139,12 +20139,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c9a642d26ac12746982503ded1eac8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  RoundsWon: 0
   mainMenuFirst: {fileID: 0}
   createMatchFirst: {fileID: 0}
   settingsFirst: {fileID: 0}
   controlsFirst: {fileID: 0}
   mapSelectScreenFirst: {fileID: 0}
+  pauseFirst: {fileID: 0}
+  inGameSettingsFirst: {fileID: 0}
+  nextRoundFirst: {fileID: 0}
+  gameEndFirst: {fileID: 0}
+  objectiveFirst: {fileID: 0}
+  creditsMenuFirst: {fileID: 0}
+  primaryCamera: {fileID: 0}
+  monitorCamera: {fileID: 0}
+  virtualCameras: []
   matchSettingsFirst: {fileID: 7058641175719198948}
+  MaxPlayers: 0
+  NumberOfRounds: 0
   donutDropDistance: 0
   donutDropItem: {fileID: 0}
   bodyTracker: []
@@ -20167,21 +20179,35 @@ MonoBehaviour:
   menuSettings: {fileID: 8387105965669288541}
   menuControls: {fileID: 8086904138023715686}
   menuCredits: {fileID: 0}
+  mainMenuStart: {fileID: 0}
   menuDK2Objective: {fileID: 3757116254800681060}
   menuNSObjective: {fileID: 412827795277343906}
+  menuShop: {fileID: 0}
+  Title: {fileID: 0}
+  menuTimeDelay: 0
   menuRetryAmount: {fileID: 925220846083220733}
   donutCountText: {fileID: 7420876166113207580}
   timerUI: {fileID: 2800039893418771312}
   timerText: {fileID: 7841254088661628476}
   donutCountUI: {fileID: 7420876166113207580}
   vendingMachines: []
+  doors: []
   respawnTime: 5
+  scoreBoardTitleText: {fileID: 0}
+  scoreBoardWLMessageText: {fileID: 0}
   scoreBoardPlacementsText: {fileID: 7090671043447024037}
   scoreBoardNamesText: {fileID: 5847351106614090230}
   scoreBoardScoreText: {fileID: 7183160012657718961}
+  scoreBoardRWText: {fileID: 0}
   scoreBoardResultText: {fileID: 344953113631893121}
   activeScoreNamesText: {fileID: 3340935617195500276}
   activeScoreText: {fileID: 1439888467951709977}
+  RetryButton: {fileID: 0}
+  NextRoundButton: {fileID: 0}
+  loadingScreen: {fileID: 0}
+  loadingBar: {fileID: 0}
+  fillSpeed: 0
+  loadSpeed: 0
   isThereDonutKing: 0
   TheDonutKing: {fileID: 0}
   moneyForKills: 0
@@ -20199,6 +20225,7 @@ MonoBehaviour:
   damageFlash: {fileID: 2163867917957468674}
   player: {fileID: 0}
   playerScript: {fileID: 0}
+  playerThrowScript: {fileID: 0}
   audioMixer: {fileID: 24100000, guid: 491cca7fefc6f3f418f639a8b44c47aa, type: 2}
   isPaused: 0
   playerHPStart: 0

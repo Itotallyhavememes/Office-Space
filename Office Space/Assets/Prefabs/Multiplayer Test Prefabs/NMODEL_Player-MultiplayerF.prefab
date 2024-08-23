@@ -463,14 +463,14 @@ MonoBehaviour:
   dmgColor: {r: 0.7169812, g: 0, b: 0, a: 1}
   DKLight: {fileID: 4054478004205456150}
   speed: 6
-  sprintModifier: 2
+  sprintMod: 2
   crouchLevel: 0.3
   crouchMod: 4
   jumpForce: 8
   gravity: 22
   slideSpeed: 19
   slideLockoutTime: 1
-  slideCooldown: 0
+  slideCooldown: 10
   playerCamera: {fileID: 5018801600766032129}
   cameraLockOn: {fileID: 8078530457849970204}
   invertYAxis: 0
@@ -486,8 +486,7 @@ MonoBehaviour:
   aimBallDist: 5
   weaponHUD: {fileID: 0}
   starterWeapon: {fileID: 11400000, guid: a472b3a2a9729e141a2907916827da95, type: 2}
-  weaponList:
-  - {fileID: 11400000, guid: 21641470c5893094896493a45be6e766, type: 2}
+  weaponList: []
   weaponModel: {fileID: 3997627584081395518}
   shootRate: 0
   shootDamage: 0
@@ -495,6 +494,7 @@ MonoBehaviour:
   shootDist: 0
   raycastRotationRecoil: 0
   raycastRotationReload: 0
+  currentAmmo: 0
   shurikenSpawnPoint: {fileID: 8433792936503639719}
   shurikenProjectile: {fileID: 9051712137437555885, guid: 427abf216183ff34e8d038c29d5910a8, type: 3}
   isReloading: 0
@@ -536,7 +536,6 @@ MonoBehaviour:
   mouseSensitivity: 2
   upDownRange: 90
   playerCam: {fileID: 5018801600766032129}
-  mapIndicatorMat: {fileID: 2100000, guid: d3376d14c44b6534cacecb24c5a93cb1, type: 2}
   actionMapName: Player
   movement: Movement
   look: Look

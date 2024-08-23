@@ -21,6 +21,7 @@ public class ControllerTest : MonoBehaviour //ITarget //, IDamage
     float agentSpeedVert;
     float agentSpeedHori;
     bool throwAnimDone;
+    Rigidbody rb;
 
     [Header("Player Mesh and Player Effects")]
     [SerializeField] SkinnedMeshRenderer playerMeshRenderer;
@@ -30,10 +31,10 @@ public class ControllerTest : MonoBehaviour //ITarget //, IDamage
 
     [Header("Movement Parameters")]
     [SerializeField] float speed = 6.0f;
-    [SerializeField] float sprintModifier = 2.0f;
-    private Vector3 currentMovement;
+    [SerializeField] float sprintMod = 2.0f;
+    private Vector3 playerVel;
     float origSpeed;
-    float originSpeed;
+    bool isSprinting;
 
     [Header("Crouch Parameters")]
     [SerializeField] float crouchLevel;
@@ -91,6 +92,7 @@ public class ControllerTest : MonoBehaviour //ITarget //, IDamage
     [SerializeField] float shootDist;
     [SerializeField] float raycastRotationRecoil;
     [SerializeField] float raycastRotationReload;
+    [SerializeField] int currentAmmo;
 
     [Header("----- Shuriken -----")]
     [SerializeField] GameObject shurikenSpawnPoint;
@@ -230,41 +232,32 @@ public class ControllerTest : MonoBehaviour //ITarget //, IDamage
         InputSystem.settings.defaultDeadzoneMin = leftStickDeadzoneValue;
 
         eventSystem = FindObjectOfType<MultiplayerEventSystem>();
-
-        HPOrig = HP;
-        origSpeed = speed;
-        origHeight = characterController.height;
-        slideLockout = slideLockoutTime;
-        canSlide = true;
-        origColor = playerMeshRenderer.material.color;
-        DKLight.SetActive(false);
-        GetWeaponStats(starterWeapon);
-        //Add self to gameManager's bodyTracker
-        GameManager.instance.AddToTracker(this.gameObject);
     }
     private void Start()
     {
         HPOrig = HP;
+        origSpeed = speed;
         origHeight = characterController.height;
-        originSpeed = speed;
-        canSlide = true;
         slideLockout = slideLockoutTime;
         crouchSpeed = speed - crouchMod;
+        rb = GetComponent<Rigidbody>();
         GetWeaponStats(starterWeapon);
         //Add self to gameManager's bodyTracker
         GameManager.instance.AddToTracker(this.gameObject);
-        // Call spawnPlayer
+        // Don't need to call spawn player cause player manager does it for me
         rubberBallMaxCount = rubberBallCount;
         updateGrenadeUI();
     }
 
     private void Update()
     {
-        Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDist, Color.green);
+        Debug.DrawRay(playerCamera.transform.position, playerCamera.transform.forward * shootDist, Color.green);
 
-        Movement();
-        
-        Rotation();
+        if (PlayerManager.instance.matchStarted && !GameManager.instance.isPaused)
+        {
+            Movement();
+            Rotation();
+        }
 
         //----------------This should NOT be here--------------------
         //if (!isShooting && !isReloading)
@@ -293,8 +286,8 @@ public class ControllerTest : MonoBehaviour //ITarget //, IDamage
         anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), agentSpeedVert, Time.deltaTime * animTransitSpeed));
         anim.SetFloat("SpeedHori", Mathf.Lerp(anim.GetFloat("SpeedHori"), agentSpeedHori, Time.deltaTime * animTransitSpeed));
 
-        playerAim.transform.position = Camera.main.transform.position + (Camera.main.transform.forward * aimBallDist);
-        playerAim.transform.rotation = Camera.main.transform.rotation;
+        playerAim.transform.position = playerCamera.transform.position + (playerCamera.transform.forward * aimBallDist);
+        playerAim.transform.rotation = playerCamera.transform.rotation;
 
     }
 
@@ -310,11 +303,11 @@ public class ControllerTest : MonoBehaviour //ITarget //, IDamage
         jumpAction.performed += context => JumpTriggered = true;
         jumpAction.canceled += context => JumpTriggered = false;
 
-        crouchAction.performed += context => CrouchTrigger = true;
-        crouchAction.canceled += context => CrouchTrigger = false;
+        //crouchAction.performed += context => CrouchTrigger = true;
+        //crouchAction.canceled += context => CrouchTrigger = false;
 
-        sprintAction.performed += context => SprintValue = context.ReadValue<float>();
-        sprintAction.canceled += context => SprintValue = 0f;
+        //sprintAction.performed += context => SprintValue = context.ReadValue<float>();
+        //sprintAction.canceled += context => SprintValue = 0f;
 
         sprintAction.performed += context => SprintTrigger = true;
         sprintAction.canceled += context => SprintTrigger = false;
@@ -355,8 +348,9 @@ public class ControllerTest : MonoBehaviour //ITarget //, IDamage
         lookAction.Enable();
         //jumpAction.performed += OnJumpStart;
         jumpAction.Enable();
-        crouchAction.Enable();
-        sprintAction.Enable();
+        crouchAction.performed += Crouch;
+        crouchAction.canceled += unCrouch;
+        sprintAction.performed += Sprint;
         shootAction.performed += ShootEvent;
         reloadAction.performed += ReloadEvent;
         grenadeAction.Enable();
@@ -380,8 +374,9 @@ public class ControllerTest : MonoBehaviour //ITarget //, IDamage
         lookAction.Disable();
         //jumpAction.performed -= OnJumpStart;
         jumpAction.Disable();
-        crouchAction.Disable();
-        sprintAction.Disable();
+        crouchAction.performed -= Crouch;
+        crouchAction.canceled -= unCrouch;
+        sprintAction.performed -= Sprint;
         shootAction.performed -= ShootEvent;
         reloadAction.performed -= ReloadEvent;
         grenadeAction.Disable();
@@ -405,38 +400,57 @@ public class ControllerTest : MonoBehaviour //ITarget //, IDamage
         if (characterController.isGrounded)
         {
             jumpCount = 0;
-            currentMovement = Vector3.zero;
+            playerVel = Vector3.zero;
         }
-        //If it is above the value, then you are sprinting so multiply by the modifier, otherwise multiply by 1
-        float speed = this.speed * (SprintValue > 0 ? sprintModifier : 1f);
 
         Vector3 inputDirection = new Vector3(MovementInput.x, 0f, MovementInput.y);
         Vector3 worldDirection = transform.TransformDirection(inputDirection); //Transforms direction from local to world space
         worldDirection.Normalize();
-        currentMovement.x = worldDirection.x * speed;
-        currentMovement.z = worldDirection.z * speed;
+        playerVel.x = worldDirection.x * speed;
+        playerVel.z = worldDirection.z * speed;
 
-        Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDist, Color.green);
+        Debug.DrawRay(playerCamera.transform.position, playerCamera.transform.forward * shootDist, Color.green);
 
 
         if (JumpTriggered && jumpCount < 1 && !isCrouching)
         {
             anim.SetTrigger("Jump");
             jumpCount++;
-            currentMovement.y = jumpForce;
+            playerVel.y = jumpForce;
             aud.PlayOneShot(audJump[Random.Range(0, audJump.Length)], audJumpVol);
 
         }
 
-        characterController.Move(currentMovement * Time.deltaTime);
-        currentMovement.y -= gravity * Time.deltaTime;
 
-        if (characterController.isGrounded)
-        {
-            HandleCrouch();
-        }
+
+        characterController.Move(playerVel * Time.deltaTime);
+        playerVel.y -= gravity * Time.deltaTime;
+
+        //if (characterController.isGrounded)
+        //{
+        //    Crouch();
+        //}
         // HandleShoot();
 
+    }
+
+    void Sprint(InputAction.CallbackContext context)
+    {
+        if (!isSliding)
+        {
+            isSprinting = !isSprinting;
+
+            if (!isCrouching)
+                switch (isSprinting)
+                {
+                    case true:
+                        speed *= sprintMod;
+                        break;
+                    case false:
+                        speed /= sprintMod;
+                        break;
+                }
+        }
     }
 
     //void HandleJumping() //Was going to be the jump action but couldn't figure it out
@@ -447,119 +461,160 @@ public class ControllerTest : MonoBehaviour //ITarget //, IDamage
     //    //if (characterController.isGrounded)
     //    //{
 
-    //    //    currentMovement.y = -0.5f;
+    //    //    playerVel.y = -0.5f;
     //    //    if (JumpTriggered || Input.GetButton("Jump")) ;
     //    //    {
     //    //        anim.SetTrigger("Jump");
     //    //        jumpCount++;
-    //    //        currentMovement.y = jumpForce;
+    //    //        playerVel.y = jumpForce;
     //    //    }
     //    //}
     //    //else
     //    //{
-    //    //    currentMovement.y -= gravity * Time.deltaTime;
+    //    //    playerVel.y -= gravity * Time.deltaTime;
     //    //}
     //}
 
-    void HandleCrouch()
+    //--------------Crouch event methods-------------//
+    void Crouch(InputAction.CallbackContext context)
     {
-
-
-
-        if (CrouchTrigger)
+        if (!isCrouching)
         {
             characterController.height = crouchLevel;
             speed = crouchSpeed;
             isCrouching = true;
-            if (JumpTriggered)
+            canSlide = true;
+            if (isSprinting && !isSliding)
             {
-                isSliding = true;
-
+                StartCoroutine(Slide2());
             }
-            if (isSliding)
-            {
 
-                slide();
-
-            }
         }
-        else if (isCrouching && (!CrouchTrigger))
+        //else
+        //{
+        //    characterController.height = origHeight;
+        //    speed += crouchMod;
+        //    isCrouching = false;
+        //}
+
+    }
+    void unCrouch(InputAction.CallbackContext context)
+    {
+        if (isCrouching)
         {
             characterController.height = origHeight;
-            speed = originSpeed;
+            speed = origSpeed;
             isCrouching = false;
+            canSlide = false;
         }
-
     }
-    void slide()
+    //------------------------------------------------//
+
+    IEnumerator Slide2()
     {
+        isSliding = true;
 
-
-        if (canSlide)
+        if (!slideSoundPlayed)
         {
-
-            Debug.Log("started");
-
-            //if (!slideSoundPlayed)
-            //{
-            //    aud.PlayOneShot(audSlide, audSlideVol);
-            //    slideSoundPlayed = true;
-            //}
-
-            //if (!slideAnimPlayed)
-            //{
-            //    anim.SetTrigger("Slide");
-            //    slideAnimPlayed = true;
-            //}
-
-            isCrouching = true;
-            //SprintTrigger = false;
-            if (characterController.isGrounded)
-            {
-                jumpCount = 0;
-                currentMovement = Vector3.zero;
-            }
-            characterController.height = crouchLevel;
-
-            currentMovement.x = transform.forward.x * slideSpeed;
-            currentMovement.z = transform.forward.z * slideSpeed;
-
-            characterController.Move(currentMovement * Time.deltaTime);
-            currentMovement.y -= gravity * Time.deltaTime;
-
-            if (slideLockout > 0)
-            {
-                slideLockout -= Time.deltaTime;
-            }
-            else if (slideLockout <= 0)
-            {
-                Debug.Log("no errors");
-                if (!CrouchTrigger)
-                    characterController.height = origHeight;
-
-                //slideSoundPlayed = false;
-                //slideAnimPlayed = false;
-                slideLockout = slideLockoutTime;
-
-
-                currentMovement = Vector3.zero;
-                speed = originSpeed;
-                StartCoroutine(SlideCooldown());
-                Debug.Log("sliding");
-
-            }
-
+            aud.PlayOneShot(audSlide, audSlideVol);
+            slideSoundPlayed = true;
         }
+
+        if (!slideAnimPlayed)
+        {
+            anim.SetTrigger("Slide");
+            slideAnimPlayed = true;
+        }
+
+        isCrouching = true;
+        isSprinting = false;
+
+        // Increase the player's speed for the slide
+        characterController.height = crouchLevel;
+        speed = slideSpeed;
+
+        //    playerVel.x = transform.forward.x * slideSpeed;
+        //    playerVel.z = transform.forward.z * slideSpeed;
+
+        //    characterController.Move(playerVel * Time.deltaTime);
+        //    playerVel.y -= gravity * Time.deltaTime;
+
+        // Maintain the slide for the specified duration
+        yield return new WaitForSeconds(slideLockout);
+
+        // After sliding, stop the slide and return to normal movement
+        isSliding = false;
+        //playerVel = Vector3.zero;
+        speed = origSpeed;
+        isSliding = false;
+
     }
+
+    //void Slide()
+    //{
+    //    isSliding = true;
+    //    if (canSlide)
+    //    {
+
+    //        if (!slideSoundPlayed)
+    //        {
+    //            aud.PlayOneShot(audSlide, audSlideVol);
+    //            slideSoundPlayed = true;
+    //        }
+
+    //        if (!slideAnimPlayed)
+    //        {
+    //            anim.SetTrigger("Slide");
+    //            slideAnimPlayed = true;
+    //        }
+
+    //        isCrouching = true;
+    //        isSprinting = false;
+
+    //        if (characterController.isGrounded)
+    //        {
+    //            jumpCount = 0;
+    //            playerVel = Vector3.zero;
+    //        }
+    //        characterController.height = crouchLevel;
+
+    //        playerVel.x = transform.forward.x * slideSpeed;
+    //        playerVel.z = transform.forward.z * slideSpeed;
+
+    //        characterController.Move(playerVel * Time.deltaTime);
+    //        playerVel.y -= gravity * Time.deltaTime;
+
+    //        if (slideLockout > 0)
+    //        {
+    //            slideLockout -= Time.deltaTime;
+    //        }
+    //        else if (slideLockout <= 0)
+    //        {
+    //            if (!isCrouching)
+    //                characterController.height = origHeight;
+
+    //            //slideSoundPlayed = false;
+    //            //slideAnimPlayed = false;
+    //            slideLockout = slideLockoutTime;
+
+
+    //            playerVel = Vector3.zero;
+    //            speed = origSpeed;
+    //            isSliding = false;
+    //            StartCoroutine(SlideCooldown());
+
+    //        }
+
+    //    }
+    //}
 
     IEnumerator SlideCooldown()
     {
         canSlide = false;
         yield return new WaitForSeconds(slideCooldown);
         canSlide = true;
-        isSliding = false;
     }
-    
+
     void Rotation()
     {
         float mouseYInput = invertYAxis ? -LookInput.y : LookInput.y;
@@ -626,10 +681,10 @@ public class ControllerTest : MonoBehaviour //ITarget //, IDamage
 
             if (weaponList[selectedWeapon].type == WeaponStats.WeaponType.raycast)
             {
-                // aud.PlayOneShot(audHandFire, audHandFireVol);
+                aud.PlayOneShot(audHandFire, audHandFireVol);
 
                 RaycastHit hit;
-                if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, shootDist, ~ignoreMask))
+                if (Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out hit, shootDist, ~ignoreMask))
                 {
                     //Debug.Log(hit.collider.name);
 
@@ -669,7 +724,25 @@ public class ControllerTest : MonoBehaviour //ITarget //, IDamage
         }
         else if (!isReloading && (weaponList[selectedWeapon].currentAmmo <= 0))
         {
-            StartCoroutine(Reload());
+            //Switch weapons when shuriken is out of ammo
+            if (weaponList[selectedWeapon].type != WeaponStats.WeaponType.projectile)
+            {
+                StartCoroutine(Reload());
+            }
+            else
+            {
+                if (weaponList.Count > 1)
+                {
+                    selectedWeapon++;
+
+                    if (selectedWeapon > weaponList.Count - 1)
+                        selectedWeapon = 0;
+
+                    WeaponChange();
+                    UpdateAmmoUI();
+                }
+
+            }
         }
 
         isShooting = false;
@@ -717,7 +790,6 @@ public class ControllerTest : MonoBehaviour //ITarget //, IDamage
     public void UpdateAmmoUI()
     {
         GameManager.instance.playerAmmoBar.fillAmount = (float)weaponList[selectedWeapon].currentAmmo / weaponList[selectedWeapon].startAmmo;
-
     }
 
     public void updateGrenadeUI()
@@ -811,13 +883,13 @@ public class ControllerTest : MonoBehaviour //ITarget //, IDamage
         UpdateAmmoUI();
     }
 
-    IEnumerator ThrowItem()
+    IEnumerator ThrowItem() ///GrenadeThrow
     {
         WeaponToggleOff();
         yield return new WaitForSeconds(throwDelay);
         GameObject item = Instantiate(itemPrefab, itemSpawnPoint.transform.position, itemSpawnPoint.transform.rotation);
         Rigidbody rb = item.GetComponent<Rigidbody>();
-        rb.velocity = Camera.main.transform.forward * throwForce;
+        rb.velocity = playerCamera.transform.forward * throwForce;
         grenadeHUD.SetActive(false);
         rubberBallCount--;
         updateGrenadeUI();
