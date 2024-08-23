@@ -70,6 +70,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject menuActive;
     [SerializeField] GameObject menuScore; //The UI for when a Round Ends & For when Game Ends
     [SerializeField] GameObject scoreDisplay;
+    [SerializeField] TMP_Text activeScoreNamesText;
+    [SerializeField] TMP_Text activeScoreText;
+    [SerializeField] TMP_Text activeRoundsText;
+    [SerializeField] TMP_Text activePlaceText;
+    [SerializeField] TMP_Text activeDKSText;
     [SerializeField] GameObject menuPause;
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuLose;
@@ -105,8 +110,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] TMP_Text scoreBoardScoreText;
     [SerializeField] TMP_Text scoreBoardRWText;
     [SerializeField] TMP_Text scoreBoardResultText;
-    [SerializeField] TMP_Text activeScoreNamesText;
-    [SerializeField] TMP_Text activeScoreText;
+    
     [SerializeField] GameObject RetryButton;
     [SerializeField] GameObject NextRoundButton;
 
@@ -212,8 +216,8 @@ public class GameManager : MonoBehaviour
             EventSystem.current.SetSelectedGameObject(mainMenuFirst);
         }
         Debug.Log(bodyTracker.Count.ToString() + " PLAYERS LOADED");
-        //if (currentMode == gameMode.DONUTKING2)
-        //    InstantiateScoreBoard();
+        if (currentMode == gameMode.DONUTKING2)
+            InstantiateScoreBoard();
 
 
 
@@ -262,35 +266,42 @@ public class GameManager : MonoBehaviour
     public void InstantiateScoreBoard()
     {
         scoreBoardPlacementsText.text = string.Empty;
+        activePlaceText.text = string.Empty;
         for (int i = 0; i < statsTracker.Count; ++i)
         {
             scoreBoardPlacementsText.text += i + 1;
+            activePlaceText.text += i + 1;
             switch (i)
             {
                 case 0:
                     {
                         scoreBoardPlacementsText.text += "st";
+                        activePlaceText.text += "st";
                         break;
                     }
                 case 1:
                     {
                         scoreBoardPlacementsText.text += "nd";
+                        activePlaceText.text += "nd";
                         break;
                     }
                 case 2:
                     {
                         scoreBoardPlacementsText.text += "rd";
+                        activePlaceText.text += "rd";
                         break;
                     }
                 default:
                     {
                         scoreBoardPlacementsText.text += "th";
+                        activePlaceText.text += "th";
                         break;
                     }
             }
             scoreBoardPlacementsText.text += '\n';
+            activePlaceText.text += "\n";
         }
-        scoreBoardPlacementsText.color = Color.yellow;
+        //scoreBoardPlacementsText.color = Color.yellow;
     }
     //METHOD FOR RESETTING EVERYTHING WITHOUT RESETTING PARTICPANTSTATS
     public void ResetTheRound()
@@ -614,21 +625,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    //public string GetPlayerDC(GameObject target)
-    //{
-    //    return donutCountList[player.name].ToString();
-    //}
-    ////method to set status to dead or alive for specific entity
-    //public void SetEntityState(GameObject target, bool state)
-    //{
-    //    foreach(KeyValuePair<GameObject,bool> pair in bodyTracker)
-    //    {
-    //        if(pair.Key.Equals(target))
-    //            bodyTracker[pair.Key] = state;
-    //    }
-    //}
-    //END: enemy&player Tracker Methods
-
     public void StatePause()
     {
         isPaused = !isPaused;
@@ -643,7 +639,7 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-        menuActive.SetActive(isPaused);
+        menuActive.SetActive(false);
         menuActive = null;
     }
 
@@ -707,20 +703,48 @@ public class GameManager : MonoBehaviour
             //RESULT SUBMENU:
             //-Change Result Text to say GAME OVER
             //-SetActive(true) for RETRY
-            scoreBoardTitleText.text = "ALL HAIL:";
-            scoreBoardPlacementsText.text = "1st";
-            scoreBoardNamesText.text = TheTrueKing;
-            scoreBoardScoreText.text = statsTracker[TheTrueKing].getTimeHeld().ToString();
-            scoreBoardRWText.text = statsTracker[TheTrueKing].getRoundsWon().ToString();
+            scoreBoardTitleText.text = "ALL HAIL: " + TheTrueKing.ToString();
+            //scoreBoardPlacementsText.text = "1st";
+            //scoreBoardNamesText.text = TheTrueKing;
+            //scoreBoardScoreText.text = statsTracker[TheTrueKing].getTimeHeld().ToString();
+            //scoreBoardRWText.text = statsTracker[TheTrueKing].getRoundsWon().ToString();
+            foreach (var score in scoreBoard)
+            {
+                //if (scoreIndex == 0)
+                //{
+                //    winnerName = score.Key;
+                //    statsTracker[winnerName].updateRoundsWon();
+                //}
+                int timeElapsed = score.Value.timeHeld;
+                int timerMinutes = timeElapsed / 60;
+                int timerSeconds = timeElapsed % 60;
+                string timeText = "";
+
+                if (timerMinutes == 0 || timerMinutes < 10)
+                    timeText = "0";
+
+                timeText += timerMinutes.ToString() + ":";
+
+                if (timerSeconds == 0 || timerSeconds < 10)
+                    timeText += "0";
+
+                timeText += timerSeconds.ToString();
+                scoreBoardScoreText.text += timeText + '\n';
+                score.Value.resetTimeHeld();
+                scoreBoardNamesText.text += score.Key + '\n';
+                //scoreBoardScoreText.text += score.Value.getTimeHeld().ToString() + '\n';
+                scoreBoardRWText.text += score.Value.getRoundsWon().ToString() + '\n';
+                scoreIndex++;
+            }
             if (player.name == TheTrueKing)
             {
                 scoreBoardWLMessageText.text = "Enjoy Your Donut!";
-                scoreBoardWLMessageText.color = Color.green;
+                //scoreBoardWLMessageText.color = Color.green;
             }
             else
             {
-                scoreBoardWLMessageText.text = "No Donut For You :(";
-                scoreBoardWLMessageText.color = Color.red;
+                scoreBoardWLMessageText.text = "Better Luck Next Time!";
+                //scoreBoardWLMessageText.color = Color.red;
             }
             RetryButton.SetActive(true);
 
@@ -739,7 +763,7 @@ public class GameManager : MonoBehaviour
             //RESULT SUBMENU:
             //-Change Result Text to say ROUND OVER
             //-SetActive(true) for NEXT ROUND
-            InstantiateScoreBoard();
+            //InstantiateScoreBoard();
             scoreBoardTitleText.text = "TIME'S UP!";
             foreach (var score in scoreBoard)
             {
@@ -748,9 +772,24 @@ public class GameManager : MonoBehaviour
                 //    winnerName = score.Key;
                 //    statsTracker[winnerName].updateRoundsWon();
                 //}
+                int timeElapsed = score.Value.timeHeld;
+                int timerMinutes = timeElapsed / 60;
+                int timerSeconds = timeElapsed % 60;
+                string timeText = "";
+
+                if (timerMinutes == 0 || timerMinutes < 10)
+                    timeText = "0";
+
+                timeText += timerMinutes.ToString() + ":";
+
+                if (timerSeconds == 0 || timerSeconds < 10)
+                    timeText += "0";
+
+                timeText += timerSeconds.ToString();
+                scoreBoardScoreText.text += timeText + '\n';
                 score.Value.resetTimeHeld();
                 scoreBoardNamesText.text += score.Key + '\n';
-                scoreBoardScoreText.text += score.Value.getTimeHeld().ToString() + '\n';
+               
                 scoreBoardRWText.text += score.Value.getRoundsWon().ToString() + '\n';
                 scoreIndex++;
             }
@@ -788,6 +827,8 @@ public class GameManager : MonoBehaviour
     {
         activeScoreNamesText.text = string.Empty;
         activeScoreText.text = string.Empty;
+        activeRoundsText.text = string.Empty;
+        activeDKSText.text = string.Empty;
         var scoreBoard = statsTracker.OrderByDescending(pair => pair.Value.getTimeHeld());
         foreach (var score in scoreBoard)
         {
@@ -805,13 +846,17 @@ public class GameManager : MonoBehaviour
                 timeText += "0";
 
             timeText += timerSeconds.ToString();
-
+            //Name Printage
             activeScoreNamesText.text += score.Key;
-            if (score.Value.getDKStatus())
-                activeScoreNamesText.text += " (K)";
             activeScoreNamesText.text += '\n';
+            //DKStatus Printage
+            if (score.Value.getDKStatus())
+                activeDKSText.text += "O";
+            activeDKSText.text += "\n";
+            activeRoundsText.text += score.Value.getRoundsWon();
+            activeRoundsText.text += "\n";
 
-            activeScoreText.text += "|" + timeText + '\n';
+            activeScoreText.text += timeText + '\n';
         }
     }
 
@@ -844,6 +889,8 @@ public class GameManager : MonoBehaviour
 
     public void OpenControls()
     {
+        if (currentMode == gameMode.DONUTKING2)
+            previousScreen = menuActive;
         menuActive = menuControls;
         ActivateMenu(menuActive);
         EventSystem.current.SetSelectedGameObject(controlsFirst);
