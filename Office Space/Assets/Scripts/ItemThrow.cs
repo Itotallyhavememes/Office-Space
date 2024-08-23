@@ -15,7 +15,6 @@ public class ItemThrow : MonoBehaviour
     [SerializeField] GameObject grenadeHUD;
     [Header("----- Sounds -----")]
     [SerializeField] AudioClip audRubberBall;
-    [SerializeField] AudioSource aud;
     [Range(0, 1)][SerializeField] float audRubberBallVol;
     public int rubberBallCount;
     int rubberBallMaxCount;

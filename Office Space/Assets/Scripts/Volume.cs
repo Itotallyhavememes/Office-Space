@@ -11,15 +11,13 @@ public class Volume : MonoBehaviour
     [SerializeField] private Slider musicSider;
     [SerializeField] private Slider SFXSider;
 
-     bool changeAudio;
+    // bool changeAudio;
 
 
 
     private void Awake()
     {
-        musicSider.value = 10f;
-        MusterSider.value = 10f;
-        SFXSider.value = 10f;
+      
         musicSider.onValueChanged.AddListener(HandleSider);
         MusterSider.onValueChanged.AddListener (SilderMaster);
         SFXSider.onValueChanged.AddListener(SilderSFX);
@@ -29,10 +27,11 @@ public class Volume : MonoBehaviour
 
     private void OnDisable()
     {
-        PlayerPrefs.SetFloat("music", -80f);
-        PlayerPrefs.SetFloat("Master", -80f);
-        PlayerPrefs.SetFloat("SFX", -80f);
+        PlayerPrefs.SetFloat("music", musicSider.value);
+        PlayerPrefs.SetFloat("Master", MusterSider.value);
+        PlayerPrefs.SetFloat("SFX", SFXSider.value);
     }
+   
     private void HandleSider(float value)
     {
         if (musicSider.value == 0)
@@ -45,7 +44,7 @@ public class Volume : MonoBehaviour
         if (SFXSider.value == 0)
             audioMixer.SetFloat("SFX", -80f);
         else
-            audioMixer.SetFloat("SFX", Mathf.Log10(value) * 10f);
+            audioMixer.SetFloat("SFX", Mathf.Log10(value) * 20f);
     }
     private void SilderMaster(float value)
     {
@@ -59,8 +58,9 @@ public class Volume : MonoBehaviour
 
        // changeAudio = false;
         Debug.Log("Start");
-
-
+      musicSider.value = PlayerPrefs.GetFloat("music", musicSider.value);
+        SFXSider.value = PlayerPrefs.GetFloat("SFX", SFXSider.value);
+        MusterSider.value = PlayerPrefs.GetFloat("Master", MusterSider.value);
         //SFXSider.onValueChanged.AddListener((v) =>
         //{
         //    changeAudio = false;

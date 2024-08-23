@@ -13,7 +13,6 @@ public class RubberBall : MonoBehaviour
 
     [Header("----- Sounds -----")]
     [SerializeField] AudioClip rubberBall;
-    [SerializeField] AudioSource rubberOut;
     [Range(0, 1)][SerializeField] float volume;
 
     float countdown;
