@@ -5099,9 +5099,13 @@ MonoBehaviour:
   mapSelectScreenFirst: {fileID: 0}
   pauseFirst: {fileID: 794985920012363250}
   inGameSettingsFirst: {fileID: 4053615918021608579}
-  objectiveFirst: {fileID: 0}
   nextRoundFirst: {fileID: 6626692109011410343}
   gameEndFirst: {fileID: 6626692109011410343}
+  objectiveFirst: {fileID: 0}
+  creditsMenuFirst: {fileID: 0}
+  primaryCamera: {fileID: 0}
+  monitorCamera: {fileID: 0}
+  virtualCameras: []
   matchSettingsFirst: {fileID: 0}
   MaxPlayers: 0
   NumberOfRounds: 3
@@ -5118,6 +5122,11 @@ MonoBehaviour:
   menuActive: {fileID: 0}
   menuScore: {fileID: 2912214111203061515}
   scoreDisplay: {fileID: 750167623841100312}
+  activeScoreNamesText: {fileID: 7735192341744030771}
+  activeScoreText: {fileID: 6416889148339413148}
+  activeRoundsText: {fileID: 0}
+  activePlaceText: {fileID: 0}
+  activeDKSText: {fileID: 0}
   menuPause: {fileID: 3680602538115992826}
   menuWin: {fileID: 0}
   menuLose: {fileID: 0}
@@ -5127,9 +5136,12 @@ MonoBehaviour:
   menuSettings: {fileID: 4803527845111553040}
   menuControls: {fileID: 0}
   menuCredits: {fileID: 4162002951137531139}
+  mainMenuStart: {fileID: 0}
   menuDK2Objective: {fileID: 1528765462864837783}
   menuNSObjective: {fileID: 0}
   menuShop: {fileID: 8769666501969234489}
+  Title: {fileID: 0}
+  menuTimeDelay: 0
   menuRetryAmount: {fileID: 0}
   donutCountText: {fileID: 4010693431967661779}
   timerUI: {fileID: 4756381507667274610}
@@ -5153,10 +5165,12 @@ MonoBehaviour:
   scoreBoardScoreText: {fileID: 2653913049632204638}
   scoreBoardRWText: {fileID: 8731361026322715260}
   scoreBoardResultText: {fileID: 1597806972867570122}
-  activeScoreNamesText: {fileID: 7735192341744030771}
-  activeScoreText: {fileID: 6416889148339413148}
   RetryButton: {fileID: 8825871732354770337}
   NextRoundButton: {fileID: 332733733606068802}
+  loadingScreen: {fileID: 0}
+  loadingBar: {fileID: 0}
+  fillSpeed: 0
+  loadSpeed: 0
   isThereDonutKing: 0
   TheDonutKing: {fileID: 0}
   moneyForKills: 50

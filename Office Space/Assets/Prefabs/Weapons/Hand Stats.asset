@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: Hand Stats
   m_EditorClassIdentifier: 
   type: 0
-  weaponModel: {fileID: 919132149155446097, guid: 332e48c2cdfb18e4fb7a2cb11594a42b, type: 3}
+  style: 0
+  weaponModel: {fileID: 7076750991551353172, guid: ab7c7a7ba02aa7f4fb6bf7c595d9f90d, type: 3}
   shootRate: 0.18
   shootDamage: 2
-  currentAmmo: 12
+  currentAmmo: 6
   reloadTime: 1.5
   startAmmo: 12
   hitEffect: {fileID: 2433282508523890284, guid: 3ef3ae421f71c5c4e97fe12dc2fc6312, type: 3}

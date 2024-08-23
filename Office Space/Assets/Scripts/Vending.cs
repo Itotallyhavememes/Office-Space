@@ -7,15 +7,20 @@ public class Vending : MonoBehaviour, IVend
     [SerializeField] GameObject interactionSprite;
     [SerializeField] GameObject spotLight;
     [SerializeField] GameObject vendPos;
+    [SerializeField] AudioSource Aud;
+    [SerializeField] AudioSource AudSrcInteract;
+    [SerializeField] AudioClip interact;
 
     [Header("----- Items -----")]
     [SerializeField] GameObject[] commonItems;
     [SerializeField] GameObject[] uncommonItems;
     [SerializeField] GameObject[] rareItems;
     bool playerInCollider;
+    bool ambientIsPlaying;
 
     void Update()
     {
+
         if (Input.GetButtonDown("Interact") && GameManager.instance.canVend && playerInCollider)
         {
             VendItem();
@@ -25,6 +30,13 @@ public class Vending : MonoBehaviour, IVend
             spotLight.SetActive(false);
         else if (!spotLight.activeSelf && GameManager.instance.canVend)
             spotLight.SetActive(true);
+
+        if (!ambientIsPlaying && GameManager.instance.canVend)
+        {
+            Aud.loop = true;
+            Aud.Play();
+            ambientIsPlaying = true;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -57,6 +69,9 @@ public class Vending : MonoBehaviour, IVend
 
     public void VendItem()
     {
+        Aud.loop = false;
+        Aud.Stop();
+
         int selection = Random.Range(0, 100);
 
         if (selection <= 15)
@@ -75,7 +90,9 @@ public class Vending : MonoBehaviour, IVend
             Instantiate(commonItems[index], vendPos.transform.position, commonItems[index].transform.rotation);
         }
 
+        AudSrcInteract.PlayOneShot(interact);
         GameManager.instance.StartVendingMachineCooldown();
         interactionSprite.SetActive(false);
+        ambientIsPlaying = false;
     }
 }

@@ -54,8 +54,8 @@ MonoBehaviour:
   bobHeight: 0.3
   powerupEffect: {fileID: 0}
   weapon: {fileID: 11400000, guid: 21641470c5893094896493a45be6e766, type: 2}
-  PuickUpSound: {fileID: 8300000, guid: 8cfc68988435aa04999c4027c945c326, type: 3}
-  auidSource: {fileID: 0}
+  pickUpSound: {fileID: 0}
+  audSource: {fileID: 0}
   volume: 1
 --- !u!33 &9179441603636853133
 MeshFilter:
@@ -138,8 +138,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -8678566210064012743, guid: 491cca7fefc6f3f418f639a8b44c47aa, type: 2}
-  m_audioClip: {fileID: 8300000, guid: 63c1269548bf9984392bc3b479e854b1, type: 3}
-  m_PlayOnAwake: 1
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
