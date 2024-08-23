@@ -31,6 +31,8 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
     [SerializeField] float animTransitSpeed;
     [SerializeField] SkinnedMeshRenderer playerMeshRenderer;
     [SerializeField] Color dmgColor;
+    [SerializeField] GameObject electricParticles;
+    [Range(75,100)][SerializeField] float speedFOVEffect;
     public Rig playerRig;
     Color origColor;
     //[SerializeField] int donutDropDistance;
@@ -607,9 +609,15 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
 
     IEnumerator SpeedPowerUp(SpeedBuff stats) //Triggers buffs for a good cup of Joe (mediocre office brew)
     {
+        float origFOV = Camera.main.fieldOfView;
+
+        electricParticles.SetActive(true);
+        Camera.main.fieldOfView = speedFOVEffect;
         AddSpeed(stats.speedModifier);
         yield return new WaitForSeconds(stats.speedBoostTime);
         AddSpeed(-stats.speedModifier);
+        Camera.main.fieldOfView = origFOV;
+        electricParticles.SetActive(false);
     }
 
     private void AddSpeed(int addSpeed) //Controls the speed increase and maintains the boost constant regardless of state of player movement

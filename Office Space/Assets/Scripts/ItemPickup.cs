@@ -13,8 +13,8 @@ public class ItemPickup : MonoBehaviour
     [SerializeField] WeaponStats weapon;
 
     [Header("----- Sounds -----")]
-    [SerializeField] AudioClip PuickUpSound;
-    [SerializeField] AudioSource auidSource;
+    [SerializeField] AudioClip pickUpSound;
+    [SerializeField] AudioSource audSource;
     [Range(0, 1)][SerializeField] float volume;
     
     Vector3 startPos;
@@ -56,13 +56,14 @@ public class ItemPickup : MonoBehaviour
                            
                             GameManager.instance.worldItemCount--;
                             powerupEffect.ApplyBuff();
+                            audSource.PlayOneShot(pickUpSound);
                             Destroy(gameObject);
                         }
                         break;
                     }
                 case ItemType.speedBoost:
                     {
-                        GameManager.instance.playerScript.Munch(PuickUpSound, volume);
+                        GameManager.instance.playerScript.Munch(pickUpSound, volume);
                         powerupEffect.ApplyBuff();
                         GameManager.instance.worldItemCount--;
                         Destroy(gameObject);
@@ -73,7 +74,7 @@ public class ItemPickup : MonoBehaviour
                         if (GameManager.instance.playerScript.GetComponent<ItemThrow>().rubberBallCount < GameManager.instance.playerScript.GetComponent<ItemThrow>().GetMaxBallCount())
                         {
                             
-                            GameManager.instance.playerScript.Munch(PuickUpSound, volume);
+                            GameManager.instance.playerScript.Munch(pickUpSound, volume);
                             GameManager.instance.playerScript.GetComponent<ItemThrow>().rubberBallCount++;
                             GameManager.instance.playerScript.GetComponent<ItemThrow>().updateGrenadeUI();
                             GameManager.instance.worldItemCount--;
@@ -84,7 +85,7 @@ public class ItemPickup : MonoBehaviour
                     }
                 case ItemType.weapon:
                     {
-                        GameManager.instance.playerScript.Munch(PuickUpSound, volume);
+                        GameManager.instance.playerScript.Munch(pickUpSound, volume);
                         GameManager.instance.playerScript.GetWeaponStats(this.weapon);
                         GameManager.instance.worldItemCount--;
                         Destroy(gameObject);
