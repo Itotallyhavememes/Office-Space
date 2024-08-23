@@ -226,13 +226,13 @@ public class GameManager : MonoBehaviour
     //Update is called once per frame
     void Update()
     {
-        //if (currentMode == gameMode.DONUTKING2 && !isShopDisplayed)
-        //{
-        //    //PJ's shop code
-        //    ActivateMenu(menuShop);
-        //    StatePause();
-        //    isShopDisplayed = true;
-        //}
+        if (currentMode == gameMode.DONUTKING2 && !isShopDisplayed)
+        {
+            //PJ's shop code
+            ActivateMenu(menuShop);
+            StatePause();
+            isShopDisplayed = true;
+        }
         if (currentMode == gameMode.DONUTKING2 && !isPaused)
             TallyActiveScores();
 
@@ -403,6 +403,7 @@ public class GameManager : MonoBehaviour
 
         //PJ's shop code
         isShopDisplayed = false;
+        Shop.instance.updateMoneyCount();
     }
 
     void RandomizeVending()
