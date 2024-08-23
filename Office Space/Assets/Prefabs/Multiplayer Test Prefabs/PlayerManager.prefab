@@ -67,7 +67,7 @@ MonoBehaviour:
       m_SingletonActionBindings: []
       m_Flags: 0
     m_Reference: {fileID: -6472792577892142278, guid: 1acd5144362277a4e9ad483c81247dda, type: 3}
-  m_PlayerPrefab: {fileID: 3517113814117527876, guid: 7c537c98ec071a9429ab033dbda36fbf, type: 3}
+  m_PlayerPrefab: {fileID: 403883271711309938, guid: 5ca7ea2f8aa014f44b48a049777d3423, type: 3}
   m_SplitScreen: 1
   m_MaintainAspectRatioInSplitScreen: 0
   m_FixedNumberOfSplitScreens: -1
@@ -115,9 +115,9 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   botsDropdown: {fileID: 0}
-  enemyMapIndicator: {fileID: 2100000, guid: 3b3b4a3216f32d74b84e6a817a55b2bf, type: 2}
   matchSettingsMenu: {fileID: 0}
   enemyPrefabs:
   - {fileID: 66639171892398607, guid: 48db362738f2d6744a93b6bd49ed02af, type: 3}
   - {fileID: 8401946793163134991, guid: 273690cd15ecdc642a9b38d24934d43a, type: 3}
   - {fileID: 8357165618867339889, guid: fb7d009777c4fae448d110c840b59d80, type: 3}
+  matchStarted: 0

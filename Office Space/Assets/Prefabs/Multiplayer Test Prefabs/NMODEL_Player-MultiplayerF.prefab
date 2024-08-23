@@ -459,6 +459,7 @@ MonoBehaviour:
     m_Bits: 8
   anim: {fileID: 6180894738504849728}
   animTransitSpeed: 10
+  playerRig: {fileID: 7713957286700280249}
   playerMeshRenderer: {fileID: 5892147064852502340}
   dmgColor: {r: 0.7169812, g: 0, b: 0, a: 1}
   DKLight: {fileID: 4054478004205456150}
@@ -527,6 +528,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 9b7a78212bfb060429e3697a82574c93, type: 3}
   - {fileID: 8300000, guid: 87d1afcb45928044db032422cc026b14, type: 3}
   audDamageVol: 0
+  audRubberBall: {fileID: 0}
+  audRubberBallVol: 0
   grenadeHUD: {fileID: 0}
   itemPrefab: {fileID: 0}
   itemSpawnPoint: {fileID: 0}
@@ -588,6 +591,8 @@ MonoBehaviour:
   animTransitSpeed: 10
   playerMeshRenderer: {fileID: 5892147064852502340}
   dmgColor: {r: 0.7169812, g: 0, b: 0, a: 1}
+  electricParticles: {fileID: 0}
+  speedFOVEffect: 75
   playerRig: {fileID: 0}
   deathCamera: {fileID: 6557330449660377003}
   playerAim: {fileID: 8432964258101734896}
@@ -627,6 +632,8 @@ MonoBehaviour:
   audSlideVol: 0.5
   audShurikenFire: {fileID: 0}
   audShurikenFireVol: 0
+  rubberBall: {fileID: 0}
+  volume: 0
   audDamage:
   - {fileID: 8300000, guid: 1a0f51f03789b0049bf3ed7975f2a5ec, type: 3}
   - {fileID: 8300000, guid: f469e0090cbb7694f8656a816e968478, type: 3}
@@ -644,7 +651,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 403883271711309938}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c36764aaf63a82a42a850cfb1d3f59a6, type: 3}
   m_Name: 
@@ -653,11 +660,12 @@ MonoBehaviour:
   throwDelay: 0.4
   itemPrefab: {fileID: 3822187847243570803, guid: 14ce3eaf9a276fa49ba840ba1115eff7, type: 3}
   itemSpawnPoint: {fileID: 8433792936503639719}
-  player: {fileID: 2979110028611397876}
+  player: {fileID: 0}
+  playerCam: {fileID: 5018801600766032129}
   weaponHUD: {fileID: 6168191915925768079}
   grenadeHUD: {fileID: 5483979885216275072}
-  audRubberBall: {fileID: 0}
-  aud: {fileID: 0}
+  audRubberBall: {fileID: 8300000, guid: 51d732c04d3a7e04a981cf18a4d38f62, type: 3}
+  aud: {fileID: 339064837180620918}
   audRubberBallVol: 0
   rubberBallCount: 7
 --- !u!95 &6180894738504849728
