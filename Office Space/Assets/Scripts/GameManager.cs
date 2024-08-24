@@ -201,7 +201,7 @@ public class GameManager : MonoBehaviour
         {
             //EventSystem.current.SetSelectedGameObject(matchSettingsFirst); //Match settings
             timerUI.SetActive(true);
-            //RandomizeVending();
+            RandomizeVending();
             StartCoroutine(Timer());
         }
 

@@ -43638,6 +43638,10 @@ PrefabInstance:
       value: UI
       objectReference: {fileID: 0}
     - target: {fileID: 8754997016133161887, guid: d3513e0bf77cac44ca54f4d9070420fb, type: 3}
+      propertyPath: timerTime
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 8754997016133161887, guid: d3513e0bf77cac44ca54f4d9070420fb, type: 3}
       propertyPath: playerSpawn
       value: 
       objectReference: {fileID: 1846228661}
