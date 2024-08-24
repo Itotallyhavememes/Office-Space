@@ -110,7 +110,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] TMP_Text scoreBoardScoreText;
     [SerializeField] TMP_Text scoreBoardRWText;
     [SerializeField] TMP_Text scoreBoardResultText;
-    
+
     [SerializeField] GameObject RetryButton;
     [SerializeField] GameObject NextRoundButton;
 
@@ -242,9 +242,10 @@ public class GameManager : MonoBehaviour
         if (currentMode == gameMode.DONUTKING2 && !isPaused)
             TallyActiveScores();
 
-        if (Input.GetButtonDown("Cancel") && !PlayerManager.instance.isMultiplayer)
+        if (Input.GetButtonDown("Cancel"))
         {
-            OnPause();
+            if (PlayerManager.instance != null && !PlayerManager.instance.isMultiplayer)
+                OnPause();
         }
 
         if (currentMode == gameMode.DONUTKING2 && !isPaused)
@@ -515,7 +516,7 @@ public class GameManager : MonoBehaviour
         deadTracker.Add(self);
         //Start CHECKING if doors need to remove their dead from the list
         Door doorCMP;
-        foreach(var door in doors)
+        foreach (var door in doors)
         {
             doorCMP = door.GetComponent<Door>();
             doorCMP.RemoveFromDoorList(self);
@@ -801,7 +802,7 @@ public class GameManager : MonoBehaviour
                 scoreBoardScoreText.text += timeText + '\n';
                 score.Value.resetTimeHeld();
                 scoreBoardNamesText.text += score.Key + '\n';
-               
+
                 scoreBoardRWText.text += score.Value.getRoundsWon().ToString() + '\n';
                 scoreIndex++;
             }
