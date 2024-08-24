@@ -21,7 +21,7 @@ public class ParticipantStats
         timeHeld = 0;
         KDR = 0.0f;
         isDonutKing = false;
-        moneyTotal = 150;//starting money for players and AI
+        moneyTotal = 150;//starting money for players
         return this;
     }
 

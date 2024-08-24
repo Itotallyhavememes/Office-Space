@@ -124,7 +124,7 @@ public class GameManager : MonoBehaviour
     public bool isThereDonutKing;
     public GameObject TheDonutKing;
     //CODE FOR PJ's SHOP
-    [SerializeField] public int moneyForKills, moneyForTimeHeld, moneyForDonutKing;
+    [SerializeField] public int moneyForTimeHeld, moneyForDonutKing;
     // JOHN CODE FOR CHECKPOINT
     public GameObject playerSpawn;
     public GameObject checkPointPos;
@@ -235,13 +235,13 @@ public class GameManager : MonoBehaviour
     //Update is called once per frame
     void Update()
     {
-        //if (currentMode == gameMode.DONUTKING2 && !isShopDisplayed)
-        //{
-        //    //PJ's shop code
-        //    ActivateMenu(menuShop);
-        //    StatePause();
-        //    isShopDisplayed = true;
-        //}
+        if (currentMode == gameMode.DONUTKING2 && !isShopDisplayed)
+        {
+            //PJ's shop code
+            ActivateMenu(menuShop);
+            StatePause();
+            isShopDisplayed = true;
+        }
         if (currentMode == gameMode.DONUTKING2 && !isPaused)
             TallyActiveScores();
 
@@ -403,6 +403,7 @@ public class GameManager : MonoBehaviour
 
         //PJ's shop code
         isShopDisplayed = false;
+        statsTracker[player.name].depositMoney(100);
         Shop.instance.updateMoneyCount();
     }
 
@@ -700,6 +701,8 @@ public class GameManager : MonoBehaviour
         //Check for Winner HERE:
         winnerName = scoreBoard.ElementAt(0).Key;
         statsTracker[winnerName].updateRoundsWon();
+        //PJ's code to give winner bonus money
+        statsTracker[winnerName].depositMoney(moneyForDonutKing);
 
         if (RetryButton.activeSelf == true)
             RetryButton.SetActive(false);

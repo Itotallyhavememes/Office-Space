@@ -10,19 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ec10f6cbc94e25648b80250f087b3926, type: 3}
-  m_Name: nerfRifle
+  m_Name: nerfSMG
   m_EditorClassIdentifier: 
   type: 1
   style: 0
-  weaponModel: {fileID: 3214162760228816129, guid: 76518c3e456d4b64e8b1c501da4a3d22, type: 3}
-  shootRate: 0.5
-  shootDamage: 5
-  currentAmmo: 25
+  weaponModel: {fileID: 2511199517075280301, guid: 86376c1bd041b8c4c86eda4c434f7021, type: 3}
+  shootRate: 0.1
+  shootDamage: 3
+  currentAmmo: 45
   reloadTime: 10
-  startAmmo: 25
+  startAmmo: 45
   hitEffect: {fileID: 0}
   shootVol: 0.5
   raycastDist: 0
   raycastRotationReload: 0
   raycastRotationRecoil: 0
-  projectileProjectile: {fileID: 2682772027241780945, guid: 6fbe3c2205976e74bbdb37fc1b2b9b21, type: 3}
+  projectileProjectile: {fileID: 2682772027241780945, guid: 96573c5d4bb67494c8658d2031dd5cd9, type: 3}

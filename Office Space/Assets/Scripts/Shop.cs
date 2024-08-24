@@ -23,9 +23,14 @@ public class Shop : MonoBehaviour
     [SerializeField] int rubberbandBallPrice;
     [SerializeField] WeaponStats rubberbandBall;
 
+    private void Awake()
+    {
+        instance = this;
+    }
+
     void Start()
     {
-        //moneyCount.text = "$ " + GameManager.instance.statsTracker[GameManager.instance.player.name].getMoneyTotal().ToString();
+        moneyCount.text = "$ " + GameManager.instance.statsTracker[GameManager.instance.player.name].getMoneyTotal().ToString();
     }
 
     public void updateMoneyCount()
@@ -35,40 +40,55 @@ public class Shop : MonoBehaviour
 
     public void shotgunButton()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (GameManager.instance.statsTracker[GameManager.instance.player.name].getMoneyTotal() >= shotgunPrice)
         {
-            int playerMoney = GameManager.instance.statsTracker[GameManager.instance.player.name].getMoneyTotal();
-            if (playerMoney >= shotgunPrice)
+            GameManager.instance.statsTracker[GameManager.instance.player.name].withdrawMoney(shotgunPrice);
+            updateMoneyCount();
+            for (int i = 0; i < GameManager.instance.playerScript.weaponList.Count; i++)
             {
-                playerMoney -= shotgunPrice;
-                //add code to add new weapon for primary
+                if (GameManager.instance.playerScript.weaponList[i] == shotgun)
+                {
+                    GameManager.instance.playerScript.weaponList[i].currentAmmo = GameManager.instance.playerScript.weaponList[i].startAmmo;
+                    return;
+                }
             }
+            GameManager.instance.playerScript.GetWeaponStats(shotgun);
         }
     }
 
     public void SMGButton()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (GameManager.instance.statsTracker[GameManager.instance.player.name].getMoneyTotal() >= SMGPrice)
         {
-            int playerMoney = GameManager.instance.statsTracker[GameManager.instance.player.name].getMoneyTotal();
-            if (playerMoney >= SMGPrice)
+            GameManager.instance.statsTracker[GameManager.instance.player.name].withdrawMoney(SMGPrice);
+            updateMoneyCount();
+            for (int i = 0; i < GameManager.instance.playerScript.weaponList.Count; i++)
             {
-                playerMoney -= SMGPrice;
-                //add code to add new weapon for primary
+                if (GameManager.instance.playerScript.weaponList[i] == SMG)
+                {
+                    GameManager.instance.playerScript.weaponList[i].currentAmmo = GameManager.instance.playerScript.weaponList[i].startAmmo;
+                    return;
+                }
             }
+            GameManager.instance.playerScript.GetWeaponStats(SMG);
         }
     }
 
     public void rifleButton()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (GameManager.instance.statsTracker[GameManager.instance.player.name].getMoneyTotal() >= riflePrice)
         {
-            int playerMoney = GameManager.instance.statsTracker[GameManager.instance.player.name].getMoneyTotal();
-            if (playerMoney >= riflePrice)
+            GameManager.instance.statsTracker[GameManager.instance.player.name].withdrawMoney(riflePrice);
+            updateMoneyCount();
+            for (int i = 0; i < GameManager.instance.playerScript.weaponList.Count; i++)
             {
-                playerMoney -= riflePrice;
-                //add code to add new weapon for primary
+                if (GameManager.instance.playerScript.weaponList[i] == rifle)
+                {
+                    GameManager.instance.playerScript.weaponList[i].currentAmmo = GameManager.instance.playerScript.weaponList[i].startAmmo;
+                    return;
+                }
             }
+            GameManager.instance.playerScript.GetWeaponStats(rifle);
         }
     }
 
@@ -87,8 +107,8 @@ public class Shop : MonoBehaviour
     }
     public void rubberbandBallButton()
     {
-            int playerMoney = GameManager.instance.statsTracker[GameManager.instance.player.name].getMoneyTotal();
-            if (playerMoney >= rubberbandBallPrice && GameManager.instance.playerThrowScript.rubberBallCount < GameManager.instance.playerThrowScript.GetRubberBallMax())
+        int playerMoney = GameManager.instance.statsTracker[GameManager.instance.player.name].getMoneyTotal();
+        if (playerMoney >= rubberbandBallPrice && GameManager.instance.playerThrowScript.rubberBallCount < GameManager.instance.playerThrowScript.GetRubberBallMax())
         {
             GameManager.instance.statsTracker[GameManager.instance.player.name].withdrawMoney(rubberbandBallPrice);
             GameManager.instance.playerThrowScript.rubberBallCount++;
@@ -96,6 +116,5 @@ public class Shop : MonoBehaviour
             //add code to add new weapon to throwables
         }
             GameManager.instance.playerThrowScript.updateGrenadeUI();
-        
     }
 }

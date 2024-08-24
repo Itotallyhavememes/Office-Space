@@ -47,6 +47,7 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
     Vector3 playerVel;
 
     [Header("----- Weapons -----")]
+    [SerializeField] GameObject muzzle;//PJ code
     [SerializeField] GameObject playerAim;
     [SerializeField] GameObject playerhandRotation;
     [SerializeField] float aimBallDist;
@@ -527,15 +528,20 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
             }
             else if (weaponList[selectedWeapon].type == WeaponStats.WeaponType.projectile) //Shuriken
             {
-                if (weaponList[selectedWeapon].style == WeaponStats.ThrowStyle.chestOut)
+                //PJ's code start
+                if (weaponList[selectedWeapon].style == WeaponStats.ThrowStyle.none)
+                {
+                    Instantiate(weaponList[selectedWeapon].projectileProjectile, muzzle.transform.position, muzzle.transform.rotation);
+                    yield return new WaitForSeconds(weaponList[selectedWeapon].shootRate);
+                    weaponModel.SetActive(true);
+                }
+                //PJ's code end
+                else if (weaponList[selectedWeapon].style == WeaponStats.ThrowStyle.chestOut)
                 {
                     aud.PlayOneShot(audShurikenFire, audShurikenFireVol);
                     playerRig.weight = 0;
                     anim.SetLayerWeight(8, 1f);
                     anim.SetTrigger("ThrowShuriken");
-                }
-                else
-                {
                     
                     weaponModel.SetActive(false);
                     
@@ -545,6 +551,13 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
                 }
             }
         }
+        //PJ's code to switch nerf gun when out of ammo
+        else if (weaponList[selectedWeapon].currentAmmo <= 0 && weaponList[selectedWeapon].reloadTime == 10)
+        {
+            weaponList[selectedWeapon] = weaponList[0];
+            WeaponChange();
+        }
+        //end of PJ's code
         else if (!isReloading && (weaponList[selectedWeapon].currentAmmo <= 0))
         {
             StartCoroutine(Reload());
