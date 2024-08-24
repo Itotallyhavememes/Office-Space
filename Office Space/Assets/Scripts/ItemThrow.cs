@@ -27,7 +27,7 @@ public class ItemThrow : MonoBehaviour
         rubberBallMaxCount = rubberBallCount;
         updateGrenadeUI();
         controllerTestScript = this.GetComponent<ControllerTest>();
-        if (PlayerManager.instance != null && !PlayerManager.instance.isMultiplayer)
+        if (!GameManager.instance.isMultiplayer)
             anim = player.GetComponent<Animator>();
         else
             anim = this.GetComponent<Animator>();
@@ -35,7 +35,7 @@ public class ItemThrow : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (PlayerManager.instance != null && !PlayerManager.instance.isMultiplayer)
+        if (!GameManager.instance.isMultiplayer)
         {
             if (animationDone)
             {
@@ -113,7 +113,7 @@ public class ItemThrow : MonoBehaviour
 
     void WeaponToggleOff()
     {
-        if (PlayerManager.instance != null && !PlayerManager.instance.isMultiplayer)
+        if (!GameManager.instance.isMultiplayer)
         {
             player.isShooting = true;
             player.isReloading = true;
@@ -131,7 +131,7 @@ public class ItemThrow : MonoBehaviour
     void WeaponToggleOn()
     {
         weaponHUD.SetActive(true);
-        if (PlayerManager.instance != null && !PlayerManager.instance.isMultiplayer)
+        if (!GameManager.instance.isMultiplayer)
         {
             player.isShooting = false;
             player.isReloading = false;

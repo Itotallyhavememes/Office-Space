@@ -175,6 +175,9 @@ public class GameManager : MonoBehaviour
     Vector3 origCreditsPosition;
     bool canScrollCredits;
 
+
+    public bool isMultiplayer;
+
     void Awake()
     {
         instance = this;
@@ -244,7 +247,7 @@ public class GameManager : MonoBehaviour
 
         if (Input.GetButtonDown("Cancel"))
         {
-            if (PlayerManager.instance != null && !PlayerManager.instance.isMultiplayer)
+            if (!GameManager.instance.isMultiplayer)
                 OnPause();
         }
 

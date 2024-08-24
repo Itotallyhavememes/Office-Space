@@ -1900,6 +1900,7 @@ MonoBehaviour:
   playerMeshRenderer: {fileID: 6268629496894949658}
   dmgColor: {r: 0.7169812, g: 0, b: 0, a: 1}
   electricParticles: {fileID: 1874484568157741170}
+  speedFOVEffect: 75
   playerRig: {fileID: 6071380423050833199}
   deathCamera: {fileID: 7532941921966850233}
   playerAim: {fileID: 2108755235465321697}
@@ -1940,8 +1941,7 @@ MonoBehaviour:
   audShurikenFire: {fileID: 0}
   audShurikenFireVol: 0
   rubberBall: {fileID: 0}
-  rubberOut: {fileID: 0}
-  why: 0
+  volume: 0
   audDamage:
   - {fileID: 8300000, guid: 1a0f51f03789b0049bf3ed7975f2a5ec, type: 3}
   - {fileID: 8300000, guid: f469e0090cbb7694f8656a816e968478, type: 3}
@@ -1969,6 +1969,7 @@ MonoBehaviour:
   itemPrefab: {fileID: 3822187847243570803, guid: 14ce3eaf9a276fa49ba840ba1115eff7, type: 3}
   itemSpawnPoint: {fileID: 1816182811130589193}
   player: {fileID: 7526630443427397445}
+  multiPlayerPrefab: {fileID: 0}
   weaponHUD: {fileID: 4048435227192157926}
   grenadeHUD: {fileID: 2478422088836464121}
   audRubberBall: {fileID: 0}

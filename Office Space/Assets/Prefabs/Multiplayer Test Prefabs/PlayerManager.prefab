@@ -104,6 +104,7 @@ MonoBehaviour:
     m_Bits: 131072
   - serializedVersion: 2
     m_Bits: 262144
+  matchSettingsFirst: {fileID: 0}
   playerIcons:
   - {fileID: 0}
   - {fileID: 0}
@@ -121,3 +122,4 @@ MonoBehaviour:
   - {fileID: 8401946793163134991, guid: 273690cd15ecdc642a9b38d24934d43a, type: 3}
   - {fileID: 8357165618867339889, guid: fb7d009777c4fae448d110c840b59d80, type: 3}
   matchStarted: 0
+  isMultiplayer: 0

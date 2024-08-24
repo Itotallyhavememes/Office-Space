@@ -473,6 +473,9 @@ MonoBehaviour:
   slideLockoutTime: 1
   slideCooldown: 10
   playerCamera: {fileID: 5018801600766032129}
+  camerasToResize:
+  - {fileID: 2489295648474889437}
+  - {fileID: 6557330449660377003}
   cameraLockOn: {fileID: 8078530457849970204}
   invertYAxis: 0
   HP: 13
@@ -6979,7 +6982,7 @@ Transform:
   m_GameObject: {fileID: 8068904291683183365}
   serializedVersion: 2
   m_LocalRotation: {x: 0.3420201, y: -0, z: -0, w: 0.9396927}
-  m_LocalPosition: {x: 0.24285057, y: 5.4545455, z: -5.4545455}
+  m_LocalPosition: {x: 0.24285057, y: 5.4545455, z: 0}
   m_LocalScale: {x: 0.90909094, y: 0.9090908, z: 0.9090908}
   m_ConstrainProportionsScale: 0
   m_Children: []

@@ -41,7 +41,7 @@ public class RubberBall : MonoBehaviour
 
     void Explode()
     {
-        if (PlayerManager.instance != null && !PlayerManager.instance.isMultiplayer)
+        if (!GameManager.instance.isMultiplayer)
             GameManager.instance.playerScript.Munch(rubberBall, volume);
         else
         {

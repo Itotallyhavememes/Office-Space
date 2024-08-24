@@ -21,7 +21,7 @@ public class Vending : MonoBehaviour, IVend
     void Update()
     {
 
-        if (PlayerManager.instance != null && !PlayerManager.instance.isMultiplayer)
+        if (!GameManager.instance.isMultiplayer)
         {
             if (Input.GetButtonDown("Interact") && GameManager.instance.canVend && playerInCollider)
             {
