@@ -12,6 +12,7 @@ using UnityEngine.UI;
 
 public class ButtonFunctions : MonoBehaviour
 {
+    float loadFilled;
     // Start is called before the first frame update
     public void resume()
     {
@@ -152,24 +153,36 @@ public class ButtonFunctions : MonoBehaviour
         StartCoroutine(GameManager.instance.BackToMainFromCredits());
     }
 
-    IEnumerator loadingAsync()
+    IEnumerator loadingScreenTime()
     {
-        
-        Debug.Log("Loading menu open");
-        while (GameManager.instance.loadingBar.fillOrigin >= GameManager.instance.loadingBar.fillAmount)
+        while (GameManager.instance.loadingBar.fillAmount <= loadFilled)
         {
-            yield return new WaitForSeconds(GameManager.instance.loadSpeed);
-            GameManager.instance.loadingBar.fillAmount += GameManager.instance.fillSpeed;
-            Debug.Log("Waiting");
+            GameManager.instance.loadingBar.fillAmount += GameManager.instance.amountFilled;
+            yield return new WaitForSeconds(GameManager.instance.fillSpeed);
+            if (GameManager.instance.loadingBar.fillAmount == loadFilled)
+            {
+                yield return new WaitForSeconds(0.5f);
+                break; 
+            }
         }
-        yield return new WaitForSeconds(1);
-        GameManager.instance.loadingScreen.SetActive(false);
+        //Next Scene
+        SceneManager.LoadScene("TTT5 - Derrick");
+
+    }
+
+    public void loading()
+    {
+        GameManager.instance.menuLoad();
+        loadFilled = GameManager.instance.loadingBar.fillAmount;
+        Debug.Log(loadFilled.ToString() + " loadFilled");
+        GameManager.instance.loadingBar.fillAmount = 0;
+        StartCoroutine(loadingScreenTime());
+      
     }
 
     public void openDK3Objective()
-    {        
-        GameManager.instance.loadingMenu();
-        StartCoroutine(loadingAsync());
+    {
+
         GameManager.instance.ActivateObjectiveScreen();
         GameManager.instance.StatePause();
     }

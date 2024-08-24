@@ -117,8 +117,8 @@ public class GameManager : MonoBehaviour
     //Loading UI
     [SerializeField] public GameObject loadingScreen;
     [SerializeField] public Image loadingBar;
+    [SerializeField] public float amountFilled;
     [SerializeField] public float fillSpeed;
-    [SerializeField] public float loadSpeed;
 
     //TIM TEST CODE FOR DK
     public bool isThereDonutKing;
@@ -966,11 +966,11 @@ public class GameManager : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(mainMenuFirst);
     }
 
-    public void loadingMenu()
+    public void menuLoad()
     {
         menuActive = loadingScreen;
-        menuActive.SetActive(true);
-        loadingBar.fillAmount = 0;
+        ActivateMenu(menuActive);
+        Debug.Log("opened loading");
     }
 
     public void SetVolume(float volume)
