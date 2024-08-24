@@ -9,6 +9,7 @@ using Unity.VisualScripting;
 using System.Linq;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.EventSystems;
 
 
 public class PlayerManager : MonoBehaviour
@@ -23,6 +24,7 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] List<LayerMask> playerLayers;
 
     [Header("Match UI")]
+    [SerializeField] GameObject matchSettingsFirst;
     [SerializeField] List<GameObject> playerIcons;
     [SerializeField] List<Text> playerTogglesText;
     [SerializeField] GameObject botsDropdown;
@@ -38,6 +40,7 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] GameObject matchSettingsMenu;
     [SerializeField] GameObject[] enemyPrefabs;
     public bool matchStarted;
+    public bool isMultiplayer;
 
 
     private PlayerInputManager playerInputManager;
@@ -58,6 +61,7 @@ public class PlayerManager : MonoBehaviour
     {
         GameManager.instance.StatePause();
         GameManager.instance.ActivateMenu(matchSettingsMenu);
+        EventSystem.current.SetSelectedGameObject(matchSettingsFirst);
     }
 
     private void OnEnable()
@@ -72,6 +76,7 @@ public class PlayerManager : MonoBehaviour
 
     void AddPlayer(PlayerInput player)
     {
+        isMultiplayer = true;
         players.Add(player);
         //cameras.Add(player.GetComponentInChildren<Camera>());
         GameManager.instance.playerSpawn.transform.position = spawnPoints[players.Count - 1].position;

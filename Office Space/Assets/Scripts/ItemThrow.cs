@@ -11,6 +11,8 @@ public class ItemThrow : MonoBehaviour
     [SerializeField] GameObject itemPrefab;
     [SerializeField] GameObject itemSpawnPoint;
     [SerializeField] PlayerControl player;
+    [SerializeField] Camera playerCam;
+    [SerializeField] ControllerTest controllerTestScript;
     [SerializeField] GameObject weaponHUD;
     [SerializeField] GameObject grenadeHUD;
     [Header("----- Sounds -----")]
@@ -24,26 +26,49 @@ public class ItemThrow : MonoBehaviour
     {
         rubberBallMaxCount = rubberBallCount;
         updateGrenadeUI();
-        anim = player.GetComponent<Animator>();
+        controllerTestScript = this.GetComponent<ControllerTest>();
+        if (PlayerManager.instance != null && !PlayerManager.instance.isMultiplayer)
+            anim = player.GetComponent<Animator>();
+        else
+            anim = this.GetComponent<Animator>();
     }
     // Update is called once per frame
     void Update()
     {
-        if (animationDone)
+        if (PlayerManager.instance != null && !PlayerManager.instance.isMultiplayer)
         {
-            player.playerRig.weight = 1;
-            animationDone = false;
-        }
-
-        if (!player.isShooting && !player.isReloading)
-        {
-            if (Input.GetButtonDown("Item") && rubberBallCount > 0)
+            if (animationDone)
             {
-                //StartCoroutine(ThrowItem());
-                player.playerRig.weight = 0;
+                player.playerRig.weight = 1;
+                animationDone = false;
+            }
+
+            if (!player.isShooting && !player.isReloading)
+            {
+                if (Input.GetButtonDown("Item") && rubberBallCount > 0)
+                {
+                    //StartCoroutine(ThrowItem());
+                    player.playerRig.weight = 0;
+                    anim.SetLayerWeight(8, 1f);
+                    GameManager.instance.playerScript.Munch(audRubberBall, audRubberBallVol);
+                    anim.SetTrigger("ThrowGrenade");
+                }
+            }
+        }
+        else
+        {
+            if (this.GetComponent<ControllerTest>().GrenadeTriggered && rubberBallCount > 0)
+            {
+                this.GetComponent<ControllerTest>().playerRig.weight = 0;
                 anim.SetLayerWeight(8, 1f);
-                GameManager.instance.playerScript.Munch(audRubberBall, audRubberBallVol);
+                this.GetComponent<ControllerTest>().Munch(audRubberBall, audRubberBallVol);
                 anim.SetTrigger("ThrowGrenade");
+            }
+
+            if (animationDone)
+            {
+                this.GetComponent<ControllerTest>().playerRig.weight = 1;
+                animationDone = false;
             }
         }
     }
@@ -56,11 +81,12 @@ public class ItemThrow : MonoBehaviour
     }
     public void ThrowGrenade()
     {
-         
+
         grenadeHUD.SetActive(false);
         GameObject item = Instantiate(itemPrefab, itemSpawnPoint.transform.position, itemSpawnPoint.transform.rotation);
         Rigidbody rb = item.GetComponent<Rigidbody>();
-        rb.velocity = Camera.main.transform.forward * throwForce;
+        //rb.velocity = Camera.main.transform.forward * throwForce;
+        rb.velocity = playerCam.transform.forward * throwForce;
         rubberBallCount--;
         updateGrenadeUI();
     }
@@ -76,7 +102,8 @@ public class ItemThrow : MonoBehaviour
         yield return new WaitForSeconds(throwDelay);
         GameObject item = Instantiate(itemPrefab, itemSpawnPoint.transform.position, itemSpawnPoint.transform.rotation);
         Rigidbody rb = item.GetComponent<Rigidbody>();
-        rb.velocity = Camera.main.transform.forward * throwForce;
+        //rb.velocity = Camera.main.transform.forward * throwForce;
+        rb.velocity = playerCam.transform.forward * throwForce;
         grenadeHUD.SetActive(false);
         rubberBallCount--;
         updateGrenadeUI();
@@ -86,8 +113,16 @@ public class ItemThrow : MonoBehaviour
 
     void WeaponToggleOff()
     {
-        player.isShooting = true;
-        player.isReloading = true;
+        if (PlayerManager.instance != null && !PlayerManager.instance.isMultiplayer)
+        {
+            player.isShooting = true;
+            player.isReloading = true;
+        }
+        else
+        {
+            this.GetComponent<ControllerTest>().isShooting = true;
+            this.GetComponent<ControllerTest>().isReloading = true;
+        }
         weaponHUD.SetActive(false);
         grenadeHUD.SetActive(true);
 
@@ -96,8 +131,16 @@ public class ItemThrow : MonoBehaviour
     void WeaponToggleOn()
     {
         weaponHUD.SetActive(true);
-        player.isShooting = false;
-        player.isReloading = false;
+        if (PlayerManager.instance != null && !PlayerManager.instance.isMultiplayer)
+        {
+            player.isShooting = false;
+            player.isReloading = false;
+        }
+        else
+        {
+            this.GetComponent<ControllerTest>().isShooting = false;
+            this.GetComponent<ControllerTest>().isReloading = false;
+        }
     }
     public void updateGrenadeUI()
     {

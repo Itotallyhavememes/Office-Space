@@ -33,32 +33,20 @@ public class RubberBall : MonoBehaviour
         if (countdown <= 0f && !hasExploded)
         {
             Explode();
-           // rubberOut.PlayOneShot(rubberBall, why);
+            // rubberOut.PlayOneShot(rubberBall, why);
             hasExploded = false;
 
         }
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-       
-        Debug.Log("Pick up");
-        StartCoroutine(bom());
-    }
-    IEnumerator bom()
-    {
-      
-        yield return new WaitForSeconds(1.5f);
-        
-
-
-    }
-
-        
-
     void Explode()
     {
-        GameManager.instance.playerScript.Munch(rubberBall, volume);
+        if (PlayerManager.instance != null && !PlayerManager.instance.isMultiplayer)
+            GameManager.instance.playerScript.Munch(rubberBall, volume);
+        else
+        {
+            PlayerManager.instance.players[0].GetComponent<ControllerTest>().Munch(rubberBall, volume);
+        }
         // show effect
         Instantiate(explosionEffect, transform.position, transform.rotation);
 
@@ -66,7 +54,7 @@ public class RubberBall : MonoBehaviour
         Collider[] collidersToDestroy = Physics.OverlapSphere(transform.position, blastRadius);
         foreach (Collider nearbyObject in collidersToDestroy)
         {
-            
+
             IDamage dmg = nearbyObject.GetComponent<IDamage>();
             if (dmg != null && !hasDamaged)
             {

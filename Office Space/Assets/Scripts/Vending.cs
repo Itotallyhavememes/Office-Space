@@ -21,10 +21,25 @@ public class Vending : MonoBehaviour, IVend
     void Update()
     {
 
-        if (Input.GetButtonDown("Interact") && GameManager.instance.canVend && playerInCollider)
+        if (PlayerManager.instance != null && !PlayerManager.instance.isMultiplayer)
         {
-            VendItem();
+            if (Input.GetButtonDown("Interact") && GameManager.instance.canVend && playerInCollider)
+            {
+                VendItem();
+            }
         }
+        else
+        {
+            foreach (var player in PlayerManager.instance.players)
+            {
+                if (player.GetComponent<ControllerTest>().InteractTriggered && GameManager.instance.canVend && playerInCollider)
+                {
+                    VendItem();
+                }
+            }
+
+        }
+
 
         if (spotLight.activeSelf && !GameManager.instance.canVend)
             spotLight.SetActive(false);
@@ -41,12 +56,14 @@ public class Vending : MonoBehaviour, IVend
 
     private void OnTriggerEnter(Collider other)
     {
+
         if (other.CompareTag("Player") && GameManager.instance.canVend)
         {
-          
             interactionSprite.SetActive(true);
             playerInCollider = true;
         }
+
+
     }
 
     private void OnTriggerStay(Collider other)
