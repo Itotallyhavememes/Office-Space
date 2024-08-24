@@ -201,7 +201,7 @@ public class GameManager : MonoBehaviour
         {
             //EventSystem.current.SetSelectedGameObject(matchSettingsFirst); //Match settings
             timerUI.SetActive(true);
-            RandomizeVending();
+            //RandomizeVending();
             StartCoroutine(Timer());
         }
 
@@ -226,13 +226,13 @@ public class GameManager : MonoBehaviour
     //Update is called once per frame
     void Update()
     {
-        if (currentMode == gameMode.DONUTKING2 && !isShopDisplayed)
-        {
-            //PJ's shop code
-            ActivateMenu(menuShop);
-            StatePause();
-            isShopDisplayed = true;
-        }
+        //if (currentMode == gameMode.DONUTKING2 && !isShopDisplayed)
+        //{
+        //    //PJ's shop code
+        //    ActivateMenu(menuShop);
+        //    StatePause();
+        //    isShopDisplayed = true;
+        //}
         if (currentMode == gameMode.DONUTKING2 && !isPaused)
             TallyActiveScores();
 

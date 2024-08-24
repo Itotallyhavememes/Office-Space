@@ -2017,14 +2017,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Vending (2)
       objectReference: {fileID: 0}
-    - target: {fileID: 8950421953565123695, guid: bbb58bb2605ff0a4496ef9792321c3e1, type: 3}
-      propertyPath: MaxDistance
-      value: 3.1771886
-      objectReference: {fileID: 0}
-    - target: {fileID: 8950421953565123695, guid: bbb58bb2605ff0a4496ef9792321c3e1, type: 3}
-      propertyPath: MinDistance
-      value: 3.1771877
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -6289,7 +6281,6 @@ MonoBehaviour:
   weaponHUD: {fileID: 3814943545063708141}
   grenadeHUD: {fileID: 3229027267135344970}
   audRubberBall: {fileID: 0}
-  aud: {fileID: 0}
   audRubberBallVol: 0
   rubberBallCount: 7
 --- !u!136 &3169213083614375172
@@ -7530,7 +7521,6 @@ MonoBehaviour:
   weaponHUD: {fileID: 1117754092887402989}
   grenadeHUD: {fileID: 7644069063299256229}
   audRubberBall: {fileID: 0}
-  aud: {fileID: 0}
   audRubberBallVol: 0
   rubberBallCount: 7
 --- !u!136 &4920889607592535554

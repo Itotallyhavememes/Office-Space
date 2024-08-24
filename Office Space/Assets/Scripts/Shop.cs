@@ -25,7 +25,7 @@ public class Shop : MonoBehaviour
 
     void Start()
     {
-        moneyCount.text = "$ " + GameManager.instance.statsTracker[GameManager.instance.player.name].getMoneyTotal().ToString();
+        //moneyCount.text = "$ " + GameManager.instance.statsTracker[GameManager.instance.player.name].getMoneyTotal().ToString();
     }
 
     public void updateMoneyCount()
