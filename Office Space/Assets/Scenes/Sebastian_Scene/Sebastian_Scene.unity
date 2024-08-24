@@ -240,6 +240,18 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 35368735}
     - target: {fileID: 8754997016133161887, guid: d3513e0bf77cac44ca54f4d9070420fb, type: 3}
+      propertyPath: activeDKSText
+      value: 
+      objectReference: {fileID: 157805045}
+    - target: {fileID: 8754997016133161887, guid: d3513e0bf77cac44ca54f4d9070420fb, type: 3}
+      propertyPath: activePlaceText
+      value: 
+      objectReference: {fileID: 157805045}
+    - target: {fileID: 8754997016133161887, guid: d3513e0bf77cac44ca54f4d9070420fb, type: 3}
+      propertyPath: activeRoundsText
+      value: 
+      objectReference: {fileID: 157805045}
+    - target: {fileID: 8754997016133161887, guid: d3513e0bf77cac44ca54f4d9070420fb, type: 3}
       propertyPath: spawnPoints.Array.size
       value: 4
       objectReference: {fileID: 0}
@@ -444,6 +456,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2bfc2fb4df4d5e449a3cfdad2560e00f, type: 3}
+--- !u!114 &157805045 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8731361026322715260, guid: d3513e0bf77cac44ca54f4d9070420fb, type: 3}
+  m_PrefabInstance: {fileID: 69157107}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &165892416
 PrefabInstance:
   m_ObjectHideFlags: 0

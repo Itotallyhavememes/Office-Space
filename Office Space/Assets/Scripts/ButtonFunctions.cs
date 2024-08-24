@@ -79,10 +79,10 @@ public class ButtonFunctions : MonoBehaviour
     {
         GameManager.instance.OpenControls();
     }
-    public void creditsMenu()
-    {
-        GameManager.instance.OpenCredits();
-    }
+    //public void creditsMenu()
+    //{
+    //    GameManager.instance.OpenCredits();
+    //}
 
     public void returnButton()
     {
@@ -145,6 +145,11 @@ public class ButtonFunctions : MonoBehaviour
     {
         GameManager.instance.ChangeTargetCamera();
         StartCoroutine(GameManager.instance.BackToMain());
+    }
+    public void backFromCredits()
+    {
+        GameManager.instance.ChangeTargetCamera();
+        StartCoroutine(GameManager.instance.BackToMainFromCredits());
     }
 
     IEnumerator loadingAsync()

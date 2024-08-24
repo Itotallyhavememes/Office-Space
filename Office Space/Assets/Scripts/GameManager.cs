@@ -168,6 +168,13 @@ public class GameManager : MonoBehaviour
 
     bool isShopDisplayed;
 
+    [Header("Variables for Credits")]
+    [SerializeField] GameObject creditsText;
+    [SerializeField] float maxCreditsHeight;
+    [SerializeField] float creditsScrollSpeed;
+    Vector3 origCreditsPosition;
+    bool canScrollCredits;
+
     void Awake()
     {
         instance = this;
@@ -210,16 +217,15 @@ public class GameManager : MonoBehaviour
         else if (player == null)
             playerHPStart = 5;
 
-        if (SceneManager.GetSceneByName("Title") == SceneManager.GetActiveScene())
+        if (currentMode == gameMode.TITLE)
         {
             //StatePause();
             EventSystem.current.SetSelectedGameObject(mainMenuFirst);
+            origCreditsPosition = creditsText.transform.localPosition;
         }
         Debug.Log(bodyTracker.Count.ToString() + " PLAYERS LOADED");
         if (currentMode == gameMode.DONUTKING2)
             InstantiateScoreBoard();
-
-
 
     }
 
@@ -1113,6 +1119,39 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(menuTimeDelay);
         menuCredits.SetActive(true);
         EventSystem.current.SetSelectedGameObject(creditsMenuFirst);
+
+        canScrollCredits = true;
+        StartCoroutine(BeginScrollingCredits());
+    }
+
+    public IEnumerator BeginScrollingCredits()
+    {
+        while (canScrollCredits)
+        {
+            while (canScrollCredits && creditsText.transform.localPosition.y < maxCreditsHeight - 1)
+            {
+                creditsText.transform.localPosition += Vector3.up * (creditsScrollSpeed * Time.deltaTime);
+                yield return new WaitForEndOfFrame();
+            }
+            creditsText.transform.localPosition = origCreditsPosition;
+        }
+
+    }
+
+    public void ResetCredits()
+    {
+        canScrollCredits = false;
+        creditsText.transform.localPosition = origCreditsPosition;
+    }
+
+    public IEnumerator BackToMainFromCredits()
+    {
+        ResetCredits();
+        menuCredits.SetActive(false);
+        yield return new WaitForSeconds(menuTimeDelay);
+        Title.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(mainMenuFirst);
+        yield return new WaitForSeconds(menuTimeDelay);
     }
 
     public IEnumerator BackToMain()
