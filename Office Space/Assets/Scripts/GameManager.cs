@@ -28,6 +28,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject settingsFirst;
     [SerializeField] GameObject controlsFirst;
     [SerializeField] GameObject mapSelectScreenFirst;
+    [SerializeField] GameObject creditsMenuFirst;
 
     [Header("In-Game First Selected")]
     [SerializeField] GameObject pauseFirst;
@@ -35,7 +36,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject nextRoundFirst;
     [SerializeField] GameObject gameEndFirst;
     [SerializeField] GameObject objectiveFirst;
-    [SerializeField] GameObject creditsMenuFirst;
 
     [Header("Title Screen Cinemachine")]
     [SerializeField] CinemachineVirtualCamera primaryCamera;
@@ -242,19 +242,9 @@ public class GameManager : MonoBehaviour
         if (currentMode == gameMode.DONUTKING2 && !isPaused)
             TallyActiveScores();
 
-        if (Input.GetButtonDown("Cancel"))
+        if (Input.GetButtonDown("Cancel") && !PlayerManager.instance.isMultiplayer)
         {
-            if (menuActive == null)
-            {
-                StatePause();
-                menuActive = menuPause;
-                menuActive.SetActive(isPaused);
-                EventSystem.current.SetSelectedGameObject(pauseFirst);
-            }
-            else if (menuActive == menuPause)
-            {
-                StateUnpause();
-            }
+            OnPause();
         }
 
         if (currentMode == gameMode.DONUTKING2 && !isPaused)
@@ -629,6 +619,21 @@ public class GameManager : MonoBehaviour
         {
             PriorityPoint.Add(donutOBJ.transform);
             //PriorityPoint = donutOBJ.transform;
+        }
+    }
+
+    public void OnPause()
+    {
+        if (menuActive == null)
+        {
+            StatePause();
+            menuActive = menuPause;
+            menuActive.SetActive(isPaused);
+            EventSystem.current.SetSelectedGameObject(pauseFirst);
+        }
+        else if (menuActive == menuPause)
+        {
+            StateUnpause();
         }
     }
 
