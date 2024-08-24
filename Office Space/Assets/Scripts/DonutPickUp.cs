@@ -80,11 +80,11 @@ public class DonutPickUp : MonoBehaviour
                     GameManager.instance.playerScript.DKPickedUp();
                     //GameManager.instance.worldDonutCount--;
                 }
-                else
-                {
-                    //compare.GetComponent<enemyAI>().HealHP(HpRestoreAmount);
-                    compare.GetComponent<enemyAI>().ResetHP();
-                }
+                //else
+                //{
+                //    //compare.GetComponent<enemyAI>().HealHP(HpRestoreAmount);
+                //    compare.GetComponent<enemyAI>().ResetHP();
+                //}
                 //GameManager.instance.TallyActiveScores();
 
                 //CODE BIT: Donut King Status Update

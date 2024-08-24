@@ -1969,11 +1969,11 @@ MonoBehaviour:
   itemPrefab: {fileID: 3822187847243570803, guid: 14ce3eaf9a276fa49ba840ba1115eff7, type: 3}
   itemSpawnPoint: {fileID: 1816182811130589193}
   player: {fileID: 7526630443427397445}
-  multiPlayerPrefab: {fileID: 0}
+  playerCam: {fileID: 2376661861460711729}
+  controllerTestScript: {fileID: 0}
   weaponHUD: {fileID: 4048435227192157926}
   grenadeHUD: {fileID: 2478422088836464121}
   audRubberBall: {fileID: 0}
-  aud: {fileID: 0}
   audRubberBallVol: 0
   rubberBallCount: 7
 --- !u!95 &4082514754491947661

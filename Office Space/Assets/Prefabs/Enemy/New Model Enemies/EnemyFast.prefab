@@ -1169,7 +1169,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8544230854418234985
 Transform:
   m_ObjectHideFlags: 0
@@ -1233,7 +1233,7 @@ MonoBehaviour:
   model: {fileID: 5046793513790081073}
   anim: {fileID: 3677355535356495607}
   enemRig: {fileID: 4024470739610092049}
-  dmgColor: {r: 0.07861614, g: 0.07861614, b: 1, a: 1}
+  dmgColor: {r: 0.7169812, g: 0, b: 0, a: 1}
   shootPos: {fileID: 9138533809072025593}
   HP: 10
   faceTargetSpeed: 50
