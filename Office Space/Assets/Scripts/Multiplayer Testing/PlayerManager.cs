@@ -28,7 +28,12 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] List<GameObject> playerIcons;
     [SerializeField] List<Text> playerTogglesText;
     [SerializeField] GameObject botsDropdown;
+    [SerializeField] Slider timerSlider;
+    [SerializeField] GameObject roundsDropdown;
+    [SerializeField] GameObject playerBlockout;
+
     private TMP_Dropdown botsDropdownValue;
+    
     List<Color> playerToggleColors = new List<Color> { Color.red, Color.blue, Color.yellow, Color.green };
     private Color activePlayerTxtColor = Color.white;
     private Color activeBotColor = Color.gray;
@@ -89,7 +94,7 @@ public class PlayerManager : MonoBehaviour
         maxBots--;
 
         if (players.Count > 1)
-            player.GetComponent<ControllerTest>().playerCamera.GetComponent<AudioListener>().enabled = false;
+            player.GetComponent<AudioListener>().enabled = false;
 
         while (players.Count + botCount > maxPlayers)
         {
@@ -158,6 +163,8 @@ public class PlayerManager : MonoBehaviour
             playerInputManager.DisableJoining();
             BotSpawner();
             matchSettingsMenu.SetActive(false);
+            if(players.Count == 3)
+                playerBlockout.SetActive(true);
 
             for (int i = 0; i < players.Count; i++)
             {
@@ -170,6 +177,7 @@ public class PlayerManager : MonoBehaviour
             }
 
             matchStarted = true;
+            GameManager.instance.SetDKTimer((int)timerSlider.value * 60);
             //GameManager.instance.StateUnpause();
 
 

@@ -80,10 +80,14 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
     [SerializeField] GameObject menuActive;
     [SerializeField] GameObject menuShop;
     [SerializeField] GameObject shopFirst;
+    [SerializeField] GameObject damageFlash;
     //[SerializeField] GameObject firstSelectedButtonInPause;
     public Image playerHPBar;
     public Image playerAmmoBar;
     public TMP_Text grenadeStack;
+
+    [Header("Scoreboard Text")]
+    [SerializeField] 
 
     [Header("Death Cam")]
     public Camera deathCamera;
@@ -135,6 +139,7 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
 
     [Header("Look Sensitivity")]
     [SerializeField] float mouseSensitivity = 2.0f;
+    [SerializeField] float controllerSensitivity;
     [SerializeField] float upDownRange = 90.0f;
     [SerializeField] Camera playerCam;
     private float verticalRotation;
@@ -509,13 +514,23 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
 
     void Rotation()
     {
+        float sensitivity;
+        if (gameObject.GetComponent<PlayerInput>().currentControlScheme == "Keyboard&Mouse")
+        {
+            sensitivity = mouseSensitivity;
+        }
+        else
+        {
+            sensitivity = controllerSensitivity;
+        }
+
         float mouseYInput = invertYAxis ? -LookInput.y : LookInput.y;
-        float mouseXRotation = LookInput.x * mouseSensitivity;
+        float mouseXRotation = LookInput.x * sensitivity;
         transform.Rotate(0, mouseXRotation, 0);
         //verticalRotation -= inputHandler.LookInput.y * mouseSensitivity;
-        verticalRotation -= mouseYInput * mouseSensitivity;
+        verticalRotation -= mouseYInput * sensitivity;
         verticalRotation = Mathf.Clamp(verticalRotation, -upDownRange, upDownRange);
-        playerCamera.transform.localRotation = Quaternion.Euler(verticalRotation, 0, 0);
+        playerCamera.transform.localRotation = Quaternion.Euler(verticalRotation, 0, 0);        
     }
 
     //UI Refresh Methods
@@ -800,6 +815,8 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
 
         gameObject.GetComponent<CapsuleCollider>().enabled = true;
         deathCamera.gameObject.SetActive(false);
+        playerCam.gameObject.SetActive(true);
+        weaponModel.SetActive(true);
 
         isDead = false;
 
@@ -918,11 +935,11 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
 
     IEnumerator flashScreenDamage()
     {
-        GameManager.instance.damageFlash.SetActive(true);
+        damageFlash.SetActive(true);
         playerMeshRenderer.material.color = dmgColor;
         yield return new WaitForSeconds(0.2f);
         playerMeshRenderer.material.color = origColor;
-        GameManager.instance.damageFlash.SetActive(false);
+        damageFlash.SetActive(false);
     }
 
     //-------------------Animation methods-------------------

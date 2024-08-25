@@ -404,7 +404,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -1820, y: -980}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2843510128759674120
 CanvasRenderer:
@@ -7989,7 +7989,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6951914856414834927
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8247,11 +8247,11 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7364175232640527542}
-  - {fileID: 2421907695155343969}
   - {fileID: 5263978374835942204}
   - {fileID: 5331830946721852588}
   - {fileID: 1540433762800224506}
   - {fileID: 8509967023337174284}
+  - {fileID: 2421907695155343969}
   - {fileID: 8301373257848750768}
   - {fileID: 6951914856414834927}
   m_Father: {fileID: 395297506697260119}
@@ -21246,6 +21246,7 @@ MonoBehaviour:
   menuActive: {fileID: 0}
   menuShop: {fileID: 3581008271251290688}
   shopFirst: {fileID: 2795480273282301591}
+  damageFlash: {fileID: 469829045782115343}
   playerHPBar: {fileID: 8746920632880842021}
   playerAmmoBar: {fileID: 4744407084604503777}
   grenadeStack: {fileID: 3276352545860222381}
@@ -21295,7 +21296,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 87d1afcb45928044db032422cc026b14, type: 3}
   audDamageVol: 0
   grenadeHUD: {fileID: 0}
-  mouseSensitivity: 2
+  mouseSensitivity: 1
+  controllerSensitivity: 3
   upDownRange: 90
   playerCam: {fileID: 168878907541188755}
   actionMapName: Player

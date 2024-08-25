@@ -127,7 +127,7 @@ public class GameManager : MonoBehaviour
     //CODE FOR PJ's SHOP
     public int playersReady;
     [SerializeField] public int moneyForTimeHeld;
-    [SerializeField] public int moneyForDonutKing; 
+    [SerializeField] public int moneyForDonutKing;
     [SerializeField] public int startingMoney;
 
 
@@ -211,7 +211,7 @@ public class GameManager : MonoBehaviour
         //Debug.Log("Did we restart?");
 
         //isShopDisplayed = true;
-        
+
     }
 
     void Start()
@@ -242,7 +242,7 @@ public class GameManager : MonoBehaviour
         }
         //Debug.Log(bodyTracker.Count.ToString() + " PLAYERS LOADED");
         //if (currentMode == gameMode.DONUTKING2)
-            
+
 
     }
 
@@ -431,7 +431,7 @@ public class GameManager : MonoBehaviour
         foreach (var player in PlayerManager.instance.players)
         {
             statsTracker[player.name].depositMoney(100);
-            
+
         }
         //Shop.instance.updateMoneyCount();
     }
@@ -526,7 +526,7 @@ public class GameManager : MonoBehaviour
             ParticipantStats objStat = new ParticipantStats();
             objStat = objStat.instantiateStats();
             statsTracker.Add(self.name, objStat);
-          //  Debug.Log(self.name.ToString() + " : " + statsTracker[self.name].getAllStats());
+            //  Debug.Log(self.name.ToString() + " : " + statsTracker[self.name].getAllStats());
             //BELOW: available code for when/if Beta requires username to be displayed, as opposed to Player or Enemy Types
             //statsTracker[self.name].setDisplayName(self.name);
         }
@@ -557,7 +557,7 @@ public class GameManager : MonoBehaviour
         //Debug.Log(self.name + "DB: " + statsTracker[self.name].getDeaths().ToString());
         statsTracker[self.name].updateDeaths();
         statsTracker[self.name].updateKDR();
-      //  Debug.Log(self.name.ToString() + statsTracker[self.name].getAllStats().ToString());
+        //  Debug.Log(self.name.ToString() + statsTracker[self.name].getAllStats().ToString());
         // Debug.Log(self.name + "DA: " + statsTracker[self.name].getDeaths().ToString());
         //if (statsTracker[self.name].getDKStatus() == true)
         //    statsTracker[self.name].updateDKStatus();
@@ -851,7 +851,7 @@ public class GameManager : MonoBehaviour
         //    menuActive = menuScore2;
 
 
-      //  Debug.Log(winnerName + " : " + statsTracker[winnerName].getAllStats());
+        //  Debug.Log(winnerName + " : " + statsTracker[winnerName].getAllStats());
         ++RoundsWon;
 
 
@@ -862,7 +862,7 @@ public class GameManager : MonoBehaviour
     {
         foreach (var participant in statsTracker)
         {
-           // Debug.Log(participant.Key + " : " + participant.Value.getAllStats());
+            // Debug.Log(participant.Key + " : " + participant.Value.getAllStats());
             if (participant.Value.getRoundsWon() == NumberOfRounds)
             {
                 Debug.Log(participant.Key + " WINS THE GAME!");
@@ -874,6 +874,7 @@ public class GameManager : MonoBehaviour
 
     public void TallyActiveScores()
     {
+
         activeScoreNamesText.text = string.Empty;
         activeScoreText.text = string.Empty;
         activeRoundsText.text = string.Empty;
@@ -907,6 +908,7 @@ public class GameManager : MonoBehaviour
 
             activeScoreText.text += timeText + '\n';
         }
+
     }
 
     public void DisplayInfoScreen()
@@ -1029,7 +1031,7 @@ public class GameManager : MonoBehaviour
 
     public void SetRounds(int rounds)
     {
-        roundsToPlay = rounds;
+        NumberOfRounds = rounds;
     }
 
     public void SetDKTimer(int time) //Made public timer setter to access it from the Match Settings
@@ -1072,7 +1074,7 @@ public class GameManager : MonoBehaviour
 
         //Sets isDonutKing for current object to false, since initially was true
         //METHOD TO TOGGLE LIGHT SWITCH
-        PlayerControl lightSwitchP = donutDropper.GetComponent<PlayerControl>();
+        ControllerTest lightSwitchP = donutDropper.GetComponent<ControllerTest>();
         if (lightSwitchP != null)
             lightSwitchP.ToggleMyLight();
         else
@@ -1087,7 +1089,7 @@ public class GameManager : MonoBehaviour
         PriorityPoint.Clear();
         PriorityPoint.Add(donutDropItem.transform);
         DownWithTheDonutKing();
-       // Debug.Log(donutDropper.name.ToString() + " : " + statsTracker[donutDropper.name].getAllStats());
+        // Debug.Log(donutDropper.name.ToString() + " : " + statsTracker[donutDropper.name].getAllStats());
     }
 
     public IEnumerator DKTimer()
@@ -1134,7 +1136,7 @@ public class GameManager : MonoBehaviour
             //        break;
             //    }
             //}
-            
+
         }
     }
 
@@ -1233,5 +1235,11 @@ public class GameManager : MonoBehaviour
     {
         //menuActive.SetActive(false);
         StateUnpause();
+    }
+
+    public void AddScoreboards(GameObject boards)
+    {
+
+
     }
 }
