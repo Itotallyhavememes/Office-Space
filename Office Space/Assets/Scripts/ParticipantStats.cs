@@ -85,19 +85,19 @@ public class ParticipantStats
 
     public string getMoneyTotalString() { return moneyTotal.ToString(); }
 
-    //Debug Method
-    public string getAllStats()
-    {
-        string debugStats;
-        debugStats = "\tK: " + Kills.ToString() + " | ";
-        debugStats += "D: " + Deaths.ToString() + " | ";
-        debugStats += "TH: " + timeHeld.ToString() + " | ";
-        debugStats += "KDR: " + KDR.ToString("N2") + "% | ";
-        debugStats += "DK?: " + isDonutKing.ToString() + " | ";
-        debugStats += "$" + moneyTotal.ToString() + " | ";
-        debugStats += "RW: " + RoundsWon.ToString() + " | ";
-        return debugStats;
-    }
+    ////Debug Method
+    //public string getAllStats()
+    //{
+    //    string debugStats;
+    //    debugStats = "\tK: " + Kills.ToString() + " | ";
+    //    debugStats += "D: " + Deaths.ToString() + " | ";
+    //    debugStats += "TH: " + timeHeld.ToString() + " | ";
+    //    debugStats += "KDR: " + KDR.ToString("N2") + "% | ";
+    //    debugStats += "DK?: " + isDonutKing.ToString() + " | ";
+    //    debugStats += "$" + moneyTotal.ToString() + " | ";
+    //    debugStats += "RW: " + RoundsWon.ToString() + " | ";
+    //    return debugStats;
+    //}
 
     //METHOD FOR PRINTING STATS FOR SCOREBOARD
     public string GetScoreStats()

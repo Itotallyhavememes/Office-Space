@@ -97,7 +97,6 @@ public class Shop : MonoBehaviour
             int playerMoney = GameManager.instance.statsTracker[GameManager.instance.player.name].getMoneyTotal();
             if (playerMoney >= shurikenPrice)
             {
-                Debug.Log("Shuriken bought");
                 GameManager.instance.statsTracker[GameManager.instance.player.name].withdrawMoney(shurikenPrice);
                 GameManager.instance.playerScript.GetWeaponStats(shuriken);
                 updateMoneyCount();
