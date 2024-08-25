@@ -27,6 +27,7 @@ public class ItemThrow : MonoBehaviour
         rubberBallMaxCount = rubberBallCount;
         updateGrenadeUI();
         controllerTestScript = this.GetComponent<ControllerTest>();
+
         if (!GameManager.instance.isMultiplayer)
             anim = player.GetComponent<Animator>();
         else
@@ -85,8 +86,12 @@ public class ItemThrow : MonoBehaviour
         grenadeHUD.SetActive(false);
         GameObject item = Instantiate(itemPrefab, itemSpawnPoint.transform.position, itemSpawnPoint.transform.rotation);
         Rigidbody rb = item.GetComponent<Rigidbody>();
-        //rb.velocity = Camera.main.transform.forward * throwForce;
-        rb.velocity = playerCam.transform.forward * throwForce;
+        
+        if (!GameManager.instance.isMultiplayer)
+            rb.velocity = Camera.main.transform.forward * throwForce;
+        else
+            rb.velocity = playerCam.transform.forward * throwForce;
+
         rubberBallCount--;
         updateGrenadeUI();
     }
@@ -102,8 +107,12 @@ public class ItemThrow : MonoBehaviour
         yield return new WaitForSeconds(throwDelay);
         GameObject item = Instantiate(itemPrefab, itemSpawnPoint.transform.position, itemSpawnPoint.transform.rotation);
         Rigidbody rb = item.GetComponent<Rigidbody>();
-        //rb.velocity = Camera.main.transform.forward * throwForce;
-        rb.velocity = playerCam.transform.forward * throwForce;
+
+        if(!GameManager.instance.isMultiplayer)
+            rb.velocity = Camera.main.transform.forward * throwForce;
+        else
+            rb.velocity = playerCam.transform.forward * throwForce;
+
         grenadeHUD.SetActive(false);
         rubberBallCount--;
         updateGrenadeUI();
@@ -144,7 +153,10 @@ public class ItemThrow : MonoBehaviour
     }
     public void updateGrenadeUI()
     {
-        GameManager.instance.grenadeStack.text = (rubberBallCount).ToString();
+        if (!GameManager.instance.isMultiplayer)
+            GameManager.instance.grenadeStack.text = (rubberBallCount).ToString();
+        else
+            this.GetComponent<ControllerTest>().grenadeStack.text = (rubberBallCount).ToString();
     }
 
     public int GetMaxBallCount()

@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5461497336981969858}
   - component: {fileID: -7229983277525793893}
   - component: {fileID: 6446358141037384437}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: Shuriken
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -254,7 +254,7 @@ TrailRenderer:
       atime6: 0
       atime7: 0
       m_Mode: 0
-      m_ColorSpace: 0
+      m_ColorSpace: -1
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
     numCornerVertices: 0

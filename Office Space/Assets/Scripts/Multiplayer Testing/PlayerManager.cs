@@ -40,10 +40,11 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] GameObject matchSettingsMenu;
     [SerializeField] GameObject[] enemyPrefabs;
     public bool matchStarted;
-    public bool isMultiplayer;
-
 
     private PlayerInputManager playerInputManager;
+
+    [Header("Player HP")]
+    public int HP;
 
     private void Awake()
     {
@@ -55,13 +56,15 @@ public class PlayerManager : MonoBehaviour
 
         botsDropdownValue = botsDropdown.GetComponent<TMP_Dropdown>();
         matchStarted = false;
+
     }
 
     private void Start()
     {
         GameManager.instance.StatePause();
         GameManager.instance.ActivateMenu(matchSettingsMenu);
-        EventSystem.current.SetSelectedGameObject(matchSettingsFirst);
+        GameManager.instance.isMultiplayer = true;
+        //EventSystem.current.SetSelectedGameObject(matchSettingsFirst);
     }
 
     private void OnEnable()
@@ -76,14 +79,17 @@ public class PlayerManager : MonoBehaviour
 
     void AddPlayer(PlayerInput player)
     {
-        isMultiplayer = true;
         players.Add(player);
         //cameras.Add(player.GetComponentInChildren<Camera>());
         GameManager.instance.playerSpawn.transform.position = spawnPoints[players.Count - 1].position;
 
         player.GetComponent<ControllerTest>().spawnPlayer();
+        player.GetComponent<ControllerTest>().ResetPlayer();
         player.name = "Player " + players.Count.ToString();
         maxBots--;
+
+        if(players.Count > 0)
+            player.GetComponent<ControllerTest>().playerCamera.GetComponent<AudioListener>().enabled = false;
 
         while (players.Count + botCount > maxPlayers)
         {
@@ -91,27 +97,6 @@ public class PlayerManager : MonoBehaviour
         }
 
         RefreshUI();
-
-
-
-        //Debug.Log(Input.GetJoystickNames().First());
-
-        //if (players.Count == 2)
-        //{
-        //    cameras[0].rect.Set(0, 0.5f, 1, 0.5f);
-        //    cameras[1].rect.Set(0, 0, 1, 0.5f);
-        //    Debug.Log("There's 2 players on screen");
-        //}
-
-        //// converts layer mask (bit) to an int
-        //int layerToAdd = (int)Mathf.Log(playerLayers[players.Count - 1].value, 2);
-
-        ////set the layer
-        //playerParent.GetComponentInChildren<CinemachineFreeLook>().gameObject.layer = layerToAdd;
-        ////add the layer
-        //playerParent.GetComponentInChildren<Camera>().cullingMask |= 1 << layerToAdd; //bitwise operation
-        ////set the action in the custom Cinemachine Input Handler
-        //playerParent.GetComponentInChildren<InputHandler>().horizontal = player.actions.FindAction("Look");
     }
 
     public void RefreshUI()
@@ -162,7 +147,6 @@ public class PlayerManager : MonoBehaviour
             int rand = Random.Range(0, enemyPrefabs.Length);
             GameObject enemy = enemyPrefabs[rand];
             Instantiate(enemy, spawnPoints[i].position, spawnPoints[i].rotation);
-            //enemy.transform.position = new Vector3(transform.position.x + transform.forward.x, transform.position.y, transform.position.z);
         }
 
     }
@@ -177,11 +161,13 @@ public class PlayerManager : MonoBehaviour
             for (int i = 0; i < players.Count; i++)
             {
                 players[i].GetComponent<Animator>().enabled = true;
+                players[i].GetComponent<ControllerTest>().deathCamera.rect 
+                    = players[i].GetComponent<ControllerTest>().playerCamera.rect;
             }
 
             matchSettingsMenu.SetActive(false);
             matchStarted = true;
-            GameManager.instance.StateUnpause();
+            //GameManager.instance.StateUnpause();
         }
     }
 

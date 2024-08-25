@@ -463,8 +463,11 @@ MonoBehaviour:
   playerMeshRenderer: {fileID: 5892147064852502340}
   dmgColor: {r: 0.7169812, g: 0, b: 0, a: 1}
   DKLight: {fileID: 4054478004205456150}
+  electricParticles: {fileID: 0}
+  speedFOVEffect: 75
   speed: 6
   sprintMod: 2
+  leftStickDeadzoneValue: 0.2
   crouchLevel: 0.3
   crouchMod: 4
   jumpForce: 8
@@ -473,9 +476,6 @@ MonoBehaviour:
   slideLockoutTime: 1
   slideCooldown: 10
   playerCamera: {fileID: 5018801600766032129}
-  camerasToResize:
-  - {fileID: 2489295648474889437}
-  - {fileID: 6557330449660377003}
   cameraLockOn: {fileID: 8078530457849970204}
   invertYAxis: 0
   HP: 13
@@ -485,10 +485,11 @@ MonoBehaviour:
   firstSelectedButtonInPause: {fileID: 0}
   playerHPBar: {fileID: 7384612064159632506}
   playerAmmoBar: {fileID: 1812737734512437336}
+  grenadeStack: {fileID: 2069020586877694242}
   deathCamera: {fileID: 6557330449660377003}
   playerAim: {fileID: 8432964258101734896}
   aimBallDist: 5
-  weaponHUD: {fileID: 0}
+  weaponHUD: {fileID: 3997627584081395518}
   starterWeapon: {fileID: 11400000, guid: a472b3a2a9729e141a2907916827da95, type: 2}
   weaponList: []
   weaponModel: {fileID: 3997627584081395518}
@@ -552,16 +553,11 @@ MonoBehaviour:
   grenade: Grenade
   join: Join
   pause: Pause
-  resume: Cancel
   crouch: Crouch
-  aim: Aim
-  adsLeft: ADS Left
-  adsRight: ADS Right
   swapWeaponsCont: Swap Weapon
   swapWeaponsScroll: Swap Weapon Scroll
   interact: Interact
   scoreboard: Scroeboard
-  leftStickDeadzoneValue: 0.2
 --- !u!114 &2979110028611397876
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -679,7 +675,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 403883271711309938}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 9000000, guid: 897b34267f422c1499700402763d096e, type: 3}
   m_Controller: {fileID: 9100000, guid: ce91b560fe9b96e4ab021ef42db2f771, type: 2}
   m_CullingMode: 1
@@ -5871,7 +5867,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5900594466262353738
 RectTransform:
   m_ObjectHideFlags: 0

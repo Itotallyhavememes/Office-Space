@@ -71,36 +71,59 @@ public class DonutPickUp : MonoBehaviour
 
                 //if (gameObject.transform == GameManager.instance.PriorityPoint)
                 //    GameManager.instance.PriorityPoint = other.transform;
-
-                if (compare.name == "NMODEL_Player")
+                if (!GameManager.instance.isMultiplayer)
                 {
-                    GameManager.instance.playerScript.Munch(pickupSFX, audPickupVol);
-                    //GameManager.instance.playerScript.HealthPickup(); // Heals player by HpRestoreAmount 
-                    //FOR DK SPECIFICALLY
-                    GameManager.instance.playerScript.DKPickedUp();
-                    //GameManager.instance.worldDonutCount--;
-                }
-                //else
-                //{
-                //    //compare.GetComponent<enemyAI>().HealHP(HpRestoreAmount);
-                //    compare.GetComponent<enemyAI>().ResetHP();
-                //}
-                //GameManager.instance.TallyActiveScores();
+                    if (compare.name == "NMODEL_Player")
+                    {
+                        GameManager.instance.playerScript.Munch(pickupSFX, audPickupVol);
+                        //GameManager.instance.playerScript.HealthPickup(); // Heals player by HpRestoreAmount 
+                        //FOR DK SPECIFICALLY
+                        GameManager.instance.playerScript.DKPickedUp();
+                        //GameManager.instance.worldDonutCount--;
+                    }
+                    else
+                    {
+                        //compare.GetComponent<enemyAI>().HealHP(HpRestoreAmount);
+                        compare.GetComponent<enemyAI>().ResetHP();
+                    }
+                    //GameManager.instance.TallyActiveScores();
 
-                //CODE BIT: Donut King Status Update
-                GameManager.instance.TheDonutKing = other.gameObject;
-                //LOGIC TO CHECK WHICH LIGHT TO TOGGLE
-                PlayerControl lightSwitchP = other.GetComponent<PlayerControl>();
-                if (lightSwitchP != null)
-                    lightSwitchP.ToggleMyLight();
+                    //CODE BIT: Donut King Status Update
+                    GameManager.instance.TheDonutKing = other.gameObject;
+                    //LOGIC TO CHECK WHICH LIGHT TO TOGGLE
+                    PlayerControl lightSwitchP = other.GetComponent<PlayerControl>();
+                    if (lightSwitchP != null)
+                        lightSwitchP.ToggleMyLight();
+                    else
+                    {
+                        enemyAI lightSwitchE = other.GetComponent<enemyAI>();
+                        lightSwitchE.ToggleMyLight();
+                        lightSwitchE.ToggleAmIKing();
+                        if (lightSwitchE.getKingStatus())
+                            Debug.Log("ALL HAIL: " + other.name);
+                    }
+                }
                 else
                 {
-                    enemyAI lightSwitchE = other.GetComponent<enemyAI>();
-                    lightSwitchE.ToggleMyLight();
-                    lightSwitchE.ToggleAmIKing();
-                    if (lightSwitchE.getKingStatus())
-                        Debug.Log("ALL HAIL: " + other.name);
+                    ControllerTest isItPlayer = compare.GetComponent<ControllerTest>();
+                    if (isItPlayer != null)
+                    {
+                        isItPlayer.Munch(pickupSFX, audPickupVol);
+                        isItPlayer.DKPickedUp();
+                        isItPlayer.ToggleMyLight();
+                    }
+                    else
+                    {
+                        enemyAI lightSwitchE = other.GetComponent<enemyAI>();
+                        lightSwitchE.ResetHP(); //Reset enemy HP
+                        lightSwitchE.ToggleMyLight();
+                        lightSwitchE.ToggleAmIKing();
+                    }
+
                 }
+                
+                //CODE BIT: Donut King Status Update
+                GameManager.instance.TheDonutKing = other.gameObject;
                 GameManager.instance.statsTracker[other.name].updateDKStatus();
                 if (GameManager.instance.statsTracker[other.name].getDKStatus() == true)
                 {
@@ -114,11 +137,11 @@ public class DonutPickUp : MonoBehaviour
 
               //  Debug.Log(other.name.ToString() + " : " + GameManager.instance.statsTracker[other.name].getAllStats());
                 gameObject.SetActive(false);
-                if(GameManager.instance.worldDonutCount > 0)
+                if (GameManager.instance.worldDonutCount > 0)
                     --GameManager.instance.worldDonutCount;
             }
         }
     }
 
-    
+
 }

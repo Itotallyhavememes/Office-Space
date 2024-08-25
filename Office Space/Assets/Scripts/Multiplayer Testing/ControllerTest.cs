@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
@@ -7,7 +8,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
 using UnityEngine.UI;
 
-public class ControllerTest : MonoBehaviour //ITarget //, IDamage 
+public class ControllerTest : MonoBehaviour, ITarget, IDamage
 {
     [Header("Input Action Asset")]
     [SerializeField] InputActionAsset inputAsset;
@@ -28,14 +29,19 @@ public class ControllerTest : MonoBehaviour //ITarget //, IDamage
     [SerializeField] SkinnedMeshRenderer playerMeshRenderer;
     [SerializeField] Color dmgColor;
     [SerializeField] GameObject DKLight;
+    [SerializeField] GameObject electricParticles;
+    [Range(75, 100)][SerializeField] float speedFOVEffect;
     Color origColor;
 
     [Header("Movement Parameters")]
     [SerializeField] float speed = 6.0f;
+    float origSpeed;
     [SerializeField] float sprintMod = 2.0f;
     private Vector3 playerVel;
-    float origSpeed;
     bool isSprinting;
+
+    [Header("Gamepad Deadzone Values")]
+    [SerializeField] float leftStickDeadzoneValue = 0.2f;
 
     [Header("Crouch Parameters")]
     [SerializeField] float crouchLevel;
@@ -60,7 +66,7 @@ public class ControllerTest : MonoBehaviour //ITarget //, IDamage
     bool canSlide;
 
     [Header("Camera Settings")]
-    [SerializeField] Camera playerCamera;
+    public Camera playerCamera;
     [SerializeField] GameObject cameraLockOn;
     [SerializeField] bool invertYAxis = false;
 
@@ -75,18 +81,18 @@ public class ControllerTest : MonoBehaviour //ITarget //, IDamage
     [SerializeField] GameObject firstSelectedButtonInPause;
     public Image playerHPBar;
     public Image playerAmmoBar;
+    public TMP_Text grenadeStack;
 
     [Header("Death Cam")]
-    [SerializeField] Camera deathCamera;
+    public Camera deathCamera;
     bool isDead;
 
     [Header("----- Weapons -----")]
     [SerializeField] GameObject playerAim;
     [SerializeField] float aimBallDist;
-    [SerializeField] GameObject weaponHUD;
+    [SerializeField] GameObject weaponModel;
     [SerializeField] WeaponStats starterWeapon;
     [SerializeField] public List<WeaponStats> weaponList;
-    [SerializeField] GameObject weaponModel;
     [SerializeField] float shootRate;
     [SerializeField] int shootDamage;
     [SerializeField] float reloadTime;
@@ -117,25 +123,21 @@ public class ControllerTest : MonoBehaviour //ITarget //, IDamage
     [Range(0, 1)][SerializeField] float audSlideVol;
     [SerializeField] AudioClip[] audDamage;
     [Range(0, 1)][SerializeField] float audDamageVol;
-    [SerializeField] AudioClip audRubberBall;
-    [Range(0, 1)][SerializeField] float audRubberBallVol;
+    private bool isPlayingStep;
 
-    [Header("---- Grenade ----")]
-    [SerializeField] GameObject grenadeHUD;
-    [SerializeField] GameObject itemPrefab;
-    [SerializeField] GameObject itemSpawnPoint;
-    [SerializeField] float throwForce;
-    [SerializeField] float throwDelay;
-    public int rubberBallCount;
-    int rubberBallMaxCount;
-    ItemThrow item;
-
+    //[Header("---- Grenade ----")]
+    //[SerializeField] GameObject grenadeHUD;
+    //public int rubberBallCount;
+    //int rubberBallMaxCount;
+    //ItemThrow item;
 
     [Header("Look Sensitivity")]
     [SerializeField] float mouseSensitivity = 2.0f;
     [SerializeField] float upDownRange = 90.0f;
     [SerializeField] Camera playerCam;
     private float verticalRotation;
+
+    Coroutine speedCoroutine; //Speed Boost variable
 
     [Header("Action Map Name References")]
     [SerializeField] string actionMapName = "Player";
@@ -150,18 +152,11 @@ public class ControllerTest : MonoBehaviour //ITarget //, IDamage
     [SerializeField] string grenade = "Grenade";
     [SerializeField] string join = "Join";
     [SerializeField] string pause = "Pause";
-    [SerializeField] string resume = "Cancel";
     [SerializeField] string crouch = "Crouch";
-    [SerializeField] string aim = "Aim";
-    [SerializeField] string adsLeft = "ADS Left";
-    [SerializeField] string adsRight = "ADS Right";
     [SerializeField] string swapWeaponsCont = "Swap Weapon";
     [SerializeField] string swapWeaponsScroll = "Swap Weapon Scroll";
     [SerializeField] string interact = "Interact";
     [SerializeField] string scoreboard = "Scroeboard";
-
-    [Header("Deadzone Values")]
-    [SerializeField] float leftStickDeadzoneValue = 0.2f;
 
     InputActionMap player;
     InputAction movementAction;
@@ -174,7 +169,6 @@ public class ControllerTest : MonoBehaviour //ITarget //, IDamage
     InputAction cycleWeaponAction;
     InputAction joinAction;
     InputAction pauseAction;
-    InputAction resumeAction;
     InputAction crouchAction;
     InputAction aimAction;
     InputAction adsLeftAction;
@@ -195,9 +189,6 @@ public class ControllerTest : MonoBehaviour //ITarget //, IDamage
     public bool GrenadeTriggered { get; private set; }
     public bool CycleWeaponTriggered { get; private set; }
     public bool SplitCameraTriggered { get; private set; }
-    public bool AimTriggered { get; private set; }
-    public bool AdsLeftTriggered { get; private set; }
-    public bool adsRightTriggered { get; private set; }
     public bool SwapWeaponsTriggered { get; private set; }
     public bool InteractTriggered { get; private set; }
     public bool ScoreboardTriggered { get; private set; }
@@ -220,14 +211,10 @@ public class ControllerTest : MonoBehaviour //ITarget //, IDamage
         grenadeAction = player.FindAction(grenade);
         joinAction = player.FindAction(join);
         pauseAction = player.FindAction(pause);
-        aimAction = player.FindAction(aim);
-        adsLeftAction = player.FindAction(adsLeft);
-        adsRightAction = player.FindAction(adsRight);
         swapWeaponsContAction = player.FindAction(swapWeaponsCont);
         swapWeaponsScrollAction = player.FindAction(swapWeaponsScroll);
         interactAction = player.FindAction(interact);
         scoreboardAction = player.FindAction(scoreboard);
-        //splitCameraAction = player.FindAction(splitCamera); //testing
 
         RegisterInputActions();
 
@@ -237,6 +224,7 @@ public class ControllerTest : MonoBehaviour //ITarget //, IDamage
     }
     private void Start()
     {
+        HP = PlayerManager.instance.HP;
         HPOrig = HP;
         origSpeed = speed;
         origHeight = characterController.height;
@@ -247,9 +235,10 @@ public class ControllerTest : MonoBehaviour //ITarget //, IDamage
         GetWeaponStats(starterWeapon);
         //Add self to gameManager's bodyTracker
         GameManager.instance.AddToTracker(this.gameObject);
+        canSlide = true;
         // Don't need to call spawn player cause player manager does it for me
         // rubberBallMaxCount = rubberBallCount;
-        updateGrenadeUI();
+        //updateGrenadeUI();
     }
 
     private void Update()
@@ -258,23 +247,10 @@ public class ControllerTest : MonoBehaviour //ITarget //, IDamage
 
         if (PlayerManager.instance.matchStarted && !GameManager.instance.isPaused)
         {
-            Movement();
+            if(!isDead)
+                Movement();
             Rotation();
         }
-
-        //----------------This should NOT be here--------------------
-        //if (!isShooting && !isReloading)
-        //{
-        //    if (GrenadeTriggered && rubberBallCount > 0)
-        //    {
-        //        StartCoroutine(ThrowItem());
-        //    }
-        //}
-        //----------------This should NOT be here--------------------
-
-
-        
-
 
         if (!isCrouching)
         {
@@ -319,30 +295,14 @@ public class ControllerTest : MonoBehaviour //ITarget //, IDamage
         sprintAction.performed += context => SprintTrigger = true;
         sprintAction.canceled += context => SprintTrigger = false;
 
-        //shootAction.performed += context => ShootTriggered = true;
-        //shootAction.canceled += context => ShootTriggered = false;
-
-        //reloadAction.performed += context => ReloadTriggered = true;
-        //reloadAction.canceled += context => ReloadTriggered = false;
-
         grenadeAction.performed += context => GrenadeTriggered = true;
         grenadeAction.canceled += context => GrenadeTriggered = false;
-
-        aimAction.performed += context => AimTriggered = true;
-        aimAction.canceled += context => AimTriggered = false;
-
-        adsLeftAction.performed += context => AdsLeftTriggered = true;
-        adsLeftAction.canceled += context => AdsLeftTriggered = false;
-
-        adsRightAction.performed += context => adsRightTriggered = true;
-        adsRightAction.canceled += context => adsRightTriggered = false;
 
         interactAction.performed += context => InteractTriggered = true;
         interactAction.canceled += context => InteractTriggered = false;
 
         scoreboardAction.performed += context => ScoreboardTriggered = true;
         scoreboardAction.canceled += context => ScoreboardTriggered = false;
-
     }
 
     //On Enable and Disable is required as this input manager uses an event handler
@@ -363,10 +323,7 @@ public class ControllerTest : MonoBehaviour //ITarget //, IDamage
         //grenadeAction.performed += OnGrenadeThrow;
         grenadeAction.Enable();
         joinAction.Enable();
-        pauseAction.performed += OnPause;
-        aimAction.Enable();
-        adsLeftAction.Enable();
-        adsRightAction.Enable();
+        pauseAction.performed += PauseEvent;
         swapWeaponsContAction.performed += WeaponSelectController;
         swapWeaponsScrollAction.performed += WeaponSelectMouse;
         interactAction.Enable();
@@ -389,10 +346,7 @@ public class ControllerTest : MonoBehaviour //ITarget //, IDamage
         //grenadeAction.performed -= OnGrenadeThrow;
         grenadeAction.Disable();
         joinAction.Disable();
-        pauseAction.performed -= OnPause;
-        aimAction.Disable();
-        adsLeftAction.Disable();
-        adsRightAction.Disable();
+        pauseAction.performed -= PauseEvent;
         swapWeaponsContAction.performed -= WeaponSelectController;
         swapWeaponsScrollAction.performed -= WeaponSelectMouse;
         interactAction.Disable();
@@ -431,15 +385,38 @@ public class ControllerTest : MonoBehaviour //ITarget //, IDamage
         characterController.Move(playerVel * Time.deltaTime);
         playerVel.y -= gravity * Time.deltaTime;
 
+        if (characterController.isGrounded && playerVel.magnitude > 0.3f && !isPlayingStep)
+            StartCoroutine(PlayStep());
+
+    }
+
+    IEnumerator PlayStep()
+    {
+        isPlayingStep = true;
+
+        aud.PlayOneShot(audStep[Random.Range(0, audStep.Length)], audStepVol);
+
+        if (!isSprinting)
+            yield return new WaitForSeconds(0.5f);
+        else if (isSprinting)
+            yield return new WaitForSeconds(0.3f);
+
+        isPlayingStep = false;
     }
 
     void Sprint(InputAction.CallbackContext context)
     {
-        if (!isSliding)
+        if (!isSliding && !GameManager.instance.isPaused && !isDead)
         {
             isSprinting = !isSprinting;
 
-            if (!isCrouching)
+            if (isCrouching)
+            {
+                characterController.height = origHeight;
+                speed = origSpeed;
+                isCrouching = false;
+            }
+            
                 switch (isSprinting)
                 {
                     case true:
@@ -452,164 +429,73 @@ public class ControllerTest : MonoBehaviour //ITarget //, IDamage
         }
     }
 
-    //void HandleJumping() //Was going to be the jump action but couldn't figure it out
-    //{
-
-
-
-    //    //if (characterController.isGrounded)
-    //    //{
-
-    //    //    playerVel.y = -0.5f;
-    //    //    if (JumpTriggered || Input.GetButton("Jump")) ;
-    //    //    {
-    //    //        anim.SetTrigger("Jump");
-    //    //        jumpCount++;
-    //    //        playerVel.y = jumpForce;
-    //    //    }
-    //    //}
-    //    //else
-    //    //{
-    //    //    playerVel.y -= gravity * Time.deltaTime;
-    //    //}
-    //}
-
     //--------------Crouch event methods-------------//
     void Crouch(InputAction.CallbackContext context)
     {
-        if (!isCrouching)
+        if (!isCrouching && !GameManager.instance.isPaused && !isDead)
         {
             characterController.height = crouchLevel;
             speed = crouchSpeed;
             isCrouching = true;
-            canSlide = true;
-            if (isSprinting && !isSliding)
+            if (isSprinting && canSlide)
             {
                 StartCoroutine(Slide2());
             }
-
         }
-        //else
-        //{
-        //    characterController.height = origHeight;
-        //    speed += crouchMod;
-        //    isCrouching = false;
-        //}
-
     }
     void unCrouch(InputAction.CallbackContext context)
     {
-        if (isCrouching)
+        if (isCrouching && !GameManager.instance.isPaused && !isDead && !isSliding)
         {
             characterController.height = origHeight;
             speed = origSpeed;
             isCrouching = false;
-            canSlide = false;
         }
     }
     //------------------------------------------------//
 
     IEnumerator Slide2()
     {
-        isSliding = true;
-
-        if (!slideSoundPlayed)
+        if (canSlide)
         {
-            aud.PlayOneShot(audSlide, audSlideVol);
-            slideSoundPlayed = true;
+            canSlide = false;
+            isSliding = true;
+
+            if (!slideSoundPlayed)
+            {
+                aud.PlayOneShot(audSlide, audSlideVol);
+                slideSoundPlayed = true;
+            }
+
+            if (!slideAnimPlayed)
+            {
+                anim.SetTrigger("Slide");
+                slideAnimPlayed = true;
+            }
+
+            isCrouching = true;
+            isSprinting = false;
+
+            // Increase the player's speed for the slide
+            characterController.height = crouchLevel;
+            speed = slideSpeed; //Consider adding a catch for coffee power up
+
+
+            yield return new WaitForSeconds(slideLockout);
+
+
+            characterController.height = origHeight;
+            isCrouching = false;
+
+            speed = origSpeed;
+            isSliding = false;
+            StartCoroutine(SlideCooldown());
         }
-
-        if (!slideAnimPlayed)
-        {
-            anim.SetTrigger("Slide");
-            slideAnimPlayed = true;
-        }
-
-        isCrouching = true;
-        isSprinting = false;
-
-        // Increase the player's speed for the slide
-        characterController.height = crouchLevel;
-        speed = slideSpeed;
-
-        //    playerVel.x = transform.forward.x * slideSpeed;
-        //    playerVel.z = transform.forward.z * slideSpeed;
-
-        //    characterController.Move(playerVel * Time.deltaTime);
-        //    playerVel.y -= gravity * Time.deltaTime;
-
-        // Maintain the slide for the specified duration
-        yield return new WaitForSeconds(slideLockout);
-
-        // After sliding, stop the slide and return to normal movement
-        isSliding = false;
-        //playerVel = Vector3.zero;
-        speed = origSpeed;
-        isSliding = false;
 
     }
 
-    //void Slide()
-    //{
-    //    isSliding = true;
-    //    if (canSlide)
-    //    {
-
-    //        if (!slideSoundPlayed)
-    //        {
-    //            aud.PlayOneShot(audSlide, audSlideVol);
-    //            slideSoundPlayed = true;
-    //        }
-
-    //        if (!slideAnimPlayed)
-    //        {
-    //            anim.SetTrigger("Slide");
-    //            slideAnimPlayed = true;
-    //        }
-
-    //        isCrouching = true;
-    //        isSprinting = false;
-
-    //        if (characterController.isGrounded)
-    //        {
-    //            jumpCount = 0;
-    //            playerVel = Vector3.zero;
-    //        }
-    //        characterController.height = crouchLevel;
-
-    //        playerVel.x = transform.forward.x * slideSpeed;
-    //        playerVel.z = transform.forward.z * slideSpeed;
-
-    //        characterController.Move(playerVel * Time.deltaTime);
-    //        playerVel.y -= gravity * Time.deltaTime;
-
-    //        if (slideLockout > 0)
-    //        {
-    //            slideLockout -= Time.deltaTime;
-    //        }
-    //        else if (slideLockout <= 0)
-    //        {
-    //            if (!isCrouching)
-    //                characterController.height = origHeight;
-
-    //            //slideSoundPlayed = false;
-    //            //slideAnimPlayed = false;
-    //            slideLockout = slideLockoutTime;
-
-
-    //            playerVel = Vector3.zero;
-    //            speed = origSpeed;
-    //            isSliding = false;
-    //            StartCoroutine(SlideCooldown());
-
-    //        }
-
-    //    }
-    //}
-
     IEnumerator SlideCooldown()
     {
-        canSlide = false;
         yield return new WaitForSeconds(slideCooldown);
         canSlide = true;
     }
@@ -625,22 +511,23 @@ public class ControllerTest : MonoBehaviour //ITarget //, IDamage
         playerCamera.transform.localRotation = Quaternion.Euler(verticalRotation, 0, 0);
     }
 
-
+    //UI Refresh Methods
     public void UpdatePlayerUI()
     {
         playerHPBar.fillAmount = (float)HP / HPOrig;
     }
+    public void UpdateAmmoUI()
+    {
+        playerAmmoBar.fillAmount = (float)weaponList[selectedWeapon].currentAmmo / weaponList[selectedWeapon].startAmmo;
+    }
 
-    //public void UpdateAmmoUI()
+    //public void updateGrenadeUI()
     //{
-    //    GameManager.instance.playerAmmoBar.fillAmount = (float)weaponList[selectedWeapon].currentAmmo / weaponList[selectedWeapon].startAmmo;
-
+    //    grenadeStack.text = (rubberBallCount).ToString();
     //}
 
     //void OnPauseInput(InputAction.CallbackContext obj)
     //{
-
-
     //    if (menuActive == null)
     //    {
     //        actionMapName = "UI";
@@ -659,8 +546,8 @@ public class ControllerTest : MonoBehaviour //ITarget //, IDamage
     //        menuActive = null;
 
     //    }
-
     //}
+
 
     void ShootEvent(InputAction.CallbackContext context)
     {
@@ -683,7 +570,7 @@ public class ControllerTest : MonoBehaviour //ITarget //, IDamage
                 aud.PlayOneShot(audHandFire, audHandFireVol);
 
                 RaycastHit hit;
-                if (Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out hit, shootDist, ~ignoreMask))
+                if (Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out hit, shootDist)) //ignore Mask was deleted
                 {
                     //Debug.Log(hit.collider.name);
 
@@ -759,9 +646,8 @@ public class ControllerTest : MonoBehaviour //ITarget //, IDamage
     {
         isReloading = true;
 
-        if (weaponList[selectedWeapon].currentAmmo < weaponList[selectedWeapon].startAmmo)
+        if (weaponList[selectedWeapon].style != WeaponStats.ThrowStyle.chestOut && weaponList[selectedWeapon].currentAmmo < weaponList[selectedWeapon].startAmmo)
         {
-            Debug.Log("reload");
             if (weaponList[selectedWeapon].type == WeaponStats.WeaponType.raycast)
             {
                 weaponModel.transform.Rotate(Vector3.left * raycastRotationReload);
@@ -773,27 +659,11 @@ public class ControllerTest : MonoBehaviour //ITarget //, IDamage
                 weaponList[selectedWeapon].currentAmmo = weaponList[selectedWeapon].startAmmo;
 
             }
-            //else if (weaponList[selectedWeapon].type == WeaponStats.WeaponType.projectile)
-            //{
-            //    weaponModel.SetActive(false);
-            //    yield return new WaitForSeconds(reloadTime);
-            //    weaponModel.SetActive(true);
 
-            //}
         }
 
         isReloading = false;
         UpdateAmmoUI();
-    }
-
-    public void UpdateAmmoUI()
-    {
-        GameManager.instance.playerAmmoBar.fillAmount = (float)weaponList[selectedWeapon].currentAmmo / weaponList[selectedWeapon].startAmmo;
-    }
-
-    public void updateGrenadeUI()
-    {
-        GameManager.instance.grenadeStack.text = (rubberBallCount).ToString();
     }
 
     public void GetWeaponStats(WeaponStats weapon)
@@ -854,7 +724,7 @@ public class ControllerTest : MonoBehaviour //ITarget //, IDamage
             WeaponChange();
             UpdateAmmoUI();
         }
-        
+
     }
     void WeaponSelectMouse(InputAction.CallbackContext context) //Making this to work with the 
     {
@@ -887,63 +757,28 @@ public class ControllerTest : MonoBehaviour //ITarget //, IDamage
 
             UpdateAmmoUI();
         }
-            
+
     }
-
-    //void OnGrenadeThrow(InputAction.CallbackContext context)
-    //{
-    //    Debug.Log("ThrowYoShit");
-    //    if (!isShooting && !isReloading)
-    //    {
-    //        if (rubberBallCount > 0)
-    //        {
-    //            //StartCoroutine(ThrowItem());
-    //            playerRig.weight = 0;
-    //            anim.SetLayerWeight(8, 1f);
-    //            GameManager.instance.playerScript.Munch(audRubberBall, audRubberBallVol);
-    //            anim.SetTrigger("ThrowGrenade");
-    //        }
-    //    }
-    //}
-
-    //IEnumerator ThrowItem() ///GrenadeThrow
-    //{
-    //    WeaponToggleOff();
-    //    yield return new WaitForSeconds(throwDelay);
-    //    GameObject item = Instantiate(itemPrefab, itemSpawnPoint.transform.position, itemSpawnPoint.transform.rotation);
-    //    Rigidbody rb = item.GetComponent<Rigidbody>();
-    //    rb.velocity = playerCamera.transform.forward * throwForce;
-    //    grenadeHUD.SetActive(false);
-    //    rubberBallCount--;
-    //    updateGrenadeUI();
-    //    yield return new WaitForSeconds(throwDelay);
-    //    WeaponToggleOn();
-    //}
 
     void WeaponToggleOff()
     {
         isShooting = true;
         isReloading = true;
-        weaponHUD.SetActive(false);
-        grenadeHUD.SetActive(true);
+        weaponModel.SetActive(false);
+        //grenadeHUD.SetActive(true);
 
     }
 
     void WeaponToggleOn()
     {
-        weaponHUD.SetActive(true);
+        weaponModel.SetActive(true);
         isShooting = false;
         isReloading = false;
     }
 
-    void OnPause(InputAction.CallbackContext context)
+    public void PauseEvent(InputAction.CallbackContext context)
     {
         GameManager.instance.OnPause();
-    }
-
-    public int GetMaxBallCount()
-    {
-        return rubberBallMaxCount;
     }
 
     //-----------------------NOTICE: Keep these Methods at the Bottom please-------------------------------
@@ -971,24 +806,6 @@ public class ControllerTest : MonoBehaviour //ITarget //, IDamage
         characterController.enabled = true;
     }
 
-    //ITarget Specific Methods
-    //public GameObject declareOBJ(GameObject obj)
-    //{
-    //    return gameObject;
-    //}
-
-    //public bool declareDeath()
-    //{
-    //    if (HP <= 0)
-    //    {
-    //        //Increment death by 1 in GameManager's statsTracker dictionary
-    //        return true;
-    //    }
-    //    else
-    //        return false;
-    //}
-
-    //END ITarget Methods
 
     //FOR DONUT KING
     public void DKPickedUp()
@@ -1007,6 +824,91 @@ public class ControllerTest : MonoBehaviour //ITarget //, IDamage
         UpdatePlayerUI();
     }
 
+    private void AddSpeed(int addSpeed) //Controls the speed increase and maintains the boost constant regardless of state of player movement
+    {
+        if (isSprinting)
+        {
+            if (addSpeed > 0)
+                speed = (origSpeed + addSpeed) * sprintMod;
+            else
+                speed = origSpeed * sprintMod;
+        }
+        else
+        {
+            if (addSpeed > 0)
+                speed = origSpeed + addSpeed;
+            else
+                speed = origSpeed;
+        }
+    }
+
+    public void ActivateSpeedBoost(SpeedBuff stats) //Handles the activation of the speed power up coroutine 
+    {
+        if (speedCoroutine != null) //resets the timer if player picks up another power up
+        {
+            StopCoroutine(speedCoroutine);
+        }
+        speedCoroutine = StartCoroutine(SpeedPowerUp(stats));
+    }
+
+    IEnumerator SpeedPowerUp(SpeedBuff stats) //Triggers buffs for a good cup of Joe (mediocre office brew)
+    {
+        float origFOV = playerCam.fieldOfView;
+
+        electricParticles.SetActive(true);
+        playerCam.fieldOfView = speedFOVEffect;
+        AddSpeed(stats.speedModifier);
+        yield return new WaitForSeconds(stats.speedBoostTime);
+        AddSpeed(-stats.speedModifier);
+        playerCam.fieldOfView = origFOV;
+        electricParticles.SetActive(false);
+    }
+
+    //ITarget Specific Methods
+    public GameObject declareOBJ(GameObject obj)
+    {
+        return gameObject;
+    }
+
+    public bool declareDeath()
+    {
+        if (HP <= 0)
+        {
+            //Increment death by 1 in GameManager's statsTracker dictionary
+            return true;
+        }
+        else
+            return false;
+    }
+    //END ITarget Methods
+
+    //IDamage Method
+    public void takeDamage(int amount)
+    {
+        if (!isDead)
+        {
+            HP -= amount;
+            StartCoroutine(flashScreenDamage());
+            UpdatePlayerUI();
+            aud.PlayOneShot(audDamage[Random.Range(0, audDamage.Length)], audDamageVol);
+
+            if (HP <= 0)
+            {
+                if (GameManager.instance.statsTracker[name].getDKStatus() == true)
+                    GameManager.instance.dropTheDonut(this.gameObject);
+
+                playerCam.gameObject.SetActive(false);
+                isDead = true;
+                GameManager.instance.DeclareSelfDead(gameObject);
+                gameObject.GetComponent<CapsuleCollider>().enabled = false;
+                playerMeshRenderer.enabled = false;
+                weaponModel.SetActive(false);
+                deathCamera.gameObject.SetActive(true);
+            }
+
+        }
+    }
+
     IEnumerator flashScreenDamage()
     {
         GameManager.instance.damageFlash.SetActive(true);
@@ -1016,35 +918,6 @@ public class ControllerTest : MonoBehaviour //ITarget //, IDamage
         GameManager.instance.damageFlash.SetActive(false);
     }
 
-    //IDamage Method
-    //public void takeDamage(int amount)
-    //{
-    //    if (!isDead)
-    //    {
-    //        HP -= amount;
-    //        StartCoroutine(flashScreenDamage());
-    //        UpdatePlayerUI();
-    //        aud.PlayOneShot(audDamage[Random.Range(0, audDamage.Length)], audDamageVol);
-
-    //        if (HP <= 0 && GameManager.currentMode == GameManager.gameMode.NIGHTSHIFT)
-    //        {
-    //            GameManager.instance.YouLose();
-    //        }
-    //        else if (HP <= 0 && GameManager.currentMode == GameManager.gameMode.DONUTKING2)
-    //        {
-    //            if (GameManager.instance.statsTracker[name].getDKStatus() == true)
-    //                GameManager.instance.dropTheDonut(this.gameObject);
-    //            //Camera.main.gameObject.SetActive(false);
-    //            isDead = true;
-    //            GameManager.instance.DeclareSelfDead(gameObject);
-    //            gameObject.GetComponent<CapsuleCollider>().enabled = false;
-    //            playerMeshRenderer.enabled = false;
-    //            deathCamera.gameObject.SetActive(true);
-    //            //while (GameManager.instance.statsTracker[name] > 0)              
-    //        }
-    //    }
-    //}
-    
     //-------------------Animation methods-------------------
     public void AnimThrowWeapon()
     {
@@ -1082,9 +955,19 @@ public class ControllerTest : MonoBehaviour //ITarget //, IDamage
         {
             gameObject.GetComponent<CapsuleCollider>().enabled = true;
             playerMeshRenderer.enabled = true;
+            weaponModel.SetActive(true);
             deathCamera.gameObject.SetActive(false);
+            weaponList[0].currentAmmo = weaponList[0].startAmmo;         
             isDead = false;
         }
     }
     //---------------------------------------------------------
+
+    //Getters and Setters
+    public int GetStartHP()
+    {
+        return HPOrig;
+    }
+
+
 }

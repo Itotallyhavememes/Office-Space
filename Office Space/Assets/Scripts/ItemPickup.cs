@@ -16,7 +16,7 @@ public class ItemPickup : MonoBehaviour
     [SerializeField] AudioClip pickUpSound;
     [SerializeField] AudioSource audSource;
     [Range(0, 1)][SerializeField] float volume;
-    
+
     Vector3 startPos;
 
     // Start is called before the first frame update
@@ -51,43 +51,91 @@ public class ItemPickup : MonoBehaviour
             {
                 case ItemType.health:
                     {
-                        if (GameManager.instance.playerScript.HP < GameManager.instance.playerScript.GetStartHP())
+                        if (!GameManager.instance.isMultiplayer)
                         {
-                           
-                            GameManager.instance.worldItemCount--;
-                            powerupEffect.ApplyBuff();
-                            audSource.PlayOneShot(pickUpSound);
-                            Destroy(gameObject);
+                            if (GameManager.instance.playerScript.HP < GameManager.instance.playerScript.GetStartHP())
+                            {
+
+                                GameManager.instance.worldItemCount--;
+                                powerupEffect.ApplyBuff();
+                                audSource.PlayOneShot(pickUpSound);
+                                Destroy(gameObject);
+                            }
+                        }
+                        else
+                        {
+                            ControllerTest multiplayerControlsScript = other.GetComponent<ControllerTest>();
+                            if (multiplayerControlsScript.HP < multiplayerControlsScript.GetStartHP())
+                            {
+                                GameManager.instance.worldItemCount--;
+                                powerupEffect.ApplyBuff();
+                                audSource.PlayOneShot(pickUpSound);
+                                Destroy(gameObject);
+                            }
                         }
                         break;
                     }
                 case ItemType.speedBoost:
                     {
-                        GameManager.instance.playerScript.Munch(pickUpSound, volume);
-                        powerupEffect.ApplyBuff();
-                        GameManager.instance.worldItemCount--;
-                        Destroy(gameObject);
-                        break;
-                    }
-                case ItemType.rubberBand:
-                    {
-                        if (GameManager.instance.playerScript.GetComponent<ItemThrow>().rubberBallCount < GameManager.instance.playerScript.GetComponent<ItemThrow>().GetMaxBallCount())
+                        if (!GameManager.instance.isMultiplayer)
                         {
-                            
                             GameManager.instance.playerScript.Munch(pickUpSound, volume);
-                            GameManager.instance.playerScript.GetComponent<ItemThrow>().rubberBallCount++;
-                            GameManager.instance.playerScript.GetComponent<ItemThrow>().updateGrenadeUI();
+                            powerupEffect.ApplyBuff();
+                            GameManager.instance.worldItemCount--;
+                            Destroy(gameObject);
+                        }
+                        else
+                        {
+                            other.GetComponent<ControllerTest>().Munch(pickUpSound, volume);
+                            powerupEffect.ApplyBuff();
                             GameManager.instance.worldItemCount--;
                             Destroy(gameObject);
                         }
 
                         break;
                     }
+                case ItemType.rubberBand:
+                    {
+                        if (!GameManager.instance.isMultiplayer)
+                        {
+                            if (GameManager.instance.playerScript.GetComponent<ItemThrow>().rubberBallCount < GameManager.instance.playerScript.GetComponent<ItemThrow>().GetMaxBallCount())
+                            {
+                                GameManager.instance.playerScript.Munch(pickUpSound, volume);
+                                GameManager.instance.playerScript.GetComponent<ItemThrow>().rubberBallCount++;
+                                GameManager.instance.playerScript.GetComponent<ItemThrow>().updateGrenadeUI();
+                                GameManager.instance.worldItemCount--;
+                                Destroy(gameObject);
+                            }
+                        }
+                        else
+                        {
+                            ItemThrow multiplayerItemThrow = other.GetComponent<ItemThrow>();
+                            if (multiplayerItemThrow.rubberBallCount < multiplayerItemThrow.GetMaxBallCount())
+                            {
+                                other.GetComponent<ControllerTest>().Munch(pickUpSound, volume);
+                                multiplayerItemThrow.rubberBallCount++;
+                                multiplayerItemThrow.updateGrenadeUI();
+                                GameManager.instance.worldItemCount--;
+                                Destroy(gameObject);
+                            }
+                        }
+
+                        break;
+                    }
                 case ItemType.weapon:
                     {
-                        GameManager.instance.playerScript.Munch(pickUpSound, volume);
-                        GameManager.instance.playerScript.GetWeaponStats(this.weapon);
-                        GameManager.instance.worldItemCount--;
+                        if (!GameManager.instance.isMultiplayer)
+                        {
+                            GameManager.instance.playerScript.Munch(pickUpSound, volume);
+                            GameManager.instance.playerScript.GetWeaponStats(this.weapon);
+                            GameManager.instance.worldItemCount--;
+                        }
+                        else
+                        {
+                            other.GetComponent<ControllerTest>().Munch(pickUpSound, volume);
+                            other.GetComponent<ControllerTest>().GetWeaponStats(this.weapon);
+                            GameManager.instance.worldItemCount--;
+                        }
                         Destroy(gameObject);
 
                         break;

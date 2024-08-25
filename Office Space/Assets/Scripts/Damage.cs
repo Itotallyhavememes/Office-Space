@@ -37,6 +37,7 @@ public class Damage : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+            Debug.Log(other.name);
 
         if (type != damageType.item)
         {
@@ -45,7 +46,6 @@ public class Damage : MonoBehaviour
 
             IDamage dmg = other.GetComponent<IDamage>();
             //GameObject victim = other.GetComponent<GameObject>();
-            
             if (dmg != null && !hasDamaged)
             {
                 //Debug.Log(parent.name.ToString() + " --> SHOT --> " + other.name.ToString());

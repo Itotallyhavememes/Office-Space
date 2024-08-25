@@ -240,11 +240,11 @@ public class GameManager : MonoBehaviour
     //Update is called once per frame
     void Update()
     {
-        if (currentMode == gameMode.DONUTKING2 && !isShopDisplayed)
+        if (currentMode == gameMode.DONUTKING2 && !isShopDisplayed && PlayerManager.instance.matchStarted)
         {
             //PJ's shop code
             ActivateMenu(menuShop);
-            StatePause();
+            //StatePause();
             isShopDisplayed = true;
         }
         if (currentMode == gameMode.DONUTKING2 && !isPaused)
