@@ -4,11 +4,14 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Shop : MonoBehaviour
 {
-    public static Shop instance;
-
+    //public static Shop instance;
+    public int test;
+    [SerializeField] GameObject myPlayer;
+    //[SerializeField] ControllerTest playersWeaponList;
     [SerializeField] TMP_Text moneyCount;
     [Header("-----Primaries-----")]
     [SerializeField] int shotgunPrice;
@@ -25,30 +28,37 @@ public class Shop : MonoBehaviour
 
     private void Awake()
     {
-        instance = this;
+        //instance = this;
     }
 
     void Start()
     {
-        moneyCount.text = "$ " + GameManager.instance.statsTracker[GameManager.instance.player.name].getMoneyTotal().ToString();
+        //moneyCount.text = "$ " + GameManager.instance.statsTracker[GameManager.instance.player.name].getMoneyTotal().ToString();
     }
 
     public void updateMoneyCount()
     {
-        moneyCount.text = "$ " + GameManager.instance.statsTracker[GameManager.instance.player.name].getMoneyTotal().ToString();
+        //foreach (var player in PlayerManager.instance.players)
+        //{
+            moneyCount.text = "$ " + GameManager.instance.statsTracker[myPlayer.name].getMoneyTotal().ToString();
+        //}
     }
 
     public void shotgunButton()
     {
-        if (GameManager.instance.statsTracker[GameManager.instance.player.name].getMoneyTotal() >= shotgunPrice)
+        //When calling this method, needs to pass in whoever called this function
+        
+        if (GameManager.instance.statsTracker[myPlayer.name].getMoneyTotal() >= shotgunPrice)
         {
-            GameManager.instance.statsTracker[GameManager.instance.player.name].withdrawMoney(shotgunPrice);
+            GameManager.instance.statsTracker[myPlayer.name].withdrawMoney(shotgunPrice);
             updateMoneyCount();
-            for (int i = 0; i < GameManager.instance.playerScript.weaponList.Count; i++)
+            ControllerTest playerCT = myPlayer.GetComponent<ControllerTest>();
+            for (int i = 0; i < playerCT.weaponList.Count; i++)
             {
-                if (GameManager.instance.playerScript.weaponList[i] == shotgun)
+                if (playerCT.weaponList[i] == shotgun)
                 {
-                    GameManager.instance.playerScript.weaponList[i].currentAmmo = GameManager.instance.playerScript.weaponList[i].startAmmo;
+                    //GameManager.instance.playerScript.weaponList[i].currentAmmo = GameManager.instance.playerScript.weaponList[i].startAmmo;
+                    playerCT.weaponList[i].currentAmmo = playerCT.weaponList[i].startAmmo;
                     return;
                 }
             }
@@ -58,15 +68,17 @@ public class Shop : MonoBehaviour
 
     public void SMGButton()
     {
-        if (GameManager.instance.statsTracker[GameManager.instance.player.name].getMoneyTotal() >= SMGPrice)
+        if (GameManager.instance.statsTracker[myPlayer.name].getMoneyTotal() >= SMGPrice)
         {
-            GameManager.instance.statsTracker[GameManager.instance.player.name].withdrawMoney(SMGPrice);
+            GameManager.instance.statsTracker[myPlayer.name].withdrawMoney(SMGPrice);
             updateMoneyCount();
-            for (int i = 0; i < GameManager.instance.playerScript.weaponList.Count; i++)
+            ControllerTest playerCT = myPlayer.GetComponent<ControllerTest>();
+            for (int i = 0; i < playerCT.weaponList.Count; i++)
             {
-                if (GameManager.instance.playerScript.weaponList[i] == SMG)
+                if (playerCT.weaponList[i] == SMG)
                 {
-                    GameManager.instance.playerScript.weaponList[i].currentAmmo = GameManager.instance.playerScript.weaponList[i].startAmmo;
+                    //GameManager.instance.playerScript.weaponList[i].currentAmmo = GameManager.instance.playerScript.weaponList[i].startAmmo;
+                    playerCT.weaponList[i].currentAmmo = playerCT.weaponList[i].startAmmo;
                     return;
                 }
             }
@@ -76,15 +88,17 @@ public class Shop : MonoBehaviour
 
     public void rifleButton()
     {
-        if (GameManager.instance.statsTracker[GameManager.instance.player.name].getMoneyTotal() >= riflePrice)
+        if (GameManager.instance.statsTracker[myPlayer.name].getMoneyTotal() >= riflePrice)
         {
-            GameManager.instance.statsTracker[GameManager.instance.player.name].withdrawMoney(riflePrice);
+            GameManager.instance.statsTracker[myPlayer.name].withdrawMoney(riflePrice);
             updateMoneyCount();
-            for (int i = 0; i < GameManager.instance.playerScript.weaponList.Count; i++)
+            ControllerTest playerCT = myPlayer.GetComponent<ControllerTest>();
+            for (int i = 0; i < playerCT.weaponList.Count; i++)
             {
-                if (GameManager.instance.playerScript.weaponList[i] == rifle)
+                if (playerCT.weaponList[i] == rifle)
                 {
-                    GameManager.instance.playerScript.weaponList[i].currentAmmo = GameManager.instance.playerScript.weaponList[i].startAmmo;
+                    //GameManager.instance.playerScript.weaponList[i].currentAmmo = GameManager.instance.playerScript.weaponList[i].startAmmo;
+                    playerCT.weaponList[i].currentAmmo = playerCT.weaponList[i].startAmmo;
                     return;
                 }
             }
@@ -94,10 +108,10 @@ public class Shop : MonoBehaviour
 
     public void shurikenButton()
     {
-            int playerMoney = GameManager.instance.statsTracker[GameManager.instance.player.name].getMoneyTotal();
-            if (playerMoney >= shurikenPrice)
+           
+            if (GameManager.instance.statsTracker[myPlayer.name].getMoneyTotal() >= shurikenPrice)
             {
-                GameManager.instance.statsTracker[GameManager.instance.player.name].withdrawMoney(shurikenPrice);
+                GameManager.instance.statsTracker[myPlayer.name].withdrawMoney(shurikenPrice);
                 GameManager.instance.playerScript.GetWeaponStats(shuriken);
                 updateMoneyCount();
                 //add code to add new weapon to throwables
@@ -106,10 +120,9 @@ public class Shop : MonoBehaviour
     }
     public void rubberbandBallButton()
     {
-        int playerMoney = GameManager.instance.statsTracker[GameManager.instance.player.name].getMoneyTotal();
-        if (playerMoney >= rubberbandBallPrice && GameManager.instance.playerThrowScript.rubberBallCount < GameManager.instance.playerThrowScript.GetRubberBallMax())
+        if (GameManager.instance.statsTracker[myPlayer.name].getMoneyTotal() >= rubberbandBallPrice && myPlayer.GetComponent<ItemThrow>().rubberBallCount < myPlayer.GetComponent<ItemThrow>().GetRubberBallMax())
         {
-            GameManager.instance.statsTracker[GameManager.instance.player.name].withdrawMoney(rubberbandBallPrice);
+            GameManager.instance.statsTracker[myPlayer.name].withdrawMoney(rubberbandBallPrice);
             GameManager.instance.playerThrowScript.rubberBallCount++;
             updateMoneyCount();
             //add code to add new weapon to throwables

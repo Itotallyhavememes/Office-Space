@@ -12,10 +12,10 @@ public class SpeedBuff : PowerUpEffect
     //public AudioClip pickupSFX; //For future add
     //[Range(0, 1)][SerializeField] float audPickupVol;
 
-    public override void ApplyBuff()
+    public override void ApplyBuff(GameObject player)
     {
         //GameManager.instance.player.GetComponent<AudioSource>().PlayOneShot(pickupSFX, audPickupVol);
-        GameManager.instance.playerScript.ActivateSpeedBoost(this);
+        player.GetComponent<ControllerTest>().ActivateSpeedBoost(this);
 
     }
 

@@ -9,9 +9,9 @@ public class HealthRestore : PowerUpEffect
     public AudioClip pickupSFX;
     [Range(0, 1)][SerializeField] float audPickupVol;
 
-    public override void ApplyBuff()
+    public override void ApplyBuff(GameObject player)
     {
-        GameManager.instance.player.GetComponent<AudioSource>().PlayOneShot(pickupSFX, audPickupVol);
-        GameManager.instance.playerScript.HealthPickup(HpRestoreAmount);
+        player.GetComponent<AudioSource>().PlayOneShot(pickupSFX, audPickupVol);
+        player.GetComponent<ControllerTest>().HealthPickup(HpRestoreAmount);
     }
 }

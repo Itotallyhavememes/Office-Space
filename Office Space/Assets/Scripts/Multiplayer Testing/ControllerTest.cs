@@ -77,8 +77,9 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
     [Header("Player UI")]
     [SerializeField] MultiplayerEventSystem eventSystem;
     [SerializeField] GameObject menuActive;
-    [SerializeField] GameObject menuPause;
-    [SerializeField] GameObject firstSelectedButtonInPause;
+    [SerializeField] GameObject menuShop;
+    [SerializeField] GameObject shopFirst;
+    //[SerializeField] GameObject firstSelectedButtonInPause;
     public Image playerHPBar;
     public Image playerAmmoBar;
     public TMP_Text grenadeStack;
@@ -88,11 +89,11 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
     bool isDead;
 
     [Header("----- Weapons -----")]
+    public List<WeaponStats> weaponList;
     [SerializeField] GameObject playerAim;
     [SerializeField] float aimBallDist;
     [SerializeField] GameObject weaponModel;
     [SerializeField] WeaponStats starterWeapon;
-    [SerializeField] public List<WeaponStats> weaponList;
     [SerializeField] float shootRate;
     [SerializeField] int shootDamage;
     [SerializeField] float reloadTime;
@@ -125,11 +126,11 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
     [Range(0, 1)][SerializeField] float audDamageVol;
     private bool isPlayingStep;
 
-    //[Header("---- Grenade ----")]
-    //[SerializeField] GameObject grenadeHUD;
+    [Header("---- Grenade ----")]
+    [SerializeField] GameObject grenadeHUD;
     //public int rubberBallCount;
     //int rubberBallMaxCount;
-    //ItemThrow item;
+    ItemThrow itemThrowScript;
 
     [Header("Look Sensitivity")]
     [SerializeField] float mouseSensitivity = 2.0f;
@@ -221,6 +222,7 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
         InputSystem.settings.defaultDeadzoneMin = leftStickDeadzoneValue;
 
         eventSystem = FindObjectOfType<MultiplayerEventSystem>();
+        itemThrowScript = gameObject.GetComponent<ItemThrow>();
     }
     private void Start()
     {
@@ -237,7 +239,7 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
         GameManager.instance.AddToTracker(this.gameObject);
         canSlide = true;
         // Don't need to call spawn player cause player manager does it for me
-        // rubberBallMaxCount = rubberBallCount;
+        //rubberBallMaxCount = rubberBallCount;
         //updateGrenadeUI();
     }
 
@@ -967,6 +969,31 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
     public int GetStartHP()
     {
         return HPOrig;
+    }
+
+    public void ActivateShopUI()
+    {
+        //ACTIVATE SHOP UI IN EACH PLAYER
+        eventSystem.firstSelectedGameObject = shopFirst;
+        menuShop.SetActive(true);
+        
+        //foreach(var player in PlayerManager.instance.players){
+        //playerCMP = player.GetComponent<ControllerTest>();
+        //playerCMP = ActivateShopUI();
+        //}
+        //PlayerManager.instance.players[i].ActivateShopUI()
+        //isShopDisplayed = false;
+    }
+
+    public void ShopMenuDone() //Needs to be assigned to the done button
+    {
+        GameManager.instance.playersReady++;
+        menuShop.SetActive(false);
+
+        if(GameManager.instance.playersReady == PlayerManager.instance.players.Count)
+        {
+            GameManager.instance.StateUnpause();
+        }
     }
 
 

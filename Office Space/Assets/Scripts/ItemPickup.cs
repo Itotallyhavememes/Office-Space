@@ -57,7 +57,7 @@ public class ItemPickup : MonoBehaviour
                             {
 
                                 GameManager.instance.worldItemCount--;
-                                powerupEffect.ApplyBuff();
+                                powerupEffect.ApplyBuff(other.gameObject);
                                 audSource.PlayOneShot(pickUpSound);
                                 Destroy(gameObject);
                             }
@@ -68,7 +68,7 @@ public class ItemPickup : MonoBehaviour
                             if (multiplayerControlsScript.HP < multiplayerControlsScript.GetStartHP())
                             {
                                 GameManager.instance.worldItemCount--;
-                                powerupEffect.ApplyBuff();
+                                powerupEffect.ApplyBuff(other.gameObject);
                                 audSource.PlayOneShot(pickUpSound);
                                 Destroy(gameObject);
                             }
@@ -80,14 +80,14 @@ public class ItemPickup : MonoBehaviour
                         if (!GameManager.instance.isMultiplayer)
                         {
                             GameManager.instance.playerScript.Munch(pickUpSound, volume);
-                            powerupEffect.ApplyBuff();
+                            powerupEffect.ApplyBuff(other.gameObject);
                             GameManager.instance.worldItemCount--;
                             Destroy(gameObject);
                         }
                         else
                         {
                             other.GetComponent<ControllerTest>().Munch(pickUpSound, volume);
-                            powerupEffect.ApplyBuff();
+                            powerupEffect.ApplyBuff(other.gameObject);
                             GameManager.instance.worldItemCount--;
                             Destroy(gameObject);
                         }

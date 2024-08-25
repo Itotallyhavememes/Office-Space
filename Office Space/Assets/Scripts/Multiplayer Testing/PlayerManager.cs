@@ -61,7 +61,7 @@ public class PlayerManager : MonoBehaviour
 
     private void Start()
     {
-        GameManager.instance.StatePause();
+        //GameManager.instance.StatePause();
         GameManager.instance.ActivateMenu(matchSettingsMenu);
         GameManager.instance.isMultiplayer = true;
         //EventSystem.current.SetSelectedGameObject(matchSettingsFirst);
@@ -157,18 +157,23 @@ public class PlayerManager : MonoBehaviour
         if (players.Count > 0 && players.Count + botCount > 1)
         {
             BotSpawner();
+            matchSettingsMenu.SetActive(false);
 
             for (int i = 0; i < players.Count; i++)
             {
                 players[i].GetComponent<Animator>().enabled = true;
                 players[i].GetComponent<ControllerTest>().deathCamera.rect 
                     = players[i].GetComponent<ControllerTest>().playerCamera.rect;
+                //ACTIVATE SHOP UI
+                players[i].GetComponent<ControllerTest>().ActivateShopUI();
             }
 
-            matchSettingsMenu.SetActive(false);
             matchStarted = true;
             //GameManager.instance.StateUnpause();
+            
+
         }
     }
+    
 
 }

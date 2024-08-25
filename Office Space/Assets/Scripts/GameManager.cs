@@ -87,7 +87,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject mainMenuStart;
     [SerializeField] GameObject menuDK2Objective;
     [SerializeField] GameObject menuNSObjective;
-    [SerializeField] GameObject menuShop;
+    //[SerializeField] GameObject menuShop;
 
     [Header("Cam Switch")]
     [SerializeField] GameObject Title;
@@ -125,6 +125,7 @@ public class GameManager : MonoBehaviour
     public GameObject TheDonutKing;
     [Header("Shop Variables")]
     //CODE FOR PJ's SHOP
+    public int playersReady;
     [SerializeField] public int moneyForTimeHeld;
     [SerializeField] public int moneyForDonutKing; 
     [SerializeField] public int startingMoney;
@@ -143,7 +144,7 @@ public class GameManager : MonoBehaviour
     public Image playerAmmoBar;
 
     public GameObject damageFlash;
-    public GameObject player;
+    //public GameObject player;
     public PlayerControl playerScript;
     public ItemThrow playerThrowScript;
     public AudioMixer audioMixer;
@@ -171,7 +172,7 @@ public class GameManager : MonoBehaviour
 
     Coroutine coroutine;
 
-    bool isShopDisplayed;
+    //bool isShopDisplayed;
 
     [Header("Variables for Credits")]
     [SerializeField] GameObject creditsText;
@@ -185,14 +186,15 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
+        Debug.Log("Awake");
         instance = this;
-        player = GameObject.FindWithTag("Player");
+        //player = GameObject.FindWithTag("Player");
 
-        if (player != null)
-        {
-            playerScript = player.GetComponent<PlayerControl>();
-            playerThrowScript = player.GetComponent<ItemThrow>();
-        }
+        //if (player != null)
+        //{
+        //    playerScript = player.GetComponent<PlayerControl>();
+        //    playerThrowScript = player.GetComponent<ItemThrow>();
+        //}
         currentMode = modeSelection;
 
         Thresh = 29;
@@ -207,23 +209,29 @@ public class GameManager : MonoBehaviour
         //TIM TEST CODE FOR DKSTATUS
         isThereDonutKing = false;
         Debug.Log("Did we restart?");
+
+        //isShopDisplayed = true;
+        
     }
 
     void Start()
     {
+        Debug.Log("Start");
         canVend = true;
         if (currentMode == gameMode.DONUTKING2)
         {
-            //EventSystem.current.SetSelectedGameObject(matchSettingsFirst); //Match settings
+            StatePause();
+            EventSystem.current.SetSelectedGameObject(matchSettingsFirst); //Match settings
             timerUI.SetActive(true);
             RandomizeVending();
             StartCoroutine(Timer());
         }
 
-        if (player != null)
-            playerHPStart = playerScript.HP;
-        else if (player == null)
-            playerHPStart = 5;
+
+        //if (player != null)
+        //    playerHPStart = playerScript.HP;
+        //else if (player == null)
+        //    playerHPStart = 5;
 
         if (currentMode == gameMode.TITLE)
         {
@@ -240,13 +248,14 @@ public class GameManager : MonoBehaviour
     //Update is called once per frame
     void Update()
     {
-        if (currentMode == gameMode.DONUTKING2 && !isShopDisplayed && PlayerManager.instance.matchStarted)
-        {
-            //PJ's shop code
-            ActivateMenu(menuShop);
-            //StatePause();
-            isShopDisplayed = true;
-        }
+        Debug.Log("Update");
+        //if (currentMode == gameMode.DONUTKING2 && !isShopDisplayed && PlayerManager.instance.matchStarted)
+        //{
+        //    //PJ's shop code
+        //    ActivateMenu(menuShop);
+        //    //StatePause();
+        //    isShopDisplayed = true;
+        //}
         if (currentMode == gameMode.DONUTKING2 && !isPaused)
             TallyActiveScores();
 
@@ -336,10 +345,11 @@ public class GameManager : MonoBehaviour
             //LOOK HERE TO FIX ENEMIES NOT SPAWNING APPROPRIATELY ON SPAWN POINTS
             for (int i = 0; i < deadTrackTemp; i++)
             {
-                if (deadTracker[0].GetHashCode() == player.GetHashCode())
+                ControllerTest playerCMP = deadTracker[0].GetComponent<ControllerTest>();
+                if (playerCMP != null /*&& deadTracker[0].GetHashCode() == player.GetHashCode()*/)
                 {
                     playerSpawn.transform.position = spawnPoints[i].transform.position;
-                    playerScript.spawnPlayer();
+                    playerCMP.spawnPlayer();
                 }
                 else
                 {
@@ -407,9 +417,22 @@ public class GameManager : MonoBehaviour
         //
 
         //PJ's shop code
-        isShopDisplayed = false;
-        statsTracker[player.name].depositMoney(100);
-        Shop.instance.updateMoneyCount();
+        //INSTEAD OF isShopDisplayed = false...
+        //ACTIVATE SHOP UI IN EACH PLAYER
+        //ControllerTest playerCMP;
+        //foreach(var player in PlayerManager.instance.players){
+        //playerCMP = player.GetComponent<ControllerTest>();
+        //playerCMP = ActivateShopUI();
+        //}
+        //PlayerManager.instance.players[i].ActivateShopUI()
+        //isShopDisplayed = false;
+        //ControllerTest playerCMP;
+        foreach (var player in PlayerManager.instance.players)
+        {
+            statsTracker[player.name].depositMoney(100);
+            
+        }
+        //Shop.instance.updateMoneyCount();
     }
 
     void RandomizeVending()
@@ -568,12 +591,13 @@ public class GameManager : MonoBehaviour
         //deadTracker[0].transform.position = spawnPoints[spawnIndex].transform.position;
         //deadTracker[0].SetActive(true);
         //}
-        if (deadTracker.Count > 0 && deadTracker[0].GetHashCode() == player.GetHashCode())
+        ControllerTest playerCMP = deadTracker[0].GetComponent<ControllerTest>();
+        if (playerCMP != null/* deadTracker.Count > 0 && deadTracker[0].GetHashCode() == player.GetHashCode()*/)
         {
             playerSpawn.transform.position = spawnPoints[spawnIndex].transform.position;
-            playerScript.spawnPlayer();
+            playerCMP.spawnPlayer();
         }
-        else if (deadTracker.Count > 0 && deadTracker[0].GetHashCode() != player.GetHashCode())
+        else /*if (deadTracker.Count > 0 && deadTracker[0].GetHashCode() != player.GetHashCode())*/
         {
             deadTracker[0].transform.position = spawnPoints[spawnIndex].transform.position;
             deadTracker[0].SetActive(true);
@@ -760,16 +784,16 @@ public class GameManager : MonoBehaviour
                 scoreBoardRWText.text += score.Value.getRoundsWon().ToString() + '\n';
                 scoreIndex++;
             }
-            if (player.name == TheTrueKing)
-            {
-                scoreBoardWLMessageText.text = "Enjoy Your Donut!";
-                //scoreBoardWLMessageText.color = Color.green;
-            }
-            else
-            {
-                scoreBoardWLMessageText.text = "Better Luck Next Time!";
-                //scoreBoardWLMessageText.color = Color.red;
-            }
+            //if (player.name == TheTrueKing)
+            //{
+            //    scoreBoardWLMessageText.text = "Enjoy Your Donut!";
+            //    //scoreBoardWLMessageText.color = Color.green;
+            //}
+            //else
+            //{
+            //    scoreBoardWLMessageText.text = "Better Luck Next Time!";
+            //    //scoreBoardWLMessageText.color = Color.red;
+            //}
             RetryButton.SetActive(true);
 
             scoreBoardResultText.text = "GAME OVER";
@@ -1095,9 +1119,21 @@ public class GameManager : MonoBehaviour
 
     public void DKLightSwitch(GameObject theDonutKing)
     {
-        if (statsTracker[theDonutKing.name].GetHashCode() == player.GetHashCode())
+        //Searches through PlayerManager's Players list to find out if they are THe Donut King.
+        //If they are, find that player, compare, then turn on their light switch
+        ControllerTest playerCMP = theDonutKing.GetComponent<ControllerTest>();
+        if (playerCMP != null)
         {
-            playerScript.ToggleMyLight();
+            playerCMP.ToggleMyLight();
+            //foreach(var player in PlayerManager.instance.players)
+            //{
+            //    if (statsTracker[theDonutKing.name].GetHashCode() == player.GetHashCode())
+            //    {
+            //        playerCMP.ToggleMyLight();
+            //        break;
+            //    }
+            //}
+            
         }
     }
 
@@ -1194,7 +1230,6 @@ public class GameManager : MonoBehaviour
 
     public void shopDoneButton()
     {
-        Debug.Log("done");
         //menuActive.SetActive(false);
         StateUnpause();
     }
