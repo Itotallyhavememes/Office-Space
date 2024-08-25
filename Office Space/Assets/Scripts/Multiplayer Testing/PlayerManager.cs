@@ -152,6 +152,7 @@ public class PlayerManager : MonoBehaviour
             //int rand = Random.Range(0, enemyPrefabs.Length);
             GameObject enemy = enemyPrefabs[i];
             Instantiate(enemy, spawnPoints[i].position, spawnPoints[i].rotation);
+            //enemy.SetActive(true);
         }
 
     }

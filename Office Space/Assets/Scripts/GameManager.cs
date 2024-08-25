@@ -181,7 +181,8 @@ public class GameManager : MonoBehaviour
     Vector3 origCreditsPosition;
     bool canScrollCredits;
 
-
+    [Header("Tim's a Genius")]
+    public List<GameObject> RunningPoints;
     public bool isMultiplayer;
 
     void Awake()
@@ -202,6 +203,7 @@ public class GameManager : MonoBehaviour
         statsTracker = new Dictionary<string, ParticipantStats>();
         PriorityPoint = new List<Transform>();
         CombatMessage = new List<string>();
+        //RunningPoints = new List<GameObject>();
         // CHECK POINT
         playerSpawn = GameObject.FindWithTag("Player Spawn Pos");
         respawn = false;

@@ -15,7 +15,7 @@ public class ParticipantStats
 
     public ParticipantStats instantiateStats()
     {
-        Debug.Log("Instantiating StatsTracker Values...");
+        //Debug.Log("Instantiating StatsTracker Values...");
         Kills = 0;
         Deaths = 0;
         timeHeld = 0;

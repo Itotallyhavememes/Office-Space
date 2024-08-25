@@ -127,35 +127,42 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
     void Update()
     {
 
-        if (!GameManager.instance.isThereDonutKing)
+        if (!GameManager.instance.isThereDonutKing) //The Donut is still there, because no donut king
         {
             agent.SetDestination(GameManager.instance.donutDropItem.transform.position);
-            agent.stoppingDistance = 0;
+            agent.stoppingDistance = 0; //so I can grab that donut
             //No Donut King, so fight each other
-            targetOBJ = PrioritizeTarget(targetOBJ);
+            targetOBJ = PrioritizeTarget(targetOBJ); //This method I wrote, bases it on update for who's closest, this is also how the enemies ALWAYS find me when I run around
 
         }
-        else if (GameManager.instance.isThereDonutKing)
+        else if (GameManager.instance.isThereDonutKing) //Donut King exists, meaning, there is no more donut
         {
-            if (GameManager.instance.isThereDonutKing.GetHashCode() != this.gameObject.GetHashCode())
+            if (GameManager.instance.TheDonutKing.GetHashCode() != this.gameObject.GetHashCode()) //if I AM the Donut King, ignore myself so I don't stand there like an idiot
             {
+                Debug.Log(gameObject.name.ToString() + ": Down with the King!");
                 agent.SetDestination(GameManager.instance.TheDonutKing.transform.position);
-                agent.stoppingDistance = stoppingDistOrig;
+                agent.stoppingDistance = stoppingDistOrig; //When facing targets, always have a stopping distance with The Donut King (OTHERWISE, they'll push the Donut King out of the map)
                 //if (agent.remainingDistance > agent.stoppingDistance)
                 //    agent.stoppingDistance = 5;
                 //There is Donut King, so targetOBJ = TheDonutKing;
-                targetOBJ = GameManager.instance.TheDonutKing;
+                targetOBJ = GameManager.instance.TheDonutKing; //Donut King is NOT ME, so my targetOBJ is whoever is The Donut King
             }
-            else
+            else //I AM The Donut King
             {
-                GoOnPatrol();
-                targetOBJ = null;
-                //targetOBJ = PrioritizeTarget(targetOBJ);
+                Debug.Log(gameObject.name.ToString() + ": All hail the King, fools");
+                agent.stoppingDistance = 0;
+                agent.SetDestination(PatrolPoint); // Initially called when Picking Up a Donut
+
+                //Once they reach the destination, THEN we go ahead and grab a new destination via PatrolPoint
+                if (agent.remainingDistance == 0)
+                    GetMeAnEscape();
+                targetOBJ = null; //I don't have targetOBJ
+                targetOBJ = PrioritizeTarget(targetOBJ); //But if anyone gets near me, I'ma start blasting
             }
         }
         if (targetOBJ != null)
             FaceTarget();
-        if (canSeeTarget = canSeePlayer())
+        if (canSeeTarget = canSeePlayer()) //canSeeTarget is test bool
         {
 
             if (!isShooting)
@@ -164,130 +171,11 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
 
         float agentSpeed = agent.velocity.normalized.magnitude;
         anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), agentSpeed, Time.deltaTime * animTransitSpeed));
+    }
 
-
-
-        //if (type != enemyType.security)
-        //{
-        //    if (numOfTargets > 0)
-        //        targetInRange = true;
-        //    else targetInRange = false;
-        //}
-        ////LOGIC BREAKDOWN:
-        ////Enemies should always Prioritize the Following:
-        ////The Donut and The Donut King
-        ////
-        ////Logic changes based on situation:
-        ////If The Donut is active, then The Donut King MUST be false
-        ////-in this case, enemies attack each other as normal to get to The Donut
-        ////Else if, The Donut is inactive, then The Donut King MUST be true
-        ////-in this case, enemies ignore each other and only attack The Donut King
-        ////Cycle repeats for enemies that are NOT The Donut King
-        ////
-        ////IF an Enemy BECOMES The Donut King
-        ////-Main Priority: Choose a Spawn Location at random and run
-        ////-If they BUMP into another enemy, then fight (Work on Complex DK Enemy AI Later)
-
-        ////if (GameManager.instance.isThereDonutKing == false/* || !destPriority*/)
-        ////{
-        ////    destPriority = GameManager.instance.donutDropItem.transform;
-        ////    PrioritizeTarget(targetOBJ);
-        ////}
-        ////else if (GameManager.instance.isThereDonutKing == true/* && destPriority*/)
-        ////{
-        ////    destPriority = GameManager.instance.TheDonutKing.transform;
-        ////    targetOBJ = destPriority.gameObject;
-        ////    GetDetCode(targetOBJ);
-        ////}
-        ////What to do if I'm the king
-        //if (!amITheKing)
-        //    destPriority = GetPriorityPoint();
-        //else if (amITheKing)
-        //    destPriority = null;
-
-
-        //if (targetInRange)
-        //{
-
-        //    for (int i = 0; i < GameManager.instance.deadTracker.Count; ++i)
-        //    {
-        //        if (tarOBJhash == GameManager.instance.deadTracker[i].GetHashCode())
-        //        {
-        //            targetOBJ = null;
-        //            isTargetDead = true;
-        //            break;
-        //        }
-        //    }
-        //    if (isTargetDead)
-        //    {
-        //        targetOBJ = PrioritizeTarget(targetOBJ);
-        //        if (targetOBJ != null)
-        //            isTargetDead = false;
-        //    }
-        //    if (targetOBJ != null)
-        //        //Debug.Log(gameObject.name.ToString() + " says: My New Target-> " + targetOBJ.name.ToString());
-        //        if (canSeePlayer())
-        //        {
-        //            //Debug.Log("I see you!");
-        //            if (agent.remainingDistance <= agent.stoppingDistance)
-        //                FaceTarget();
-        //            if (!isShooting)
-        //                StartCoroutine(shoot());
-        //        }
-        //        else
-        //        {
-        //            if (agent.remainingDistance < 0.05f)
-        //            {
-
-        //                if (type != enemyType.security)
-        //                {
-        //                    if (!amITheKing)
-        //                    {
-        //                        StartCoroutine(GoToPOI());
-        //                        //if (GameManager.instance.PriorityPoint.Count > 0)
-        //                        //{
-        //                        //    if (destPriority != null)
-        //                        //        StartCoroutine(GoToPOI());
-        //                        //}
-        //                        ////else
-        //                        ////{
-        //                        ////    StartCoroutine(Roam());
-        //                        ////}
-        //                    }
-        //                    else if (amITheKing)
-        //                        StartCoroutine(RunKingRun());
-        //                }
-        //                else if (type == enemyType.security && !isPatrol)
-        //                    StartCoroutine(Patrol());
-        //            }
-        //        }
-        //}
-        //else if (!targetInRange/* && !destPriority*/)
-        //{
-        //    if (type != enemyType.security)
-        //    {
-        //        if (!amITheKing)
-        //        {
-        //            StartCoroutine(GoToPOI());
-        //            //if (GameManager.instance.PriorityPoint.Count > 0)
-        //            //{
-        //            //    if (destPriority != null)
-        //            //        StartCoroutine(GoToPOI());
-        //            //}
-        //            ////else
-        //            ////{
-        //            ////    StartCoroutine(Roam());
-        //            ////}
-        //        }
-        //        else if (amITheKing)
-        //            StartCoroutine(RunKingRun());
-        //    }
-        //    else
-        //    {
-        //        if (!isPatrol && agent.remainingDistance < 0.05f)
-        //            StartCoroutine(Patrol());
-        //    }
-        //}
+    public void GetMeAnEscape()
+    {
+       PatrolPoint = GameManager.instance.RunningPoints[Random.Range(0, GameManager.instance.RunningPoints.Count)].transform.position;
     }
 
     public void ToggleMyLight()
@@ -353,30 +241,35 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
 
         agent.stoppingDistance = 0;
         GoOnPatrol();
+        Debug.Log("I'm fast af boi");
         agent.SetDestination(PatrolPoint);
         isPatrol = false;
+        Debug.Log("I made it!");
     }
     // PATROL POINT CAN NOT BE A CHALDEN OF ENEMY
     // PATROL POINT MUST BE DIG INTO POSITIONS IN EDIT 
     //ONLY FOR SECURITY
     public void GoOnPatrol()
     {
+        //Let's Go Random
+        int rand = Random.Range(0, GameManager.instance.RunningPoints.Count);
+        Debug.Log("RP SIZE: " + GameManager.instance.RunningPoints.Count.ToString());
+        PatrolPoint = GameManager.instance.RunningPoints[rand].transform.position;
+        //if (nextPosIndex < Positions.Count)
+        //{
 
-        if (nextPosIndex < Positions.Count)
-        {
-
-            PatrolPoint = Positions[nextPosIndex].transform.position;
-            ++nextPosIndex;
-        }
-        else if (nextPosIndex >= Positions.Count)
-        {
-            if (nextPosIndex > Positions.Count)
-            {
-                nextPosIndex = Positions.Count;
-            }
-            PatrolPoint = StartPoint;
-            nextPosIndex = 0;
-        }
+        //    PatrolPoint = Positions[nextPosIndex].transform.position;
+        //    ++nextPosIndex;
+        //}
+        //else if (nextPosIndex >= Positions.Count)
+        //{
+        //    if (nextPosIndex > Positions.Count)
+        //    {
+        //        nextPosIndex = Positions.Count;
+        //    }
+        //    PatrolPoint = StartPoint;
+        //    nextPosIndex = 0;
+        //}
     }
 
     //ONLY FOR !SECURITY

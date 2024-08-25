@@ -118,6 +118,7 @@ public class DonutPickUp : MonoBehaviour
                         lightSwitchE.ResetHP(); //Reset enemy HP
                         lightSwitchE.ToggleMyLight();
                         lightSwitchE.ToggleAmIKing();
+                        lightSwitchE.GetMeAnEscape();
                     }
 
                 }
