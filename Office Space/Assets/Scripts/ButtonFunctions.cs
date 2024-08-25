@@ -12,7 +12,6 @@ using UnityEngine.UI;
 
 public class ButtonFunctions : MonoBehaviour
 {
-    float loadFilled;
     // Start is called before the first frame update
     public void resume()
     {
@@ -152,32 +151,25 @@ public class ButtonFunctions : MonoBehaviour
         GameManager.instance.ChangeTargetCamera();
         StartCoroutine(GameManager.instance.BackToMainFromCredits());
     }
-
     IEnumerator loadingScreenTime()
     {
-        while (GameManager.instance.loadingBar.fillAmount <= loadFilled)
+        while(GameManager.instance.loadingBar.fillAmount != 1)
         {
-            GameManager.instance.loadingBar.fillAmount += GameManager.instance.amountFilled;
-            yield return new WaitForSeconds(GameManager.instance.fillSpeed);
-            if (GameManager.instance.loadingBar.fillAmount == loadFilled)
-            {
-                yield return new WaitForSeconds(0.5f);
-                break; 
-            }
+            float newFillAmount = GameManager.instance.loadingBar.fillAmount + 0.1f;
+            GameManager.instance.loadingBar.fillAmount = Mathf.Lerp(GameManager.instance.
+              loadingBar.fillAmount, newFillAmount,
+              Time.time * 6);
+            yield return new WaitForSeconds(Time.deltaTime * 6);
         }
-        //Next Scene
-        SceneManager.LoadScene("TTT5 - Derrick");
-
+        yield return new WaitForSeconds(1);
+        SceneManager.LoadScene("DK3_MapEditScene");
     }
 
     public void loading()
-    {
+    { 
         GameManager.instance.menuLoad();
-        loadFilled = GameManager.instance.loadingBar.fillAmount;
-        Debug.Log(loadFilled.ToString() + " loadFilled");
-        GameManager.instance.loadingBar.fillAmount = 0;
+        GameManager.instance.loadingBar.fillAmount = Mathf.Clamp(0, 0, 1);
         StartCoroutine(loadingScreenTime());
-      
     }
 
     public void openDK3Objective()
