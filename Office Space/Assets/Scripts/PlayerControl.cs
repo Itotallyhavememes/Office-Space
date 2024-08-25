@@ -531,6 +531,7 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
                 //PJ's code start
                 if (weaponList[selectedWeapon].style == WeaponStats.ThrowStyle.none)
                 {
+                    aud.PlayOneShot(weaponList[selectedWeapon].shootSound);
                     Instantiate(weaponList[selectedWeapon].projectileProjectile, muzzle.transform.position, muzzle.transform.rotation);
                     yield return new WaitForSeconds(weaponList[selectedWeapon].shootRate);
                     weaponModel.SetActive(true);

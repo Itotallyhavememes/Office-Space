@@ -123,8 +123,13 @@ public class GameManager : MonoBehaviour
     //TIM TEST CODE FOR DK
     public bool isThereDonutKing;
     public GameObject TheDonutKing;
+    [Header("Shop Variables")]
     //CODE FOR PJ's SHOP
-    [SerializeField] public int moneyForTimeHeld, moneyForDonutKing;
+    [SerializeField] public int moneyForTimeHeld;
+    [SerializeField] public int moneyForDonutKing; 
+    [SerializeField] public int startingMoney;
+
+
     // JOHN CODE FOR CHECKPOINT
     public GameObject playerSpawn;
     public GameObject checkPointPos;

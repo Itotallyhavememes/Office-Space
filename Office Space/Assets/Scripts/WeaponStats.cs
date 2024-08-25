@@ -10,6 +10,7 @@ public class WeaponStats : ScriptableObject
     public WeaponType type;
     public ThrowStyle style;
     public GameObject weaponModel;
+    public AudioClip shootSound;
     public float shootRate;
     public int shootDamage;
     public int currentAmmo;

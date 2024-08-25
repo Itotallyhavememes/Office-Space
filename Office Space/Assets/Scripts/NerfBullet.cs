@@ -24,6 +24,7 @@ public class NerfBullet : MonoBehaviour
     {
         if (hasPhysics)
         {
+            rb.useGravity = true;
             transform.rotation = Quaternion.LookRotation(rb.velocity.normalized);//gives the nerf bullet realistic physics 
         }
     }
