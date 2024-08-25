@@ -54,8 +54,8 @@ MonoBehaviour:
   bobHeight: 0.3
   powerupEffect: {fileID: 0}
   weapon: {fileID: 11400000, guid: 21641470c5893094896493a45be6e766, type: 2}
-  pickUpSound: {fileID: 0}
-  audSource: {fileID: 0}
+  pickUpSound: {fileID: 8300000, guid: 8cfc68988435aa04999c4027c945c326, type: 3}
+  audSource: {fileID: -3289976538979643506}
   volume: 1
 --- !u!33 &9179441603636853133
 MeshFilter:

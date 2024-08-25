@@ -698,7 +698,7 @@ public class ControllerTest : MonoBehaviour //ITarget //, IDamage
                             GameManager.instance.statsTracker[this.gameObject.name].updateKills();
                             GameManager.instance.statsTracker[this.gameObject.name].updateKDR();
                             GameManager.instance.DisplayKillMessage(gameObject, hit.collider.gameObject);
-                            Debug.Log(GameManager.instance.statsTracker[this.gameObject.name].getAllStats());
+                          //  Debug.Log(GameManager.instance.statsTracker[this.gameObject.name].getAllStats());
                         }
                     }
                     else

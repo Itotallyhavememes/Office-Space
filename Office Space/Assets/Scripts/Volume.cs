@@ -37,21 +37,21 @@ public class Volume : MonoBehaviour
         if (musicSider.value == 0)
             audioMixer.SetFloat("music", -80f);
         else
-            audioMixer.SetFloat("music", Mathf.Log10(value) * 10f);
+            audioMixer.SetFloat("music", Mathf.Log10(value) * 30f);
     }
     private void SilderSFX(float value)
     {
         if (SFXSider.value == 0)
             audioMixer.SetFloat("SFX", -80f);
         else
-            audioMixer.SetFloat("SFX", Mathf.Log10(value) * 20f);
+            audioMixer.SetFloat("SFX", Mathf.Log10(value) * 30f);
     }
     private void SilderMaster(float value)
     {
         if (MusterSider.value == 0)
             audioMixer.SetFloat("Master", -80f);
         else
-            audioMixer.SetFloat("Master", Mathf.Log10(value) * 10f);
+            audioMixer.SetFloat("Master", Mathf.Log10(value) * 30f);
     }
     private void Start()
     {

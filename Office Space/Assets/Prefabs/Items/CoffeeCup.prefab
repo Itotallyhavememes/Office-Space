@@ -139,7 +139,7 @@ MonoBehaviour:
   bobHeight: 0.3
   powerupEffect: {fileID: 11400000, guid: 4ca6404836521654ba62d54f0fc38381, type: 2}
   weapon: {fileID: 0}
-  pickUpSound: {fileID: 0}
+  pickUpSound: {fileID: 8300000, guid: 63b11c08e74a5a44cbb2b8b72c388e52, type: 3}
   audSource: {fileID: 6910402494954525830}
   volume: 0.5
 --- !u!33 &7387428692115581037

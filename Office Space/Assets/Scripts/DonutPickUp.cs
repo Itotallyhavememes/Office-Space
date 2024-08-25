@@ -112,7 +112,7 @@ public class DonutPickUp : MonoBehaviour
                     //StartCoroutine(GameManager.instance.DKTimer());
                 }
 
-                Debug.Log(other.name.ToString() + " : " + GameManager.instance.statsTracker[other.name].getAllStats());
+              //  Debug.Log(other.name.ToString() + " : " + GameManager.instance.statsTracker[other.name].getAllStats());
                 gameObject.SetActive(false);
                 if(GameManager.instance.worldDonutCount > 0)
                     --GameManager.instance.worldDonutCount;

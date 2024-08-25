@@ -196,6 +196,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 414311504061547679, guid: 6379007b14c2a234dbbb75c4f020a880, type: 3}
+      propertyPath: playerCam
+      value: 
+      objectReference: {fileID: 1376484764}
+    - target: {fileID: 414311504061547679, guid: 6379007b14c2a234dbbb75c4f020a880, type: 3}
+      propertyPath: audRubberBall
+      value: 
+      objectReference: {fileID: 8300000, guid: 8b363cee3cf49ae418f32ed13e3eaca0, type: 3}
+    - target: {fileID: 414311504061547679, guid: 6379007b14c2a234dbbb75c4f020a880, type: 3}
+      propertyPath: audRubberBallVol
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 1388050218775161322, guid: 6379007b14c2a234dbbb75c4f020a880, type: 3}
       propertyPath: m_Name
       value: NMODEL_Player2
@@ -239,6 +251,22 @@ PrefabInstance:
     - target: {fileID: 4403731185893258093, guid: 6379007b14c2a234dbbb75c4f020a880, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8390889193788095070, guid: 6379007b14c2a234dbbb75c4f020a880, type: 3}
+      propertyPath: volume
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8390889193788095070, guid: 6379007b14c2a234dbbb75c4f020a880, type: 3}
+      propertyPath: rubberBall
+      value: 
+      objectReference: {fileID: 8300000, guid: 51d732c04d3a7e04a981cf18a4d38f62, type: 3}
+    - target: {fileID: 8390889193788095070, guid: 6379007b14c2a234dbbb75c4f020a880, type: 3}
+      propertyPath: audShurikenFire
+      value: 
+      objectReference: {fileID: 8300000, guid: 3bd06bd9d6f6972459a1db09b8a791ac, type: 3}
+    - target: {fileID: 8390889193788095070, guid: 6379007b14c2a234dbbb75c4f020a880, type: 3}
+      propertyPath: audShurikenFireVol
+      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -794,6 +822,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1253205077}
   m_CullTransparentMesh: 1
+--- !u!20 &1376484764 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 4400089426999802919, guid: 6379007b14c2a234dbbb75c4f020a880, type: 3}
+  m_PrefabInstance: {fileID: 218268282}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1599894770
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1254,6 +1287,38 @@ PrefabInstance:
       propertyPath: m_Name
       value: DK3_Map
       objectReference: {fileID: 0}
+    - target: {fileID: 6548212741553210362, guid: 7b469cf31f13f3544a3f4e1d47990a44, type: 3}
+      propertyPath: audDoorOpen
+      value: 
+      objectReference: {fileID: 8300000, guid: cb812129f07a5ed42a252ea8fd180f82, type: 3}
+    - target: {fileID: 6548212741553210362, guid: 7b469cf31f13f3544a3f4e1d47990a44, type: 3}
+      propertyPath: audDoorClose
+      value: 
+      objectReference: {fileID: 8300000, guid: 0653919eebadb2548834c0644bfa6fda, type: 3}
+    - target: {fileID: 6548212741553210362, guid: 7b469cf31f13f3544a3f4e1d47990a44, type: 3}
+      propertyPath: audDoorOpenVol
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6548212741553210362, guid: 7b469cf31f13f3544a3f4e1d47990a44, type: 3}
+      propertyPath: audDoorCloseVol
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6702897842352744569, guid: 7b469cf31f13f3544a3f4e1d47990a44, type: 3}
+      propertyPath: audDoorOpen
+      value: 
+      objectReference: {fileID: 8300000, guid: cb812129f07a5ed42a252ea8fd180f82, type: 3}
+    - target: {fileID: 6702897842352744569, guid: 7b469cf31f13f3544a3f4e1d47990a44, type: 3}
+      propertyPath: audDoorClose
+      value: 
+      objectReference: {fileID: 8300000, guid: 0653919eebadb2548834c0644bfa6fda, type: 3}
+    - target: {fileID: 6702897842352744569, guid: 7b469cf31f13f3544a3f4e1d47990a44, type: 3}
+      propertyPath: audDoorOpenVol
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6702897842352744569, guid: 7b469cf31f13f3544a3f4e1d47990a44, type: 3}
+      propertyPath: audDoorCloseVol
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 7310681262633353093, guid: 7b469cf31f13f3544a3f4e1d47990a44, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1293,6 +1358,38 @@ PrefabInstance:
     - target: {fileID: 7310681262633353093, guid: 7b469cf31f13f3544a3f4e1d47990a44, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8081282674880756415, guid: 7b469cf31f13f3544a3f4e1d47990a44, type: 3}
+      propertyPath: audDoorOpen
+      value: 
+      objectReference: {fileID: 8300000, guid: cb812129f07a5ed42a252ea8fd180f82, type: 3}
+    - target: {fileID: 8081282674880756415, guid: 7b469cf31f13f3544a3f4e1d47990a44, type: 3}
+      propertyPath: audDoorClose
+      value: 
+      objectReference: {fileID: 8300000, guid: 0653919eebadb2548834c0644bfa6fda, type: 3}
+    - target: {fileID: 8081282674880756415, guid: 7b469cf31f13f3544a3f4e1d47990a44, type: 3}
+      propertyPath: audDoorOpenVol
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8081282674880756415, guid: 7b469cf31f13f3544a3f4e1d47990a44, type: 3}
+      propertyPath: audDoorCloseVol
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8848206906182752183, guid: 7b469cf31f13f3544a3f4e1d47990a44, type: 3}
+      propertyPath: audDoorOpen
+      value: 
+      objectReference: {fileID: 8300000, guid: cb812129f07a5ed42a252ea8fd180f82, type: 3}
+    - target: {fileID: 8848206906182752183, guid: 7b469cf31f13f3544a3f4e1d47990a44, type: 3}
+      propertyPath: audDoorClose
+      value: 
+      objectReference: {fileID: 8300000, guid: 0653919eebadb2548834c0644bfa6fda, type: 3}
+    - target: {fileID: 8848206906182752183, guid: 7b469cf31f13f3544a3f4e1d47990a44, type: 3}
+      propertyPath: audDoorOpenVol
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8848206906182752183, guid: 7b469cf31f13f3544a3f4e1d47990a44, type: 3}
+      propertyPath: audDoorCloseVol
+      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
