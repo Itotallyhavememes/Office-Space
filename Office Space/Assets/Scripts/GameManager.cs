@@ -208,7 +208,7 @@ public class GameManager : MonoBehaviour
         //
         //TIM TEST CODE FOR DKSTATUS
         isThereDonutKing = false;
-        Debug.Log("Did we restart?");
+        //Debug.Log("Did we restart?");
 
         //isShopDisplayed = true;
         
@@ -224,7 +224,8 @@ public class GameManager : MonoBehaviour
             EventSystem.current.SetSelectedGameObject(matchSettingsFirst); //Match settings
             timerUI.SetActive(true);
             RandomizeVending();
-            StartCoroutine(Timer());
+            //StartCoroutine(Timer());
+            InstantiateScoreBoard();
         }
 
 
@@ -239,9 +240,9 @@ public class GameManager : MonoBehaviour
             EventSystem.current.SetSelectedGameObject(mainMenuFirst);
             origCreditsPosition = creditsText.transform.localPosition;
         }
-        Debug.Log(bodyTracker.Count.ToString() + " PLAYERS LOADED");
-        if (currentMode == gameMode.DONUTKING2)
-            InstantiateScoreBoard();
+        //Debug.Log(bodyTracker.Count.ToString() + " PLAYERS LOADED");
+        //if (currentMode == gameMode.DONUTKING2)
+            
 
     }
 
@@ -464,7 +465,7 @@ public class GameManager : MonoBehaviour
         yield return null;
     }
 
-    IEnumerator Timer()
+    public IEnumerator Timer()
     {
         int timeElapsed = timerTime;
         int timerMinutes;

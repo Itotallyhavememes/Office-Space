@@ -26,10 +26,10 @@ public class Shop : MonoBehaviour
     [SerializeField] int rubberbandBallPrice;
     [SerializeField] WeaponStats rubberbandBall;
 
-    private void Awake()
-    {
-        //instance = this;
-    }
+    //private void Awake()
+    //{
+    //    //instance = this;
+    //}
 
     void Start()
     {

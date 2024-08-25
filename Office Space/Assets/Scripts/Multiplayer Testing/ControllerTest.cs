@@ -226,7 +226,8 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
     }
     private void Start()
     {
-        HP = PlayerManager.instance.HP;
+        if(HP == 0)
+            HP = PlayerManager.instance.HP;
         HPOrig = HP;
         origSpeed = speed;
         origHeight = characterController.height;
@@ -993,6 +994,7 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
         if(GameManager.instance.playersReady == PlayerManager.instance.players.Count)
         {
             GameManager.instance.StateUnpause();
+            StartCoroutine(GameManager.instance.Timer());
         }
     }
 

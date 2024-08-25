@@ -88,7 +88,7 @@ public class PlayerManager : MonoBehaviour
         player.name = "Player " + players.Count.ToString();
         maxBots--;
 
-        if(players.Count > 0)
+        if(players.Count > 1)
             player.GetComponent<ControllerTest>().playerCamera.GetComponent<AudioListener>().enabled = false;
 
         while (players.Count + botCount > maxPlayers)

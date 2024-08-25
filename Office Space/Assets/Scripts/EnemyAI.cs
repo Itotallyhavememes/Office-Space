@@ -17,6 +17,8 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
     //Enum for distinguishing different enemy types for AI distinction
     [SerializeField] enum enemyType { norm, fast, tank, security };
     [SerializeField] enemyType type;
+    [SerializeField] bool canSeeTarget;
+    //public GameObject headPos;
     [SerializeField] GameObject DKLight;
     [SerializeField] bool amITheKing;
     [SerializeField] Vector3 DKRPoint;
@@ -48,7 +50,7 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
     Vector3 TargetDIR;
     float angleToTarget;
     //JOHN CODE
-    bool isSprinting;
+    //bool isSprinting;
     [Range(5, 25)][SerializeField] int dodgeSpeed;
     Vector3 enemyVel;
     Vector3 randPos;
@@ -105,7 +107,7 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
         colorOrig = model.material.color;
         //tells game manager that we've made an enemy
         GameManager.instance.enemyCount++;
-        isSprinting = false;
+        //isSprinting = false;
         target = null;
         randPos = Vector3.zero;
         startingPos = transform.position;
@@ -125,8 +127,46 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
     //FOR ALL
     void Update()
     {
-        //float agentSpeed = agent.velocity.normalized.magnitude;
-        //anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), agentSpeed, Time.deltaTime * animTransitSpeed));
+        
+        if (!GameManager.instance.isThereDonutKing)
+        {
+            agent.SetDestination(GameManager.instance.donutDropItem.transform.position);
+            agent.stoppingDistance = 0;
+            //No Donut King, so fight each other
+            targetOBJ = PrioritizeTarget(targetOBJ);
+
+        }
+        else if (GameManager.instance.isThereDonutKing)
+        {
+            if (GameManager.instance.isThereDonutKing.GetHashCode() != this.gameObject.GetHashCode())
+            {
+                agent.SetDestination(GameManager.instance.TheDonutKing.transform.position);
+                agent.stoppingDistance = stoppingDistOrig;
+                //if (agent.remainingDistance > agent.stoppingDistance)
+                //    agent.stoppingDistance = 5;
+                //There is Donut King, so targetOBJ = TheDonutKing;
+                targetOBJ = GameManager.instance.TheDonutKing;
+            }
+            else
+            {
+                GoOnPatrol();
+                targetOBJ = null;
+                //targetOBJ = PrioritizeTarget(targetOBJ);
+            }
+        }
+        if(targetOBJ != null)
+            FaceTarget();
+        if (canSeeTarget = canSeePlayer())
+        {
+            
+            if(!isShooting)
+                StartCoroutine(shoot());
+        }
+
+        float agentSpeed = agent.velocity.normalized.magnitude;
+        anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), agentSpeed, Time.deltaTime * animTransitSpeed));
+
+        
 
         //if (type != enemyType.security)
         //{
@@ -199,7 +239,7 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
         //        {
         //            if (agent.remainingDistance < 0.05f)
         //            {
-                        
+
         //                if (type != enemyType.security)
         //                {
         //                    if (!amITheKing)
@@ -341,97 +381,97 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
     }
 
     //ONLY FOR !SECURITY
-    IEnumerator Roam()
-    {
-        if (type != enemyType.security)
-        {
-            isRoaming = true;
-            yield return new WaitForSeconds(roamTimer);
-            agent.stoppingDistance = 0;
-            //creates sphere that's the size of roamdist and selects a random position
-            Vector3 randPos = Random.insideUnitSphere * roamDist;
-            randPos += startingPos;
-            //Prevents getting null reference when creating random point
-            NavMeshHit hit;
-            NavMesh.SamplePosition(randPos, out hit, roamDist, 1);
-            //The "1" is in refernce to layer mask "1"
-            agent.SetDestination(hit.position);
-            isRoaming = false;
-        }
-    }
+    //IEnumerator Roam()
+    //{
+    //    if (type != enemyType.security)
+    //    {
+    //        isRoaming = true;
+    //        yield return new WaitForSeconds(roamTimer);
+    //        agent.stoppingDistance = 0;
+    //        //creates sphere that's the size of roamdist and selects a random position
+    //        Vector3 randPos = Random.insideUnitSphere * roamDist;
+    //        randPos += startingPos;
+    //        //Prevents getting null reference when creating random point
+    //        NavMeshHit hit;
+    //        NavMesh.SamplePosition(randPos, out hit, roamDist, 1);
+    //        //The "1" is in refernce to layer mask "1"
+    //        agent.SetDestination(hit.position);
+    //        isRoaming = false;
+    //    }
+    //}
 
     //FOR BOTH
-    IEnumerator GoToPOI()
-    {
-        yield return new WaitForSeconds(0.05f);
-        agent.stoppingDistance = 0;
-        agent.SetDestination(destPriority.position);
-    }
+    //IEnumerator GoToPOI()
+    //{
+    //    yield return new WaitForSeconds(0.05f);
+    //    agent.stoppingDistance = 0;
+    //    agent.SetDestination(destPriority.position);
+    //}
 
     //if potential target enters Sphere
     //FOR BOTH
-    public void OnTriggerEnter(Collider other)
-    {
-        target = other.GetComponent<ITarget>();
-        if (this.type == enemyType.security)
-        {
-            if (target != null && other.CompareTag("Player"))
-            {
-                targetOBJ = other.gameObject;
-                targetInRange = true;
-                detCode = 1;
-            }
-        }
-        else
-        {
-            if (numOfTargets < GameManager.instance.bodyTracker.Count)
-            {
-                if (target != null && other != this)
-                {
+    //public void OnTriggerEnter(Collider other)
+    //{
+    //    target = other.GetComponent<ITarget>();
+    //    if (this.type == enemyType.security)
+    //    {
+    //        if (target != null && other.CompareTag("Player"))
+    //        {
+    //            targetOBJ = other.gameObject;
+    //            targetInRange = true;
+    //            detCode = 1;
+    //        }
+    //    }
+    //    else
+    //    {
+    //        if (numOfTargets < GameManager.instance.bodyTracker.Count)
+    //        {
+    //            if (target != null && other != this)
+    //            {
 
-                    if (numOfTargets == 0)
-                    {
-                        targetOBJ = other.gameObject;
-                        ++numOfTargets;
-                    }
-                    else
-                    {
-                        ++numOfTargets;
-                        targetOBJ = PrioritizeTarget(targetOBJ);
-                    }
-                }
-            }
-        }
-    }
+    //                if (numOfTargets == 0)
+    //                {
+    //                    targetOBJ = other.gameObject;
+    //                    ++numOfTargets;
+    //                }
+    //                else
+    //                {
+    //                    ++numOfTargets;
+    //                    targetOBJ = PrioritizeTarget(targetOBJ);
+    //                }
+    //            }
+    //        }
+    //    }
+    //}
 
     //If target exits Sphere
     //FOR BOTH
-    public void OnTriggerExit(Collider other)
-    {
-        if (this.type == enemyType.security)
-        {
-            if (other.CompareTag("Player"))
-            {
-                targetOBJ = null;
-                targetInRange = false;
-                TargetDIR = Vector3.zero;
-                detCode = 0;
-            }
-        }
-        else
-        {
-            if (numOfTargets > 0)
-            {
-                target = other.GetComponent<ITarget>();
-                if (target != null && other != this)
-                {
+    //public void OnTriggerExit(Collider other)
+    //{
+    //    if (this.type == enemyType.security)
+    //    {
+    //        if (other.CompareTag("Player"))
+    //        {
+    //            targetOBJ = null;
+    //            targetInRange = false;
+    //            TargetDIR = Vector3.zero;
+    //            detCode = 0;
+    //        }
+    //    }
+    //    else
+    //    {
+    //        if (numOfTargets > 0)
+    //        {
+    //            target = other.GetComponent<ITarget>();
+    //            if (target != null && other != this)
+    //            {
 
-                    --numOfTargets;
-                    targetOBJ = PrioritizeTarget(targetOBJ);
-                }
-            }
-        }
-    }
+    //                --numOfTargets;
+    //                targetOBJ = PrioritizeTarget(targetOBJ);
+    //            }
+    //        }
+    //    }
+    //}
 
 
     //takes in currTarget and checks to see if currTarget is closest in relation to GameManager's bodyTracker
@@ -473,42 +513,47 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
                     }
                 }
             }
-            detCode = GetDetCode(targetHolder);
+            enemyAI targetComp = targetHolder.GetComponent<enemyAI>();
+            //if(targetComp != null)
+            //{
+            //    targetHolder = targetComp.headPos;
+            //}
+            //detCode = GetDetCode(targetHolder);
             tarOBJhash = targetHolder.GetHashCode();
         }
 
         return targetHolder;
     }
 
-    public Transform GetPriorityPoint()
-    {
-        //Transform closestPoint = null;
-        //if (GameManager.instance.PriorityPoint.Count > 0)
-        //{
-        //    Transform enemyT = gameObject.transform;
-        //    closestPoint = GameManager.instance.PriorityPoint[0];
-        //    float compDist = Vector3.Distance(enemyT.position, closestPoint.position);
-        //    float newComp = 0.0f;
-        //   for(int i = 0; i < GameManager.instance.PriorityPoint.Count; ++i)
-        //    {
-        //        newComp = Vector3.Distance(enemyT.position, GameManager.instance.PriorityPoint[i].position);
-        //        if (compDist > newComp)
-        //        {
-        //            compDist = newComp;
-        //            closestPoint = GameManager.instance.PriorityPoint[i];
-        //        }
-        //    }
-        //}
-        //return closestPoint;
-        Transform PriorityPoint = null;
-        PriorityPoint = GameManager.instance.PriorityPoint[0];
-        //if (!GameManager.instance.isThereDonutKing)
-        //    PriorityPoint = GameManager.instance.donutDropItem.transform;
-        //else if(GameManager.instance.isThereDonutKing)
-        //    PriorityPoint = GameManager.instance.TheDonutKing.transform;
+    //public Transform GetPriorityPoint()
+    //{
+    //    //Transform closestPoint = null;
+    //    //if (GameManager.instance.PriorityPoint.Count > 0)
+    //    //{
+    //    //    Transform enemyT = gameObject.transform;
+    //    //    closestPoint = GameManager.instance.PriorityPoint[0];
+    //    //    float compDist = Vector3.Distance(enemyT.position, closestPoint.position);
+    //    //    float newComp = 0.0f;
+    //    //   for(int i = 0; i < GameManager.instance.PriorityPoint.Count; ++i)
+    //    //    {
+    //    //        newComp = Vector3.Distance(enemyT.position, GameManager.instance.PriorityPoint[i].position);
+    //    //        if (compDist > newComp)
+    //    //        {
+    //    //            compDist = newComp;
+    //    //            closestPoint = GameManager.instance.PriorityPoint[i];
+    //    //        }
+    //    //    }
+    //    //}
+    //    //return closestPoint;
+    //    Transform PriorityPoint = null;
+    //    PriorityPoint = GameManager.instance.PriorityPoint[0];
+    //    //if (!GameManager.instance.isThereDonutKing)
+    //    //    PriorityPoint = GameManager.instance.donutDropItem.transform;
+    //    //else if(GameManager.instance.isThereDonutKing)
+    //    //    PriorityPoint = GameManager.instance.TheDonutKing.transform;
 
-        return PriorityPoint;
-    }
+    //    return PriorityPoint;
+    //}
     int GetDetCode(GameObject target)
     {
         if (target != null)
@@ -523,56 +568,80 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
 
     bool canSeePlayer()
     {
-        if (targetOBJ)
+        //Changed it to headPos, since transform is always at model's feet
+        //enemyAI targetCmp = targetOBJ.GetComponent<enemyAI>();
+        //if(targetCmp != null)
+        //{
+        //    targetOBJ = targetCmp.headPos;
+        //}
+        targeting.transform.position = targetOBJ.transform.position;
+        TargetDIR = targeting.transform.position - transform.position;
+        angleToTarget = Vector3.Angle(TargetDIR, transform.forward);
+        //Each frame, the enemy AI will be seeking out player's position through this line
+
+        //Debug.Log(angleToPlayer); <- this does take up quite a few frames, so take out if possible
+        //Debug.DrawRay(headPos.position, PlayerDirection);
+        Debug.DrawRay(transform.position, TargetDIR, Color.yellow);
+        RaycastHit hit;
+        //This checks if there is a wall between enemy and player
+        if (Physics.Raycast(transform.position, TargetDIR, out hit))
         {
-
-            //OLD CODE:
-            targeting.transform.position = targetOBJ.transform.position;
-            TargetDIR = targeting.transform.position - transform.position;
-            angleToTarget = Vector3.Angle(TargetDIR, transform.forward);
-            if (GameManager.instance.isThereDonutKing)
-                StopCoroutine(GoToPOI());
-            bool canSee = false;
-
-            switch (detCode)
+            if (hit.collider.name == targetOBJ.name && angleToTarget <= viewAngle)
             {
-                //For Players
-                case 1:
-                    RaycastHit hit;
-                    if (Physics.Raycast(transform.position, TargetDIR, out hit))
-                    {
-                        if (hit.collider.CompareTag("Player"))
-                            canSee = true;
-                    }
-                    break;
-                //For Other Enemies
-                case 2:
-                    if (!Physics.Linecast(transform.position, targeting.transform.position))
-                        canSee = true;
-                    break;
-                //Most cases when detCode is absent
-                default:
-                    canSee = false;
-                    break;
-            }
-
-            if (angleToTarget <= viewAngle && canSee)
-            {
-                if(type!=enemyType.security)
-                    agent.stoppingDistance = stoppingDistOrig;
-                agent.SetDestination(targetOBJ.transform.position);
-                canTarget = true;
-                anim.SetBool("Aiming", true);
-                FaceTarget();
-                enemRig.enabled = true;
                 return true;
             }
         }
-        agent.stoppingDistance = 0;
-        canTarget = false;
-        anim.SetBool("Aiming", false);
-        enemRig.enabled = false;
         return false;
+        //if (targetOBJ)
+        //{
+
+        //OLD CODE:
+        //    targeting.transform.position = targetOBJ.transform.position;
+        //    TargetDIR = targeting.transform.position - transform.position;
+        //    angleToTarget = Vector3.Angle(TargetDIR, transform.forward);
+        //    //if (GameManager.instance.isThereDonutKing)
+        //    //    StopCoroutine(GoToPOI());
+        //    bool canSee = false;
+
+        //    switch (detCode)
+        //    {
+        //        //For Players
+        //        case 1:
+        //            RaycastHit hit;
+        //            if (Physics.Raycast(transform.position, TargetDIR, out hit))
+        //            {
+        //                if (hit.collider.CompareTag("Player"))
+        //                    canSee = true;
+        //            }
+        //            break;
+        //        //For Other Enemies
+        //        case 2:
+        //            if (!Physics.Linecast(transform.position, targeting.transform.position))
+        //                canSee = true;
+        //            break;
+        //        //Most cases when detCode is absent
+        //        default:
+        //            canSee = false;
+        //            break;
+        //    }
+
+        //    if (angleToTarget <= viewAngle && canSee)
+        //    {
+        //        if(type!=enemyType.security)
+        //            agent.stoppingDistance = stoppingDistOrig;
+        //        agent.SetDestination(targetOBJ.transform.position);
+        //        canTarget = true;
+        //        anim.SetBool("Aiming", true);
+        //        FaceTarget();
+        //        enemRig.enabled = true;
+        //        return true;
+        //    }
+        //}
+        //agent.stoppingDistance = 0;
+        //canTarget = false;
+        //anim.SetBool("Aiming", false);
+        //enemRig.enabled = false;
+        //return false;
     }
 
     public void takeDamage(int amount)

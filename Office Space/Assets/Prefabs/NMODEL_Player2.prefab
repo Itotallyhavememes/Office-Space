@@ -700,7 +700,7 @@ MonoBehaviour:
   animTransitSpeed: 10
   playerMeshRenderer: {fileID: 2793527189652970898}
   dmgColor: {r: 0.7169812, g: 0, b: 0, a: 1}
-  electricParticles: {fileID: 0}
+  electricParticles: {fileID: 9027514048236820045, guid: effb650189dc5714e9e9801b1cfb3991, type: 3}
   speedFOVEffect: 75
   playerRig: {fileID: 2774599587136377882}
   deathCamera: {fileID: 605183949440467373}
@@ -771,7 +771,7 @@ MonoBehaviour:
   itemPrefab: {fileID: 3822187847243570803, guid: 14ce3eaf9a276fa49ba840ba1115eff7, type: 3}
   itemSpawnPoint: {fileID: 987151880084788565}
   player: {fileID: 8390889193788095070}
-  playerCam: {fileID: 0}
+  playerCam: {fileID: 4400089426999802919}
   controllerTestScript: {fileID: 0}
   weaponHUD: {fileID: 7217534094125820764}
   grenadeHUD: {fileID: 2020084761414294192}

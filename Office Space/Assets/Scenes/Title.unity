@@ -10637,7 +10637,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2014411557
 RectTransform:
   m_ObjectHideFlags: 0
@@ -29408,7 +29408,6 @@ MonoBehaviour:
   mainMenuStart: {fileID: 872372113}
   menuDK2Objective: {fileID: 872372113}
   menuNSObjective: {fileID: 687579524954175997}
-  menuShop: {fileID: 0}
   Title: {fileID: 4490490888435361631}
   menuTimeDelay: 1
   menuRetryAmount: {fileID: 0}
@@ -29435,8 +29434,10 @@ MonoBehaviour:
   fillSpeed: 0
   isThereDonutKing: 0
   TheDonutKing: {fileID: 0}
+  playersReady: 0
   moneyForTimeHeld: 0
   moneyForDonutKing: 0
+  startingMoney: 0
   playerSpawn: {fileID: 0}
   checkPointPos: {fileID: 0}
   retryAmount: 0
@@ -29447,7 +29448,6 @@ MonoBehaviour:
   playerHPBar: {fileID: 1119674820351551520}
   playerAmmoBar: {fileID: 1119674820351551520}
   damageFlash: {fileID: 8479201531142303392}
-  player: {fileID: 8479201531142303392}
   playerScript: {fileID: 0}
   playerThrowScript: {fileID: 0}
   audioMixer: {fileID: 24100000, guid: 491cca7fefc6f3f418f639a8b44c47aa, type: 2}
