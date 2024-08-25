@@ -13,7 +13,7 @@ using UnityEngine.UIElements;
 public class enemyAI : MonoBehaviour, IDamage, ITarget
 {
     public int enemyDonutCount;
-    
+
     //Enum for distinguishing different enemy types for AI distinction
     [SerializeField] enum enemyType { norm, fast, tank, security };
     [SerializeField] enemyType type;
@@ -98,7 +98,7 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
     //bool hasPriority;
 
     int origHP;
- 
+
 
 
     // Start is called before the first frame update
@@ -114,8 +114,7 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
         stoppingDistOrig = agent.stoppingDistance;
         StartPoint = transform.position;
         nextPosIndex = 0;
-        if(type != enemyType.security)
-            GameManager.instance.AddToTracker(this.gameObject);
+        GameManager.instance.AddToTracker(this.gameObject);
         isTargetDead = false;
         agent.stoppingDistance = 0;
         destPriority = null;
@@ -127,7 +126,7 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
     //FOR ALL
     void Update()
     {
-        
+
         if (!GameManager.instance.isThereDonutKing)
         {
             agent.SetDestination(GameManager.instance.donutDropItem.transform.position);
@@ -154,19 +153,19 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
                 //targetOBJ = PrioritizeTarget(targetOBJ);
             }
         }
-        if(targetOBJ != null)
+        if (targetOBJ != null)
             FaceTarget();
         if (canSeeTarget = canSeePlayer())
         {
-            
-            if(!isShooting)
+
+            if (!isShooting)
                 StartCoroutine(shoot());
         }
 
         float agentSpeed = agent.velocity.normalized.magnitude;
         anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), agentSpeed, Time.deltaTime * animTransitSpeed));
 
-        
+
 
         //if (type != enemyType.security)
         //{
@@ -304,7 +303,7 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
         amITheKing = !amITheKing;
     }
 
-    public bool getKingStatus() {  return amITheKing; }
+    public bool getKingStatus() { return amITheKing; }
 
     //METHOD FOR DONUT KING ENEMIES
     IEnumerator RunKingRun()
@@ -479,7 +478,7 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
     //ONLY FOR !SECURITY
     public GameObject PrioritizeTarget(GameObject currTarget)
     {
-        
+
         GameObject targetHolder = null;
         float currDist = 0.0f;
         float compDist = 0.0f;
@@ -491,12 +490,12 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
         {
             for (int i = 0; i < GameManager.instance.bodyTracker.Count; i++)
             {
-                if(GameManager.instance.bodyTracker[i].GetHashCode() != gameObject.GetHashCode())
+                if (GameManager.instance.bodyTracker[i].GetHashCode() != gameObject.GetHashCode())
                     targetHolder = GameManager.instance.bodyTracker[i];
             }
         }
-        
-        
+
+
         if (targetHolder)
         {
             currDist = Vector3.Distance(transform.position, targetHolder.transform.position);
@@ -699,13 +698,13 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
 
                 //
                 //while (GameManager.instance.statsTracker[name] > 0)
-                
+
                 //GameManager.instance.DeclareSelfDead(gameObject);//
                 gameObject.SetActive(false);
             }
         }
     }
-   
+
     void dodgeThreat()
     {
         FaceTarget();

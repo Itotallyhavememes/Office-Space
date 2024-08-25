@@ -142,20 +142,19 @@ public class PlayerManager : MonoBehaviour
 
     public void BotSpawner()
     {
-        for (int i = players.Count; i < players.Count + botCount; i++)
+        for (int i = 0; i < botCount; i++)
         {
-            int rand = Random.Range(0, enemyPrefabs.Length);
-            GameObject enemy = enemyPrefabs[rand];
+            //int rand = Random.Range(0, enemyPrefabs.Length);
+            GameObject enemy = enemyPrefabs[i];
             Instantiate(enemy, spawnPoints[i].position, spawnPoints[i].rotation);
-            //enemy.GetComponent<Animator>().enabled = true;
         }
 
     }
 
     public void StartMatch()
     {
-        //if (players.Count > 0 && players.Count + botCount > 1)
-        //{
+        if (players.Count > 0 && players.Count + botCount > 1)
+        {
             playerInputManager.DisableJoining();
             BotSpawner();
             matchSettingsMenu.SetActive(false);
@@ -174,7 +173,7 @@ public class PlayerManager : MonoBehaviour
             //GameManager.instance.StateUnpause();
 
 
-        //}
+        }
     }
 
 

@@ -222,7 +222,7 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
 
         InputSystem.settings.defaultDeadzoneMin = leftStickDeadzoneValue;
 
-        eventSystem = FindObjectOfType<MultiplayerEventSystem>();
+        //eventSystem = FindObjectOfType<MultiplayerEventSystem>();
         itemThrowScript = gameObject.GetComponent<ItemThrow>();
     }
     private void Start()
@@ -236,11 +236,13 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
         crouchSpeed = speed - crouchMod;
         DKLight.SetActive(false);
         origColor = playerMeshRenderer.material.color;
-        GetWeaponStats(starterWeapon);
+        WeaponStats startingWeapon = Instantiate(starterWeapon);
+        GetWeaponStats(startingWeapon);
         //Add self to gameManager's bodyTracker
         GameManager.instance.AddToTracker(this.gameObject);
         canSlide = true;
         UpdatePlayerUI();
+        UpdateAmmoUI();
         // Don't need to call spawn player cause player manager does it for me
         //rubberBallMaxCount = rubberBallCount;
         //updateGrenadeUI();
@@ -685,8 +687,8 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
                 return;
             }
         }
-
-        weaponList.Add(weapon);
+        WeaponStats weaponStats = Instantiate(weapon);
+        weaponList.Add(weaponStats);
         selectedWeapon = weaponList.Count - 1;
         weaponList[selectedWeapon].currentAmmo = weaponList[selectedWeapon].startAmmo;
 
@@ -977,7 +979,8 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
     public void ActivateShopUI()
     {
         //ACTIVATE SHOP UI IN EACH PLAYER
-        eventSystem.firstSelectedGameObject = shopFirst;
+        
+        this.eventSystem.firstSelectedGameObject = shopFirst;
         menuShop.SetActive(true);
         
         //foreach(var player in PlayerManager.instance.players){

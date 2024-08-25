@@ -8,7 +8,7 @@ public class Door : MonoBehaviour
 
     //public GameObject Instruction;
     public GameObject AnimeObject;
-   
+
     [SerializeField] bool /*isSomeoneThere,*/ isOutward, isInward; //Indicates whether someone is STILL inside there
     [SerializeField] GameObject OuterPoint;
     [SerializeField] GameObject InnerPoint;
@@ -16,10 +16,11 @@ public class Door : MonoBehaviour
     [SerializeField] List<GameObject> inMyDoorway;
     //[SerializeField] GameObject LastInDoor;//Entity who intially triggered my doorway
     [Header("----- Sounds -----")]
+    [SerializeField] AudioSource doorAudSource;
     [SerializeField] AudioClip audDoorOpen;
     [Range(0f, 1f)][SerializeField] float audDoorOpenVol;
     [SerializeField] AudioClip audDoorClose;
-    [Range (0f, 1f)] [SerializeField] float audDoorCloseVol;
+    [Range(0f, 1f)][SerializeField] float audDoorCloseVol;
     bool Action;
     bool close;
 
@@ -43,7 +44,7 @@ public class Door : MonoBehaviour
         AnimeObject.GetComponent<Animator>().Play("Close");
         //Instruction.SetActive(false);
         //close = true;
-       
+
 
     }
 
@@ -72,7 +73,7 @@ public class Door : MonoBehaviour
             float PointToInner = 0.0f;
             //CHECKS TO SEE IF THAT PLAYER/ENEMY IS ALIVE (IMPORTANT BECAUSE IF DEAD: DOOR CLOSES)
             GameObject compare = GameManager.instance.ReturnEntity(other.gameObject);
-            
+
             if (compare != null)
             {
                 //Grabbed other's transform position in respects TO: PointToOuter (point outside Door) AND PointToInner (point inside Door)
@@ -96,26 +97,27 @@ public class Door : MonoBehaviour
                     if (PointToOuter > PointToInner /*&& other.gameObject != LastInDoor*/)
                     {
                         //GameManager.instance.playerScript.Munch(audDoorOpen, audDoorOpenVol);
-                        compare.GetComponent<ControllerTest>().Munch(audDoorOpen, audDoorOpenVol);
+                        //compare.GetComponent<ControllerTest>().Munch(audDoorOpen, audDoorOpenVol);
                         AnimeObject.GetComponent<Animator>().Play("Open");
                         isOutward = true;
                     }
                     else
                     {
                         //GameManager.instance.playerScript.Munch(audDoorOpen, audDoorOpenVol);
-                        compare.GetComponent<ControllerTest>().Munch(audDoorOpen, audDoorOpenVol);
+                        //compare.GetComponent<ControllerTest>().Munch(audDoorOpen, audDoorOpenVol);
                         AnimeObject.GetComponent<Animator>().Play("InsideOpenDoor");
                         isInward = true;
                     }
                     //BOOLS ARE NECESSARY, to know WHICH Close to Play when OnTriggerExit (If isOutward, play Close (from outward)
                     //ELSE: OnTriggerExit -> Play Close (From Inward);
                     //AnimeObject.GetComponent<Animator>().Play("Open");
+                    doorAudSource.PlayOneShot(audDoorOpen, audDoorOpenVol);
                     close = false;
                 }
             }
         }
     }
-      
+
 
     private void OnTriggerExit(Collider other)
     {
@@ -123,13 +125,13 @@ public class Door : MonoBehaviour
 
         //Only way isSomeoneThere = false, should be if NO ONE is left inside Box Collider
         //However: currently, this only cares about whoever leaves, doesn't care about who is still in there
-        
+
         //This makes sure that if anyone tries to re-enter the door immediately while it's playing the close animation, that the door doesn't open again immediately
         //This can be remedited with LastInDoor AND extending the door's collider HORIZONTALLY
         //if (LastInDoor == null)
         //{
         //    LastInDoor = other.gameObject;
-            
+
         //}
         //else if(LastInDoor == other.gameObject)
         //{
@@ -154,10 +156,11 @@ public class Door : MonoBehaviour
             {
                 Debug.Log("AD: CLOSING!");
                 //Play Close(From Inward)
-                GameManager.instance.playerScript.Munch(audDoorClose, audDoorCloseVol);
+                //GameManager.instance.playerScript.Munch(audDoorClose, audDoorCloseVol);
                 AnimeObject.GetComponent<Animator>().Play("CloseInsideDoor");
                 isInward = false;
             }
+            doorAudSource.PlayOneShot(audDoorClose, audDoorCloseVol);
             close = true;
             shouldClose = false; //Debug Test
         }
@@ -187,7 +190,7 @@ public class Door : MonoBehaviour
                 }
             }
         }
-        if(canAdd)
+        if (canAdd)
             inMyDoorway.Add(doorUser);
     }
 
@@ -195,7 +198,7 @@ public class Door : MonoBehaviour
     {
         foreach (var person in inMyDoorway)
         {
-            if(person.gameObject == doorUser)
+            if (person.gameObject == doorUser)
             {
                 inMyDoorway.Remove(person);
                 break;
@@ -244,10 +247,10 @@ public class Door : MonoBehaviour
         //        AnimeObject.GetComponent<Animator>().Play("Open");
         //      StartCoroutine(CloseDoor());
         //        Action = false;
-               
+
         //    }
-           
+
         //}
-        
+
     }
 }

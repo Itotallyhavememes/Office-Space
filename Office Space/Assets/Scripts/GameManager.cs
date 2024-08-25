@@ -186,7 +186,7 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
-        Debug.Log("Awake");
+
         instance = this;
         //player = GameObject.FindWithTag("Player");
 
@@ -216,7 +216,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        Debug.Log("Start");
+
         canVend = true;
         if (currentMode == gameMode.DONUTKING2)
         {
@@ -249,7 +249,7 @@ public class GameManager : MonoBehaviour
     //Update is called once per frame
     void Update()
     {
-        Debug.Log("Update");
+
         //if (currentMode == gameMode.DONUTKING2 && !isShopDisplayed && PlayerManager.instance.matchStarted)
         //{
         //    //PJ's shop code
