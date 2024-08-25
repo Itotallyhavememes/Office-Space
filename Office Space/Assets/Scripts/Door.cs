@@ -95,13 +95,15 @@ public class Door : MonoBehaviour
                     PointToInner = Vector3.Distance(InnerPoint.transform.position, other.gameObject.transform.position);
                     if (PointToOuter > PointToInner /*&& other.gameObject != LastInDoor*/)
                     {
-                        GameManager.instance.playerScript.Munch(audDoorOpen, audDoorOpenVol);
+                        //GameManager.instance.playerScript.Munch(audDoorOpen, audDoorOpenVol);
+                        compare.GetComponent<ControllerTest>().Munch(audDoorOpen, audDoorOpenVol);
                         AnimeObject.GetComponent<Animator>().Play("Open");
                         isOutward = true;
                     }
                     else
                     {
-                        GameManager.instance.playerScript.Munch(audDoorOpen, audDoorOpenVol);
+                        //GameManager.instance.playerScript.Munch(audDoorOpen, audDoorOpenVol);
+                        compare.GetComponent<ControllerTest>().Munch(audDoorOpen, audDoorOpenVol);
                         AnimeObject.GetComponent<Animator>().Play("InsideOpenDoor");
                         isInward = true;
                     }
@@ -145,7 +147,7 @@ public class Door : MonoBehaviour
                 //Play Close(from Outward)
                 isOutward = false;
                 //StartCoroutine(CloseDoor()); //Currently meant to close FromOutward
-                GameManager.instance.playerScript.Munch(audDoorClose, audDoorCloseVol);
+                //GameManager.instance.playerScript.Munch(audDoorClose, audDoorCloseVol);
                 AnimeObject.GetComponent<Animator>().Play("Close");
             }
             else if (isInward)

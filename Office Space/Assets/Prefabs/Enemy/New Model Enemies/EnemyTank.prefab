@@ -1962,7 +1962,6 @@ MonoBehaviour:
   enemyDonutCount: 0
   type: 2
   canSeeTarget: 0
-  headPos: {fileID: 1613504654840084635}
   DKLight: {fileID: 2603729426002016136}
   amITheKing: 0
   DKRPoint: {x: 0, y: 0, z: 0}

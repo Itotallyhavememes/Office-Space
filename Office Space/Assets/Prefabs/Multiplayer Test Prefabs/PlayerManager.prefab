@@ -118,8 +118,8 @@ MonoBehaviour:
   botsDropdown: {fileID: 0}
   matchSettingsMenu: {fileID: 0}
   enemyPrefabs:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 4464568196514872736, guid: c4aec7654a823f840ac1a7eceebdfb45, type: 3}
+  - {fileID: 5311110221532064970, guid: f41b91804dd148d46bccfca84ac57191, type: 3}
+  - {fileID: 6939534948025705443, guid: 99b9a64cd8586cf40b448d79afac50db, type: 3}
   matchStarted: 0
   HP: 15

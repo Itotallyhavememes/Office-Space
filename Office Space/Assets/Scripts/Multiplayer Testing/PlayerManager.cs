@@ -88,7 +88,7 @@ public class PlayerManager : MonoBehaviour
         player.name = "Player " + players.Count.ToString();
         maxBots--;
 
-        if(players.Count > 1)
+        if (players.Count > 1)
             player.GetComponent<ControllerTest>().playerCamera.GetComponent<AudioListener>().enabled = false;
 
         while (players.Count + botCount > maxPlayers)
@@ -147,33 +147,35 @@ public class PlayerManager : MonoBehaviour
             int rand = Random.Range(0, enemyPrefabs.Length);
             GameObject enemy = enemyPrefabs[rand];
             Instantiate(enemy, spawnPoints[i].position, spawnPoints[i].rotation);
+            //enemy.GetComponent<Animator>().enabled = true;
         }
 
     }
 
     public void StartMatch()
     {
-        playerInputManager.DisableJoining();
-        if (players.Count > 0 && players.Count + botCount > 1)
-        {
+        //if (players.Count > 0 && players.Count + botCount > 1)
+        //{
+            playerInputManager.DisableJoining();
             BotSpawner();
             matchSettingsMenu.SetActive(false);
 
             for (int i = 0; i < players.Count; i++)
             {
                 players[i].GetComponent<Animator>().enabled = true;
-                players[i].GetComponent<ControllerTest>().deathCamera.rect 
+                players[i].GetComponent<ControllerTest>().deathCamera.rect
                     = players[i].GetComponent<ControllerTest>().playerCamera.rect;
+                players[i].GetComponent<ControllerTest>().UI.SetActive(true);
                 //ACTIVATE SHOP UI
                 players[i].GetComponent<ControllerTest>().ActivateShopUI();
             }
 
             matchStarted = true;
             //GameManager.instance.StateUnpause();
-            
 
-        }
+
+        //}
     }
-    
+
 
 }

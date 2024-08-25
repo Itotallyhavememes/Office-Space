@@ -75,6 +75,7 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
     private int HPOrig;
 
     [Header("Player UI")]
+    public GameObject UI;
     [SerializeField] MultiplayerEventSystem eventSystem;
     [SerializeField] GameObject menuActive;
     [SerializeField] GameObject menuShop;
@@ -239,6 +240,7 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
         //Add self to gameManager's bodyTracker
         GameManager.instance.AddToTracker(this.gameObject);
         canSlide = true;
+        UpdatePlayerUI();
         // Don't need to call spawn player cause player manager does it for me
         //rubberBallMaxCount = rubberBallCount;
         //updateGrenadeUI();

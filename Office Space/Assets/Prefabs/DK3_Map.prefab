@@ -7501,10 +7501,10 @@ MonoBehaviour:
   InnerPoint: {fileID: 8111275904287505435}
   shouldClose: 0
   inMyDoorway: []
-  audDoorOpen: {fileID: 0}
-  audDoorOpenVol: 0
-  audDoorClose: {fileID: 0}
-  audDoorCloseVol: 0
+  audDoorOpen: {fileID: 8300000, guid: cb812129f07a5ed42a252ea8fd180f82, type: 3}
+  audDoorOpenVol: 0.5
+  audDoorClose: {fileID: 8300000, guid: 0653919eebadb2548834c0644bfa6fda, type: 3}
+  audDoorCloseVol: 0.5
 --- !u!1 &1649418898119443087
 GameObject:
   m_ObjectHideFlags: 0
@@ -9671,10 +9671,10 @@ MonoBehaviour:
   InnerPoint: {fileID: 2666993231367601807}
   shouldClose: 0
   inMyDoorway: []
-  audDoorOpen: {fileID: 0}
-  audDoorOpenVol: 0
-  audDoorClose: {fileID: 0}
-  audDoorCloseVol: 0
+  audDoorOpen: {fileID: 8300000, guid: cb812129f07a5ed42a252ea8fd180f82, type: 3}
+  audDoorOpenVol: 0.5
+  audDoorClose: {fileID: 8300000, guid: 0653919eebadb2548834c0644bfa6fda, type: 3}
+  audDoorCloseVol: 0.5
 --- !u!95 &2296569923491999928
 Animator:
   serializedVersion: 5
@@ -33682,10 +33682,10 @@ MonoBehaviour:
   InnerPoint: {fileID: 6321351178989412923}
   shouldClose: 0
   inMyDoorway: []
-  audDoorOpen: {fileID: 0}
-  audDoorOpenVol: 0
-  audDoorClose: {fileID: 0}
-  audDoorCloseVol: 0
+  audDoorOpen: {fileID: 8300000, guid: cb812129f07a5ed42a252ea8fd180f82, type: 3}
+  audDoorOpenVol: 0.5
+  audDoorClose: {fileID: 8300000, guid: 0653919eebadb2548834c0644bfa6fda, type: 3}
+  audDoorCloseVol: 0.5
 --- !u!65 &1314053503965603045
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -45043,10 +45043,10 @@ MonoBehaviour:
   InnerPoint: {fileID: 8534745442097861781}
   shouldClose: 0
   inMyDoorway: []
-  audDoorOpen: {fileID: 0}
-  audDoorOpenVol: 0
-  audDoorClose: {fileID: 0}
-  audDoorCloseVol: 0
+  audDoorOpen: {fileID: 8300000, guid: cb812129f07a5ed42a252ea8fd180f82, type: 3}
+  audDoorOpenVol: 0.5
+  audDoorClose: {fileID: 8300000, guid: 0653919eebadb2548834c0644bfa6fda, type: 3}
+  audDoorCloseVol: 0.5
 --- !u!95 &7378646351260865882
 Animator:
   serializedVersion: 5
