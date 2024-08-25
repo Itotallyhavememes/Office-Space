@@ -313,8 +313,8 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
         interactAction.performed += context => InteractTriggered = true;
         interactAction.canceled += context => InteractTriggered = false;
 
-        scoreboardAction.performed += context => ScoreboardTriggered = true;
-        scoreboardAction.canceled += context => ScoreboardTriggered = false;
+        //scoreboardAction.performed += context => ScoreboardTriggered = true;
+        //scoreboardAction.canceled += context => ScoreboardTriggered = false;
     }
 
     //On Enable and Disable is required as this input manager uses an event handler
@@ -339,7 +339,8 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
         swapWeaponsContAction.performed += WeaponSelectController;
         swapWeaponsScrollAction.performed += WeaponSelectMouse;
         interactAction.Enable();
-        scoreboardAction.Enable();
+        scoreboardAction.performed += DisplayScoreboard;
+        scoreboardAction.canceled += DeactivateScoreboard;
     }
 
     private void OnDisable()
@@ -362,8 +363,9 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
         swapWeaponsContAction.performed -= WeaponSelectController;
         swapWeaponsScrollAction.performed -= WeaponSelectMouse;
         interactAction.Disable();
-        scoreboardAction.Disable();
-    }
+        scoreboardAction.performed -= DisplayScoreboard;
+        scoreboardAction.canceled -= DeactivateScoreboard;
+    }   
 
 
 
@@ -1020,5 +1022,14 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
         }
     }
 
+    public void DisplayScoreboard(InputAction.CallbackContext context)
+    {
+        //call display score method and pass in the text variables
+        //Set active menu
+    }
 
+    public void DeactivateScoreboard(InputAction.CallbackContext context)
+    {
+        //deactivate menu object
+    }
 }
