@@ -212,7 +212,7 @@ public class GameManager : MonoBehaviour
         //
         //TIM TEST CODE FOR DKSTATUS
         isThereDonutKing = false;
-        //Debug.Log("Did we restart?");
+        ////DebugLog("Did we restart?");
 
         //isShopDisplayed = true;
 
@@ -244,7 +244,7 @@ public class GameManager : MonoBehaviour
             EventSystem.current.SetSelectedGameObject(mainMenuFirst);
             origCreditsPosition = creditsText.transform.localPosition;
         }
-        //Debug.Log(bodyTracker.Count.ToString() + " PLAYERS LOADED");
+        ////DebugLog(bodyTracker.Count.ToString() + " PLAYERS LOADED");
         //if (currentMode == gameMode.DONUTKING2)
 
 
@@ -325,7 +325,7 @@ public class GameManager : MonoBehaviour
     //METHOD FOR RESETTING EVERYTHING WITHOUT RESETTING PARTICPANTSTATS
     public void ResetTheRound()
     {
-        Debug.Log("GM: RESET ROUND!");
+        //DebugLog("GM: RESET ROUND!");
         //Changed to reflect that menuScore IS ALSO for Round Over
         if (menuActive = menuScore)
             menuScore.SetActive(false);
@@ -369,7 +369,7 @@ public class GameManager : MonoBehaviour
         //Door doorComp = null;
         foreach (GameObject door in doors)
         {
-            Debug.Log("GM: Resetting DOORS!");
+            //DebugLog("GM: Resetting DOORS!");
             Door doorComp = door.GetComponent<Door>();
             //if(doorComp)
             doorComp.ResetDoors();
@@ -530,7 +530,7 @@ public class GameManager : MonoBehaviour
             ParticipantStats objStat = new ParticipantStats();
             objStat = objStat.instantiateStats();
             statsTracker.Add(self.name, objStat);
-            //  Debug.Log(self.name.ToString() + " : " + statsTracker[self.name].getAllStats());
+            //  //DebugLog(self.name.ToString() + " : " + statsTracker[self.name].getAllStats());
             //BELOW: available code for when/if Beta requires username to be displayed, as opposed to Player or Enemy Types
             //statsTracker[self.name].setDisplayName(self.name);
         }
@@ -558,16 +558,16 @@ public class GameManager : MonoBehaviour
             doorCMP = door.GetComponent<Door>();
             doorCMP.RemoveFromDoorList(self);
         }
-        //Debug.Log(self.name + "DB: " + statsTracker[self.name].getDeaths().ToString());
+        ////DebugLog(self.name + "DB: " + statsTracker[self.name].getDeaths().ToString());
         statsTracker[self.name].updateDeaths();
         statsTracker[self.name].updateKDR();
         coroutine = StartCoroutine(SpawnTheDead());
-        //  Debug.Log(self.name.ToString() + statsTracker[self.name].getAllStats().ToString());
-        // Debug.Log(self.name + "DA: " + statsTracker[self.name].getDeaths().ToString());
+        //  //DebugLog(self.name.ToString() + statsTracker[self.name].getAllStats().ToString());
+        // //DebugLog(self.name + "DA: " + statsTracker[self.name].getDeaths().ToString());
         //if (statsTracker[self.name].getDKStatus() == true)
         //    statsTracker[self.name].updateDKStatus();
         //if (statsTracker[self.name].getDeaths() > 0)
-        //    Debug.Log(self.name.ToString() + " : " + statsTracker[self.name].getAllStats());
+        //    //DebugLog(self.name.ToString() + " : " + statsTracker[self.name].getAllStats());
     }
 
     //public void CleanUpDictionary(GameObject self)
@@ -651,7 +651,7 @@ public class GameManager : MonoBehaviour
     //        ////For Debugging purposes:
     //        //foreach (KeyValuePair<string, int> pair in statsTracker)
     //        //{
-    //        //    Debug.Log(pair.Key.ToString() + " HAS: " + pair.Value.ToString());
+    //        //    //DebugLog(pair.Key.ToString() + " HAS: " + pair.Value.ToString());
     //        //}
     //        //donutCountText.text = statsTracker[player.name].ToString();
     //}
@@ -859,7 +859,7 @@ public class GameManager : MonoBehaviour
         //    menuActive = menuScore2;
 
 
-        //  Debug.Log(winnerName + " : " + statsTracker[winnerName].getAllStats());
+        //  //DebugLog(winnerName + " : " + statsTracker[winnerName].getAllStats());
         ++RoundsWon;
 
 
@@ -870,10 +870,10 @@ public class GameManager : MonoBehaviour
     {
         foreach (var participant in statsTracker)
         {
-            // Debug.Log(participant.Key + " : " + participant.Value.getAllStats());
+            // //DebugLog(participant.Key + " : " + participant.Value.getAllStats());
             if (participant.Value.getRoundsWon() == NumberOfRounds)
             {
-                Debug.Log(participant.Key + " WINS THE GAME!");
+                //DebugLog(participant.Key + " WINS THE GAME!");
                 return participant.Key;
             }
         }
@@ -1013,12 +1013,12 @@ public class GameManager : MonoBehaviour
     {
         menuActive = loadingScreen;
         ActivateMenu(menuActive);
-        Debug.Log("opened loading");
+        //DebugLog("opened loading");
     }
 
     public void SetVolume(float volume)
     {
-        //Debug.Log(volume);
+        ////DebugLog(volume);
         audioMixer.SetFloat("MasterAudio", volume);
     }
     public void SetFullScreen(bool isFullScreen)
@@ -1071,10 +1071,10 @@ public class GameManager : MonoBehaviour
         //UnityEngine.AI.NavMeshHit hit;
         ////The "1" is in refernce to layer mask "1"
         //UnityEngine.AI.NavMesh.SamplePosition(randDropPos, out hit, donutDropDistance, 1);
-        Debug.Log(donutDropper.name.ToString() + " DROPPED THE DONUT!");
+        //DebugLog(donutDropper.name.ToString() + " DROPPED THE DONUT!");
         donutDropItem.transform.position = donutDropper.transform.position;
         if (donutDropItem.transform.position == donutDropper.transform.position)
-            Debug.Log("YAHOO!");
+            //DebugLog("YAHOO!");
         donutDropItem.SetActive(true);
         //Instantiate(donutDropItem, donutDropper.transform.position + randDropPos, donutDropItem.transform.rotation);
 
@@ -1090,14 +1090,14 @@ public class GameManager : MonoBehaviour
             enemyAI lightSwitchE = donutDropper.GetComponent<enemyAI>();
             lightSwitchE.ToggleMyLight();
             lightSwitchE.ToggleAmIKing();
-            if (!lightSwitchE.getKingStatus())
-                Debug.Log(donutDropper.name + " IS DETHRONED!!!");
+            //if (!lightSwitchE.getKingStatus())
+                ////DebugLog(donutDropper.name + " IS DETHRONED!!!");
         }
         statsTracker[donutDropper.name].updateDKStatus();
         PriorityPoint.Clear();
         PriorityPoint.Add(donutDropItem.transform);
         DownWithTheDonutKing();
-        // Debug.Log(donutDropper.name.ToString() + " : " + statsTracker[donutDropper.name].getAllStats());
+        // //DebugLog(donutDropper.name.ToString() + " : " + statsTracker[donutDropper.name].getAllStats());
     }
 
     public IEnumerator DKTimer()
@@ -1106,7 +1106,7 @@ public class GameManager : MonoBehaviour
 
         while (isThereDonutKing && !isPaused)
         {
-            Debug.Log(statsTracker[TheDonutKing.name].getTimeHeld().ToString());
+            //DebugLog(statsTracker[TheDonutKing.name].getTimeHeld().ToString());
             yield return new WaitForSeconds(1);
             statsTracker[TheDonutKing.name].updateTimeHeld();
             //++timeElapsed;
@@ -1116,7 +1116,7 @@ public class GameManager : MonoBehaviour
     {
         if (!isThereDonutKing)
             isThereDonutKing = true;
-        Debug.Log("Starting TIMER!");
+        //DebugLog("Starting TIMER!");
         StartCoroutine(DKTimer());
     }
 
@@ -1125,7 +1125,7 @@ public class GameManager : MonoBehaviour
         if (isThereDonutKing)
             isThereDonutKing = false;
         StopCoroutine(DKTimer());
-        Debug.Log("Ending TIMER!");
+        //DebugLog("Ending TIMER!");
     }
 
     public void DKLightSwitch(GameObject theDonutKing)
@@ -1233,7 +1233,7 @@ public class GameManager : MonoBehaviour
     {
         string cMessage;
         cMessage = winner.name.ToString() + " KILLED " + defeated.name.ToString();
-        Debug.Log(cMessage);
+        //DebugLog(cMessage);
         CombatMessage.Add(cMessage);
         if (CombatMessage.Count > 5)
             CombatMessage.RemoveAt(0);

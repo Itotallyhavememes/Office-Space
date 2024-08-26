@@ -37,7 +37,7 @@ public class Damage : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-            Debug.Log(other.name);
+            //DebugLog(other.name);
 
         if (type != damageType.item)
         {
@@ -48,17 +48,17 @@ public class Damage : MonoBehaviour
             //GameObject victim = other.GetComponent<GameObject>();
             if (dmg != null && !hasDamaged)
             {
-                //Debug.Log(parent.name.ToString() + " --> SHOT --> " + other.name.ToString());
+                ////DebugLog(parent.name.ToString() + " --> SHOT --> " + other.name.ToString());
                 dmg.takeDamage(damageAmount);
                 if (GameManager.instance.CallTheDead(other.name))
                 {
-                    //Debug.Log(other.name.ToString() + " DIED!");
+                    ////DebugLog(other.name.ToString() + " DIED!");
                     hasKilled = true;
                     victim = other.gameObject;
                     //GameManager.instance.statsTracker[parent.name].updateKills();
                     //GameManager.instance.statsTracker[parent.name].updateKDR();
                     //GameManager.instance.DisplayKillMessage(parent, other.gameObject);
-                    //Debug.Log(parent.name.ToString() + GameManager.instance.statsTracker[parent.name].getAllStats());
+                    ////DebugLog(parent.name.ToString() + GameManager.instance.statsTracker[parent.name].getAllStats());
                 }
 
 

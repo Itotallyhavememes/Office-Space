@@ -201,7 +201,7 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
             throwAnimDone = false;
         }
 
-        Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDist, Color.green);
+        //DebugDrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDist, Color.green);
 
         agentSpeedVert = Input.GetAxis("Vertical");
         agentSpeedHori = Input.GetAxis("Horizontal");
@@ -337,12 +337,12 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
     //        switch (weaponSwap)
     //        {
     //            case true:
-    //                Debug.Log("Hand");
+    //                //DebugLog("Hand");
     //                shurikenHUD.SetActive(false);
     //                hand.SetActive(true);
     //                break;
     //            case false:
-    //                Debug.Log("Shuriken");
+    //                //DebugLog("Shuriken");
     //                shurikenHUD.SetActive(true);
     //                hand.SetActive(false);
     //                break;
@@ -498,7 +498,7 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
                 RaycastHit hit;
                 if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, shootDist, ~ignoreMask))
                 {
-                    //Debug.Log(hit.collider.name);
+                    ////DebugLog(hit.collider.name);
 
                     IDamage dmg = hit.collider.GetComponent<IDamage>();
 
@@ -511,7 +511,7 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
                             GameManager.instance.statsTracker[this.gameObject.name].updateKills();
                             GameManager.instance.statsTracker[this.gameObject.name].updateKDR();
                             GameManager.instance.DisplayKillMessage(gameObject, hit.collider.gameObject);
-                           // Debug.Log(GameManager.instance.statsTracker[this.gameObject.name].getAllStats());
+                           // //DebugLog(GameManager.instance.statsTracker[this.gameObject.name].getAllStats());
                         }
                     }
                     else
@@ -520,7 +520,7 @@ public class PlayerControl : MonoBehaviour, IDamage, ITarget
                     }
                 }
 
-                //Debug.Log("Rotating arm");
+                ////DebugLog("Rotating arm");
                 weaponModel.transform.Rotate(Vector3.left * raycastRotationRecoil);
                 yield return new WaitForSeconds(shootRate);
                 weaponModel.transform.Rotate(Vector3.right * raycastRotationRecoil);

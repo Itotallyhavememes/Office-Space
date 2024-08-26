@@ -162,7 +162,7 @@ public class ButtonFunctions : MonoBehaviour
             yield return new WaitForSeconds(Time.deltaTime * 6);
         }
         yield return new WaitForSeconds(1);
-        SceneManager.LoadScene("DK3_MapEditScene");
+        SceneManager.LoadScene("Donut King 3");
     }
 
     public void loading()

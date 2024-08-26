@@ -252,7 +252,7 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
 
     private void Update()
     {
-        Debug.DrawRay(playerCamera.transform.position, playerCamera.transform.forward * shootDist, Color.green);
+        //DebugDrawRay(playerCamera.transform.position, playerCamera.transform.forward * shootDist, Color.green);
 
         if (PlayerManager.instance.matchStarted && !GameManager.instance.isPaused)
         {
@@ -383,7 +383,7 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
         playerVel.x = worldDirection.x * speed;
         playerVel.z = worldDirection.z * speed;
 
-        Debug.DrawRay(playerCamera.transform.position, playerCamera.transform.forward * shootDist, Color.green);
+        //DebugDrawRay(playerCamera.transform.position, playerCamera.transform.forward * shootDist, Color.green);
 
         if (JumpTriggered && jumpCount < 1 && !isCrouching)
         {
@@ -593,7 +593,7 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
                 RaycastHit hit;
                 if (Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out hit, shootDist)) //ignore Mask was deleted
                 {
-                    //Debug.Log(hit.collider.name);
+                    ////DebugLog(hit.collider.name);
 
                     IDamage dmg = hit.collider.GetComponent<IDamage>();
 
@@ -606,7 +606,7 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
                             GameManager.instance.statsTracker[this.gameObject.name].updateKills();
                             GameManager.instance.statsTracker[this.gameObject.name].updateKDR();
                             GameManager.instance.DisplayKillMessage(gameObject, hit.collider.gameObject);
-                          //  Debug.Log(GameManager.instance.statsTracker[this.gameObject.name].getAllStats());
+                          //  //DebugLog(GameManager.instance.statsTracker[this.gameObject.name].getAllStats());
                         }
                     }
                     else
@@ -615,7 +615,7 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
                     }
                 }
 
-                //Debug.Log("Rotating arm");
+                ////DebugLog("Rotating arm");
                 weaponModel.transform.Rotate(Vector3.left * raycastRotationRecoil);
                 yield return new WaitForSeconds(shootRate);
                 weaponModel.transform.Rotate(Vector3.right * raycastRotationRecoil);

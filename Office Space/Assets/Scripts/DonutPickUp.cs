@@ -99,8 +99,8 @@ public class DonutPickUp : MonoBehaviour
                         enemyAI lightSwitchE = other.GetComponent<enemyAI>();
                         lightSwitchE.ToggleMyLight();
                         lightSwitchE.ToggleAmIKing();
-                        if (lightSwitchE.getKingStatus())
-                            Debug.Log("ALL HAIL: " + other.name);
+                        if (lightSwitchE.getKingStatus()) { }
+                            //DebugLog("ALL HAIL: " + other.name);
                     }
                 }
                 else
@@ -128,7 +128,7 @@ public class DonutPickUp : MonoBehaviour
                 GameManager.instance.statsTracker[other.name].updateDKStatus();
                 if (GameManager.instance.statsTracker[other.name].getDKStatus() == true)
                 {
-                    Debug.Log(other.name + " IS THE DONUT KING!");
+                    //DebugLog(other.name + " IS THE DONUT KING!");
                     GameManager.instance.DeclareTheDonutKing();
                     GameManager.instance.PriorityPoint.Clear();
                     GameManager.instance.PriorityPoint.Add(other.gameObject.transform);
@@ -136,7 +136,7 @@ public class DonutPickUp : MonoBehaviour
                     //StartCoroutine(GameManager.instance.DKTimer());
                 }
 
-              //  Debug.Log(other.name.ToString() + " : " + GameManager.instance.statsTracker[other.name].getAllStats());
+              //  //DebugLog(other.name.ToString() + " : " + GameManager.instance.statsTracker[other.name].getAllStats());
                 gameObject.SetActive(false);
                 if (GameManager.instance.worldDonutCount > 0)
                     --GameManager.instance.worldDonutCount;

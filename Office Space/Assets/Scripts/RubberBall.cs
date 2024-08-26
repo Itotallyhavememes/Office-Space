@@ -60,9 +60,9 @@ public class RubberBall : MonoBehaviour
             {
                 Vector3 direction = nearbyObject.transform.position - transform.position;
                 float distance = direction.magnitude;
-                //Debug.Log("Distance from the explosion= " + distance);
+                ////DebugLog("Distance from the explosion= " + distance);
                 int inflictedDamage = (int)(damageAmount * (1 - distance / blastRadius));
-                //Debug.Log("Damage value= " + inflictedDamage);
+                ////DebugLog("Damage value= " + inflictedDamage);
                 if (inflictedDamage <= 0)
                     inflictedDamage = 1;
                 dmg.takeDamage(inflictedDamage);

@@ -16,7 +16,7 @@ public class EventForDK : MonoBehaviour
     {
         if (DK == false)
         {
-            Debug.Log("NO");
+            //DebugLog("NO");
         }
 
     }

@@ -21268,11 +21268,11 @@ MonoBehaviour:
   isReloading: 0
   isShooting: 0
   audHandFire: {fileID: 8300000, guid: eb4729c1bd2536048af59271b18847ae, type: 3}
-  audHandFireVol: 0
+  audHandFireVol: 0.5
   audHandReloadBegin: {fileID: 8300000, guid: 96d8af6f777f08249bc9d4bc3b03e476, type: 3}
-  audHandReloadBeginVol: 0
+  audHandReloadBeginVol: 0.5
   audHandReloadEnd: {fileID: 8300000, guid: 9c4ba0e68ded5434393f03275608ef9a, type: 3}
-  audHandReloadEndVol: 0
+  audHandReloadEndVol: 0.5
   audStep:
   - {fileID: 8300000, guid: 45353eedde6b7614290919cd88ed4f68, type: 3}
   - {fileID: 8300000, guid: 09dad5782b8b3be4eb7c9e64f44fa55b, type: 3}
@@ -21280,21 +21280,21 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 278f4f3f7c85fad4897c4d88cb2e180f, type: 3}
   - {fileID: 8300000, guid: 3f873d817613be640a382c95aa4784d4, type: 3}
   - {fileID: 8300000, guid: d81b0abd83707bf4db668c1446ad36df, type: 3}
-  audStepVol: 0
+  audStepVol: 0.5
   audJump:
   - {fileID: 8300000, guid: fcb42c77baa8bdb458c340f2d26015cf, type: 3}
   - {fileID: 8300000, guid: 4a1b3aa2c10952947961aa621eacbf94, type: 3}
   - {fileID: 8300000, guid: 9ae6b82add3fb5f4c88db0fbfe88b9e7, type: 3}
-  audJumpVol: 0
+  audJumpVol: 0.5
   audSlide: {fileID: 8300000, guid: 225e326217f04ab4081f540339fe7a74, type: 3}
-  audSlideVol: 0
+  audSlideVol: 0.5
   audDamage:
   - {fileID: 8300000, guid: 1a0f51f03789b0049bf3ed7975f2a5ec, type: 3}
   - {fileID: 8300000, guid: f469e0090cbb7694f8656a816e968478, type: 3}
   - {fileID: 8300000, guid: 9ecd099848485ea498a368af269db75a, type: 3}
   - {fileID: 8300000, guid: 9b7a78212bfb060429e3697a82574c93, type: 3}
   - {fileID: 8300000, guid: 87d1afcb45928044db032422cc026b14, type: 3}
-  audDamageVol: 0
+  audDamageVol: 0.5
   grenadeHUD: {fileID: 0}
   mouseSensitivity: 1
   controllerSensitivity: 3

@@ -328,7 +328,7 @@
                 {
                     "name": "",
                     "id": "d9db7121-2088-4272-82b2-bd0b87ceb3e4",
-                    "path": "<Keyboard>/g",
+                    "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
@@ -558,7 +558,7 @@
                 },
                 {
                     "name": "",
-                    "id": "2e2061db-6b72-49f0-bc6b-d6142508fcca",
+                    "id": "61ab6532-42d5-4312-9149-bee7a6704588",
                     "path": "<Keyboard>/escape",
                     "interactions": "",
                     "processors": "",

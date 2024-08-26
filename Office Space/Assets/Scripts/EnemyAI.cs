@@ -139,7 +139,7 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
         {
             if (GameManager.instance.TheDonutKing.GetHashCode() != this.gameObject.GetHashCode()) //if I AM the Donut King, ignore myself so I don't stand there like an idiot
             {
-                Debug.Log(gameObject.name.ToString() + ": Down with the King!");
+                //DebugLog(gameObject.name.ToString() + ": Down with the King!");
                 agent.SetDestination(GameManager.instance.TheDonutKing.transform.position);
                 agent.stoppingDistance = stoppingDistOrig; //When facing targets, always have a stopping distance with The Donut King (OTHERWISE, they'll push the Donut King out of the map)
                 //if (agent.remainingDistance > agent.stoppingDistance)
@@ -149,7 +149,7 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
             }
             else //I AM The Donut King
             {
-                Debug.Log(gameObject.name.ToString() + ": All hail the King, fools");
+                //DebugLog(gameObject.name.ToString() + ": All hail the King, fools");
                 agent.stoppingDistance = 0;
                 agent.SetDestination(PatrolPoint); // Initially called when Picking Up a Donut
 
@@ -241,10 +241,10 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
 
         agent.stoppingDistance = 0;
         GoOnPatrol();
-        Debug.Log("I'm fast af boi");
+        //DebugLog("I'm fast af boi");
         agent.SetDestination(PatrolPoint);
         isPatrol = false;
-        Debug.Log("I made it!");
+        //DebugLog("I made it!");
     }
     // PATROL POINT CAN NOT BE A CHALDEN OF ENEMY
     // PATROL POINT MUST BE DIG INTO POSITIONS IN EDIT 
@@ -253,7 +253,7 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
     {
         //Let's Go Random
         int rand = Random.Range(0, GameManager.instance.RunningPoints.Count);
-        Debug.Log("RP SIZE: " + GameManager.instance.RunningPoints.Count.ToString());
+        //DebugLog("RP SIZE: " + GameManager.instance.RunningPoints.Count.ToString());
         PatrolPoint = GameManager.instance.RunningPoints[rand].transform.position;
         //if (nextPosIndex < Positions.Count)
         //{
@@ -473,9 +473,9 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
             angleToTarget = Vector3.Angle(TargetDIR, transform.forward);
             //Each frame, the enemy AI will be seeking out player's position through this line
 
-            //Debug.Log(angleToPlayer); <- this does take up quite a few frames, so take out if possible
-            //Debug.DrawRay(headPos.position, PlayerDirection);
-            Debug.DrawRay(transform.position, TargetDIR, Color.yellow);
+            ////DebugLog(angleToPlayer); <- this does take up quite a few frames, so take out if possible
+            ////DebugDrawRay(headPos.position, PlayerDirection);
+            //DebugDrawRay(transform.position, TargetDIR, Color.yellow);
             RaycastHit hit;
             //This checks if there is a wall between enemy and player
             if (Physics.Raycast(transform.position, TargetDIR, out hit))
@@ -495,7 +495,7 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
         if (type != enemyType.security)
         {
             HP -= amount;
-            //Debug.Log(gameObject.name.ToString() + " HP: " + HP.ToString());
+            ////DebugLog(gameObject.name.ToString() + " HP: " + HP.ToString());
 
             if (HP > 0) //Stops them from respawning with their flash color on
                 StartCoroutine(flashDamage());
@@ -586,17 +586,17 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
             Instantiate(bullet, shootPos.position, transform.rotation);
             Damage bulletDmg = bullet.GetComponent<Damage>();
             bulletDmg.parent = this.gameObject;
-            //Debug.Log(bulletDmg.parent.name.ToString() + " HURT " + bulletDmg.victim.name.ToString());
+            ////DebugLog(bulletDmg.parent.name.ToString() + " HURT " + bulletDmg.victim.name.ToString());
             //if (bulletDmg.hasKilled)
             //{
-            //    Debug.Log(bulletDmg.hasKilled.ToString());
-            //    Debug.Log(bulletDmg.victim.ToString());
+            //    //DebugLog(bulletDmg.hasKilled.ToString());
+            //    //DebugLog(bulletDmg.victim.ToString());
             //    GameManager.instance.statsTracker[this.gameObject.name].updateKills();
             //    GameManager.instance.statsTracker[this.gameObject.name].updateKDR();
             //    GameManager.instance.DisplayKillMessage(gameObject, bulletDmg.victim);
-            //    Debug.Log(GameManager.instance.statsTracker[this.gameObject.name].getAllStats());
+            //    //DebugLog(GameManager.instance.statsTracker[this.gameObject.name].getAllStats());
             //}
-            //Debug.Log(bulletDmg.parent.ToString() + " --> BULLET!");
+            ////DebugLog(bulletDmg.parent.ToString() + " --> BULLET!");
             yield return new WaitForSeconds(shootRate);
             isShooting = false;
         }

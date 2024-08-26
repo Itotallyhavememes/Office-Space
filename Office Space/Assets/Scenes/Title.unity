@@ -9780,7 +9780,8 @@ MonoBehaviour:
     Asset Store\r\nBedroom Set (Curtains) by Geniuscrate Games from Unity Asset Store\r\nPotted
     Plant by exa3D from Unity Asset Store\r\nCustomizable Monitor Interface by Gade
     Embossed from Unity Asset Store\r\nBlaster Kit (Foam Bullet) by/from kenny\r\nLow
-    Poly Coffee Cup by axeboyd123 in Sketchfab\r\n\r\n\r\n\r\nImported Animations:\r\nToon
+    Poly Coffee Cup by axeboyd123 in Sketchfab\nLow Poly Office Pack: Characters
+    & Props by PolygonalMind from Unity Asset Store\r\n\r\n\r\n\r\nImported Animations:\r\nToon
     Soldiers WW2 by Polygon Blacksmith from Unity Asset Store\r\nBasic Motions by
     Kevin Iglesias from Unity Asset Store\r\nWalking, crouching, sliding, jumping,
     and throwing animations from Mixamo\r\n\r\n\nImported FX:\r\nCartoon FX Remaster
@@ -13792,6 +13793,7 @@ MonoBehaviour:
   InnerPoint: {fileID: 6061137480458845442}
   shouldClose: 0
   inMyDoorway: []
+  doorAudSource: {fileID: 0}
   audDoorOpen: {fileID: 0}
   audDoorOpenVol: 0
   audDoorClose: {fileID: 0}
@@ -15870,6 +15872,7 @@ MonoBehaviour:
   InnerPoint: {fileID: 994866921834128674}
   shouldClose: 0
   inMyDoorway: []
+  doorAudSource: {fileID: 0}
   audDoorOpen: {fileID: 0}
   audDoorOpenVol: 0
   audDoorClose: {fileID: 0}
@@ -18984,6 +18987,7 @@ MonoBehaviour:
   InnerPoint: {fileID: 7294763664863802037}
   shouldClose: 0
   inMyDoorway: []
+  doorAudSource: {fileID: 0}
   audDoorOpen: {fileID: 0}
   audDoorOpenVol: 0
   audDoorClose: {fileID: 0}
@@ -19388,6 +19392,7 @@ MonoBehaviour:
   InnerPoint: {fileID: 2883465048664727486}
   shouldClose: 0
   inMyDoorway: []
+  doorAudSource: {fileID: 0}
   audDoorOpen: {fileID: 0}
   audDoorOpenVol: 0
   audDoorClose: {fileID: 0}
@@ -19704,7 +19709,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2870957332791437831
 RectTransform:
   m_ObjectHideFlags: 0
@@ -20513,7 +20518,7 @@ MonoBehaviour:
   m_Navigation:
     m_Mode: 4
     m_WrapAround: 0
-    m_SelectOnUp: {fileID: 3386566201918374421}
+    m_SelectOnUp: {fileID: 4306316876367820081}
     m_SelectOnDown: {fileID: 111353422}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
@@ -22873,7 +22878,7 @@ MonoBehaviour:
     m_Mode: 4
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 335136272}
-    m_SelectOnDown: {fileID: 3386566201918374421}
+    m_SelectOnDown: {fileID: 3347794477648241926}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
   m_Transition: 2
@@ -29579,7 +29584,7 @@ MonoBehaviour:
   RoundsWon: 0
   mainMenuFirst: {fileID: 1864329422}
   createMatchFirst: {fileID: 4830679415997371419}
-  settingsFirst: {fileID: 2858155514389150285}
+  settingsFirst: {fileID: 4306316876367820079}
   controlsFirst: {fileID: 347053073297423506}
   mapSelectScreenFirst: {fileID: 4830679415997371419}
   creditsMenuFirst: {fileID: 1431772982}
@@ -29681,8 +29686,9 @@ MonoBehaviour:
   worldDonutCount: 0
   worldItemCount: 0
   creditsText: {fileID: 1909036488}
-  maxCreditsHeight: 2800
+  maxCreditsHeight: 2850
   creditsScrollSpeed: 100
+  RunningPoints: []
   isMultiplayer: 0
 --- !u!114 &7729711834160596302
 MonoBehaviour:

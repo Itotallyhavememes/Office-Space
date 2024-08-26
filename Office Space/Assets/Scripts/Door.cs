@@ -32,7 +32,7 @@ public class Door : MonoBehaviour
         //isSomeoneThere = false;
         inMyDoorway = new List<GameObject>();
         //Helps for ResetDoor()
-        //Debug.Log(DoorShutPositionY);
+        ////DebugLog(DoorShutPositionY);
         //Instruction.SetActive(false);
 
     }
@@ -40,7 +40,7 @@ public class Door : MonoBehaviour
     {
         //close = false;
         yield return new WaitForSeconds(3f);
-        Debug.Log("AD: door is Close");
+        //DebugLog("AD: door is Close");
         AnimeObject.GetComponent<Animator>().Play("Close");
         //Instruction.SetActive(false);
         //close = true;
@@ -50,7 +50,7 @@ public class Door : MonoBehaviour
 
     public void ResetDoors()
     {
-        Debug.Log("AD: RESETTING DOORS!");
+        //DebugLog("AD: RESETTING DOORS!");
         AnimeObject.GetComponent<Animator>().Play("ResetDoor");
         if (!close)
             close = true;
@@ -61,7 +61,7 @@ public class Door : MonoBehaviour
     {
         //if(other.CompareTag("Player") && close)
         //{
-        //    Debug.Log("Enter");
+        //    //DebugLog("Enter");
         //    //Instruction.SetActive(true);
         //    Action = true;
         //}
@@ -142,10 +142,10 @@ public class Door : MonoBehaviour
         if (inMyDoorway.Count == 0 && !close)
         {
             shouldClose = true; //Debug Test
-            Debug.Log("AD: NO ONE HERE!");
+            //DebugLog("AD: NO ONE HERE!");
             if (isOutward)
             {
-                Debug.Log("AD: CLOSING!");
+                //DebugLog("AD: CLOSING!");
                 //Play Close(from Outward)
                 isOutward = false;
                 //StartCoroutine(CloseDoor()); //Currently meant to close FromOutward
@@ -154,7 +154,7 @@ public class Door : MonoBehaviour
             }
             else if (isInward)
             {
-                Debug.Log("AD: CLOSING!");
+                //DebugLog("AD: CLOSING!");
                 //Play Close(From Inward)
                 //GameManager.instance.playerScript.Munch(audDoorClose, audDoorCloseVol);
                 AnimeObject.GetComponent<Animator>().Play("CloseInsideDoor");
@@ -214,10 +214,10 @@ public class Door : MonoBehaviour
         //CHECKS 2 THINGS - isSomeoneThere == false && isOutward or isInward
         //if (!isSomeoneThere && !close)
         //{
-        //    Debug.Log("AD: NO ONE HERE!");
+        //    //DebugLog("AD: NO ONE HERE!");
         //    if (isOutward)
         //    {
-        //        Debug.Log("AD: CLOSING!");
+        //        //DebugLog("AD: CLOSING!");
         //        //Play Close(from Outward)
         //        isOutward = false;
         //        //StartCoroutine(CloseDoor()); //Currently meant to close FromOutward
@@ -226,7 +226,7 @@ public class Door : MonoBehaviour
         //    }
         //    else if (isInward)
         //    {
-        //        Debug.Log("AD: CLOSING!");
+        //        //DebugLog("AD: CLOSING!");
         //        //Play Close(From Inward)
         //        GameManager.instance.playerScript.Munch(audDoorClose, audDoorCloseVol);
         //        AnimeObject.GetComponent<Animator>().Play("CloseInsideDoor");
@@ -238,10 +238,10 @@ public class Door : MonoBehaviour
 
         //if( Input.GetButtonDown("Interact"))
         //{
-        //    Debug.Log("F is pess");
+        //    //DebugLog("F is pess");
         //    if(Action )
         //    {
-        //        Debug.Log("door is open");
+        //        //DebugLog("door is open");
         //        //Instruction.SetActive(false );
         //        close = false;
         //        AnimeObject.GetComponent<Animator>().Play("Open");
