@@ -87,7 +87,7 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
     public TMP_Text grenadeStack;
 
     [Header("Scoreboard Text")]
-    [SerializeField] 
+    [SerializeField] GameObject ScoreBoard;
 
     [Header("Death Cam")]
     public Camera deathCamera;
@@ -1026,10 +1026,12 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
     {
         //call display score method and pass in the text variables
         //Set active menu
+        ScoreBoard.SetActive(true);
     }
 
     public void DeactivateScoreboard(InputAction.CallbackContext context)
     {
         //deactivate menu object
+        ScoreBoard.SetActive(false);
     }
 }
