@@ -21296,8 +21296,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 87d1afcb45928044db032422cc026b14, type: 3}
   audDamageVol: 0.5
   grenadeHUD: {fileID: 0}
-  mouseSensitivity: 1
-  controllerSensitivity: 3
+  mouseSensitivity: 0.5
+  controllerSensitivity: 1.5
   upDownRange: 90
   playerCam: {fileID: 168878907541188755}
   actionMapName: Player
@@ -21336,9 +21336,10 @@ MonoBehaviour:
   controllerTestScript: {fileID: 0}
   weaponHUD: {fileID: 2125431352412732797}
   grenadeHUD: {fileID: 8478292376267415120}
+  rubberBallCount: 3
+  rubberBallMaxCount: 0
   audRubberBall: {fileID: 8300000, guid: 51d732c04d3a7e04a981cf18a4d38f62, type: 3}
   audRubberBallVol: 0
-  rubberBallCount: 3
 --- !u!136 &179801705901621160
 CapsuleCollider:
   m_ObjectHideFlags: 0

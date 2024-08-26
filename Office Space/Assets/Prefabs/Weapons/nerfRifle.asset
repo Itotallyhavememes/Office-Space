@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 1
   style: 0
+  isAutoFire: 1
   weaponModel: {fileID: 6438824589515014910, guid: 6032e501b9c466c4a8101232a7388251, type: 3}
   shootSound: {fileID: 0}
   shootRate: 0.3

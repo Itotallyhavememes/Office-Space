@@ -15,11 +15,12 @@ public class ItemThrow : MonoBehaviour
     [SerializeField] ControllerTest controllerTestScript;
     [SerializeField] GameObject weaponHUD;
     [SerializeField] GameObject grenadeHUD;
+    public int rubberBallCount;
+    [SerializeField] int rubberBallMaxCount;
+
     [Header("----- Sounds -----")]
     [SerializeField] AudioClip audRubberBall;
     [Range(0, 1)][SerializeField] float audRubberBallVol;
-    public int rubberBallCount;
-    int rubberBallMaxCount;
     Animator anim;
     bool animationDone;
     void Start()
@@ -151,7 +152,7 @@ public class ItemThrow : MonoBehaviour
             this.GetComponent<ControllerTest>().isReloading = false;
         }
     }
-    public void updateGrenadeUI()
+    public void updateGrenadeUI() //Old player input method
     {
         if (!GameManager.instance.isMultiplayer)
             GameManager.instance.grenadeStack.text = (rubberBallCount).ToString();

@@ -54,9 +54,8 @@ MonoBehaviour:
   explosionEffect: {fileID: 4593184484909914552, guid: 2e1e9506f5904a64b81744324fb7cd50, type: 3}
   blastRadius: 10
   blastForce: 5
-  damageAmount: 12
+  damageAmount: 15
   rubberBall: {fileID: 8300000, guid: 51d732c04d3a7e04a981cf18a4d38f62, type: 3}
-  rubberOut: {fileID: -978288609581012709}
   volume: 1
 --- !u!33 &5566336552408166728
 MeshFilter:

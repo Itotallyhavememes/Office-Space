@@ -435,6 +435,7 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
                 characterController.height = origHeight;
                 speed = origSpeed;
                 isCrouching = false;
+                isSprinting = false;
             }
 
             switch (isSprinting)
@@ -444,6 +445,10 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
                     break;
                 case false:
                     speed /= sprintMod;
+                    if(speed < origSpeed)
+                    {
+                        speed = origSpeed;
+                    }
                     break;
             }
         }
@@ -452,25 +457,27 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
     //--------------Crouch event methods-------------//
     void Crouch(InputAction.CallbackContext context)
     {
-        if (!isCrouching && !GameManager.instance.isPaused && !isDead)
+        if (!GameManager.instance.isPaused && !isCrouching && !isDead && !isSliding)
         {
             characterController.height = crouchLevel;
-            speed = crouchSpeed;
+            speed -= crouchSpeed;
             isCrouching = true;
-            if (isSprinting && canSlide)
+            if (isSprinting && canSlide && characterController.isGrounded)
             {
                 StartCoroutine(Slide2());
             }
         }
+        
     }
     void unCrouch(InputAction.CallbackContext context)
     {
-        if (isCrouching && !GameManager.instance.isPaused && !isDead && !isSliding)
+        if (!GameManager.instance.isPaused && isCrouching && !isDead && !isSliding)
         {
             characterController.height = origHeight;
-            speed = origSpeed;
+            speed += crouchSpeed;
             isCrouching = false;
         }
+        
     }
     //------------------------------------------------//
 

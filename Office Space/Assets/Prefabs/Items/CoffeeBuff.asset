@@ -12,6 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72a40c6c76fa8f44996e7a624d9558c9, type: 3}
   m_Name: CoffeeBuff
   m_EditorClassIdentifier: 
-  coffeeModel: {fileID: 1487114456331940075, guid: 72007144e1de3ed4eb422ab16e5a1582, type: 3}
-  speedModifier: 10
+  speedModifier: 5
   speedBoostTime: 10
