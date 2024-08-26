@@ -62,7 +62,7 @@ public class Shop : MonoBehaviour
                     return;
                 }
             }
-            GameManager.instance.playerScript.GetWeaponStats(shotgun);
+            playerCT.GetWeaponStats(shotgun);
         }
     }
 
@@ -82,7 +82,7 @@ public class Shop : MonoBehaviour
                     return;
                 }
             }
-            GameManager.instance.playerScript.GetWeaponStats(SMG);
+            playerCT.GetWeaponStats(SMG);
         }
     }
 
@@ -121,12 +121,16 @@ public class Shop : MonoBehaviour
             {
                 if (playerCT.weaponList[i] == shuriken)
                 {
+                    if(playerCT.weaponList[i].currentAmmo < playerCT.weaponList[i].startAmmo)
+                    {
+                        playerCT.weaponList[i].currentAmmo++;
+                        return;
+                    }
+                    else { return; }
                     //GameManager.instance.playerScript.weaponList[i].currentAmmo = GameManager.instance.playerScript.weaponList[i].startAmmo;
-                    playerCT.weaponList[i].currentAmmo = playerCT.weaponList[i].startAmmo;
-                    return;
                 }
             }
-            playerCT.GetWeaponStats(rifle);
+            playerCT.GetWeaponStats(shuriken);
             //add code to add new weapon to throwables
         }
         
