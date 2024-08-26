@@ -103,6 +103,7 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
     [SerializeField] float raycastRotationRecoil;
     [SerializeField] float raycastRotationReload;
     [SerializeField] int currentAmmo;
+    Coroutine shootCoroutine;
 
     [Header("----- Shuriken -----")]
     [SerializeField] GameObject shurikenSpawnPoint;
@@ -229,7 +230,7 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
     }
     private void Start()
     {
-        if(HP == 0)
+        if (HP == 0)
             HP = PlayerManager.instance.HP;
         HPOrig = HP;
         origSpeed = speed;
@@ -256,9 +257,14 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
 
         if (PlayerManager.instance.matchStarted && !GameManager.instance.isPaused)
         {
-            if(!isDead)
+            if (!isDead)
                 Movement();
             Rotation();
+
+            if (weaponList[selectedWeapon].isAutoFire && !isShooting && ShootTriggered)
+            {
+                StartCoroutine(Shoot());
+            }
         }
 
         if (!isCrouching)
@@ -300,6 +306,9 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
 
         //sprintAction.performed += context => SprintValue = context.ReadValue<float>();
         //sprintAction.canceled += context => SprintValue = 0f;
+
+        shootAction.performed += context => ShootTriggered = true;
+        shootAction.canceled += context => ShootTriggered = false;
 
         sprintAction.performed += context => SprintTrigger = true;
         sprintAction.canceled += context => SprintTrigger = false;
@@ -362,7 +371,7 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
         interactAction.Disable();
         scoreboardAction.performed -= DisplayScoreboard;
         scoreboardAction.canceled -= DeactivateScoreboard;
-    }   
+    }
 
 
 
@@ -427,16 +436,16 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
                 speed = origSpeed;
                 isCrouching = false;
             }
-            
-                switch (isSprinting)
-                {
-                    case true:
-                        speed *= sprintMod;
-                        break;
-                    case false:
-                        speed /= sprintMod;
-                        break;
-                }
+
+            switch (isSprinting)
+            {
+                case true:
+                    speed *= sprintMod;
+                    break;
+                case false:
+                    speed /= sprintMod;
+                    break;
+            }
         }
     }
 
@@ -529,7 +538,7 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
         //verticalRotation -= inputHandler.LookInput.y * mouseSensitivity;
         verticalRotation -= mouseYInput * sensitivity;
         verticalRotation = Mathf.Clamp(verticalRotation, -upDownRange, upDownRange);
-        playerCamera.transform.localRotation = Quaternion.Euler(verticalRotation, 0, 0);        
+        playerCamera.transform.localRotation = Quaternion.Euler(verticalRotation, 0, 0);
     }
 
     //UI Refresh Methods
@@ -572,14 +581,16 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
 
     void ShootEvent(InputAction.CallbackContext context)
     {
-        if (!isShooting && !isReloading)
+        if (!isShooting && !isReloading && !isDead && !GameManager.instance.isPaused)
         {
-            StartCoroutine(Shoot());
+            if (!weaponList[selectedWeapon].isAutoFire)
+                StartCoroutine(Shoot());
         }
     }
 
     IEnumerator Shoot()
     {
+
         isShooting = true;
         if (weaponList[selectedWeapon].currentAmmo > 0)
         {
@@ -606,7 +617,7 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
                             GameManager.instance.statsTracker[this.gameObject.name].updateKills();
                             GameManager.instance.statsTracker[this.gameObject.name].updateKDR();
                             GameManager.instance.DisplayKillMessage(gameObject, hit.collider.gameObject);
-                          //  //DebugLog(GameManager.instance.statsTracker[this.gameObject.name].getAllStats());
+                            //  //DebugLog(GameManager.instance.statsTracker[this.gameObject.name].getAllStats());
                         }
                     }
                     else
@@ -651,8 +662,9 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
 
             }
         }
-
         isShooting = false;
+        shootCoroutine = null;
+
     }
 
     void ReloadEvent(InputAction.CallbackContext context)
@@ -980,7 +992,7 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
             playerMeshRenderer.enabled = true;
             weaponModel.SetActive(true);
             deathCamera.gameObject.SetActive(false);
-            weaponList[0].currentAmmo = weaponList[0].startAmmo;         
+            weaponList[0].currentAmmo = weaponList[0].startAmmo;
             isDead = false;
         }
     }
@@ -995,10 +1007,10 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
     public void ActivateShopUI()
     {
         //ACTIVATE SHOP UI IN EACH PLAYER
-        
+
         this.eventSystem.firstSelectedGameObject = shopFirst;
         menuShop.SetActive(true);
-        
+
         //foreach(var player in PlayerManager.instance.players){
         //playerCMP = player.GetComponent<ControllerTest>();
         //playerCMP = ActivateShopUI();
@@ -1012,7 +1024,7 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
         GameManager.instance.playersReady++;
         menuShop.SetActive(false);
 
-        if(GameManager.instance.playersReady == PlayerManager.instance.players.Count)
+        if (GameManager.instance.playersReady == PlayerManager.instance.players.Count)
         {
             GameManager.instance.StateUnpause();
             StartCoroutine(GameManager.instance.Timer());

@@ -9,6 +9,7 @@ public class WeaponStats : ScriptableObject
     public enum ThrowStyle { none, overhead, chestOut }
     public WeaponType type;
     public ThrowStyle style;
+    public  bool isAutoFire;
     public GameObject weaponModel;
     public AudioClip shootSound;
     public float shootRate;
