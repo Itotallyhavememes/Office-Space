@@ -185,6 +185,8 @@ public class GameManager : MonoBehaviour
     public List<GameObject> RunningPoints;
     public bool isMultiplayer;
 
+    private bool isDisplayingScore;
+
     void Awake()
     {
 
@@ -270,7 +272,7 @@ public class GameManager : MonoBehaviour
 
         if (currentMode == gameMode.DONUTKING2 && !isPaused)
         {
-            DisplayInfoScreen();
+            //DisplayInfoScreen();
         }
 
         if (deadTracker.Count > 0 && coroutine == null) //spawn logic
@@ -1239,9 +1241,21 @@ public class GameManager : MonoBehaviour
         StateUnpause();
     }
 
-    public void AddScoreboards(GameObject boards)
+    public void DisplayScoreboard()
     {
-
+        if (currentMode == gameMode.DONUTKING2 && !isPaused)
+        {
+            isDisplayingScore = !isDisplayingScore;
+            if (isDisplayingScore)
+            {
+                TallyActiveScores();
+                scoreDisplay.SetActive(true);
+            }
+            else
+            {
+                scoreDisplay.SetActive(false);
+            }
+        }
 
     }
 }
