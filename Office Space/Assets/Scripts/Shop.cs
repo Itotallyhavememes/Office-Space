@@ -102,7 +102,8 @@ public class Shop : MonoBehaviour
                     return;
                 }
             }
-            GameManager.instance.playerScript.GetWeaponStats(rifle);
+            playerCT.GetWeaponStats(rifle);
+            //GameManager.instance.playerScript.GetWeaponStats(rifle);
         }
     }
 
@@ -112,10 +113,22 @@ public class Shop : MonoBehaviour
             if (GameManager.instance.statsTracker[myPlayer.name].getMoneyTotal() >= shurikenPrice)
             {
                 GameManager.instance.statsTracker[myPlayer.name].withdrawMoney(shurikenPrice);
-                GameManager.instance.playerScript.GetWeaponStats(shuriken);
+                //GameManager.instance.playerScript.GetWeaponStats(shuriken);
                 updateMoneyCount();
-                //add code to add new weapon to throwables
+
+            ControllerTest playerCT = myPlayer.GetComponent<ControllerTest>();
+            for (int i = 0; i < playerCT.weaponList.Count; i++)
+            {
+                if (playerCT.weaponList[i] == shuriken)
+                {
+                    //GameManager.instance.playerScript.weaponList[i].currentAmmo = GameManager.instance.playerScript.weaponList[i].startAmmo;
+                    playerCT.weaponList[i].currentAmmo = playerCT.weaponList[i].startAmmo;
+                    return;
+                }
             }
+            playerCT.GetWeaponStats(rifle);
+            //add code to add new weapon to throwables
+        }
         
     }
     public void rubberbandBallButton()
@@ -123,9 +136,16 @@ public class Shop : MonoBehaviour
         if (GameManager.instance.statsTracker[myPlayer.name].getMoneyTotal() >= rubberbandBallPrice && myPlayer.GetComponent<ItemThrow>().rubberBallCount < myPlayer.GetComponent<ItemThrow>().GetRubberBallMax())
         {
             GameManager.instance.statsTracker[myPlayer.name].withdrawMoney(rubberbandBallPrice);
-            GameManager.instance.playerThrowScript.rubberBallCount++;
+            //GameManager.instance.playerThrowScript.rubberBallCount++;
             updateMoneyCount();
             //add code to add new weapon to throwables
+
+            ItemThrow playerCT = myPlayer.GetComponent<ItemThrow>();
+            if (playerCT != null)
+                playerCT.rubberBallCount++;
+                    //GameManager.instance.playerScript.weaponList[i].currentAmmo = GameManager.instance.playerScript.weaponList[i].startAmmo;
+                    
+
         }
             GameManager.instance.playerThrowScript.updateGrenadeUI();
     }

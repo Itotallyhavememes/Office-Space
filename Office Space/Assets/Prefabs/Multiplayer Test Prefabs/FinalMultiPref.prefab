@@ -21250,6 +21250,7 @@ MonoBehaviour:
   playerHPBar: {fileID: 8746920632880842021}
   playerAmmoBar: {fileID: 4744407084604503777}
   grenadeStack: {fileID: 3276352545860222381}
+  ScoreBoard: {fileID: 0}
   deathCamera: {fileID: 4517408566991524832}
   weaponList: []
   playerAim: {fileID: 8474595113601631498}
