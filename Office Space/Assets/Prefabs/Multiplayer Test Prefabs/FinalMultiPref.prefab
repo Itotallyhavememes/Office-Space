@@ -21029,7 +21029,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &395297506697260119
 Transform:
   m_ObjectHideFlags: 0
@@ -21250,7 +21250,6 @@ MonoBehaviour:
   playerHPBar: {fileID: 8746920632880842021}
   playerAmmoBar: {fileID: 4744407084604503777}
   grenadeStack: {fileID: 3276352545860222381}
-  ScoreBoard: {fileID: 0}
   deathCamera: {fileID: 4517408566991524832}
   weaponList: []
   playerAim: {fileID: 8474595113601631498}
@@ -21339,7 +21338,7 @@ MonoBehaviour:
   grenadeHUD: {fileID: 8478292376267415120}
   audRubberBall: {fileID: 8300000, guid: 51d732c04d3a7e04a981cf18a4d38f62, type: 3}
   audRubberBallVol: 0
-  rubberBallCount: 7
+  rubberBallCount: 3
 --- !u!136 &179801705901621160
 CapsuleCollider:
   m_ObjectHideFlags: 0

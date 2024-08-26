@@ -3026,7 +3026,7 @@ GameObject:
   - component: {fileID: 309460222998935166}
   - component: {fileID: 996665428354211426}
   m_Layer: 7
-  m_Name: NE_Norm
+  m_Name: NE_Normal
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3094,6 +3094,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyDonutCount: 0
   type: 0
+  canSeeTarget: 0
   DKLight: {fileID: 6807637134541727530}
   amITheKing: 0
   DKRPoint: {x: 0, y: 0, z: 0}
@@ -3108,7 +3109,7 @@ MonoBehaviour:
   viewAngle: 90
   bullet: {fileID: 6562726978010489722, guid: be53c72d1bd770d4faa4be6708977d31, type: 3}
   targeting: {fileID: 3519641428797271318}
-  shootRate: 0.18
+  shootRate: 0.2
   animTransitSpeed: 5
   ikActive: 1
   aud: {fileID: 996665428354211426}

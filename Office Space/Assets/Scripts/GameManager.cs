@@ -275,10 +275,10 @@ public class GameManager : MonoBehaviour
             //DisplayInfoScreen();
         }
 
-        if (deadTracker.Count > 0 && coroutine == null) //spawn logic
-        {
-            coroutine = StartCoroutine(SpawnTheDead());
-        }
+        //if (deadTracker.Count > 0 && coroutine == null) //spawn logic
+        //{
+        //    coroutine = StartCoroutine(SpawnTheDead());
+        //}
     }
 
     //INSTANTIATING SCOREBOARD PLACEMENTS BASED OFF NUMBER OF PLAYERS:
@@ -561,6 +561,7 @@ public class GameManager : MonoBehaviour
         //Debug.Log(self.name + "DB: " + statsTracker[self.name].getDeaths().ToString());
         statsTracker[self.name].updateDeaths();
         statsTracker[self.name].updateKDR();
+        coroutine = StartCoroutine(SpawnTheDead());
         //  Debug.Log(self.name.ToString() + statsTracker[self.name].getAllStats().ToString());
         // Debug.Log(self.name + "DA: " + statsTracker[self.name].getDeaths().ToString());
         //if (statsTracker[self.name].getDKStatus() == true)
@@ -581,40 +582,43 @@ public class GameManager : MonoBehaviour
         //float respawnerTime = statsTracker[deadTracker[0].name].getTimeHeld() / 2;
         //if (respawnerTime == 0)
         //    respawnerTime = respawnTime;
-        yield return new WaitForSeconds(respawnTime);
-        int spawnIndex = Random.Range(0, statsTracker.Count);
-        //CHECK TO SEE WHO IS IN deadTracker[0]
-        //PlayerControl deadController = deadTracker[0].GetComponent<PlayerControl>();
-        //if(deadController != null){
-        //Cycle through PlayerManager.instance.players LIST and see if any of their GetHashCode matches deadTracker[0].GetHashCode()
-        //If it's a match: 
-        //playerSpawn.transform.position = spawnPoints[spawnIndex].transform.position;
-        //deadTracker[0].spawnPlayer();
-        //}
-        //else{
-        //*it's an enemy, so:
-        //deadTracker[0].transform.position = spawnPoints[spawnIndex].transform.position;
-        //deadTracker[0].SetActive(true);
-        //}
-        ControllerTest playerCMP = deadTracker[0].GetComponent<ControllerTest>();
-        if (playerCMP != null/* deadTracker.Count > 0 && deadTracker[0].GetHashCode() == player.GetHashCode()*/)
-        {
-            playerSpawn.transform.position = spawnPoints[spawnIndex].transform.position;
-            playerCMP.spawnPlayer();
-        }
-        else /*if (deadTracker.Count > 0 && deadTracker[0].GetHashCode() != player.GetHashCode())*/
-        {
-            deadTracker[0].transform.position = spawnPoints[spawnIndex].transform.position;
-            deadTracker[0].SetActive(true);
-        }
-        //Leave this portion alone
         if (deadTracker.Count > 0)
         {
-            bodyTracker.Add(deadTracker[0]);
-            deadTracker.RemoveAt(0); //pop front
-        }
+            yield return new WaitForSeconds(respawnTime);
+            int spawnIndex = Random.Range(0, statsTracker.Count);
+            //CHECK TO SEE WHO IS IN deadTracker[0]
+            //PlayerControl deadController = deadTracker[0].GetComponent<PlayerControl>();
+            //if(deadController != null){
+            //Cycle through PlayerManager.instance.players LIST and see if any of their GetHashCode matches deadTracker[0].GetHashCode()
+            //If it's a match: 
+            //playerSpawn.transform.position = spawnPoints[spawnIndex].transform.position;
+            //deadTracker[0].spawnPlayer();
+            //}
+            //else{
+            //*it's an enemy, so:
+            //deadTracker[0].transform.position = spawnPoints[spawnIndex].transform.position;
+            //deadTracker[0].SetActive(true);
+            //}
+            ControllerTest playerCMP = deadTracker[0].GetComponent<ControllerTest>();
+            if (playerCMP != null/* deadTracker.Count > 0 && deadTracker[0].GetHashCode() == player.GetHashCode()*/)
+            {
+                playerSpawn.transform.position = spawnPoints[spawnIndex].transform.position;
+                playerCMP.spawnPlayer();
+            }
+            else /*if (deadTracker.Count > 0 && deadTracker[0].GetHashCode() != player.GetHashCode())*/
+            {
+                deadTracker[0].transform.position = spawnPoints[spawnIndex].transform.position;
+                deadTracker[0].SetActive(true);
+            }
+            //Leave this portion alone
+            if (deadTracker.Count > 0)
+            {
+                bodyTracker.Add(deadTracker[0]);
+                deadTracker.RemoveAt(0); //pop front
+            }
 
-        coroutine = null;
+            coroutine = null;
+        }
     }
     //method to search through tracker and return object
     public GameObject ReturnEntity(GameObject target)

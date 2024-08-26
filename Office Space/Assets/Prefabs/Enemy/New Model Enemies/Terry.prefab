@@ -1898,7 +1898,7 @@ GameObject:
   - component: {fileID: 4808659366584081533}
   - component: {fileID: 6765005693570664936}
   m_Layer: 7
-  m_Name: EnemyTank
+  m_Name: Terry
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1971,12 +1971,12 @@ MonoBehaviour:
   enemRig: {fileID: 6765005693570664936}
   dmgColor: {r: 0.7169812, g: 0, b: 0, a: 1}
   shootPos: {fileID: 6182811478410074795}
-  HP: 16
+  HP: 30
   faceTargetSpeed: 50
   viewAngle: 90
-  bullet: {fileID: 6562726978010489722, guid: be53c72d1bd770d4faa4be6708977d31, type: 3}
+  bullet: {fileID: 4892578619623213427, guid: daab7d87f90015c4c92bd341e4f12e33, type: 3}
   targeting: {fileID: 900494570306040272}
-  shootRate: 0.2
+  shootRate: 0.5
   animTransitSpeed: 3
   ikActive: 1
   aud: {fileID: 4808659366584081533}
@@ -2016,7 +2016,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 1.5
-  m_Speed: 6
+  m_Speed: 4
   m_Acceleration: 32
   avoidancePriority: 50
   m_AngularSpeed: 200

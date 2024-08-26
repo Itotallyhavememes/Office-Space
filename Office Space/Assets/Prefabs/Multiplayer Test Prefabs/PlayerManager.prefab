@@ -116,6 +116,9 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   botsDropdown: {fileID: 0}
+  timerSlider: {fileID: 0}
+  roundsDropdown: {fileID: 0}
+  playerBlockout: {fileID: 0}
   matchSettingsMenu: {fileID: 0}
   enemyPrefabs:
   - {fileID: 4464568196514872736, guid: c4aec7654a823f840ac1a7eceebdfb45, type: 3}

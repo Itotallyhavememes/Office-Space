@@ -28,7 +28,7 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
     [SerializeField] RigBuilder enemRig;
     [SerializeField] Color dmgColor;
     [SerializeField] Transform shootPos;
-    [Range(1, 20)][SerializeField] int HP;
+    [Range(1, 30)][SerializeField] int HP;
     [Range(50, 100)][SerializeField] int faceTargetSpeed;
     [SerializeField] int viewAngle;
     [SerializeField] GameObject bullet;
@@ -466,74 +466,28 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
         //{
         //    targetOBJ = targetCmp.headPos;
         //}
-        targeting.transform.position = targetOBJ.transform.position;
-        TargetDIR = targeting.transform.position - transform.position;
-        angleToTarget = Vector3.Angle(TargetDIR, transform.forward);
-        //Each frame, the enemy AI will be seeking out player's position through this line
-
-        //Debug.Log(angleToPlayer); <- this does take up quite a few frames, so take out if possible
-        //Debug.DrawRay(headPos.position, PlayerDirection);
-        Debug.DrawRay(transform.position, TargetDIR, Color.yellow);
-        RaycastHit hit;
-        //This checks if there is a wall between enemy and player
-        if (Physics.Raycast(transform.position, TargetDIR, out hit))
+        if (targetOBJ)
         {
-            if (hit.collider.name == targetOBJ.name && angleToTarget <= viewAngle)
+            targeting.transform.position = targetOBJ.transform.position;
+            TargetDIR = targeting.transform.position - transform.position;
+            angleToTarget = Vector3.Angle(TargetDIR, transform.forward);
+            //Each frame, the enemy AI will be seeking out player's position through this line
+
+            //Debug.Log(angleToPlayer); <- this does take up quite a few frames, so take out if possible
+            //Debug.DrawRay(headPos.position, PlayerDirection);
+            Debug.DrawRay(transform.position, TargetDIR, Color.yellow);
+            RaycastHit hit;
+            //This checks if there is a wall between enemy and player
+            if (Physics.Raycast(transform.position, TargetDIR, out hit))
             {
-                return true;
+                if (hit.collider.name == targetOBJ.name && angleToTarget <= viewAngle)
+                {
+                    return true;
+                }
             }
         }
-        return false;
-        //if (targetOBJ)
-        //{
-
-        //OLD CODE:
-        //    targeting.transform.position = targetOBJ.transform.position;
-        //    TargetDIR = targeting.transform.position - transform.position;
-        //    angleToTarget = Vector3.Angle(TargetDIR, transform.forward);
-        //    //if (GameManager.instance.isThereDonutKing)
-        //    //    StopCoroutine(GoToPOI());
-        //    bool canSee = false;
-
-        //    switch (detCode)
-        //    {
-        //        //For Players
-        //        case 1:
-        //            RaycastHit hit;
-        //            if (Physics.Raycast(transform.position, TargetDIR, out hit))
-        //            {
-        //                if (hit.collider.CompareTag("Player"))
-        //                    canSee = true;
-        //            }
-        //            break;
-        //        //For Other Enemies
-        //        case 2:
-        //            if (!Physics.Linecast(transform.position, targeting.transform.position))
-        //                canSee = true;
-        //            break;
-        //        //Most cases when detCode is absent
-        //        default:
-        //            canSee = false;
-        //            break;
-        //    }
-
-        //    if (angleToTarget <= viewAngle && canSee)
-        //    {
-        //        if(type!=enemyType.security)
-        //            agent.stoppingDistance = stoppingDistOrig;
-        //        agent.SetDestination(targetOBJ.transform.position);
-        //        canTarget = true;
-        //        anim.SetBool("Aiming", true);
-        //        FaceTarget();
-        //        enemRig.enabled = true;
-        //        return true;
-        //    }
-        //}
-        //agent.stoppingDistance = 0;
-        //canTarget = false;
-        //anim.SetBool("Aiming", false);
-        //enemRig.enabled = false;
-        //return false;
+            return false;
+        
     }
 
     public void takeDamage(int amount)

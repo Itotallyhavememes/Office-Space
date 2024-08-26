@@ -3167,6 +3167,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyDonutCount: 0
   type: 2
+  canSeeTarget: 0
   DKLight: {fileID: 9007674136037943849}
   amITheKing: 0
   DKRPoint: {x: 0, y: 0, z: 0}
@@ -3179,9 +3180,9 @@ MonoBehaviour:
   HP: 16
   faceTargetSpeed: 50
   viewAngle: 90
-  bullet: {fileID: 6562726978010489722, guid: be53c72d1bd770d4faa4be6708977d31, type: 3}
+  bullet: {fileID: 6562726978010489722, guid: 271c939834b9b4f44acdd96f9fb37bf8, type: 3}
   targeting: {fileID: 5317356766618144084}
-  shootRate: 0.18
+  shootRate: 0.4
   animTransitSpeed: 3
   ikActive: 1
   aud: {fileID: 6574212025105934487}
