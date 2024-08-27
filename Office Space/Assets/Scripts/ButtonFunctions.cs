@@ -97,6 +97,9 @@ public class ButtonFunctions : MonoBehaviour
         if (GameManager.instance.isPaused)
             GameManager.instance.StateUnpause();
 
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
     }
     
     public void returnToMainFromTitle()
