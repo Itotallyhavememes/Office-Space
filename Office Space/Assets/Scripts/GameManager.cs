@@ -186,7 +186,7 @@ public class GameManager : MonoBehaviour
     public bool isMultiplayer;
 
     private bool isDisplayingScore;
-
+    [SerializeField] GameObject donutDropStarter;
     void Awake()
     {
 
@@ -227,9 +227,10 @@ public class GameManager : MonoBehaviour
             StatePause();
             EventSystem.current.SetSelectedGameObject(matchSettingsFirst); //Match settings
             timerUI.SetActive(true);
-            RandomizeVending();
+            //RandomizeVending();
             //StartCoroutine(Timer());
             InstantiateScoreBoard();
+            donutDropItem.transform.position = donutDropStarter.transform.position;
         }
 
 
@@ -1072,11 +1073,12 @@ public class GameManager : MonoBehaviour
         ////The "1" is in refernce to layer mask "1"
         //UnityEngine.AI.NavMesh.SamplePosition(randDropPos, out hit, donutDropDistance, 1);
         //DebugLog(donutDropper.name.ToString() + " DROPPED THE DONUT!");
-        donutDropItem.transform.position = donutDropper.transform.position;
-        if (donutDropItem.transform.position == donutDropper.transform.position)
-            //DebugLog("YAHOO!");
-        donutDropItem.SetActive(true);
-        //Instantiate(donutDropItem, donutDropper.transform.position + randDropPos, donutDropItem.transform.rotation);
+        //donutDropItem.transform.position += donutDropper.transform.position;
+        //if (donutDropItem.transform.position == donutDropper.transform.position)
+        //DebugLog("YAHOO!");
+        //donutDropItem.SetActive(true);
+        GameObject newDonutDrop = Instantiate(donutDropItem, donutDropper.transform.position , donutDropItem.transform.rotation);
+        donutDropItem.transform.position = newDonutDrop.transform.position;
 
         //GameManager.instance.UpdateDonutCount(gameObject, -1);
 

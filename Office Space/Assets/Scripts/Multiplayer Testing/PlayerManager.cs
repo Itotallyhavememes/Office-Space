@@ -87,7 +87,7 @@ public class PlayerManager : MonoBehaviour
         players.Add(player);
         //cameras.Add(player.GetComponentInChildren<Camera>());
         GameManager.instance.playerSpawn.transform.position = spawnPoints[players.Count - 1].position;
-
+        GameManager.instance.playerSpawn.transform.rotation = spawnPoints[players.Count - 1].rotation;
         player.GetComponent<ControllerTest>().spawnPlayer();
         player.GetComponent<ControllerTest>().ResetPlayer();
         player.name = "Player " + players.Count.ToString();
@@ -151,7 +151,7 @@ public class PlayerManager : MonoBehaviour
         {
             //int rand = Random.Range(0, enemyPrefabs.Length);
             GameObject enemy = enemyPrefabs[i];
-            Instantiate(enemy, spawnPoints[i].position, spawnPoints[i].rotation);
+            Instantiate(enemy, spawnPoints[i + players.Count].position, spawnPoints[i + players.Count].rotation);
             //enemy.SetActive(true);
         }
 

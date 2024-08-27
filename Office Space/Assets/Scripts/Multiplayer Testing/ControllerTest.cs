@@ -15,6 +15,8 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
 
 
     [Header("----- Components -----")]
+    //TEST FOR AI TARGETTING
+    public GameObject targetPoint;
     [SerializeField] CharacterController characterController;
     [SerializeField] AudioSource aud;
     [SerializeField] LayerMask ignoreMask;
@@ -828,6 +830,7 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
         UpdatePlayerUI();
         characterController.enabled = false;
         transform.position = GameManager.instance.playerSpawn.transform.position;
+        transform.rotation = GameManager.instance.playerSpawn.transform.rotation;
         characterController.enabled = true;
         playerMeshRenderer.enabled = true;
 

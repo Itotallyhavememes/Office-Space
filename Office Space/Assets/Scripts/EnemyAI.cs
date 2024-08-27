@@ -120,6 +120,7 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
         destPriority = null;
         origHP = HP;
         DKLight.SetActive(false);
+        //agent.SetDestination(GameManager.instance.donutDropItem.transform.position);
     }
 
     // Update is called once per frame
@@ -583,6 +584,11 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
         {
             isShooting = true;
 
+
+            Debug.DrawRay(transform.position, targeting.transform.position, color:Color.green);
+            ControllerTest playerCMP = targetOBJ.GetComponent<ControllerTest>();
+            if (playerCMP != null)
+                targeting.transform.position = playerCMP.targetPoint.transform.position;
             Instantiate(bullet, shootPos.position, transform.rotation);
             Damage bulletDmg = bullet.GetComponent<Damage>();
             bulletDmg.parent = this.gameObject;
