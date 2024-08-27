@@ -447,7 +447,7 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
                     break;
                 case false:
                     speed /= sprintMod;
-                    if(speed < origSpeed)
+                    if (speed < origSpeed)
                     {
                         speed = origSpeed;
                     }
@@ -469,7 +469,7 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
                 StartCoroutine(Slide2());
             }
         }
-        
+
     }
     void unCrouch(InputAction.CallbackContext context)
     {
@@ -479,7 +479,7 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
             speed += crouchSpeed;
             isCrouching = false;
         }
-        
+
     }
     //------------------------------------------------//
 
@@ -678,7 +678,7 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
 
     void ReloadEvent(InputAction.CallbackContext context)
     {
-        if (!isReloading && !isShooting)
+        if (!isDead && !isReloading && !isShooting)
         {
             StartCoroutine(Reload());
         }
@@ -1049,5 +1049,10 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
     public void DeactivateScoreboard(InputAction.CallbackContext context)
     {
         GameManager.instance.DisplayScoreboard();
+    }
+
+    public bool GetLifeState()
+    {
+        return isDead;
     }
 }

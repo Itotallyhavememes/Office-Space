@@ -604,6 +604,8 @@ public class GameManager : MonoBehaviour
             if (playerCMP != null/* deadTracker.Count > 0 && deadTracker[0].GetHashCode() == player.GetHashCode()*/)
             {
                 playerSpawn.transform.position = spawnPoints[spawnIndex].transform.position;
+                playerCMP.weaponList[0].currentAmmo = playerCMP.weaponList[0].startAmmo;
+                playerCMP.UpdateAmmoUI();
                 playerCMP.spawnPlayer();
             }
             else /*if (deadTracker.Count > 0 && deadTracker[0].GetHashCode() != player.GetHashCode())*/
@@ -1077,7 +1079,7 @@ public class GameManager : MonoBehaviour
         //if (donutDropItem.transform.position == donutDropper.transform.position)
         //DebugLog("YAHOO!");
         //donutDropItem.SetActive(true);
-        GameObject newDonutDrop = Instantiate(donutDropItem, donutDropper.transform.position , donutDropItem.transform.rotation);
+        GameObject newDonutDrop = Instantiate(donutDropItem, donutDropper.transform.position, donutDropItem.transform.rotation);
         donutDropItem.transform.position = newDonutDrop.transform.position;
 
         //GameManager.instance.UpdateDonutCount(gameObject, -1);
@@ -1093,7 +1095,7 @@ public class GameManager : MonoBehaviour
             lightSwitchE.ToggleMyLight();
             lightSwitchE.ToggleAmIKing();
             //if (!lightSwitchE.getKingStatus())
-                ////DebugLog(donutDropper.name + " IS DETHRONED!!!");
+            ////DebugLog(donutDropper.name + " IS DETHRONED!!!");
         }
         statsTracker[donutDropper.name].updateDKStatus();
         PriorityPoint.Clear();

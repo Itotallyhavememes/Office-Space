@@ -59,7 +59,7 @@ public class ItemThrow : MonoBehaviour
         }
         else
         {
-            if (this.GetComponent<ControllerTest>().GrenadeTriggered && rubberBallCount > 0)
+            if (!this.GetComponent<ControllerTest>().GetLifeState() && this.GetComponent<ControllerTest>().GrenadeTriggered && rubberBallCount > 0)
             {
                 this.GetComponent<ControllerTest>().playerRig.weight = 0;
                 anim.SetLayerWeight(8, 1f);
