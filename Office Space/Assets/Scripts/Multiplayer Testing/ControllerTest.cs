@@ -80,7 +80,7 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
     public GameObject UI;
     [SerializeField] MultiplayerEventSystem eventSystem;
     [SerializeField] GameObject menuActive;
-    [SerializeField] GameObject menuShop;
+    public GameObject menuShop;
     [SerializeField] GameObject shopFirst;
     [SerializeField] GameObject damageFlash;
     //[SerializeField] GameObject firstSelectedButtonInPause;
@@ -828,6 +828,7 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
     public void spawnPlayer()
     {
         HP = HPOrig;
+        //weaponList[0].currentAmmo = weaponList[0].startAmmo;
         UpdatePlayerUI();
         characterController.enabled = false;
         transform.position = GameManager.instance.playerSpawn.transform.position;
@@ -846,9 +847,11 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
 
     public void respawnPlayer()
     {
+        weaponList[0].currentAmmo = weaponList[0].startAmmo;
         UpdatePlayerUI();
         characterController.enabled = false;
         transform.position = GameManager.instance.playerSpawn.transform.position;
+        transform.rotation = GameManager.instance.playerSpawn.transform.rotation;
         characterController.enabled = true;
     }
 
@@ -1040,6 +1043,12 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
             GameManager.instance.StateUnpause();
             StartCoroutine(GameManager.instance.Timer());
         }
+        //Call InstantaiteScoreBoard here to make sure all entities are accounted for
+        GameManager.instance.InstantiateScoreBoard();
+        //foreach (var entity in GameManager.instance.statsTracker)
+        //{
+        //    Debug.Log(entity.Key.ToString());
+        //}
     }
 
     public void DisplayScoreboard(InputAction.CallbackContext context)

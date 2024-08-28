@@ -229,7 +229,7 @@ public class GameManager : MonoBehaviour
             timerUI.SetActive(true);
             //RandomizeVending();
             //StartCoroutine(Timer());
-            InstantiateScoreBoard();
+            //InstantiateScoreBoard();
             donutDropItem.transform.position = donutDropStarter.transform.position;
         }
 
@@ -287,6 +287,7 @@ public class GameManager : MonoBehaviour
     {
         scoreBoardPlacementsText.text = string.Empty;
         activePlaceText.text = string.Empty;
+        Debug.Log(statsTracker.Count.ToString());
         for (int i = 0; i < statsTracker.Count; ++i)
         {
             scoreBoardPlacementsText.text += i + 1;
@@ -330,8 +331,14 @@ public class GameManager : MonoBehaviour
         //Changed to reflect that menuScore IS ALSO for Round Over
         if (menuActive = menuScore)
             menuScore.SetActive(false);
+        foreach (var player in PlayerManager.instance.players)
+        {
+            statsTracker[player.name].depositMoney(100);
+            player.GetComponent<ControllerTest>().menuShop.GetComponent<Shop>().updateMoneyCount();
+            player.GetComponent<ControllerTest>().ActivateShopUI();
+        }
         //CHANGE END
-        StateUnpause();
+        //StateUnpause();
         ////Pause game
         //isPaused = true;
         //int SpawnIndex = 0;
@@ -433,11 +440,7 @@ public class GameManager : MonoBehaviour
         //PlayerManager.instance.players[i].ActivateShopUI()
         //isShopDisplayed = false;
         //ControllerTest playerCMP;
-        foreach (var player in PlayerManager.instance.players)
-        {
-            statsTracker[player.name].depositMoney(100);
-
-        }
+        
         //Shop.instance.updateMoneyCount();
     }
 

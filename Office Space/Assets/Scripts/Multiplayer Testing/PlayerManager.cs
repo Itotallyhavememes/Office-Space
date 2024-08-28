@@ -69,6 +69,7 @@ public class PlayerManager : MonoBehaviour
         //GameManager.instance.StatePause();
         GameManager.instance.ActivateMenu(matchSettingsMenu);
         GameManager.instance.isMultiplayer = true;
+        //GameManager.instance.AddToTracker(this.gameObject);
         //EventSystem.current.SetSelectedGameObject(matchSettingsFirst);
     }
 
@@ -154,7 +155,7 @@ public class PlayerManager : MonoBehaviour
             Instantiate(enemy, spawnPoints[i + players.Count].position, spawnPoints[i + players.Count].rotation);
             //enemy.SetActive(true);
         }
-
+        //GameManager.instance.InstantiateScoreBoard();
     }
 
     public void StartMatch()
@@ -179,10 +180,12 @@ public class PlayerManager : MonoBehaviour
 
             matchStarted = true;
             GameManager.instance.SetDKTimer((int)timerSlider.value * 60);
+            
             //GameManager.instance.StateUnpause();
 
 
         }
+        
     }
 
 
