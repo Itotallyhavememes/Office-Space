@@ -167,6 +167,7 @@ public class GameManager : MonoBehaviour
     public string PlayerName;
 
     public bool respawn;
+    bool fullScreen;
 
     public bool canVend;
     [SerializeField] float VendingCooldown;
@@ -203,7 +204,7 @@ public class GameManager : MonoBehaviour
         //    playerThrowScript = player.GetComponent<ItemThrow>();
         //}
         currentMode = modeSelection;
-
+        fullScreen = Screen.fullScreen;
         Thresh = 29;
         bodyTracker = new List<GameObject>();
         statsTracker = new Dictionary<string, ParticipantStats>();
@@ -1059,9 +1060,9 @@ public class GameManager : MonoBehaviour
         ////DebugLog(volume);
         audioMixer.SetFloat("MasterAudio", volume);
     }
-    public void SetFullScreen(bool isFullScreen)
+    public void SetFullScreen()
     {
-        Screen.fullScreen = isFullScreen;
+        Screen.fullScreen = fullScreen;
     }
 
     public void GetNS_GoalScreen()
