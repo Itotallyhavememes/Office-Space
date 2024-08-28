@@ -10,6 +10,7 @@ using System.Linq;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.EventSystems;
+using UnityEngine.SocialPlatforms;
 
 
 public class PlayerManager : MonoBehaviour
@@ -173,9 +174,11 @@ public class PlayerManager : MonoBehaviour
                 players[i].GetComponent<Animator>().enabled = true;
                 players[i].GetComponent<ControllerTest>().deathCamera.rect
                     = players[i].GetComponent<ControllerTest>().playerCamera.rect;
-                players[i].GetComponent<ControllerTest>().UI.SetActive(true);
+                //players[i].GetComponent<ControllerTest>().UI.SetActive(true);
                 //ACTIVATE SHOP UI
+                //players[i].GetComponent<ControllerTest>().StartCoroutine(players[i].GetComponent<ControllerTest>().DisableControlsTimer());
                 players[i].GetComponent<ControllerTest>().ActivateShopUI();
+                players[i].GetComponent<ControllerTest>().multEventSystem.playerRoot = players[i].GetComponent<ControllerTest>().localUI;
             }
 
             matchStarted = true;

@@ -22,6 +22,10 @@ public class GameManager : MonoBehaviour
     public enum gameMode { DONUTKING2, NIGHTSHIFT, TITLE }
     public static gameMode currentMode;
 
+    [Header("EventSystem")]
+    public GameObject eventSystem;
+    public GameObject globalUI;
+
     [Header("Main Menu First Selected Options")]
     [SerializeField] GameObject mainMenuFirst;
     [SerializeField] GameObject createMatchFirst;
@@ -685,6 +689,24 @@ public class GameManager : MonoBehaviour
             StateUnpause();
         }
     }
+    
+    public void OnPause(GameObject player)
+    {
+        if (menuActive == null)
+        {
+            StatePause();
+            menuActive = menuPause;
+            menuActive.SetActive(isPaused);
+            player.GetComponent<ControllerTest>().multEventSystem.playerRoot = globalUI;
+            player.GetComponent<ControllerTest>().multEventSystem.SetSelectedGameObject(pauseFirst);
+            //EventSystem.current.SetSelectedGameObject(pauseFirst);
+            eventSystem.GetComponent<EventSystem>().SetSelectedGameObject(pauseFirst);
+        }
+        else if (menuActive == menuPause)
+        {
+            StateUnpause(player);
+        }
+    }
 
     public void StatePause()
     {
@@ -696,6 +718,19 @@ public class GameManager : MonoBehaviour
 
     public void StateUnpause()
     {
+        //made changes Here for testing
+        isPaused = !isPaused;
+        Time.timeScale = 1;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        menuActive.SetActive(false);
+        menuActive = null;
+    }
+    
+    public void StateUnpause(GameObject player)
+    {
+        //made changes Here for testing
+        player.GetComponent<ControllerTest>().multEventSystem.playerRoot = player.GetComponent<ControllerTest>().localUI;
         isPaused = !isPaused;
         Time.timeScale = 1;
         Cursor.visible = false;
