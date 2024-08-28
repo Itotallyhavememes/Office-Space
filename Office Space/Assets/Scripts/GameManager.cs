@@ -706,6 +706,7 @@ public class GameManager : MonoBehaviour
         else if (menuActive == menuPause)
         {
             StateUnpause(player);
+            PlayerManager.instance.ResetPlayerRoots(); //Resets the roots back in the cause for unpausing done by the other players
         }
     }
 

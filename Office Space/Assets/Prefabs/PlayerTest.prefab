@@ -132,7 +132,7 @@ GameObject:
   - component: {fileID: 6321354430896742701}
   - component: {fileID: 9170646610353316077}
   - component: {fileID: 1886161555418341329}
-  m_Layer: 5
+  m_Layer: 14
   m_Name: Ball Count
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -273,7 +273,7 @@ GameObject:
   - component: {fileID: 3348839850743706997}
   - component: {fileID: 1908193953376627085}
   - component: {fileID: 311852378255563383}
-  m_Layer: 5
+  m_Layer: 14
   m_Name: ForeGround
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -379,7 +379,7 @@ GameObject:
   - component: {fileID: 2456621937174566462}
   - component: {fileID: 4883700955592134350}
   - component: {fileID: 8693033844849572917}
-  m_Layer: 5
+  m_Layer: 14
   m_Name: Throwable
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -548,7 +548,7 @@ GameObject:
   - component: {fileID: 7167409167199770289}
   - component: {fileID: 8921638118154677735}
   - component: {fileID: 2458499341192766796}
-  m_Layer: 3
+  m_Layer: 14
   m_Name: UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -593,7 +593,7 @@ Canvas:
   serializedVersion: 3
   m_RenderMode: 1
   m_Camera: {fileID: 3514453767592983901}
-  m_PlaneDistance: 0.3
+  m_PlaneDistance: 0.4
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
@@ -689,7 +689,7 @@ GameObject:
   - component: {fileID: 5376082668462267838}
   - component: {fileID: 7266259396736731930}
   - component: {fileID: 6570648683929905884}
-  m_Layer: 5
+  m_Layer: 14
   m_Name: NerfSMG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -821,7 +821,7 @@ GameObject:
   - component: {fileID: 7753520330563549033}
   - component: {fileID: 2471787844890230764}
   - component: {fileID: 6747506998015653951}
-  m_Layer: 5
+  m_Layer: 14
   m_Name: Primary
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1765,7 +1765,7 @@ GameObject:
   - component: {fileID: 7580193240558283371}
   - component: {fileID: 4732306532730931785}
   - component: {fileID: 69192618412386390}
-  m_Layer: 5
+  m_Layer: 14
   m_Name: SUBTITLE
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1936,7 +1936,7 @@ GameObject:
   - component: {fileID: 3030707527242036713}
   - component: {fileID: 7989265205710611696}
   - component: {fileID: 8753785347456578015}
-  m_Layer: 5
+  m_Layer: 14
   m_Name: Shuriken
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7240,7 +7240,7 @@ GameObject:
   - component: {fileID: 79631265945828453}
   - component: {fileID: 5219091046151627121}
   - component: {fileID: 5064069179604035759}
-  m_Layer: 5
+  m_Layer: 14
   m_Name: ShopBackground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7315,7 +7315,7 @@ GameObject:
   - component: {fileID: 4738885660739941465}
   - component: {fileID: 5182977878424082540}
   - component: {fileID: 2633190265864763948}
-  m_Layer: 5
+  m_Layer: 14
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7449,7 +7449,7 @@ GameObject:
   - component: {fileID: 6128335726249282006}
   - component: {fileID: 7316174809153927858}
   - component: {fileID: 5961055500829519325}
-  m_Layer: 5
+  m_Layer: 14
   m_Name: HP Bar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7525,7 +7525,7 @@ GameObject:
   - component: {fileID: 2424141393430499314}
   - component: {fileID: 3425669983228491678}
   - component: {fileID: 2816067637586633943}
-  m_Layer: 5
+  m_Layer: 14
   m_Name: Ball Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7632,7 +7632,7 @@ GameObject:
   - component: {fileID: 3328313950286265166}
   - component: {fileID: 4707727638445991817}
   - component: {fileID: 2204931232654632336}
-  m_Layer: 5
+  m_Layer: 14
   m_Name: ForeGround
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12776,7 +12776,7 @@ GameObject:
   - component: {fileID: 6266052602540852997}
   - component: {fileID: 7799664334989508971}
   - component: {fileID: 1959075013653577748}
-  m_Layer: 5
+  m_Layer: 14
   m_Name: NerfShotgun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13244,7 +13244,7 @@ GameObject:
   - component: {fileID: 2494664980178249936}
   - component: {fileID: 8368236379224494197}
   - component: {fileID: 4090142683935294457}
-  m_Layer: 5
+  m_Layer: 14
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13384,7 +13384,7 @@ GameObject:
   - component: {fileID: 670727679747001961}
   - component: {fileID: 8560685572674415168}
   - component: {fileID: 9159004326879280292}
-  m_Layer: 5
+  m_Layer: 14
   m_Name: Donut Count
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13626,7 +13626,7 @@ GameObject:
   - component: {fileID: 2323404426454424376}
   - component: {fileID: 4687567663646790621}
   - component: {fileID: 2236881730612143063}
-  m_Layer: 5
+  m_Layer: 14
   m_Name: TITLE
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13760,7 +13760,7 @@ GameObject:
   - component: {fileID: 8967310963610179332}
   - component: {fileID: 3820195240114793479}
   - component: {fileID: 5583396514915254352}
-  m_Layer: 5
+  m_Layer: 14
   m_Name: Damage Flash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13835,7 +13835,7 @@ GameObject:
   - component: {fileID: 673280099842481737}
   - component: {fileID: 6353006705151026670}
   - component: {fileID: 8833738410046596682}
-  m_Layer: 5
+  m_Layer: 14
   m_Name: BUDGET
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13969,7 +13969,7 @@ GameObject:
   - component: {fileID: 2269111617074478232}
   - component: {fileID: 6205744112703218331}
   - component: {fileID: 8010966410971398528}
-  m_Layer: 5
+  m_Layer: 14
   m_Name: Ammo Bar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14045,7 +14045,7 @@ GameObject:
   - component: {fileID: 794651915610921432}
   - component: {fileID: 5494438082237964158}
   - component: {fileID: 451706608610856333}
-  m_Layer: 5
+  m_Layer: 14
   m_Name: MiniMapRender
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14236,7 +14236,7 @@ GameObject:
   - component: {fileID: 4298972954122930785}
   - component: {fileID: 7154467427282038654}
   - component: {fileID: 7732065499612929745}
-  m_Layer: 5
+  m_Layer: 14
   m_Name: PlayerShop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14348,7 +14348,7 @@ GameObject:
   - component: {fileID: 7863424622081382391}
   - component: {fileID: 3305671691622140793}
   - component: {fileID: 5009473004830427456}
-  m_Layer: 5
+  m_Layer: 14
   m_Name: DoneButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14512,7 +14512,7 @@ GameObject:
   - component: {fileID: 1082885659301580761}
   - component: {fileID: 8310375492861955032}
   - component: {fileID: 3774434712111663821}
-  m_Layer: 5
+  m_Layer: 14
   m_Name: Input Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14650,7 +14650,7 @@ GameObject:
   - component: {fileID: 6968448218185464420}
   - component: {fileID: 2083259168990740314}
   - component: {fileID: 8179106501302137993}
-  m_Layer: 5
+  m_Layer: 14
   m_Name: Done
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14870,7 +14870,7 @@ GameObject:
   - component: {fileID: 1651013010640146277}
   - component: {fileID: 8238852760747847638}
   - component: {fileID: 1959181681251383167}
-  m_Layer: 5
+  m_Layer: 14
   m_Name: Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14945,7 +14945,7 @@ GameObject:
   - component: {fileID: 9135029098354447504}
   - component: {fileID: 2895340676306131435}
   - component: {fileID: 962107317397774382}
-  m_Layer: 5
+  m_Layer: 14
   m_Name: HP Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15084,7 +15084,7 @@ GameObject:
   - component: {fileID: 4359209856759538097}
   - component: {fileID: 2658359545000053763}
   - component: {fileID: 2951611469071090552}
-  m_Layer: 5
+  m_Layer: 14
   m_Name: $
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15218,7 +15218,7 @@ GameObject:
   - component: {fileID: 4334185602434115075}
   - component: {fileID: 8637482975355251791}
   - component: {fileID: 4599525759886096136}
-  m_Layer: 5
+  m_Layer: 14
   m_Name: Donut Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15332,7 +15332,7 @@ GameObject:
   - component: {fileID: 1254402702321016063}
   - component: {fileID: 1281630155957721526}
   - component: {fileID: 8516475309371094710}
-  m_Layer: 5
+  m_Layer: 14
   m_Name: Message
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15468,7 +15468,7 @@ GameObject:
   - component: {fileID: 7060725691326502102}
   - component: {fileID: 7006486433693308576}
   - component: {fileID: 2305395661192172846}
-  m_Layer: 5
+  m_Layer: 14
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15913,7 +15913,7 @@ GameObject:
   - component: {fileID: 2853318164969556785}
   - component: {fileID: 8856023611541785857}
   - component: {fileID: 6859872604066600605}
-  m_Layer: 5
+  m_Layer: 14
   m_Name: ForeGround
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16052,7 +16052,7 @@ GameObject:
   - component: {fileID: 8182083006101705171}
   - component: {fileID: 7392757789357684675}
   - component: {fileID: 7852664198820851070}
-  m_Layer: 5
+  m_Layer: 14
   m_Name: NerfRifle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21487,7 +21487,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.25
+  near clip plane: 0.39
   far clip plane: 1000
   field of view: 60.000004
   orthographic: 0
@@ -21495,7 +21495,7 @@ Camera:
   m_Depth: 1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 8191
+    m_Bits: 24575
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -21570,7 +21570,7 @@ GameObject:
   - component: {fileID: 3710005170527824274}
   - component: {fileID: 1833205610904792487}
   - component: {fileID: 117275721393716474}
-  m_Layer: 5
+  m_Layer: 14
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21706,7 +21706,7 @@ GameObject:
   - component: {fileID: 1178846589311087098}
   - component: {fileID: 8381359682567822582}
   - component: {fileID: 7369310941407133394}
-  m_Layer: 5
+  m_Layer: 14
   m_Name: Ball Count Txt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22050,7 +22050,7 @@ GameObject:
   - component: {fileID: 1240772871186572552}
   - component: {fileID: 8002445876645207361}
   - component: {fileID: 1310832952455989451}
-  m_Layer: 5
+  m_Layer: 14
   m_Name: MoneyCount
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22184,7 +22184,7 @@ GameObject:
   - component: {fileID: 7386779713527110183}
   - component: {fileID: 5164784666217431085}
   - component: {fileID: 6148305485966756524}
-  m_Layer: 5
+  m_Layer: 14
   m_Name: Grenade Frame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22325,7 +22325,7 @@ GameObject:
   - component: {fileID: 7370242447372665675}
   - component: {fileID: 8259917649867145358}
   - component: {fileID: 6215188829137003991}
-  m_Layer: 5
+  m_Layer: 14
   m_Name: RubberBandBall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22607,7 +22607,7 @@ GameObject:
   - component: {fileID: 6167847079031227983}
   - component: {fileID: 2609958740284200457}
   - component: {fileID: 8671947604886578972}
-  m_Layer: 5
+  m_Layer: 14
   m_Name: Ammo Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22810,7 +22810,7 @@ GameObject:
   - component: {fileID: 5904179865212648186}
   - component: {fileID: 6028147737723363609}
   - component: {fileID: 9165347411487009631}
-  m_Layer: 5
+  m_Layer: 14
   m_Name: MiniMap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22886,7 +22886,7 @@ GameObject:
   - component: {fileID: 8109584243625626563}
   - component: {fileID: 2343341365465583282}
   - component: {fileID: 4941162285048046761}
-  m_Layer: 5
+  m_Layer: 14
   m_Name: Reticle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23194,7 +23194,7 @@ GameObject:
   - component: {fileID: 2310646654642669675}
   - component: {fileID: 6153757005454042585}
   - component: {fileID: 5770927753532266190}
-  m_Layer: 5
+  m_Layer: 14
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

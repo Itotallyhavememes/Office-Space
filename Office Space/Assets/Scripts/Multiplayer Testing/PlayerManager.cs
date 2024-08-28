@@ -181,13 +181,22 @@ public class PlayerManager : MonoBehaviour
                 players[i].GetComponent<ControllerTest>().multEventSystem.playerRoot = players[i].GetComponent<ControllerTest>().localUI;
             }
 
-            matchStarted = true;
-           GameManager.instance.SetDKTimer((int)timerSlider.value * 60);
+           matchStarted = true;
+           //GameManager.instance.SetDKTimer((int)timerSlider.value * 60);
+           GameManager.instance.SetDKTimer(10);
 
 
         }
         
     }
 
+
+    public void ResetPlayerRoots()
+    {
+        foreach (var player in players)
+        {
+            player.GetComponent<ControllerTest>().multEventSystem.playerRoot = player.GetComponent<ControllerTest>().localUI;
+        }
+    }
 
 }

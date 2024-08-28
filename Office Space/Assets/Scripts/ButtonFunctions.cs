@@ -16,6 +16,7 @@ public class ButtonFunctions : MonoBehaviour
     public void resume()
     {
         GameManager.instance.StateUnpause();
+        PlayerManager.instance.ResetPlayerRoots();
     }
 
     public void startDoughnutKing()
