@@ -1072,19 +1072,9 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
         {
             GameManager.instance.StateUnpause();
             StartCoroutine(GameManager.instance.Timer());
-
-            //foreach (var player in PlayerManager.instance.players)
-            //{
-            //    player.GetComponent<ControllerTest>().multEventSystem.playerRoot = globalUI;
-            //    //player.GetComponent<ControllerTest>().multEventSystemGameObject.SetActive(true);
-            //}
         }
         //Call InstantaiteScoreBoard here to make sure all entities are accounted for
         GameManager.instance.InstantiateScoreBoard();
-        //foreach (var entity in GameManager.instance.statsTracker)
-        //{
-        //    Debug.Log(entity.Key.ToString());
-        //}
     }
 
     public void DisplayScoreboard(InputAction.CallbackContext context)

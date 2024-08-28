@@ -343,7 +343,7 @@ public class GameManager : MonoBehaviour
             player.GetComponent<ControllerTest>().ActivateShopUI();
         }
         //CHANGE END
-        //StateUnpause();
+        StateUnpause();
         ////Pause game
         //isPaused = true;
         //int SpawnIndex = 0;
@@ -762,7 +762,9 @@ public class GameManager : MonoBehaviour
             TallyFinalScores();
             menuActive = menuScore;
             menuActive.SetActive(true);
-            EventSystem.current.SetSelectedGameObject(gameEndFirst);
+            PlayerManager.instance.players[0].GetComponent<ControllerTest>().multEventSystem.playerRoot = globalUI;
+            //EventSystem.current.SetSelectedGameObject(gameEndFirst);
+            PlayerManager.instance.players[0].GetComponent<ControllerTest>().multEventSystem.SetSelectedGameObject(gameEndFirst);
         }
     }
 

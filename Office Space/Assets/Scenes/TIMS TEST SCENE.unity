@@ -62519,6 +62519,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   RoundsWon: 0
+  eventSystem: {fileID: 3376718809030492737}
+  globalUI: {fileID: 7933275841092879720}
   mainMenuFirst: {fileID: 0}
   createMatchFirst: {fileID: 0}
   settingsFirst: {fileID: 0}
