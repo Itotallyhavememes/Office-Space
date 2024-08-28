@@ -1058,7 +1058,7 @@ AudioSource:
   m_GameObject: {fileID: 737468669046305203}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 24300002, guid: 491cca7fefc6f3f418f639a8b44c47aa, type: 2}
+  OutputAudioMixerGroup: {fileID: -8678566210064012743, guid: 491cca7fefc6f3f418f639a8b44c47aa, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -1158,6 +1158,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputAsset: {fileID: 0}
+  disableControlsTime: 0
   targetPoint: {fileID: 6539787898110077674}
   characterController: {fileID: 7144814328457477816}
   aud: {fileID: 3454158837577054610}
@@ -1186,10 +1187,13 @@ MonoBehaviour:
   cameraLockOn: {fileID: 6674065762971531891}
   invertYAxis: 0
   HP: 15
-  UI: {fileID: 401729642153522752}
-  eventSystem: {fileID: 6809345020752019157}
+  multEventSystem: {fileID: 6809345020752019157}
+  globalUI: {fileID: 0}
+  localUI: {fileID: 401729642153522752}
   menuActive: {fileID: 0}
   menuShop: {fileID: 3806044849842195766}
+  menuPause: {fileID: 0}
+  pauseFirst: {fileID: 0}
   shopFirst: {fileID: 3816616739535222238}
   damageFlash: {fileID: 3463455394095389050}
   playerHPBar: {fileID: 962107317397774382}
@@ -1219,12 +1223,7 @@ MonoBehaviour:
   audHandReloadEnd: {fileID: 8300000, guid: 9c4ba0e68ded5434393f03275608ef9a, type: 3}
   audHandReloadEndVol: 0.5
   audStep:
-  - {fileID: 8300000, guid: 45353eedde6b7614290919cd88ed4f68, type: 3}
-  - {fileID: 8300000, guid: 09dad5782b8b3be4eb7c9e64f44fa55b, type: 3}
-  - {fileID: 8300000, guid: 684a62af2c94f3043a8eee96e9d7fa6a, type: 3}
-  - {fileID: 8300000, guid: 278f4f3f7c85fad4897c4d88cb2e180f, type: 3}
-  - {fileID: 8300000, guid: 3f873d817613be640a382c95aa4784d4, type: 3}
-  - {fileID: 8300000, guid: d81b0abd83707bf4db668c1446ad36df, type: 3}
+  - {fileID: 8300000, guid: f469e0090cbb7694f8656a816e968478, type: 3}
   audStepVol: 0.5
   audJump:
   - {fileID: 8300000, guid: fcb42c77baa8bdb458c340f2d26015cf, type: 3}
