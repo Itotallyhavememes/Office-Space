@@ -167,9 +167,14 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
             FaceTarget();
         if (canSeeTarget = canSeePlayer()) //canSeeTarget is test bool
         {
+            enemRig.enabled = true;
 
             if (!isShooting)
                 StartCoroutine(shoot());
+        }
+        else if (!canSeeTarget)
+        {
+            enemRig.enabled = false;
         }
 
         float agentSpeed = agent.velocity.normalized.magnitude;
@@ -229,11 +234,11 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
     //FOR BOTH
     void FaceTarget()
     {
+        shootPos.rotation = Quaternion.Lerp(shootPos.rotation, Quaternion.LookRotation(TargetDIR), Time.deltaTime * faceTargetSpeed);
         TargetDIR.y = 0;
         Quaternion rot = Quaternion.LookRotation(TargetDIR);
         transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * faceTargetSpeed);
     }
-
 
     IEnumerator Patrol()
     {
@@ -586,12 +591,12 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
         {
             isShooting = true;
 
-            GameManager.instance.playerScript.Munch(audFire, audFireVol);
+            aud.PlayOneShot(audFire, audFireVol);
             Debug.DrawRay(transform.position, targeting.transform.position, color:Color.green);
             ControllerTest playerCMP = targetOBJ.GetComponent<ControllerTest>();
             if (playerCMP != null)
                 targeting.transform.position = playerCMP.targetPoint.transform.position;
-            Instantiate(bullet, shootPos.position, transform.rotation);
+            Instantiate(bullet, shootPos.position, shootPos.rotation);
             Damage bulletDmg = bullet.GetComponent<Damage>();
             bulletDmg.parent = this.gameObject;
             ////DebugLog(bulletDmg.parent.name.ToString() + " HURT " + bulletDmg.victim.name.ToString());

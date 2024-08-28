@@ -775,9 +775,10 @@ MonoBehaviour:
   controllerTestScript: {fileID: 0}
   weaponHUD: {fileID: 7217534094125820764}
   grenadeHUD: {fileID: 2020084761414294192}
+  rubberBallCount: 7
+  rubberBallMaxCount: 0
   audRubberBall: {fileID: 0}
   audRubberBallVol: 0
-  rubberBallCount: 7
 --- !u!95 &5660229336524937938
 Animator:
   serializedVersion: 5
