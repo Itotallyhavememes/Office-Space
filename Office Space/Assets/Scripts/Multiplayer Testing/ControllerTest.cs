@@ -248,6 +248,7 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
         canSlide = true;
         UpdatePlayerUI();
         UpdateAmmoUI();
+        menuShop.GetComponent<Shop>().updateMoneyCount();
         // Don't need to call spawn player cause player manager does it for me
         //rubberBallMaxCount = rubberBallCount;
         //updateGrenadeUI();

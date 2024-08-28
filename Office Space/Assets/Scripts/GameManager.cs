@@ -864,9 +864,6 @@ public class GameManager : MonoBehaviour
 
         //  //DebugLog(winnerName + " : " + statsTracker[winnerName].getAllStats());
         ++RoundsWon;
-
-
-
     }
 
     string CheckTrueWinner()

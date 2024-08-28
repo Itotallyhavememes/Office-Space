@@ -40,7 +40,8 @@ public class Shop : MonoBehaviour
     {
         //foreach (var player in PlayerManager.instance.players)
         //{
-            moneyCount.text = "$ " + GameManager.instance.statsTracker[myPlayer.name].getMoneyTotal().ToString();
+        moneyCount.text = string.Empty;
+        moneyCount.text = GameManager.instance.statsTracker[myPlayer.name].getMoneyTotal().ToString();
         //}
     }
 
@@ -59,7 +60,7 @@ public class Shop : MonoBehaviour
                 {
                     //GameManager.instance.playerScript.weaponList[i].currentAmmo = GameManager.instance.playerScript.weaponList[i].startAmmo;
                     playerCT.weaponList[i].currentAmmo = playerCT.weaponList[i].startAmmo;
-                    return;
+                    break;
                 }
             }
             playerCT.GetWeaponStats(shotgun);
@@ -79,7 +80,7 @@ public class Shop : MonoBehaviour
                 {
                     //GameManager.instance.playerScript.weaponList[i].currentAmmo = GameManager.instance.playerScript.weaponList[i].startAmmo;
                     playerCT.weaponList[i].currentAmmo = playerCT.weaponList[i].startAmmo;
-                    return;
+                    break;
                 }
             }
             playerCT.GetWeaponStats(SMG);
@@ -99,7 +100,7 @@ public class Shop : MonoBehaviour
                 {
                     //GameManager.instance.playerScript.weaponList[i].currentAmmo = GameManager.instance.playerScript.weaponList[i].startAmmo;
                     playerCT.weaponList[i].currentAmmo = playerCT.weaponList[i].startAmmo;
-                    return;
+                    break;
                 }
             }
             playerCT.GetWeaponStats(rifle);
@@ -109,24 +110,25 @@ public class Shop : MonoBehaviour
 
     public void shurikenButton()
     {
-           
-            if (GameManager.instance.statsTracker[myPlayer.name].getMoneyTotal() >= shurikenPrice)
-            {
-                GameManager.instance.statsTracker[myPlayer.name].withdrawMoney(shurikenPrice);
-                //GameManager.instance.playerScript.GetWeaponStats(shuriken);
-                updateMoneyCount();
+
+        if (GameManager.instance.statsTracker[myPlayer.name].getMoneyTotal() >= shurikenPrice)
+        {
+            Debug.Log("BUYING SHURIKEN!");
+            GameManager.instance.statsTracker[myPlayer.name].withdrawMoney(shurikenPrice);
+            //GameManager.instance.playerScript.GetWeaponStats(shuriken);
+            updateMoneyCount();
 
             ControllerTest playerCT = myPlayer.GetComponent<ControllerTest>();
             for (int i = 0; i < playerCT.weaponList.Count; i++)
             {
                 if (playerCT.weaponList[i] == shuriken)
                 {
-                    if(playerCT.weaponList[i].currentAmmo < playerCT.weaponList[i].startAmmo)
+                    if (playerCT.weaponList[i].currentAmmo < playerCT.weaponList[i].startAmmo)
                     {
                         playerCT.weaponList[i].currentAmmo++;
-                        return;
+                        break;
                     }
-                    else { return; }
+                    //else { break; }
                     //GameManager.instance.playerScript.weaponList[i].currentAmmo = GameManager.instance.playerScript.weaponList[i].startAmmo;
                 }
             }

@@ -165,7 +165,7 @@ public class ButtonFunctions : MonoBehaviour
             yield return new WaitForSeconds(Time.deltaTime * 6);
         }
         yield return new WaitForSeconds(1);
-        SceneManager.LoadScene("Donut King 3");
+        SceneManager.LoadScene("TIMS TEST SCENE");
     }
 
     public void loading()
