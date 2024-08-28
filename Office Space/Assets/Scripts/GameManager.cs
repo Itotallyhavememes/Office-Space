@@ -340,10 +340,10 @@ public class GameManager : MonoBehaviour
         {
             statsTracker[player.name].depositMoney(100);
             player.GetComponent<ControllerTest>().menuShop.GetComponent<Shop>().updateMoneyCount();
-            player.GetComponent<ControllerTest>().ActivateShopUI();
+            player.GetComponent<ControllerTest>().ActivateShopUI();             
         }
         //CHANGE END
-        StateUnpause();
+        //StateUnpause(); //If we don't have this, it freezes...Why?... The timer was causing the freeze
         ////Pause game
         //isPaused = true;
         //int SpawnIndex = 0;
@@ -426,7 +426,7 @@ public class GameManager : MonoBehaviour
         //    }
         //}
         ////Restart the Timer???
-        StartCoroutine(Timer());
+        //StartCoroutine(Timer());
         ////Unpause the game
         //isPaused = false;
 

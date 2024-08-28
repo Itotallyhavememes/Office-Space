@@ -1059,6 +1059,8 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
         //ACTIVATE SHOP UI IN EACH PLAYER
         GameManager.instance.eventSystem.SetActive(false);
         menuShop.SetActive(true);
+        //Added to the code to reset each player's player root 
+        multEventSystem.playerRoot = localUI;
         multEventSystem.SetSelectedGameObject(shopFirst);
         //GameManager.instance.eventSystem.GetComponent<EventSystem>().SetSelectedGameObject(shopFirst);
     }
@@ -1072,6 +1074,7 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
         {
             GameManager.instance.StateUnpause();
             StartCoroutine(GameManager.instance.Timer());
+            GameManager.instance.playersReady = 0;
         }
         //Call InstantaiteScoreBoard here to make sure all entities are accounted for
         GameManager.instance.InstantiateScoreBoard();

@@ -182,9 +182,7 @@ public class PlayerManager : MonoBehaviour
             }
 
             matchStarted = true;
-            GameManager.instance.SetDKTimer((int)timerSlider.value * 60);
-            
-            //GameManager.instance.StateUnpause();
+           GameManager.instance.SetDKTimer((int)timerSlider.value * 60);
 
 
         }
