@@ -302,7 +302,9 @@ MonoBehaviour:
   ignoreMask:
     serializedVersion: 2
     m_Bits: 8
+  anim: {fileID: 0}
   HP: 13
+  DKLight: {fileID: 0}
   speed: 6
   sprintMod: 2
   crouchMod: 4
@@ -312,7 +314,17 @@ MonoBehaviour:
   slideLockoutTime: 3
   slideCooldown: 0
   gravity: 22
+  animTransitSpeed: 0
+  playerMeshRenderer: {fileID: 0}
+  dmgColor: {r: 0, g: 0, b: 0, a: 0}
+  electricParticles: {fileID: 0}
+  speedFOVEffect: 75
+  playerRig: {fileID: 0}
   deathCamera: {fileID: 777570342035633878}
+  muzzle: {fileID: 0}
+  playerAim: {fileID: 0}
+  playerhandRotation: {fileID: 0}
+  aimBallDist: 0
   starterWeapon: {fileID: 11400000, guid: a472b3a2a9729e141a2907916827da95, type: 2}
   weaponList: []
   weaponModel: {fileID: 7681990214916955962}
@@ -345,6 +357,10 @@ MonoBehaviour:
   audJumpVol: 0.5
   audSlide: {fileID: 8300000, guid: 225e326217f04ab4081f540339fe7a74, type: 3}
   audSlideVol: 0.5
+  audShurikenFire: {fileID: 0}
+  audShurikenFireVol: 0
+  rubberBall: {fileID: 0}
+  volume: 0
   audDamage:
   - {fileID: 8300000, guid: 1a0f51f03789b0049bf3ed7975f2a5ec, type: 3}
   - {fileID: 8300000, guid: f469e0090cbb7694f8656a816e968478, type: 3}
@@ -372,9 +388,14 @@ MonoBehaviour:
   itemPrefab: {fileID: 3822187847243570803, guid: 14ce3eaf9a276fa49ba840ba1115eff7, type: 3}
   itemSpawnPoint: {fileID: 589077751134878891}
   player: {fileID: 7415348336417281650}
+  playerCam: {fileID: 0}
+  controllerTestScript: {fileID: 0}
   weaponHUD: {fileID: 7681990214916955962}
   grenadeHUD: {fileID: 8038569720676148304}
   rubberBallCount: 7
+  rubberBallMaxCount: 0
+  audRubberBall: {fileID: 0}
+  audRubberBallVol: 0
 --- !u!33 &2256038359983609714
 MeshFilter:
   m_ObjectHideFlags: 0

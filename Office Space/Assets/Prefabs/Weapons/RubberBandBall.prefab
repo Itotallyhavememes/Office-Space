@@ -55,7 +55,7 @@ MonoBehaviour:
   blastRadius: 10
   blastForce: 5
   damageAmount: 15
-  rubberBall: {fileID: 8300000, guid: 51d732c04d3a7e04a981cf18a4d38f62, type: 3}
+  rubberBall: {fileID: 8300000, guid: 527942dbf102ce24991f9a8460c604ec, type: 3}
   volume: 1
 --- !u!33 &5566336552408166728
 MeshFilter:

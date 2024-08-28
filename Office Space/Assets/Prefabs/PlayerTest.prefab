@@ -1223,7 +1223,12 @@ MonoBehaviour:
   audHandReloadEnd: {fileID: 8300000, guid: 9c4ba0e68ded5434393f03275608ef9a, type: 3}
   audHandReloadEndVol: 0.5
   audStep:
-  - {fileID: 8300000, guid: f469e0090cbb7694f8656a816e968478, type: 3}
+  - {fileID: 8300000, guid: 45200827e74397941998d5b64d193b3d, type: 3}
+  - {fileID: 8300000, guid: ca7e2a9b7c6e84b4ea28cfde082c1edc, type: 3}
+  - {fileID: 8300000, guid: 5023bb5add771104c910d3e4e0c04c8f, type: 3}
+  - {fileID: 8300000, guid: 1b6e27e1beee99241ab05cc37b519e7e, type: 3}
+  - {fileID: 8300000, guid: 9cb8c102542238c48aa09dad689600f2, type: 3}
+  - {fileID: 8300000, guid: dc9261d5d8f13b84e8b8f613a06f4554, type: 3}
   audStepVol: 0.5
   audJump:
   - {fileID: 8300000, guid: fcb42c77baa8bdb458c340f2d26015cf, type: 3}
@@ -1239,6 +1244,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 9b7a78212bfb060429e3697a82574c93, type: 3}
   - {fileID: 8300000, guid: 87d1afcb45928044db032422cc026b14, type: 3}
   audDamageVol: 0.5
+  audShurikenFire: {fileID: 8300000, guid: 8ade474790543f14d92f4de2d45dcea5, type: 3}
+  audShurikenFireVol: 0.5
   grenadeHUD: {fileID: 0}
   mouseSensitivity: 1
   controllerSensitivity: 3

@@ -1131,6 +1131,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 9b7a78212bfb060429e3697a82574c93, type: 3}
   - {fileID: 8300000, guid: 87d1afcb45928044db032422cc026b14, type: 3}
   audDamageVol: 0.5
+  audFire: {fileID: 8300000, guid: 12e7fc0ae86114043839d00012eea898, type: 3}
+  audFireVol: 0.5
   dodgeSpeed: 17
   range: 90
   minRange: 50

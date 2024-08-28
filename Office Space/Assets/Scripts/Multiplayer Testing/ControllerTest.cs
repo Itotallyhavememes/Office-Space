@@ -135,6 +135,8 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
     [Range(0, 1)][SerializeField] float audSlideVol;
     [SerializeField] AudioClip[] audDamage;
     [Range(0, 1)][SerializeField] float audDamageVol;
+    [SerializeField] AudioClip audShurikenFire;
+    [Range(0, 1)][SerializeField] float audShurikenFireVol;
     private bool isPlayingStep;
 
     [Header("---- Grenade ----")]
@@ -416,7 +418,7 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
         characterController.Move(playerVel * Time.deltaTime);
         playerVel.y -= gravity * Time.deltaTime;
 
-        if (characterController.isGrounded && playerVel.magnitude > 0.3f && !isPlayingStep)
+        if (characterController.isGrounded && playerVel.magnitude > 1f && !isPlayingStep)
             StartCoroutine(PlayStep());
 
     }
@@ -653,6 +655,7 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
             else if (weaponList[selectedWeapon].type == WeaponStats.WeaponType.projectile) //Shuriken
             {
                 weaponModel.SetActive(false);
+                aud.PlayOneShot(audShurikenFire, audShurikenFireVol);
                 Instantiate(shurikenProjectile, shurikenSpawnPoint.transform.position, shurikenSpawnPoint.transform.rotation);
                 yield return new WaitForSeconds(shootRate);
                 weaponModel.SetActive(true);

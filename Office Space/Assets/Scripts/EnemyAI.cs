@@ -41,6 +41,8 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
     [SerializeField] AudioSource aud;
     [SerializeField] AudioClip[] audDamage;
     [Range(0, 1)][SerializeField] float audDamageVol;
+    [SerializeField] AudioClip audFire;
+    [Range(0, 1)][SerializeField] float audFireVol;
 
     [Header("----- Variables -----")]
 
@@ -584,7 +586,7 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
         {
             isShooting = true;
 
-
+            GameManager.instance.playerScript.Munch(audFire, audFireVol);
             Debug.DrawRay(transform.position, targeting.transform.position, color:Color.green);
             ControllerTest playerCMP = targetOBJ.GetComponent<ControllerTest>();
             if (playerCMP != null)
