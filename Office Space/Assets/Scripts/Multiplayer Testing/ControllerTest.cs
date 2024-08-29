@@ -1051,13 +1051,13 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
         return HPOrig;
     }
 
-    public IEnumerator DisableControlsTimer() //Does not work
-    {
-        this.GetComponent<PlayerInput>().enabled = false;
-        yield return new WaitForSeconds(disableControlsTime);
-        this.GetComponent<PlayerInput>().enabled = true;
+    //public IEnumerator DisableControlsTimer() //Does not work
+    //{
+    //    this.GetComponent<PlayerInput>().enabled = false;
+    //    yield return new WaitForSeconds(disableControlsTime);
+    //    this.GetComponent<PlayerInput>().enabled = true;
 
-    }
+    //}
     public void ActivateShopUI()
     {
         //ACTIVATE SHOP UI IN EACH PLAYER
@@ -1065,8 +1065,14 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
         menuShop.SetActive(true);
         //Added to the code to reset each player's player root 
         multEventSystem.playerRoot = localUI;
-        multEventSystem.SetSelectedGameObject(shopFirst);
-        //GameManager.instance.eventSystem.GetComponent<EventSystem>().SetSelectedGameObject(shopFirst);
+        StartCoroutine(DelayMenuInput(shopFirst));
+    }
+
+    //Pass in the SetSelectedObject you want to delay input for when menus's are set to active
+    IEnumerator DelayMenuInput(GameObject menuButton) 
+    {
+        yield return new WaitForSecondsRealtime(0.1f);
+        multEventSystem.SetSelectedGameObject(menuButton);
     }
 
     public void ShopMenuDone() //Needs to be assigned to the done button

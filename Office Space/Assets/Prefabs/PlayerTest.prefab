@@ -14242,7 +14242,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3577264542739025991
 RectTransform:
   m_ObjectHideFlags: 0
@@ -14325,6 +14325,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   test: 0
   myPlayer: {fileID: 737468669046305203}
+  playerCT: {fileID: 0}
+  myPlayerBudget: 0
   moneyCount: {fileID: 1310832952455989451}
   shotgunPrice: 250
   shotgun: {fileID: 11400000, guid: 069a020f1b349894eacd1a0bffb43a0a, type: 2}
