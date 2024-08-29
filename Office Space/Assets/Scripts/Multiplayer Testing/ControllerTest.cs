@@ -275,7 +275,7 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
                 Movement();
             Rotation();
 
-            if (weaponList[selectedWeapon].isAutoFire && !isShooting && ShootTriggered)
+            if (weaponList[selectedWeapon].isAutoFire && !isShooting && !isDead && ShootTriggered)
             {
                 StartCoroutine(Shoot());
             }
@@ -611,7 +611,7 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
 
     IEnumerator Shoot()
     {
-
+        
         isShooting = true;
         if (weaponList[selectedWeapon].currentAmmo > 0)
         {
@@ -659,7 +659,9 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
                 aud.PlayOneShot(audShurikenFire, audShurikenFireVol);
                 Instantiate(shurikenProjectile, shurikenSpawnPoint.transform.position, shurikenSpawnPoint.transform.rotation);
                 yield return new WaitForSeconds(shootRate);
-                weaponModel.SetActive(true);
+                
+                if (!isDead)
+                    weaponModel.SetActive(true);
             }
         }
         else if (!isReloading && (weaponList[selectedWeapon].currentAmmo <= 0))
@@ -685,7 +687,6 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
             }
         }
         isShooting = false;
-        shootCoroutine = null;
 
     }
 
