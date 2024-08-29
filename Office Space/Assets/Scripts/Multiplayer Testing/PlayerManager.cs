@@ -187,7 +187,13 @@ public class PlayerManager : MonoBehaviour
             if (players.Count == 2)
             {
                 players[0].GetComponent<ControllerTest>().playerCamera.rect = new Rect(0.25f, 0.5f, 0.5f, 0.5f);
+                players[0].GetComponent<ControllerTest>().deathCamera.rect
+                    = players[0].GetComponent<ControllerTest>().playerCamera.rect;
+
                 players[1].GetComponent<ControllerTest>().playerCamera.rect = new Rect(0.25f, 0, 0.5f, 0.5f);
+                players[1].GetComponent<ControllerTest>().deathCamera.rect
+                    = players[1].GetComponent<ControllerTest>().playerCamera.rect;
+
                 TwoPlayBlock1.SetActive(true);
                 TwoPlayBlock2.SetActive(true);
             }
