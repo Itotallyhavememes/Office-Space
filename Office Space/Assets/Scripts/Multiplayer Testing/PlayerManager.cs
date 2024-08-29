@@ -32,6 +32,9 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] Slider timerSlider;
     [SerializeField] GameObject roundsDropdown;
     [SerializeField] GameObject playerBlockout;
+    [SerializeField] GameObject TwoPlayBlock1;
+    [SerializeField] GameObject TwoPlayBlock2;
+
 
     private TMP_Dropdown botsDropdownValue;
     
@@ -183,8 +186,10 @@ public class PlayerManager : MonoBehaviour
 
             if (players.Count == 2)
             {
-                players[0].GetComponent<ControllerTest>().playerCamera.rect = new Rect(0, 0.5f, 1, 0.5f);
-                players[1].GetComponent<ControllerTest>().playerCamera.rect = new Rect(0, 0, 1, 0.5f);
+                players[0].GetComponent<ControllerTest>().playerCamera.rect = new Rect(0.25f, 0.5f, 0.5f, 0.5f);
+                players[1].GetComponent<ControllerTest>().playerCamera.rect = new Rect(0.25f, 0, 0.5f, 0.5f);
+                TwoPlayBlock1.SetActive(true);
+                TwoPlayBlock2.SetActive(true);
             }
 
            matchStarted = true;
