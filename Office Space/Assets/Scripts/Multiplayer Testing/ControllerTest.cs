@@ -1001,7 +1001,6 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
                 weaponModel.SetActive(false);
                 deathCamera.gameObject.SetActive(true);
             }
-
         }
     }
 

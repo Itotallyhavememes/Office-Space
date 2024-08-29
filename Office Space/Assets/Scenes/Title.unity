@@ -30592,6 +30592,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   RoundsWon: 0
+  eventSystem: {fileID: 0}
+  globalUI: {fileID: 0}
   mainMenuFirst: {fileID: 1864329422}
   createMatchFirst: {fileID: 4830679415997371419}
   settingsFirst: {fileID: 4306316876367820079}
@@ -33268,7 +33270,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &9081131611713956522
 GameObject:
   m_ObjectHideFlags: 0
