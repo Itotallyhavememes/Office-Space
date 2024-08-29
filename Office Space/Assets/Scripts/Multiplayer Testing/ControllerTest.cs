@@ -25,7 +25,7 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
     [SerializeField] LayerMask ignoreMask;
     [SerializeField] Animator anim;
     [SerializeField] float animTransitSpeed;
-    
+
     float agentSpeedVert;
     float agentSpeedHori;
     bool throwAnimDone;
@@ -613,7 +613,7 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
 
     IEnumerator Shoot()
     {
-        
+
         isShooting = true;
         if (weaponList[selectedWeapon].currentAmmo > 0)
         {
@@ -660,23 +660,21 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
             {
                 if (weaponList[selectedWeapon].style == WeaponStats.ThrowStyle.none)
                 {
-                   // weaponModel.SetActive(false);
+                    // weaponModel.SetActive(false);
                     aud.PlayOneShot(weaponList[selectedWeapon].shootSound);
                     Instantiate(weaponList[selectedWeapon].projectileProjectile, muzzle.transform.position, muzzle.transform.rotation);
                     yield return new WaitForSeconds(weaponList[selectedWeapon].shootRate);
-                    weaponModel.SetActive(true);
 
                 }
                 else if (weaponList[selectedWeapon].style == WeaponStats.ThrowStyle.chestOut)
                 {
                     weaponModel.SetActive(false);
-                    Debug.Log("Shooting Shuriken");
                     aud.PlayOneShot(audShurikenFire, audShurikenFireVol);
                     Instantiate(shurikenProjectile, shurikenSpawnPoint.transform.position, shurikenSpawnPoint.transform.rotation);
                     yield return new WaitForSeconds(shootRate);
-                    if (!isDead)
-                        weaponModel.SetActive(true);
                 }
+                if (!isDead)
+                    weaponModel.SetActive(true);
             }
         }
         else if (!isReloading && (weaponList[selectedWeapon].currentAmmo <= 0))
@@ -1085,7 +1083,7 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
     }
 
     //Pass in the SetSelectedObject you want to delay input for when menus's are set to active
-    IEnumerator DelayMenuInput(GameObject menuButton) 
+    IEnumerator DelayMenuInput(GameObject menuButton)
     {
         yield return new WaitForSecondsRealtime(0.1f);
         multEventSystem.SetSelectedGameObject(menuButton);
