@@ -99,7 +99,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] public GameObject menuRetryAmount;
     [SerializeField] TMP_Text donutCountText;
-    [SerializeField] GameObject timerUI;
+    public GameObject timerUI;
     [SerializeField] TMP_Text timerText;
     [SerializeField] TMP_Text donutCountUI;
     [SerializeField] GameObject[] vendingMachines;
@@ -231,7 +231,7 @@ public class GameManager : MonoBehaviour
         {
             StatePause();
             EventSystem.current.SetSelectedGameObject(matchSettingsFirst); //Match settings
-            timerUI.SetActive(true);
+            //timerUI.SetActive(true);
             //RandomizeVending();
             //StartCoroutine(Timer());
             //InstantiateScoreBoard();

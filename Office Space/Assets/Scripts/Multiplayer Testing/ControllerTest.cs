@@ -1082,6 +1082,8 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
         }
         //Call InstantaiteScoreBoard here to make sure all entities are accounted for
         GameManager.instance.InstantiateScoreBoard();
+        //GameManager.instance.SetDKTimer((int)PlayerManager.instance.timerSlider.value * 60);
+        GameManager.instance.timerUI.SetActive(true);
     }
 
     public void DisplayScoreboard(InputAction.CallbackContext context)
