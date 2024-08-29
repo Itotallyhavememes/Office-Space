@@ -593,10 +593,11 @@ public class GameManager : MonoBehaviour
         //float respawnerTime = statsTracker[deadTracker[0].name].getTimeHeld() / 2;
         //if (respawnerTime == 0)
         //    respawnerTime = respawnTime;
-        if (deadTracker.Count > 0)
-        {
+       
             yield return new WaitForSeconds(respawnTime);
             int spawnIndex = Random.Range(0, statsTracker.Count);
+        if (deadTracker.Count > 0)
+        {
             //CHECK TO SEE WHO IS IN deadTracker[0]
             //PlayerControl deadController = deadTracker[0].GetComponent<PlayerControl>();
             //if(deadController != null){
@@ -624,11 +625,11 @@ public class GameManager : MonoBehaviour
                 deadTracker[0].SetActive(true);
             }
             //Leave this portion alone
-            if (deadTracker.Count > 0)
-            {
+            //if (deadTracker.Count > 0)
+            //{
                 bodyTracker.Add(deadTracker[0]);
                 deadTracker.RemoveAt(0); //pop front
-            }
+            //}
 
             coroutine = null;
         }

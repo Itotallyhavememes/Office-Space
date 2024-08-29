@@ -18,13 +18,13 @@ MonoBehaviour:
   weaponModel: {fileID: 1708670120365351102, guid: 7b51cea474ee4434a97ca1a1c1e6dcee, type: 3}
   shootSound: {fileID: 0}
   shootRate: 0.1
-  shootDamage: 3
-  currentAmmo: 15
+  shootDamage: 1
+  currentAmmo: 50
   reloadTime: 10
-  startAmmo: 45
+  startAmmo: 50
   hitEffect: {fileID: 0}
   shootVol: 0.5
   raycastDist: 0
   raycastRotationReload: 0
   raycastRotationRecoil: 0
-  projectileProjectile: {fileID: 2682772027241780945, guid: 96573c5d4bb67494c8658d2031dd5cd9, type: 3}
+  projectileProjectile: {fileID: 6562726978010489722, guid: 50d20899c835a0e4f96db9252b6eb759, type: 3}

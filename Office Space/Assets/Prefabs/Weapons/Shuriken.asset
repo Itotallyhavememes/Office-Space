@@ -14,10 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 1
   style: 2
+  isAutoFire: 0
   weaponModel: {fileID: 919132149155446097, guid: dfa9e3c36760e014bac951e87569ed89, type: 3}
+  shootSound: {fileID: 0}
   shootRate: 0.5
   shootDamage: 4
-  currentAmmo: 7
+  currentAmmo: 0
   reloadTime: 1.5
   startAmmo: 10
   hitEffect: {fileID: 2433282508523890284, guid: fdf6fbb84134ba64cabf4d99a9b5e1d4, type: 3}
