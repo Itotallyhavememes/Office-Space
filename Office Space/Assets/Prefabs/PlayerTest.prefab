@@ -847,7 +847,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -124, y: 171}
+  m_AnchoredPosition: {x: -123.99994, y: 171}
   m_SizeDelta: {x: -1720, y: -1030}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2471787844890230764
@@ -1789,7 +1789,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -230, y: 316}
+  m_AnchoredPosition: {x: -229.99994, y: 316}
   m_SizeDelta: {x: -1720, y: -1020}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4732306532730931785
@@ -13650,7 +13650,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -230, y: 468}
+  m_AnchoredPosition: {x: -229.99994, y: 468}
   m_SizeDelta: {x: -1720, y: -1020}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4687567663646790621
@@ -13859,7 +13859,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -257, y: -274}
+  m_AnchoredPosition: {x: -256.99994, y: -274}
   m_SizeDelta: {x: -1720, y: -1020}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6353006705151026670
@@ -15110,7 +15110,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -268, y: -351}
+  m_AnchoredPosition: {x: -267.99994, y: -351}
   m_SizeDelta: {x: -1720, y: -1020}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2658359545000053763
@@ -15358,7 +15358,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -230, y: 222}
+  m_AnchoredPosition: {x: -229.99994, y: 222}
   m_SizeDelta: {x: -1720, y: -1020}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1281630155957721526
@@ -21492,7 +21492,7 @@ Camera:
     height: 1
   near clip plane: 0.39
   far clip plane: 1000
-  field of view: 60.000004
+  field of view: 55
   orthographic: 0
   orthographic size: 5
   m_Depth: 1
@@ -22076,7 +22076,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -302, y: -351}
+  m_AnchoredPosition: {x: -301.99994, y: -351}
   m_SizeDelta: {x: -1720, y: -1020}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8002445876645207361

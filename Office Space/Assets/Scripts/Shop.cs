@@ -62,7 +62,7 @@ public class Shop : MonoBehaviour
             for (int i = 0; i < playerCT.weaponList.Count; i++)
             {
                 Debug.Log("Searching Weapons at Index: " + i.ToString());
-                if (playerCT.weaponList[i] == shotgun)
+                if (playerCT.weaponList[i].weaponModel == shotgun.weaponModel)
                 {
                     Debug.Log("You already have Shotgun");
                     //GameManager.instance.playerScript.weaponList[i].currentAmmo = GameManager.instance.playerScript.weaponList[i].startAmmo;
@@ -84,7 +84,7 @@ public class Shop : MonoBehaviour
             //ControllerTest playerCT = myPlayer.GetComponent<ControllerTest>();
             for (int i = 0; i < playerCT.weaponList.Count; i++)
             {
-                if (playerCT.weaponList[i] == SMG)
+                if (playerCT.weaponList[i].weaponModel == SMG.weaponModel)
                 {
                     //GameManager.instance.playerScript.weaponList[i].currentAmmo = GameManager.instance.playerScript.weaponList[i].startAmmo;
                     playerCT.weaponList[i].currentAmmo = playerCT.weaponList[i].startAmmo;
@@ -104,7 +104,7 @@ public class Shop : MonoBehaviour
            // ControllerTest playerCT = myPlayer.GetComponent<ControllerTest>();
             for (int i = 0; i < playerCT.weaponList.Count; i++)
             {
-                if (playerCT.weaponList[i] == rifle)
+                if (playerCT.weaponList[i].weaponModel == rifle.weaponModel)
                 {
                     //GameManager.instance.playerScript.weaponList[i].currentAmmo = GameManager.instance.playerScript.weaponList[i].startAmmo;
                     playerCT.weaponList[i].currentAmmo = playerCT.weaponList[i].startAmmo;
@@ -130,7 +130,7 @@ public class Shop : MonoBehaviour
             for (int i = 0; i < playerCT.weaponList.Count; i++)
             {
                 Debug.Log("SEARCHING WEAPONS AT INDEX: " + i.ToString());
-                if (playerCT.weaponList[i].GetHashCode() == shuriken.GetHashCode())
+                if (playerCT.weaponList[i].weaponModel == shuriken.weaponModel)
                 {
                     Debug.Log("You have a Shuriken Already");
                     if (playerCT.weaponList[i].currentAmmo < playerCT.weaponList[i].startAmmo)
