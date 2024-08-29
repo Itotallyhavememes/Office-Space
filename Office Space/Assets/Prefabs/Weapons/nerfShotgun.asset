@@ -14,16 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 1
   style: 0
+  isAutoFire: 0
   weaponModel: {fileID: 186683782923256697, guid: 318aabc1ba6fe924d804db3650e235d4, type: 3}
   shootSound: {fileID: 0}
-  shootRate: 1
-  shootDamage: 6
-  currentAmmo: 8
+  shootRate: 0.5
+  shootDamage: 5
+  currentAmmo: 12
   reloadTime: 10
-  startAmmo: 10
+  startAmmo: 12
   hitEffect: {fileID: 0}
   shootVol: 0
   raycastDist: 0
   raycastRotationReload: 0
   raycastRotationRecoil: 0
-  projectileProjectile: {fileID: 2682772027241780945, guid: 252747eceaed60145821ae2f798b62e5, type: 3}
+  projectileProjectile: {fileID: 4892578619623213427, guid: daab7d87f90015c4c92bd341e4f12e33, type: 3}

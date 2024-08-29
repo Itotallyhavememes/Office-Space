@@ -25,6 +25,7 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
     [SerializeField] LayerMask ignoreMask;
     [SerializeField] Animator anim;
     [SerializeField] float animTransitSpeed;
+    
     float agentSpeedVert;
     float agentSpeedHori;
     bool throwAnimDone;
@@ -111,6 +112,7 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
     [SerializeField] float raycastRotationRecoil;
     [SerializeField] float raycastRotationReload;
     [SerializeField] int currentAmmo;
+    [SerializeField] GameObject muzzle;
     Coroutine shootCoroutine;
 
     [Header("----- Shuriken -----")]
@@ -653,15 +655,28 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
                 weaponModel.transform.Rotate(Vector3.right * raycastRotationRecoil);
 
             }
+
             else if (weaponList[selectedWeapon].type == WeaponStats.WeaponType.projectile) //Shuriken
             {
-                weaponModel.SetActive(false);
-                aud.PlayOneShot(audShurikenFire, audShurikenFireVol);
-                Instantiate(shurikenProjectile, shurikenSpawnPoint.transform.position, shurikenSpawnPoint.transform.rotation);
-                yield return new WaitForSeconds(shootRate);
-                
-                if (!isDead)
+                if (weaponList[selectedWeapon].style == WeaponStats.ThrowStyle.none)
+                {
+                   // weaponModel.SetActive(false);
+                    aud.PlayOneShot(weaponList[selectedWeapon].shootSound);
+                    Instantiate(weaponList[selectedWeapon].projectileProjectile, muzzle.transform.position, muzzle.transform.rotation);
+                    yield return new WaitForSeconds(weaponList[selectedWeapon].shootRate);
                     weaponModel.SetActive(true);
+
+                }
+                else if (weaponList[selectedWeapon].style == WeaponStats.ThrowStyle.chestOut)
+                {
+                    weaponModel.SetActive(false);
+                    Debug.Log("Shooting Shuriken");
+                    aud.PlayOneShot(audShurikenFire, audShurikenFireVol);
+                    Instantiate(shurikenProjectile, shurikenSpawnPoint.transform.position, shurikenSpawnPoint.transform.rotation);
+                    yield return new WaitForSeconds(shootRate);
+                    if (!isDead)
+                        weaponModel.SetActive(true);
+                }
             }
         }
         else if (!isReloading && (weaponList[selectedWeapon].currentAmmo <= 0))
