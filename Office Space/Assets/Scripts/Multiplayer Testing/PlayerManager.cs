@@ -181,6 +181,12 @@ public class PlayerManager : MonoBehaviour
                 players[i].GetComponent<ControllerTest>().multEventSystem.playerRoot = players[i].GetComponent<ControllerTest>().localUI;
             }
 
+            if (players.Count == 2)
+            {
+                players[0].GetComponent<ControllerTest>().playerCamera.rect = new Rect(0, 0.5f, 1, 0.5f);
+                players[1].GetComponent<ControllerTest>().playerCamera.rect = new Rect(0, 0, 1, 0.5f);
+            }
+
            matchStarted = true;
            GameManager.instance.SetDKTimer((int)timerSlider.value * 60);
            //GameManager.instance.SetDKTimer(10);
