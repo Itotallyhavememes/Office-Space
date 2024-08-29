@@ -25,6 +25,9 @@ public class GameManager : MonoBehaviour
     [Header("EventSystem")]
     public GameObject eventSystem;
     public GameObject globalUI;
+    [SerializeField] AudioSource aud;
+    [SerializeField] AudioClip audDeath;
+    [Range(0, 1)][SerializeField] float audDeathVol;
 
     [Header("Main Menu First Selected Options")]
     [SerializeField] GameObject mainMenuFirst;
@@ -562,6 +565,7 @@ public class GameManager : MonoBehaviour
                 bodyTracker.Remove(bodyTracker[i]);
         }
         deadTracker.Add(self);
+        aud.PlayOneShot(audDeath, audDeathVol);
         //Start CHECKING if doors need to remove their dead from the list
         Door doorCMP;
         foreach (var door in doors)

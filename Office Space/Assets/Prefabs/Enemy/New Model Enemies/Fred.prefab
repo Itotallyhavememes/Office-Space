@@ -1342,7 +1342,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 87d1afcb45928044db032422cc026b14, type: 3}
   audDamageVol: 0.5
   audFire: {fileID: 8300000, guid: ca72ae901b5e3124aa248378f271909c, type: 3}
-  audFireVol: 0.5
+  audFireVol: 0.75
+  audDeath: {fileID: 8300000, guid: 47f137c9d96b7a74492c16bea6746e53, type: 3}
+  audDeathVol: 0.5
   dodgeSpeed: 21
   range: 90
   minRange: 50
@@ -1476,7 +1478,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 2
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0

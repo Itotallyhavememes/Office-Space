@@ -139,6 +139,8 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
     [Range(0, 1)][SerializeField] float audDamageVol;
     [SerializeField] AudioClip audShurikenFire;
     [Range(0, 1)][SerializeField] float audShurikenFireVol;
+    [SerializeField] AudioClip audDeath;
+    [Range(0, 1)][SerializeField] float audDeathVol;
     private bool isPlayingStep;
 
     [Header("---- Grenade ----")]
@@ -995,6 +997,7 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
 
                 playerCam.gameObject.SetActive(false);
                 isDead = true;
+               // aud.PlayOneShot(audDeath, audDeathVol);
                 GameManager.instance.DeclareSelfDead(gameObject);
                 gameObject.GetComponent<CapsuleCollider>().enabled = false;
                 playerMeshRenderer.enabled = false;

@@ -43,6 +43,8 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
     [Range(0, 1)][SerializeField] float audDamageVol;
     [SerializeField] AudioClip audFire;
     [Range(0, 1)][SerializeField] float audFireVol;
+    [SerializeField] AudioClip audDeath;
+    [Range(0, 1)][SerializeField] float audDeathVol;
 
     [Header("----- Variables -----")]
 
@@ -548,6 +550,7 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
                 //    }
                 //}
                 GameManager.instance.DeclareSelfDead(gameObject);
+                
                 ResetHP();
 
 

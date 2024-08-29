@@ -972,7 +972,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1292069436461648624
 Transform:
   m_ObjectHideFlags: 0
@@ -1247,6 +1247,8 @@ MonoBehaviour:
   audDamageVol: 0.5
   audShurikenFire: {fileID: 8300000, guid: 8ade474790543f14d92f4de2d45dcea5, type: 3}
   audShurikenFireVol: 0.5
+  audDeath: {fileID: 8300000, guid: 47f137c9d96b7a74492c16bea6746e53, type: 3}
+  audDeathVol: 1
   grenadeHUD: {fileID: 0}
   mouseSensitivity: 1
   controllerSensitivity: 3

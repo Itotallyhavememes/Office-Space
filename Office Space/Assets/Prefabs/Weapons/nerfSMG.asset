@@ -16,7 +16,7 @@ MonoBehaviour:
   style: 0
   isAutoFire: 1
   weaponModel: {fileID: 1708670120365351102, guid: 7b51cea474ee4434a97ca1a1c1e6dcee, type: 3}
-  shootSound: {fileID: 0}
+  shootSound: {fileID: 8300000, guid: ca72ae901b5e3124aa248378f271909c, type: 3}
   shootRate: 0.1
   shootDamage: 1
   currentAmmo: 50
