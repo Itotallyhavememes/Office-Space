@@ -338,9 +338,11 @@ public class GameManager : MonoBehaviour
             menuScore.SetActive(false);
         foreach (var player in PlayerManager.instance.players)
         {
-            statsTracker[player.name].depositMoney(100);
+            statsTracker[player.name].depositMoney(500);
+            Debug.Log("NR: " + statsTracker[player.name].getMoneyTotal().ToString());
+            //player.GetComponent<Shop>().myPlayerBudget = statsTracker[player.name].getMoneyTotal();
             player.GetComponent<ControllerTest>().menuShop.GetComponent<Shop>().updateMoneyCount();
-            player.GetComponent<ControllerTest>().ActivateShopUI();             
+            player.GetComponent<ControllerTest>().ActivateShopUI();
         }
         //CHANGE END
         //StateUnpause(); //If we don't have this, it freezes...Why?... The timer was causing the freeze
@@ -785,7 +787,7 @@ public class GameManager : MonoBehaviour
         winnerName = scoreBoard.ElementAt(0).Key;
         statsTracker[winnerName].updateRoundsWon();
         //PJ's code to give winner bonus money
-        statsTracker[winnerName].depositMoney(moneyForDonutKing);
+        //statsTracker[winnerName].depositMoney(moneyForDonutKing);
 
         if (RetryButton.activeSelf == true)
             RetryButton.SetActive(false);
@@ -1118,6 +1120,8 @@ public class GameManager : MonoBehaviour
         //if (donutDropItem.transform.position == donutDropper.transform.position)
         //DebugLog("YAHOO!");
         //donutDropItem.SetActive(true);
+        if (donutDropper.transform.position.y > 1)
+            donutDropper.transform.position += new Vector3(0, -donutDropper.transform.position.y + 1, 0);
         GameObject newDonutDrop = Instantiate(donutDropItem, donutDropper.transform.position, donutDropItem.transform.rotation);
         donutDropItem.transform.position = newDonutDrop.transform.position;
 

@@ -8579,7 +8579,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2120541930
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9876,7 +9876,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.70945525, z: -0, w: 0.70475054}
   m_LocalPosition: {x: -3.89, y: 0, z: 0.09795189}
-  m_LocalScale: {x: 1, y: 13, z: 4.97}
+  m_LocalScale: {x: 1, y: 13, z: 5.06}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2392696756481352869}
@@ -11644,7 +11644,7 @@ GameObject:
   m_Name: BlackTile (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 2
+  m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!1 &223888126747118998
@@ -14770,8 +14770,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 00:00
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 79307f501eb267b44be9d7ca808a3dfb, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 6e47f29cf0b965d46be22a39075e4ad6, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -20425,13 +20425,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2809417383122492764}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.0020943575, y: -0.9999639, z: 0.000017271814, w: -0.008246534}
+  m_LocalRotation: {x: 0.002094393, y: -0.9999807, z: 0.000012245641, w: -0.005846757}
   m_LocalPosition: {x: -5.26, y: -0.099998474, z: -3.183895}
   m_LocalScale: {x: 1, y: 13, z: 11.740003}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2392696756481352869}
-  m_LocalEulerAnglesHint: {x: 0, y: -180.945, z: -0.24}
+  m_LocalEulerAnglesHint: {x: 0, y: -180.67, z: -0.24}
 --- !u!4 &1089784638046573511
 Transform:
   m_ObjectHideFlags: 0
@@ -21843,7 +21843,7 @@ GameObject:
   m_Name: mesh_recepcionisttable
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 2
+  m_NavMeshLayer: 1
   m_StaticEditorFlags: 40
   m_IsActive: 1
 --- !u!4 &1270688309706172664
@@ -22409,7 +22409,7 @@ GameObject:
   m_Name: BlackTile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 2
+  m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!1 &1320444796579362895
@@ -26231,7 +26231,7 @@ GameObject:
   m_Name: WhiteTile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 2
+  m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!222 &1722088633785922237
@@ -32959,7 +32959,7 @@ GameObject:
   m_Name: WhiteTile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 2
+  m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!1 &2452561695587840629
@@ -33502,7 +33502,7 @@ GameObject:
   m_Name: WhiteTile (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 2
+  m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!114 &2500876690155533073
@@ -35406,7 +35406,7 @@ GameObject:
   m_Name: mesh_furniture_sofa_left_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 1
+  m_NavMeshLayer: 0
   m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!1 &2734409106170104410
@@ -35424,7 +35424,7 @@ GameObject:
   m_Name: mesh_furniture_sofa_mid_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 1
+  m_NavMeshLayer: 0
   m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!1 &2734409106170104412
@@ -35442,7 +35442,7 @@ GameObject:
   m_Name: mesh_furniture_sofa_right_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 1
+  m_NavMeshLayer: 0
   m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!1 &2734409106170104414
@@ -72007,13 +72007,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2459789830604080939}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.009511637, y: -0.9999208, z: 0.00007844086, w: -0.008246178}
+  m_LocalRotation: {x: 0.009487851, y: -0.99991685, z: 0.0029579797, w: -0.008218753}
   m_LocalPosition: {x: -5.83, y: -0.099998474, z: -3.18}
-  m_LocalScale: {x: 1, y: 13, z: 11.740003}
+  m_LocalScale: {x: 0.09, y: 13, z: 11.740003}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2686496669812029646}
-  m_LocalEulerAnglesHint: {x: 0, y: -180.945, z: -1.09}
+  m_LocalEulerAnglesHint: {x: 0.33, y: -180.945, z: -1.09}
 --- !u!1 &6672373107200796036
 GameObject:
   m_ObjectHideFlags: 0
@@ -72205,13 +72205,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8984596733794886017}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0.999966, z: -0, w: -0.0082502365}
+  m_LocalRotation: {x: 0, y: -1, z: 0, w: 0.00017470751}
   m_LocalPosition: {x: -5.22, y: -0.22, z: -2.98}
-  m_LocalScale: {x: 1, y: 13, z: 10.47}
+  m_LocalScale: {x: 1, y: 13, z: 11.1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3988680284265665009}
-  m_LocalEulerAnglesHint: {x: 0, y: -95.178, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -179.98, z: 0}
 --- !u!1 &6680822468566000753
 GameObject:
   m_ObjectHideFlags: 0
@@ -79399,7 +79399,7 @@ GameObject:
   m_Name: BlackTile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 2
+  m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &7466395247186905374
@@ -79411,8 +79411,8 @@ Transform:
   m_GameObject: {fileID: 4933988189954717382}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.70945525, z: -0, w: 0.70475054}
-  m_LocalPosition: {x: -4.11, y: 0, z: 0.09795189}
-  m_LocalScale: {x: 1, y: 13, z: 5.15}
+  m_LocalPosition: {x: -4.17, y: 0, z: 0.09795189}
+  m_LocalScale: {x: 0.88, y: 13, z: 5.15}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2686496669812029646}
@@ -88298,7 +88298,7 @@ CapsuleCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.20369393
   m_Height: 0.9520413

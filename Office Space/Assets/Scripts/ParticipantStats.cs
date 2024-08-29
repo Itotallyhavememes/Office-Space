@@ -75,7 +75,15 @@ public class ParticipantStats
 
     //public void updateScore(int score) { scorePoints += score; }
 
-    public void depositMoney(int money) { moneyTotal += money; }
+    public void depositMoney(int money) 
+    {
+        int depositAMT, timeHeldReward;
+        depositAMT = money;
+        timeHeldReward = timeHeld;
+        if (timeHeld == 0)
+            timeHeldReward = 1;
+        moneyTotal += depositAMT * timeHeldReward;
+    }
 
     public void withdrawMoney(int money) { moneyTotal -= money; }
 

@@ -256,6 +256,7 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
         canSlide = true;
         UpdatePlayerUI();
         UpdateAmmoUI();
+        Debug.Log("START: " + GameManager.instance.statsTracker[gameObject.name].getMoneyTotal().ToString());
         menuShop.GetComponent<Shop>().updateMoneyCount();
         // Don't need to call spawn player cause player manager does it for me
         //rubberBallMaxCount = rubberBallCount;

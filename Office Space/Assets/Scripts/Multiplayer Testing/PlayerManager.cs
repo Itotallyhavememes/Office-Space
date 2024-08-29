@@ -182,8 +182,8 @@ public class PlayerManager : MonoBehaviour
             }
 
            matchStarted = true;
-           //GameManager.instance.SetDKTimer((int)timerSlider.value * 60);
-           GameManager.instance.SetDKTimer(10);
+           GameManager.instance.SetDKTimer((int)timerSlider.value * 60);
+           //GameManager.instance.SetDKTimer(10);
 
 
         }

@@ -11,6 +11,8 @@ public class Shop : MonoBehaviour
     //public static Shop instance;
     public int test;
     [SerializeField] GameObject myPlayer;
+    [SerializeField] ControllerTest playerCT;
+    public int myPlayerBudget;
     //[SerializeField] ControllerTest playersWeaponList;
     [SerializeField] TMP_Text moneyCount;
     [Header("-----Primaries-----")]
@@ -34,6 +36,8 @@ public class Shop : MonoBehaviour
     void Start()
     {
         //moneyCount.text = "$ " + GameManager.instance.statsTracker[GameManager.instance.player.name].getMoneyTotal().ToString();
+        if(myPlayer != null)
+            playerCT = myPlayer.GetComponent<ControllerTest>();
     }
 
     public void updateMoneyCount()
@@ -53,7 +57,7 @@ public class Shop : MonoBehaviour
         {
             GameManager.instance.statsTracker[myPlayer.name].withdrawMoney(shotgunPrice);
             updateMoneyCount();
-            ControllerTest playerCT = myPlayer.GetComponent<ControllerTest>();
+            //ControllerTest playerCT = myPlayer.GetComponent<ControllerTest>();
             for (int i = 0; i < playerCT.weaponList.Count; i++)
             {
                 if (playerCT.weaponList[i] == shotgun)
@@ -73,7 +77,7 @@ public class Shop : MonoBehaviour
         {
             GameManager.instance.statsTracker[myPlayer.name].withdrawMoney(SMGPrice);
             updateMoneyCount();
-            ControllerTest playerCT = myPlayer.GetComponent<ControllerTest>();
+            //ControllerTest playerCT = myPlayer.GetComponent<ControllerTest>();
             for (int i = 0; i < playerCT.weaponList.Count; i++)
             {
                 if (playerCT.weaponList[i] == SMG)
@@ -93,7 +97,7 @@ public class Shop : MonoBehaviour
         {
             GameManager.instance.statsTracker[myPlayer.name].withdrawMoney(riflePrice);
             updateMoneyCount();
-            ControllerTest playerCT = myPlayer.GetComponent<ControllerTest>();
+           // ControllerTest playerCT = myPlayer.GetComponent<ControllerTest>();
             for (int i = 0; i < playerCT.weaponList.Count; i++)
             {
                 if (playerCT.weaponList[i] == rifle)
@@ -118,7 +122,7 @@ public class Shop : MonoBehaviour
             //GameManager.instance.playerScript.GetWeaponStats(shuriken);
             updateMoneyCount();
 
-            ControllerTest playerCT = myPlayer.GetComponent<ControllerTest>();
+            //ControllerTest playerCT = myPlayer.GetComponent<ControllerTest>();
             for (int i = 0; i < playerCT.weaponList.Count; i++)
             {
                 if (playerCT.weaponList[i] == shuriken)
@@ -146,9 +150,9 @@ public class Shop : MonoBehaviour
             updateMoneyCount();
             //add code to add new weapon to throwables
 
-            ItemThrow playerCT = myPlayer.GetComponent<ItemThrow>();
-            if (playerCT != null)
-                playerCT.rubberBallCount++;
+            ItemThrow playerCTI = myPlayer.GetComponent<ItemThrow>();
+            if (playerCTI != null)
+                playerCTI.rubberBallCount++;
                     //GameManager.instance.playerScript.weaponList[i].currentAmmo = GameManager.instance.playerScript.weaponList[i].startAmmo;
                     
 
