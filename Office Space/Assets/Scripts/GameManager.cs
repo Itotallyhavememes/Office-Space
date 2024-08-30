@@ -746,21 +746,23 @@ public class GameManager : MonoBehaviour
             StateUnpause(player);
             PlayerManager.instance.ResetPlayerRoots(); //Resets the roots (UI) back in the case for unpausing done by the other players
         }
-        
-        //Global board case
-        if (isDisplayingScore)
-        {
-            isDisplayingScore = false;
-            scoreDisplay.SetActive(isDisplayingScore);
-        }
 
-        // For when I add the boards to each player
-        //foreach(var board in PlayerManager.instance.players)
+        //Global board case
+        //if (isDisplayingScore)
         //{
-        //    board.GetComponent<ControllerTest>().scoreBoardScreen.SetActive(false);
         //    isDisplayingScore = false;
         //    scoreDisplay.SetActive(isDisplayingScore);
         //}
+
+        // For when I add the boards to each player
+        foreach (var board in PlayerManager.instance.players)
+        {            
+            if (board.GetComponent<ControllerTest>().isDisplayingScore)
+            {
+                board.GetComponent<ControllerTest>().isDisplayingScore = false;
+                board.GetComponent<ControllerTest>().scoreDisplay.SetActive(board.GetComponent<ControllerTest>().isDisplayingScore);
+            }
+        }
     }
 
     public void StatePause()
@@ -998,42 +1000,86 @@ public class GameManager : MonoBehaviour
         return null;
     }
 
-    public void TallyActiveScores()
+    //TallyActiveScores in Gobal UI
+    //public void TallyActiveScores()
+    //{
+
+    //    activeScoreNamesText.text = string.Empty;
+    //    activeTimeHeldText.text = string.Empty;
+    //    activeRoundsText.text = string.Empty;
+    //    activeDKSText.text = string.Empty;
+    //    var scoreBoard = statsTracker.OrderByDescending(pair => pair.Value.getTimeHeld());
+    //    foreach (var score in scoreBoard)
+    //    {
+    //        int timeElapsed = score.Value.timeHeld;
+    //        int timerMinutes = timeElapsed / 60;
+    //        int timerSeconds = timeElapsed % 60;
+    //        string timeText = "";
+
+    //        if (timerMinutes == 0 || timerMinutes < 10)
+    //            timeText = "0";
+
+    //        timeText += timerMinutes.ToString() + ":";
+
+    //        if (timerSeconds == 0 || timerSeconds < 10)
+    //            timeText += "0";
+
+    //        timeText += timerSeconds.ToString();
+    //        //Name Printage
+    //        activeScoreNamesText.text += score.Key;
+    //        activeScoreNamesText.text += '\n';
+    //        //DKStatus Printage
+    //        if (score.Value.getDKStatus())
+    //            activeDKSText.text += "O";
+    //        activeDKSText.text += "\n";
+    //        activeRoundsText.text += score.Value.getRoundsWon();
+    //        activeRoundsText.text += "\n";
+
+    //        activeTimeHeldText.text += timeText + '\n';
+    //    }
+
+    //}
+    
+    public void TallyActiveScores() //For Local scoreboards
     {
-
-        activeScoreNamesText.text = string.Empty;
-        activeScoreText.text = string.Empty;
-        activeRoundsText.text = string.Empty;
-        activeDKSText.text = string.Empty;
-        var scoreBoard = statsTracker.OrderByDescending(pair => pair.Value.getTimeHeld());
-        foreach (var score in scoreBoard)
+        foreach (var player in PlayerManager.instance.players)
         {
-            int timeElapsed = score.Value.timeHeld;
-            int timerMinutes = timeElapsed / 60;
-            int timerSeconds = timeElapsed % 60;
-            string timeText = "";
+            
+            player.GetComponent<ControllerTest>().activeScoreNamesText.text = string.Empty;
+            player.GetComponent<ControllerTest>().activeTimeHeldText.text = string.Empty;
+            player.GetComponent<ControllerTest>().activeRoundsText.text = string.Empty;
+            player.GetComponent<ControllerTest>().activeDKSText.text = string.Empty;
+            var scoreBoard = statsTracker.OrderByDescending(pair => pair.Value.getTimeHeld());
 
-            if (timerMinutes == 0 || timerMinutes < 10)
-                timeText = "0";
+            foreach (var score in scoreBoard)
+            {
+                int timeElapsed = score.Value.timeHeld;
+                int timerMinutes = timeElapsed / 60;
+                int timerSeconds = timeElapsed % 60;
+                string timeText = "";
 
-            timeText += timerMinutes.ToString() + ":";
+                if (timerMinutes == 0 || timerMinutes < 10)
+                    timeText = "0";
 
-            if (timerSeconds == 0 || timerSeconds < 10)
-                timeText += "0";
+                timeText += timerMinutes.ToString() + ":";
 
-            timeText += timerSeconds.ToString();
-            //Name Printage
-            activeScoreNamesText.text += score.Key;
-            activeScoreNamesText.text += '\n';
-            //DKStatus Printage
-            if (score.Value.getDKStatus())
-                activeDKSText.text += "O";
-            activeDKSText.text += "\n";
-            activeRoundsText.text += score.Value.getRoundsWon();
-            activeRoundsText.text += "\n";
+                if (timerSeconds == 0 || timerSeconds < 10)
+                    timeText += "0";
 
-            activeScoreText.text += timeText + '\n';
-        }
+                timeText += timerSeconds.ToString();
+                //Name Printage
+                player.GetComponent<ControllerTest>().activeScoreNamesText.text += score.Key;
+                player.GetComponent<ControllerTest>().activeScoreNamesText.text += '\n';
+                //DKStatus Printage
+                if (score.Value.getDKStatus())
+                    player.GetComponent<ControllerTest>().activeDKSText.text += "O";
+
+                player.GetComponent<ControllerTest>().activeDKSText.text += "\n";
+                player.GetComponent<ControllerTest>().activeRoundsText.text += score.Value.getRoundsWon();
+                player.GetComponent<ControllerTest>().activeRoundsText.text += "\n";
+                player.GetComponent<ControllerTest>().activeTimeHeldText.text += timeText + '\n';
+            }
+        }        
 
     }
 
@@ -1367,24 +1413,23 @@ public class GameManager : MonoBehaviour
         StateUnpause();
     }
 
-    public void DisplayScoreboard()
+    public void DisplayScoreboard(GameObject player)
     {
+        Debug.Log("Score should display");
         if (currentMode == gameMode.DONUTKING2 && !isPaused)
         {
-            isDisplayingScore = true;
+            player.GetComponent<ControllerTest>().isDisplayingScore = true;
             TallyActiveScores();
-            scoreDisplay.SetActive(isDisplayingScore);
+            player.GetComponent<ControllerTest>().scoreDisplay.SetActive(player.GetComponent<ControllerTest>().isDisplayingScore);
         }
 
     }
-    public void DeactivateScoreboard()
+    public void DeactivateScoreboard(GameObject player)
     {
         if (currentMode == gameMode.DONUTKING2 && !isPaused)
         {
-            isDisplayingScore = false;
-            TallyActiveScores();
-            scoreDisplay.SetActive(isDisplayingScore);
-
+            player.GetComponent<ControllerTest>().isDisplayingScore = false;
+            player.GetComponent<ControllerTest>().scoreDisplay.SetActive(player.GetComponent<ControllerTest>().isDisplayingScore);
         }
 
     }
