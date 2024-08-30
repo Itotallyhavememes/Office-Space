@@ -607,8 +607,7 @@ public class GameManager : MonoBehaviour
         statsTracker[self.name].updateDeaths();
         statsTracker[self.name].updateKDR();
 
-        if (!gameEnd)
-            coroutine = StartCoroutine(SpawnTheDead());
+        coroutine = StartCoroutine(SpawnTheDead());
         //  //DebugLog(self.name.ToString() + statsTracker[self.name].getAllStats().ToString());
         // //DebugLog(self.name + "DA: " + statsTracker[self.name].getDeaths().ToString());
         //if (statsTracker[self.name].getDKStatus() == true)
@@ -806,8 +805,8 @@ public class GameManager : MonoBehaviour
             worldCamera.gameObject.SetActive(true);
             worldCamera.GetComponent<AudioListener>().enabled = false;
 
-            if (coroutine != null)
-                StopCoroutine(coroutine);
+            //if (coroutine != null)
+            //    StopCoroutine(coroutine);
             //Code End for World Camera
 
             TallyFinalScores();
@@ -955,7 +954,7 @@ public class GameManager : MonoBehaviour
                 scoreIndex++;
             }
             NextRoundButton.SetActive(true);
-            EventSystem.current.SetSelectedGameObject(nextRoundFirst);
+            //EventSystem.current.SetSelectedGameObject(nextRoundFirst);
             scoreBoardResultText.text = "ROUND OVER";
         }
         //    menuActive = menuScore;
