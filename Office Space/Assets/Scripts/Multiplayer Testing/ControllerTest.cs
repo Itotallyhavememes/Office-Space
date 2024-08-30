@@ -275,6 +275,13 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
     {
         //DebugDrawRay(playerCamera.transform.position, playerCamera.transform.forward * shootDist, Color.green);
 
+        if (isDead && isCrouching)
+        {
+            characterController.height = origHeight;
+            speed += crouchSpeed;
+            isCrouching = false;
+        }
+
         if (PlayerManager.instance.matchStarted && !GameManager.instance.isPaused && !GameManager.instance.roundEnded)
         {
             if (!isDead)
