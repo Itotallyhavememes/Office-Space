@@ -805,8 +805,8 @@ public class GameManager : MonoBehaviour
             worldCamera.gameObject.SetActive(true);
             worldCamera.GetComponent<AudioListener>().enabled = false;
 
-            //if (coroutine != null)
-            //    StopCoroutine(coroutine);
+            if (coroutine != null)
+                StopCoroutine(coroutine);
             //Code End for World Camera
 
             TallyFinalScores();
