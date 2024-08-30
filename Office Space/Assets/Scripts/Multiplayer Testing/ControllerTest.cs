@@ -1134,7 +1134,7 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
 
     public void DeactivateScoreboard(InputAction.CallbackContext context)
     {
-        GameManager.instance.DisplayScoreboard();
+        GameManager.instance.DeactivateScoreboard();
     }
 
     public bool GetLifeState()

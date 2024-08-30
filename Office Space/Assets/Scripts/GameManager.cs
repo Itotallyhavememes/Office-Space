@@ -744,8 +744,23 @@ public class GameManager : MonoBehaviour
         else if (menuActive == menuPause)
         {
             StateUnpause(player);
-            PlayerManager.instance.ResetPlayerRoots(); //Resets the roots back in the cause for unpausing done by the other players
+            PlayerManager.instance.ResetPlayerRoots(); //Resets the roots (UI) back in the case for unpausing done by the other players
         }
+        
+        //Global board case
+        if (isDisplayingScore)
+        {
+            isDisplayingScore = false;
+            scoreDisplay.SetActive(isDisplayingScore);
+        }
+
+        // For when I add the boards to each player
+        //foreach(var board in PlayerManager.instance.players)
+        //{
+        //    board.GetComponent<ControllerTest>().scoreBoardScreen.SetActive(false);
+        //    isDisplayingScore = false;
+        //    scoreDisplay.SetActive(isDisplayingScore);
+        //}
     }
 
     public void StatePause()
@@ -1356,16 +1371,20 @@ public class GameManager : MonoBehaviour
     {
         if (currentMode == gameMode.DONUTKING2 && !isPaused)
         {
-            isDisplayingScore = !isDisplayingScore;
-            if (isDisplayingScore)
-            {
-                TallyActiveScores();
-                scoreDisplay.SetActive(true);
-            }
-            else
-            {
-                scoreDisplay.SetActive(false);
-            }
+            isDisplayingScore = true;
+            TallyActiveScores();
+            scoreDisplay.SetActive(isDisplayingScore);
+        }
+
+    }
+    public void DeactivateScoreboard()
+    {
+        if (currentMode == gameMode.DONUTKING2 && !isPaused)
+        {
+            isDisplayingScore = false;
+            TallyActiveScores();
+            scoreDisplay.SetActive(isDisplayingScore);
+
         }
 
     }
