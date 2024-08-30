@@ -31,7 +31,7 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] GameObject botsDropdown;
     [SerializeField] Slider timerSlider;
     [SerializeField] GameObject roundsDropdown;
-    [SerializeField] GameObject playerBlockout;
+    [SerializeField] GameObject threePlayerBlockout;
     [SerializeField] GameObject TwoPlayBlock1;
     [SerializeField] GameObject TwoPlayBlock2;
 
@@ -169,8 +169,7 @@ public class PlayerManager : MonoBehaviour
             playerInputManager.DisableJoining();
             BotSpawner();
             matchSettingsMenu.SetActive(false);
-            if(players.Count == 3)
-                playerBlockout.SetActive(true);
+            ReactivatePlayerBlockouts();
 
             for (int i = 0; i < players.Count; i++)
             {
@@ -193,9 +192,6 @@ public class PlayerManager : MonoBehaviour
                 players[1].GetComponent<ControllerTest>().playerCamera.rect = new Rect(0.25f, 0, 0.5f, 0.5f);
                 players[1].GetComponent<ControllerTest>().deathCamera.rect
                     = players[1].GetComponent<ControllerTest>().playerCamera.rect;
-
-                TwoPlayBlock1.SetActive(true);
-                TwoPlayBlock2.SetActive(true);
             }
 
            matchStarted = true;
@@ -232,21 +228,30 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    public void DeactivatePlayerControls()
+    public void DeactivatePlayerBlockouts()
     {
-        foreach (var player in players)
+        if (players.Count == 2)
         {
-            player.GetComponent<ControllerTest>().enabled = false;
-            player.GetComponent<ItemThrow>().enabled = false;
+            TwoPlayBlock1.SetActive(false);
+            TwoPlayBlock2.SetActive(false);
         }
+        else if (players.Count == 3)
+        {
+            threePlayerBlockout.SetActive(false);
+        }
+
     }
     
-    public void ReactivatePlayerControls()
+    public void ReactivatePlayerBlockouts()
     {
-        foreach (var player in players)
+        if (players.Count == 2)
         {
-            player.GetComponent<ControllerTest>().enabled = true;
-            player.GetComponent<ItemThrow>().enabled = true;
+            TwoPlayBlock1.SetActive(true);
+            TwoPlayBlock2.SetActive(true);
+        }
+        else if (players.Count == 3)
+        {
+            threePlayerBlockout.SetActive(true);
         }
     }
 }

@@ -359,6 +359,7 @@ public class GameManager : MonoBehaviour
             menuScore.SetActive(false);
 
         PlayerManager.instance.ReactivatePlayerCameras();
+        PlayerManager.instance.ReactivatePlayerBlockouts();
         worldCamera.gameObject.SetActive(false);
         roundEnded = false;
         StatePause();
@@ -818,6 +819,7 @@ public class GameManager : MonoBehaviour
 
             //Code Start for World Camera
             PlayerManager.instance.DeactivatePlayerCameras();
+            PlayerManager.instance.DeactivatePlayerBlockouts();
             roundEnded = true;
             worldCamera.gameObject.SetActive(true);
             worldCamera.GetComponent<AudioListener>().enabled = false;
