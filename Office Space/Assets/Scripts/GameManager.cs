@@ -28,6 +28,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] AudioSource aud;
     [SerializeField] AudioClip audDeath;
     [Range(0, 1)][SerializeField] float audDeathVol;
+    [SerializeField] GameObject deathPoof;
 
     [Header("Main Menu First Selected Options")]
     [SerializeField] GameObject mainMenuFirst;
@@ -355,7 +356,10 @@ public class GameManager : MonoBehaviour
         //PlayerControl playerBody = null;
         //enemyAI enemyBody = null;
         if (isThereDonutKing)
+        {
+            TheDonutKing.transform.position = new Vector3(0, 0, 0);
             dropTheDonut(TheDonutKing);
+        }
         while (bodyTracker.Count > 0)
         {
             deadTracker.Add(bodyTracker[0]);
@@ -376,6 +380,7 @@ public class GameManager : MonoBehaviour
                 }
                 else
                 {
+                    deadTracker[0].SetActive(false);
                     deadTracker[0].transform.position = spawnPoints[i].transform.position;
                     deadTracker[0].SetActive(true);
                 }
@@ -559,6 +564,7 @@ public class GameManager : MonoBehaviour
     //Method for spawner. Also remove object from bodyTracker as new one will be instantiated upon spawn
     public void DeclareSelfDead(GameObject self)
     {
+        Instantiate(deathPoof, self.transform.position, self.transform.rotation);
         for (int i = 0; i < bodyTracker.Count; i++)
         {
             if (self.GetHashCode() == bodyTracker[i].GetHashCode())
@@ -566,6 +572,7 @@ public class GameManager : MonoBehaviour
         }
         deadTracker.Add(self);
         aud.PlayOneShot(audDeath, audDeathVol);
+        
         //Start CHECKING if doors need to remove their dead from the list
         Door doorCMP;
         foreach (var door in doors)

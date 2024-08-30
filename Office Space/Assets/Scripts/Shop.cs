@@ -129,6 +129,7 @@ public class Shop : MonoBehaviour
             //ControllerTest playerCT = myPlayer.GetComponent<ControllerTest>();
             for (int i = 0; i < playerCT.weaponList.Count; i++)
             {
+                
                 Debug.Log("SEARCHING WEAPONS AT INDEX: " + i.ToString());
                 if (playerCT.weaponList[i].weaponModel == shuriken.weaponModel)
                 {

@@ -35,6 +35,8 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
     [SerializeField] SkinnedMeshRenderer playerMeshRenderer;
     [SerializeField] Color dmgColor;
     [SerializeField] GameObject DKLight;
+    [SerializeField] GameObject goldParticles;
+    //[SerializeField] GameObject deathPoof;
     [SerializeField] GameObject electricParticles;
     [Range(75, 100)][SerializeField] float speedFOVEffect;
     Color origColor;
@@ -1003,6 +1005,7 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
                 playerMeshRenderer.enabled = false;
                 weaponModel.SetActive(false);
                 deathCamera.gameObject.SetActive(true);
+                //deathPoof.SetActive(true);
             }
         }
     }
@@ -1040,9 +1043,15 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
     public void ToggleMyLight()
     {
         if (DKLight.activeSelf == false)
+        {
             DKLight.SetActive(true);
+            goldParticles.SetActive(true);
+        }
         else
+        {
             DKLight.SetActive(false);
+            goldParticles.SetActive(false);
+        }
     }
 
     public void ResetPlayer()

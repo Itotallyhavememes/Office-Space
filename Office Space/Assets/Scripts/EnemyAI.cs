@@ -20,6 +20,7 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
     [SerializeField] bool canSeeTarget;
     //public GameObject headPos;
     [SerializeField] GameObject DKLight;
+    [SerializeField] GameObject goldParticle;
     [SerializeField] bool amITheKing;
     [SerializeField] Vector3 DKRPoint;
     [SerializeField] public NavMeshAgent agent;
@@ -191,9 +192,15 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
     public void ToggleMyLight()
     {
         if (DKLight.activeSelf == false)
+        {
             DKLight.SetActive(true);
+            goldParticle.SetActive(true);
+        }
         else
+        {
             DKLight.SetActive(false);
+            goldParticle.SetActive(false);
+        }
     }
 
     public void ToggleAmIKing()
@@ -549,16 +556,16 @@ public class enemyAI : MonoBehaviour, IDamage, ITarget
                 //        GameManager.instance.bodyTracker.Remove(GameManager.instance.bodyTracker[i]);
                 //    }
                 //}
-                GameManager.instance.DeclareSelfDead(gameObject);
                 
+                GameManager.instance.DeclareSelfDead(gameObject);
                 ResetHP();
-
+                gameObject.SetActive(false);
 
                 //
                 //while (GameManager.instance.statsTracker[name] > 0)
 
                 //GameManager.instance.DeclareSelfDead(gameObject);//
-                gameObject.SetActive(false);
+
             }
         }
     }
