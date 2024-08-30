@@ -28,9 +28,22 @@ public class GameManager : MonoBehaviour
     [Header("EventSystem")]
     public GameObject eventSystem;
     public GameObject globalUI;
-    [SerializeField] AudioSource aud;
+
+
+    [Header("Sound")]
+    public AudioSource aud;
     [SerializeField] AudioClip audDeath;
+    [SerializeField] AudioClip audDeath2;
+    [SerializeField] AudioClip audDonutDrop;
+    [SerializeField] AudioClip audRoundOver;
+    [SerializeField] AudioClip audGameOver;
+    [SerializeField] AudioClip audGameOver2;
     [Range(0, 1)][SerializeField] float audDeathVol;
+    [Range(0, 1)][SerializeField] float audDeathVol2;
+    [Range(0, 1)][SerializeField] float audDonutDropVol;
+    [Range(0, 1)][SerializeField] float audRoundOverVol;
+    [Range(0, 1)][SerializeField] float audGameOverVol;
+    [Range(0, 1)][SerializeField] float audGameOverVol2;
     [SerializeField] GameObject deathPoof;
 
     [Header("Main Menu First Selected Options")]
@@ -582,7 +595,7 @@ public class GameManager : MonoBehaviour
         }
         deadTracker.Add(self);
         aud.PlayOneShot(audDeath, audDeathVol);
-
+        aud.PlayOneShot(audDeath2, audDeathVol2);
         //Start CHECKING if doors need to remove their dead from the list
         Door doorCMP;
         foreach (var door in doors)
@@ -961,10 +974,13 @@ public class GameManager : MonoBehaviour
             // //DebugLog(participant.Key + " : " + participant.Value.getAllStats());
             if (participant.Value.getRoundsWon() == NumberOfRounds)
             {
+                aud.PlayOneShot(audGameOver, audGameOverVol);
+                aud.PlayOneShot(audGameOver2, audGameOverVol2);
                 //DebugLog(participant.Key + " WINS THE GAME!");
                 return participant.Key;
             }
         }
+        aud.PlayOneShot(audRoundOver, audRoundOverVol);
         return null;
     }
 
@@ -1189,6 +1205,7 @@ public class GameManager : MonoBehaviour
         PriorityPoint.Add(donutDropItem.transform);
         DownWithTheDonutKing();
         // //DebugLog(donutDropper.name.ToString() + " : " + statsTracker[donutDropper.name].getAllStats());
+        aud.PlayOneShot(audDonutDrop, audDonutDropVol);
     }
 
     public IEnumerator DKTimer()

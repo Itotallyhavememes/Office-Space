@@ -62629,11 +62629,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   RoundsWon: 0
+  worldCamera: {fileID: 0}
   eventSystem: {fileID: 3376718809030492737}
   globalUI: {fileID: 7933275841092879720}
   aud: {fileID: 8322937113979616869}
   audDeath: {fileID: 8300000, guid: 47f137c9d96b7a74492c16bea6746e53, type: 3}
   audDeathVol: 0.5
+  deathPoof: {fileID: 0}
   mainMenuFirst: {fileID: 0}
   createMatchFirst: {fileID: 0}
   settingsFirst: {fileID: 0}
@@ -62661,6 +62663,7 @@ MonoBehaviour:
   timerTime: 600
   botCount: 0
   roundsToPlay: 0
+  roundEnded: 0
   menuActive: {fileID: 0}
   menuScore: {fileID: 2246749233854779456}
   scoreDisplay: {fileID: 4408299119649803603}

@@ -18,6 +18,7 @@ public class DonutPickUp : MonoBehaviour
     [SerializeField] float rotationSpeed;
     [SerializeField] int bobSpeed;
     [SerializeField] float bobHeight;
+    //[SerializeField] AudioSource aud;
     [SerializeField] AudioClip pickupSFX;
     [Range(0, 1)][SerializeField] float audPickupVol;
 
@@ -61,6 +62,7 @@ public class DonutPickUp : MonoBehaviour
             GameObject compare = GameManager.instance.ReturnEntity(other.gameObject);
             if (compare != null)
             {
+              
                 //GameManager.instance.UpdateDonutCount(other.gameObject, donutQty);
                 //Keeps from null reference when donut is picked up
                 for (int i = 0; i < GameManager.instance.PriorityPoint.Count; ++i)
@@ -75,7 +77,7 @@ public class DonutPickUp : MonoBehaviour
                 {
                     if (compare.name == "NMODEL_Player")
                     {
-                        GameManager.instance.playerScript.Munch(pickupSFX, audPickupVol);
+                       
                         //GameManager.instance.playerScript.HealthPickup(); // Heals player by HpRestoreAmount 
                         //FOR DK SPECIFICALLY
                         GameManager.instance.playerScript.DKPickedUp();
@@ -139,9 +141,11 @@ public class DonutPickUp : MonoBehaviour
               //  //DebugLog(other.name.ToString() + " : " + GameManager.instance.statsTracker[other.name].getAllStats());
                 //gameObject.SetActive(false);
                 Destroy(gameObject);
+               GameManager.instance.aud.PlayOneShot(pickupSFX, audPickupVol);
                 if (GameManager.instance.worldDonutCount > 0)
                     --GameManager.instance.worldDonutCount;
             }
+
         }
     }
 

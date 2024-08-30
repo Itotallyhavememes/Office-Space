@@ -5181,7 +5181,7 @@ Transform:
   m_GameObject: {fileID: 7601297108038699415}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.690627, y: 0.88166547, z: -8.674698}
+  m_LocalPosition: {x: 8.849168, y: 1, z: -15.500795}
   m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5208,8 +5208,8 @@ MonoBehaviour:
   rotationSpeed: 100
   bobSpeed: 3
   bobHeight: 0.3
-  pickupSFX: {fileID: 8300000, guid: 63b11c08e74a5a44cbb2b8b72c388e52, type: 3}
-  audPickupVol: 0.5
+  pickupSFX: {fileID: 8300000, guid: 7c3f190d6c6ecd643adbc8e586e5c40b, type: 3}
+  audPickupVol: 1
 --- !u!33 &8196115917129123271
 MeshFilter:
   m_ObjectHideFlags: 0

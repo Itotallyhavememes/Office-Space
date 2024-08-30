@@ -57,6 +57,10 @@ MonoBehaviour:
   damageAmount: 15
   rubberBall: {fileID: 8300000, guid: 527942dbf102ce24991f9a8460c604ec, type: 3}
   volume: 1
+  rubberBall2: {fileID: 8300000, guid: 543f27685af19684c9730e0e21656b56, type: 3}
+  volume2: 1
+  rubberBall3: {fileID: 8300000, guid: 1b21501fb7f61d44e9b45e66622edbb2, type: 3}
+  volume3: 1
 --- !u!33 &5566336552408166728
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -166,7 +170,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -8678566210064012743, guid: 491cca7fefc6f3f418f639a8b44c47aa, type: 2}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0

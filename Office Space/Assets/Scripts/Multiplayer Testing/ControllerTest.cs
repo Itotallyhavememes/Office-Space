@@ -143,6 +143,8 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
     [Range(0, 1)][SerializeField] float audShurikenFireVol;
     [SerializeField] AudioClip audDeath;
     [Range(0, 1)][SerializeField] float audDeathVol;
+    [SerializeField] AudioClip audWeaponScroll;
+    [Range(0, 1)][SerializeField] float audWeaponScrollVol;
     private bool isPlayingStep;
 
     [Header("---- Grenade ----")]
@@ -788,6 +790,7 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
 
         weaponModel.GetComponent<MeshFilter>().sharedMesh = weaponList[selectedWeapon].weaponModel.GetComponent<MeshFilter>().sharedMesh;
         weaponModel.GetComponent<MeshRenderer>().sharedMaterial = weaponList[selectedWeapon].weaponModel.GetComponent<MeshRenderer>().sharedMaterial;
+        aud.PlayOneShot(audWeaponScroll, audWeaponScrollVol);
     }
 
     void WeaponSelectController(InputAction.CallbackContext context) //Making this to work with the controller
@@ -819,7 +822,7 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
             if (scrollValue > 0)
             {
                 selectedWeapon++;
-
+               // aud.PlayOneShot(audWeaponScroll, audWeaponScrollVol);
                 if (selectedWeapon > weaponList.Count - 1)
                     selectedWeapon = 0;
 
@@ -829,7 +832,7 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
             else if (scrollValue < 0)
             {
                 selectedWeapon--;
-
+              //  aud.PlayOneShot(audWeaponScroll, audWeaponScrollVol);
                 if (selectedWeapon < 0)
                     selectedWeapon = weaponList.Count - 1;
 

@@ -14,7 +14,10 @@ public class RubberBall : MonoBehaviour
     [Header("----- Sounds -----")]
     [SerializeField] AudioClip rubberBall;
     [Range(0, 1)][SerializeField] float volume;
-
+    [SerializeField] AudioClip rubberBall2;
+    [Range(0, 1)][SerializeField] float volume2;
+    [SerializeField] AudioClip rubberBall3;
+    [Range(0, 1)][SerializeField] float volume3;
     float countdown;
     bool hasExploded;
 
@@ -23,6 +26,7 @@ public class RubberBall : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        GameManager.instance.aud.PlayOneShot(rubberBall3, volume3);
         countdown = delay;
     }
 
@@ -41,12 +45,15 @@ public class RubberBall : MonoBehaviour
 
     void Explode()
     {
-        if (!GameManager.instance.isMultiplayer)
-            GameManager.instance.playerScript.Munch(rubberBall, volume);
-        else
-        {
-            PlayerManager.instance.players[0].GetComponent<ControllerTest>().Munch(rubberBall, volume);
-        }
+        //if (!GameManager.instance.isMultiplayer)
+        //{
+        //    //GameManager.instance.aud.PlayOneShot(rubberBall, volume);
+        //   // GameManager.instance.aud.PlayOneShot(rubberBall2, volume2);
+        //}
+        //else
+        //{
+        //    PlayerManager.instance.players[0].GetComponent<ControllerTest>().Munch(rubberBall, volume);
+        //}
         // show effect
         Instantiate(explosionEffect, transform.position, transform.rotation);
 
@@ -84,6 +91,8 @@ public class RubberBall : MonoBehaviour
         }
 
         Destroy(gameObject);
+        GameManager.instance.aud.PlayOneShot(rubberBall, volume);
+        GameManager.instance.aud.PlayOneShot(rubberBall2, volume2);
         hasExploded = true;
     }
 }

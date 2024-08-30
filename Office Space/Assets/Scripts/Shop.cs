@@ -27,7 +27,10 @@ public class Shop : MonoBehaviour
     [SerializeField] WeaponStats shuriken;
     [SerializeField] int rubberbandBallPrice;
     [SerializeField] WeaponStats rubberbandBall;
-
+    [Header("----- Sounds -----")]
+    [SerializeField] AudioSource aud;
+    [SerializeField] AudioClip audShopFire;
+    [Range(0, 1)][SerializeField] float audShopVol;
     //private void Awake()
     //{
     //    //instance = this;
@@ -55,6 +58,7 @@ public class Shop : MonoBehaviour
         
         if (GameManager.instance.statsTracker[myPlayer.name].getMoneyTotal() >= shotgunPrice)
         {
+            aud.PlayOneShot(audShopFire, audShopVol);
             Debug.Log("Buying Shotgun");
             GameManager.instance.statsTracker[myPlayer.name].withdrawMoney(shotgunPrice);
             updateMoneyCount();
@@ -79,6 +83,7 @@ public class Shop : MonoBehaviour
     {
         if (GameManager.instance.statsTracker[myPlayer.name].getMoneyTotal() >= SMGPrice)
         {
+            aud.PlayOneShot(audShopFire, audShopVol);
             GameManager.instance.statsTracker[myPlayer.name].withdrawMoney(SMGPrice);
             updateMoneyCount();
             //ControllerTest playerCT = myPlayer.GetComponent<ControllerTest>();
@@ -99,6 +104,7 @@ public class Shop : MonoBehaviour
     {
         if (GameManager.instance.statsTracker[myPlayer.name].getMoneyTotal() >= riflePrice)
         {
+            aud.PlayOneShot(audShopFire, audShopVol);
             GameManager.instance.statsTracker[myPlayer.name].withdrawMoney(riflePrice);
             updateMoneyCount();
            // ControllerTest playerCT = myPlayer.GetComponent<ControllerTest>();
@@ -122,6 +128,7 @@ public class Shop : MonoBehaviour
         if (GameManager.instance.statsTracker[myPlayer.name].getMoneyTotal() >= shurikenPrice)
         {
             Debug.Log("BUYING SHURIKEN!");
+            aud.PlayOneShot(audShopFire, audShopVol);
             GameManager.instance.statsTracker[myPlayer.name].withdrawMoney(shurikenPrice);
             //GameManager.instance.playerScript.GetWeaponStats(shuriken);
             updateMoneyCount();
@@ -153,6 +160,7 @@ public class Shop : MonoBehaviour
     {
         if (GameManager.instance.statsTracker[myPlayer.name].getMoneyTotal() >= rubberbandBallPrice && myPlayer.GetComponent<ItemThrow>().rubberBallCount < myPlayer.GetComponent<ItemThrow>().GetRubberBallMax())
         {
+            aud.PlayOneShot(audShopFire, audShopVol);
             GameManager.instance.statsTracker[myPlayer.name].withdrawMoney(rubberbandBallPrice);
             //GameManager.instance.playerThrowScript.rubberBallCount++;
             updateMoneyCount();
