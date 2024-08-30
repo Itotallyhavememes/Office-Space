@@ -88,14 +88,23 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
     public GameObject globalUI;
     public GameObject localUI;
     [SerializeField] GameObject menuActive;
-    public GameObject menuShop;
     [SerializeField] GameObject menuPause;
     [SerializeField] GameObject pauseFirst;
+    public GameObject menuShop;
     [SerializeField] GameObject shopFirst;
     [SerializeField] GameObject damageFlash;
     public Image playerHPBar;
     public Image playerAmmoBar;
     public TMP_Text grenadeStack;
+
+    [Header("Scoreboard")]
+    public GameObject scoreDisplay;
+    public TMP_Text activeScoreNamesText;
+    public TMP_Text activeTimeHeldText;
+    public TMP_Text activeRoundsText;
+    public TMP_Text activePlaceText;
+    public TMP_Text activeDKSText;
+    public bool isDisplayingScore;
 
     [Header("Death Cam")]
     public Camera deathCamera;
@@ -774,7 +783,6 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
 
     void WeaponChange()
     {
-
         shootDamage = weaponList[selectedWeapon].shootDamage;
         shootDist = weaponList[selectedWeapon].raycastDist;
         shootRate = weaponList[selectedWeapon].shootRate;
@@ -795,7 +803,7 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
 
     void WeaponSelectController(InputAction.CallbackContext context) //Making this to work with the controller
     {
-        if (!isShooting)
+        if (!isShooting && !isDead && !GameManager.instance.isPaused && !GameManager.instance.roundEnded)
         {
             if (weaponList.Count <= 1)
                 return;
@@ -812,7 +820,7 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
     }
     void WeaponSelectMouse(InputAction.CallbackContext context) //Making this to work with the 
     {
-        if (!isShooting)
+        if (!isShooting && !isDead && !GameManager.instance.isPaused && !GameManager.instance.roundEnded)
         {
             if (weaponList.Count <= 1)
                 return;
@@ -1130,12 +1138,12 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
 
     public void DisplayScoreboard(InputAction.CallbackContext context)
     {
-        GameManager.instance.DisplayScoreboard();
+        GameManager.instance.DisplayScoreboard(this.gameObject);
     }
 
     public void DeactivateScoreboard(InputAction.CallbackContext context)
     {
-        GameManager.instance.DisplayScoreboard();
+        GameManager.instance.DeactivateScoreboard(this.gameObject);
     }
 
     public bool GetLifeState()

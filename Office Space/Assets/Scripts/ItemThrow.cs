@@ -75,6 +75,10 @@ public class ItemThrow : MonoBehaviour
                     animationDone = false;
                 }
             }
+            if (this.GetComponent<ControllerTest>().GetLifeState())
+            {
+                weaponHUD.SetActive(false);
+            }
         }
     }
 
@@ -121,7 +125,7 @@ public class ItemThrow : MonoBehaviour
         rubberBallCount--;
         updateGrenadeUI();
         yield return new WaitForSeconds(throwDelay);
-        WeaponToggleOn();
+        WeaponToggleOn();        
     }
 
     void WeaponToggleOff()
