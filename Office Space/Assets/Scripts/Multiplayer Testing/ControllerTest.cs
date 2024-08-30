@@ -275,16 +275,17 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
     {
         //DebugDrawRay(playerCamera.transform.position, playerCamera.transform.forward * shootDist, Color.green);
 
-        if (!isDead && PlayerManager.instance.matchStarted && !GameManager.instance.isPaused && !GameManager.instance.roundEnded)
+        if (PlayerManager.instance.matchStarted && !GameManager.instance.isPaused && !GameManager.instance.roundEnded)
         {
-            
-            Movement();
-            Rotation();
-
-            if (weaponList[selectedWeapon].isAutoFire && !isShooting && ShootTriggered)
+            if (!isDead)
             {
-                StartCoroutine(Shoot());
+                Movement();
+                if (weaponList[selectedWeapon].isAutoFire && !isShooting && ShootTriggered)
+                {
+                    StartCoroutine(Shoot());
+                }
             }
+            Rotation();
         }
 
         if (!isCrouching)
@@ -999,7 +1000,7 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
 
                 playerCam.gameObject.SetActive(false);
                 isDead = true;
-               // aud.PlayOneShot(audDeath, audDeathVol);
+                // aud.PlayOneShot(audDeath, audDeathVol);
                 GameManager.instance.DeclareSelfDead(gameObject);
                 gameObject.GetComponent<CapsuleCollider>().enabled = false;
                 playerMeshRenderer.enabled = false;
@@ -1090,13 +1091,13 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
         menuShop.SetActive(true);
         //Added to the code to reset each player's player root 
         multEventSystem.playerRoot = localUI;
-        StartCoroutine(DelayMenuInput(shopFirst));
+        StartCoroutine(DelayMenuInput(shopFirst, 0.1f));
     }
 
     //Pass in the SetSelectedObject you want to delay input for when menus's are set to active
-    IEnumerator DelayMenuInput(GameObject menuButton)
+    public IEnumerator DelayMenuInput(GameObject menuButton, float delay)
     {
-        yield return new WaitForSecondsRealtime(0.1f);
+        yield return new WaitForSecondsRealtime(delay);
         multEventSystem.SetSelectedGameObject(menuButton);
     }
 

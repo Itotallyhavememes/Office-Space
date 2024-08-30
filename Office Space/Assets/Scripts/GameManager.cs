@@ -465,7 +465,7 @@ public class GameManager : MonoBehaviour
         //PlayerManager.instance.players[i].ActivateShopUI()
         //isShopDisplayed = false;
         //ControllerTest playerCMP;
-        
+
         //Shop.instance.updateMoneyCount();
     }
 
@@ -582,7 +582,7 @@ public class GameManager : MonoBehaviour
         }
         deadTracker.Add(self);
         aud.PlayOneShot(audDeath, audDeathVol);
-        
+
         //Start CHECKING if doors need to remove their dead from the list
         Door doorCMP;
         foreach (var door in doors)
@@ -593,7 +593,9 @@ public class GameManager : MonoBehaviour
         ////DebugLog(self.name + "DB: " + statsTracker[self.name].getDeaths().ToString());
         statsTracker[self.name].updateDeaths();
         statsTracker[self.name].updateKDR();
-        coroutine = StartCoroutine(SpawnTheDead());
+
+        if (!gameEnd)
+            coroutine = StartCoroutine(SpawnTheDead());
         //  //DebugLog(self.name.ToString() + statsTracker[self.name].getAllStats().ToString());
         // //DebugLog(self.name + "DA: " + statsTracker[self.name].getDeaths().ToString());
         //if (statsTracker[self.name].getDKStatus() == true)
@@ -614,9 +616,9 @@ public class GameManager : MonoBehaviour
         //float respawnerTime = statsTracker[deadTracker[0].name].getTimeHeld() / 2;
         //if (respawnerTime == 0)
         //    respawnerTime = respawnTime;
-       
-            yield return new WaitForSeconds(respawnTime);
-            int spawnIndex = Random.Range(0, statsTracker.Count);
+
+        yield return new WaitForSeconds(respawnTime);
+        int spawnIndex = Random.Range(0, statsTracker.Count);
         if (deadTracker.Count > 0)
         {
             //CHECK TO SEE WHO IS IN deadTracker[0]
@@ -648,8 +650,8 @@ public class GameManager : MonoBehaviour
             //Leave this portion alone
             //if (deadTracker.Count > 0)
             //{
-                bodyTracker.Add(deadTracker[0]);
-                deadTracker.RemoveAt(0); //pop front
+            bodyTracker.Add(deadTracker[0]);
+            deadTracker.RemoveAt(0); //pop front
             //}
 
             coroutine = null;
@@ -714,7 +716,7 @@ public class GameManager : MonoBehaviour
             StateUnpause();
         }
     }
-    
+
     public void OnPause(GameObject player)
     {
         if (menuActive == null)
@@ -752,7 +754,7 @@ public class GameManager : MonoBehaviour
         menuActive.SetActive(false);
         menuActive = null;
     }
-    
+
     public void StateUnpause(GameObject player)
     {
         //made changes Here for testing
@@ -790,6 +792,9 @@ public class GameManager : MonoBehaviour
             roundEnded = true;
             worldCamera.gameObject.SetActive(true);
             worldCamera.GetComponent<AudioListener>().enabled = false;
+
+            if (coroutine != null)
+                StopCoroutine(coroutine);
             //Code End for World Camera
 
             TallyFinalScores();
@@ -797,7 +802,16 @@ public class GameManager : MonoBehaviour
             menuActive.SetActive(true);
             PlayerManager.instance.players[0].GetComponent<ControllerTest>().multEventSystem.playerRoot = globalUI;
             //EventSystem.current.SetSelectedGameObject(gameEndFirst);
-            PlayerManager.instance.players[0].GetComponent<ControllerTest>().multEventSystem.SetSelectedGameObject(gameEndFirst);
+            StartCoroutine(PlayerManager.instance.players[0].GetComponent<ControllerTest>().DelayMenuInput(gameEndFirst, 3));
+
+            foreach (var enemy in bodyTracker)
+            {
+                enemyAI comp = enemy.GetComponent<enemyAI>();
+                if (comp != null)
+                {
+                    enemy.SetActive(false);
+                }
+            }
         }
     }
 
