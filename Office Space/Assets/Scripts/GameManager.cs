@@ -22,6 +22,9 @@ public class GameManager : MonoBehaviour
     public enum gameMode { DONUTKING2, NIGHTSHIFT, TITLE }
     public static gameMode currentMode;
 
+    [Header("World Camera")]
+    [SerializeField] Camera worldCamera;
+
     [Header("EventSystem")]
     public GameObject eventSystem;
     public GameObject globalUI;
@@ -73,6 +76,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] int timerTime;
     [SerializeField] int botCount;
     [SerializeField] int roundsToPlay;
+    public bool roundEnded;
 
     [Header("Menu Variables")]
     [SerializeField] GameObject menuActive;
@@ -340,6 +344,12 @@ public class GameManager : MonoBehaviour
         //Changed to reflect that menuScore IS ALSO for Round Over
         if (menuActive = menuScore)
             menuScore.SetActive(false);
+
+        PlayerManager.instance.ReactivatePlayerCameras();
+        worldCamera.gameObject.SetActive(false);
+        roundEnded = false;
+        StatePause();
+
         foreach (var player in PlayerManager.instance.players)
         {
             statsTracker[player.name].depositMoney(500);
@@ -773,7 +783,15 @@ public class GameManager : MonoBehaviour
         if (gameEnd)
         {
             scoreDisplay.SetActive(false);
-            StatePause();
+            //StatePause();
+
+            //Code Start for World Camera
+            PlayerManager.instance.DeactivatePlayerCameras();
+            roundEnded = true;
+            worldCamera.gameObject.SetActive(true);
+            worldCamera.GetComponent<AudioListener>().enabled = false;
+            //Code End for World Camera
+
             TallyFinalScores();
             menuActive = menuScore;
             menuActive.SetActive(true);

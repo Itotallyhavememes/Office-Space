@@ -275,13 +275,13 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
     {
         //DebugDrawRay(playerCamera.transform.position, playerCamera.transform.forward * shootDist, Color.green);
 
-        if (PlayerManager.instance.matchStarted && !GameManager.instance.isPaused)
+        if (!isDead && PlayerManager.instance.matchStarted && !GameManager.instance.isPaused && !GameManager.instance.roundEnded)
         {
-            if (!isDead)
-                Movement();
+            
+            Movement();
             Rotation();
 
-            if (weaponList[selectedWeapon].isAutoFire && !isShooting && !isDead && ShootTriggered)
+            if (weaponList[selectedWeapon].isAutoFire && !isShooting && ShootTriggered)
             {
                 StartCoroutine(Shoot());
             }
@@ -608,7 +608,7 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
 
     void ShootEvent(InputAction.CallbackContext context)
     {
-        if (!isShooting && !isReloading && !isDead && !GameManager.instance.isPaused)
+        if (!isShooting && !isReloading && !isDead && !GameManager.instance.isPaused && !GameManager.instance.roundEnded)
         {
             if (!weaponList[selectedWeapon].isAutoFire)
                 StartCoroutine(Shoot());

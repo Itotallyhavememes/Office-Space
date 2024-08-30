@@ -199,8 +199,8 @@ public class PlayerManager : MonoBehaviour
             }
 
            matchStarted = true;
-           GameManager.instance.SetDKTimer((int)timerSlider.value * 60);
-           //GameManager.instance.SetDKTimer(10);
+           //GameManager.instance.SetDKTimer((int)timerSlider.value * 60);
+           GameManager.instance.SetDKTimer(15);
 
 
         }
@@ -216,4 +216,37 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
+    public void DeactivatePlayerCameras()
+    {
+        foreach (var player in players)
+        {
+            player.GetComponent<ControllerTest>().playerCamera.gameObject.SetActive(false);
+            player.GetComponent<ControllerTest>().deathCamera.gameObject.SetActive(false);
+        }
+    }
+    public void ReactivatePlayerCameras()
+    {
+        foreach (var player in players)
+        {
+            player.GetComponent<ControllerTest>().playerCamera.gameObject.SetActive(false);
+        }
+    }
+
+    public void DeactivatePlayerControls()
+    {
+        foreach (var player in players)
+        {
+            player.GetComponent<ControllerTest>().enabled = false;
+            player.GetComponent<ItemThrow>().enabled = false;
+        }
+    }
+    
+    public void ReactivatePlayerControls()
+    {
+        foreach (var player in players)
+        {
+            player.GetComponent<ControllerTest>().enabled = true;
+            player.GetComponent<ItemThrow>().enabled = true;
+        }
+    }
 }

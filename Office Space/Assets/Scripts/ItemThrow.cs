@@ -37,40 +37,43 @@ public class ItemThrow : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!GameManager.instance.isMultiplayer)
+        if (!GameManager.instance.isPaused)
         {
-            if (animationDone)
+            if (!GameManager.instance.isMultiplayer)
             {
-                player.playerRig.weight = 1;
-                animationDone = false;
-            }
-
-            if (!player.isShooting && !player.isReloading)
-            {
-                if (Input.GetButtonDown("Item") && rubberBallCount > 0)
+                if (animationDone)
                 {
-                    //StartCoroutine(ThrowItem());
-                    player.playerRig.weight = 0;
-                    anim.SetLayerWeight(8, 1f);
-                    GameManager.instance.playerScript.Munch(audRubberBall, audRubberBallVol);
-                    anim.SetTrigger("ThrowGrenade");
+                    player.playerRig.weight = 1;
+                    animationDone = false;
+                }
+
+                if (!player.isShooting && !player.isReloading)
+                {
+                    if (Input.GetButtonDown("Item") && rubberBallCount > 0)
+                    {
+                        //StartCoroutine(ThrowItem());
+                        player.playerRig.weight = 0;
+                        anim.SetLayerWeight(8, 1f);
+                        GameManager.instance.playerScript.Munch(audRubberBall, audRubberBallVol);
+                        anim.SetTrigger("ThrowGrenade");
+                    }
                 }
             }
-        }
-        else
-        {
-            if (!this.GetComponent<ControllerTest>().GetLifeState() && this.GetComponent<ControllerTest>().GrenadeTriggered && rubberBallCount > 0)
+            else
             {
-                this.GetComponent<ControllerTest>().playerRig.weight = 0;
-                anim.SetLayerWeight(8, 1f);
-                this.GetComponent<ControllerTest>().Munch(audRubberBall, audRubberBallVol);
-                anim.SetTrigger("ThrowGrenade");
-            }
+                if (!this.GetComponent<ControllerTest>().GetLifeState() && this.GetComponent<ControllerTest>().GrenadeTriggered && rubberBallCount > 0 && !GameManager.instance.roundEnded)
+                {
+                    this.GetComponent<ControllerTest>().playerRig.weight = 0;
+                    anim.SetLayerWeight(8, 1f);
+                    this.GetComponent<ControllerTest>().Munch(audRubberBall, audRubberBallVol);
+                    anim.SetTrigger("ThrowGrenade");
+                }
 
-            if (animationDone)
-            {
-                this.GetComponent<ControllerTest>().playerRig.weight = 1;
-                animationDone = false;
+                if (animationDone)
+                {
+                    this.GetComponent<ControllerTest>().playerRig.weight = 1;
+                    animationDone = false;
+                }
             }
         }
     }
