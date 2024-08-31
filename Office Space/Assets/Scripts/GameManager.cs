@@ -38,13 +38,16 @@ public class GameManager : MonoBehaviour
     [SerializeField] AudioClip audRoundOver;
     [SerializeField] AudioClip audGameOver;
     [SerializeField] AudioClip audGameOver2;
+    public AudioClip wrongButton;
     [Range(0, 1)][SerializeField] float audDeathVol;
     [Range(0, 1)][SerializeField] float audDeathVol2;
     [Range(0, 1)][SerializeField] float audDonutDropVol;
     [Range(0, 1)][SerializeField] float audRoundOverVol;
     [Range(0, 1)][SerializeField] float audGameOverVol;
     [Range(0, 1)][SerializeField] float audGameOverVol2;
+    [Range(0, 1)] public float audwrongButtonVol;
     [SerializeField] GameObject deathPoof;
+    
 
     [Header("Main Menu First Selected Options")]
     [SerializeField] GameObject mainMenuFirst;

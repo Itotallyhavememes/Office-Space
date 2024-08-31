@@ -35,7 +35,7 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] GameObject globalScoreBoard;
     [SerializeField] GameObject TwoPlayBlock1;
     [SerializeField] GameObject TwoPlayBlock2;
-
+    [SerializeField] TMP_Text MatchSetMsg;
 
     private TMP_Dropdown botsDropdownValue;
     
@@ -66,7 +66,7 @@ public class PlayerManager : MonoBehaviour
 
         botsDropdownValue = botsDropdown.GetComponent<TMP_Dropdown>();
         matchStarted = false;
-
+        
     }
 
     private void Start()
@@ -74,6 +74,7 @@ public class PlayerManager : MonoBehaviour
         //GameManager.instance.StatePause();
         GameManager.instance.ActivateMenu(matchSettingsMenu);
         GameManager.instance.isMultiplayer = true;
+        MatchSetMsg.text = string.Empty;
         //GameManager.instance.AddToTracker(this.gameObject);
         //EventSystem.current.SetSelectedGameObject(matchSettingsFirst);
     }
@@ -198,10 +199,22 @@ public class PlayerManager : MonoBehaviour
            matchStarted = true;
            GameManager.instance.SetDKTimer((int)timerSlider.value * 60);
            //GameManager.instance.SetDKTimer(15);
-
-
         }
-        
+        else
+        {
+            MatchSetMsg.text = string.Empty;
+            GameManager.instance.aud.PlayOneShot(GameManager.instance.wrongButton, GameManager.instance.audwrongButtonVol);
+            if (players.Count == 0)
+            {
+                MatchSetMsg.text = "MINIMUM 1 REAL PLAYER";
+                MatchSetMsg.color = Color.red;
+            }
+            else if(players.Count + botCount == 1)
+            {
+                MatchSetMsg.text = "NEED 1 BOT OR 2 REAL PLAYERS";
+                MatchSetMsg.color = Color.red;    
+            }
+        }
     }
 
 
