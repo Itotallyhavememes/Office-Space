@@ -1109,6 +1109,7 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
         menuShop.SetActive(true);
         //Added to the code to reset each player's player root 
         multEventSystem.playerRoot = localUI;
+        menuShop.GetComponent<Shop>().updateMoneyCount();
         StartCoroutine(DelayMenuInput(shopFirst, 0.1f));
     }
 

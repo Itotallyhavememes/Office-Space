@@ -157,7 +157,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] public int moneyForTimeHeld;
     [SerializeField] public int moneyForDonutKing;
     [SerializeField] public int startingMoney;
-
+    public int CurrRound;
 
     // JOHN CODE FOR CHECKPOINT
     public GameObject playerSpawn;
@@ -241,6 +241,7 @@ public class GameManager : MonoBehaviour
         //
         //TIM TEST CODE FOR DKSTATUS
         isThereDonutKing = false;
+        CurrRound = 0;
         ////DebugLog("Did we restart?");
 
         //isShopDisplayed = true;
@@ -363,8 +364,6 @@ public class GameManager : MonoBehaviour
     //METHOD FOR RESETTING EVERYTHING WITHOUT RESETTING PARTICPANTSTATS
     public void ResetTheRound()
     {
-        //DebugLog("GM: RESET ROUND!");
-        //Changed to reflect that menuScore IS ALSO for Round Over
         if (menuActive = menuScore)
             menuScore.SetActive(false);
 
@@ -372,6 +371,7 @@ public class GameManager : MonoBehaviour
         PlayerManager.instance.ReactivatePlayerBlockouts();
         worldCamera.gameObject.SetActive(false);
         roundEnded = false;
+        GameManager.instance.CurrRound++; //Should make this 2+
         StatePause();
 
         foreach (var player in PlayerManager.instance.players)
@@ -379,16 +379,10 @@ public class GameManager : MonoBehaviour
             statsTracker[player.name].depositMoney(500);
             Debug.Log("NR: " + statsTracker[player.name].getMoneyTotal().ToString());
             //player.GetComponent<Shop>().myPlayerBudget = statsTracker[player.name].getMoneyTotal();
-            player.GetComponent<ControllerTest>().menuShop.GetComponent<Shop>().updateMoneyCount();
+            //player.GetComponent<ControllerTest>().menuShop.GetComponent<Shop>().updateMoneyCount();
             player.GetComponent<ControllerTest>().ActivateShopUI();
         }
-        //CHANGE END
-        //StateUnpause(); //If we don't have this, it freezes...Why?... The timer was causing the freeze
-        ////Pause game
-        //isPaused = true;
-        //int SpawnIndex = 0;
-        //PlayerControl playerBody = null;
-        //enemyAI enemyBody = null;
+        
         if (isThereDonutKing)
         {
             TheDonutKing.transform.position = new Vector3(0, 0, 0);
@@ -431,66 +425,7 @@ public class GameManager : MonoBehaviour
             //if(doorComp)
             doorComp.ResetDoors();
         }
-        //Reset Positions and Health/Ammo of all Live Participants
-        //for (int i = 0; i < bodyTracker.Count; ++i)
-        //{
-        //    playerBody = bodyTracker[i].GetComponent<PlayerControl>();
-        //    if (playerBody != null)
-        //    {
-        //        playerBody.ResetPlayer();
-        //        playerBody = null;
-        //    }
-        //    else
-        //    {
-        //        enemyBody = bodyTracker[i].GetComponent<enemyAI>();
-        //        enemyBody.ResetHP();
-        //    }
-        //    bodyTracker[i].transform.position = spawnPoints[i].transform.position;
-        //    SpawnIndex++;
-        //}
-
-        ////Reset Positions and Health/Ammo of all Dead Participants
-        //if (SpawnIndex < 4)
-        //{
-        //    for (int i = SpawnIndex; i < deadTracker.Count; ++i)
-        //    {
-        //        playerBody = deadTracker[i].GetComponent<PlayerControl>();
-        //        if (playerBody != null)
-        //        {
-        //            playerBody.ResetPlayer();
-        //            playerBody = null;
-        //        }
-        //        else
-        //        {
-        //            enemyBody = deadTracker[i].GetComponent<enemyAI>();
-        //            enemyBody.ResetHP();
-        //            if (deadTracker[i].activeSelf == false)
-        //                deadTracker[i].SetActive(true);
-        //        }
-        //    }
-        //}
-        ////Restart the Timer???
-        //StartCoroutine(Timer());
-        ////Unpause the game
-        //isPaused = false;
-
-        //StopCoroutine(Timer());
-        //StartCoroutine(Timer());
-        //
-
-        //PJ's shop code
-        //INSTEAD OF isShopDisplayed = false...
-        //ACTIVATE SHOP UI IN EACH PLAYER
-        //ControllerTest playerCMP;
-        //foreach(var player in PlayerManager.instance.players){
-        //playerCMP = player.GetComponent<ControllerTest>();
-        //playerCMP = ActivateShopUI();
-        //}
-        //PlayerManager.instance.players[i].ActivateShopUI()
-        //isShopDisplayed = false;
-        //ControllerTest playerCMP;
-
-        //Shop.instance.updateMoneyCount();
+        
     }
 
     void RandomizeVending()

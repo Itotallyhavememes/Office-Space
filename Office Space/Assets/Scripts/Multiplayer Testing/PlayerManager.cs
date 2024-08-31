@@ -172,7 +172,7 @@ public class PlayerManager : MonoBehaviour
             BotSpawner();
             matchSettingsMenu.SetActive(false);
             ReactivatePlayerBlockouts();
-
+            GameManager.instance.CurrRound++; //Makes this 1
             for (int i = 0; i < players.Count; i++)
             {
                 players[i].GetComponent<Animator>().enabled = true;
@@ -196,9 +196,10 @@ public class PlayerManager : MonoBehaviour
                     = players[1].GetComponent<ControllerTest>().playerCamera.rect;
             }
 
-           matchStarted = true;
-           GameManager.instance.SetDKTimer((int)timerSlider.value * 60);
-           //GameManager.instance.SetDKTimer(15);
+            matchStarted = true;
+            GameManager.instance.SetDKTimer((int)timerSlider.value * 60);
+            
+            //GameManager.instance.SetDKTimer(15);
         }
         else
         {
@@ -209,10 +210,10 @@ public class PlayerManager : MonoBehaviour
                 MatchSetMsg.text = "MINIMUM 1 REAL PLAYER";
                 MatchSetMsg.color = Color.red;
             }
-            else if(players.Count + botCount == 1)
+            else if (players.Count + botCount == 1)
             {
                 MatchSetMsg.text = "NEED 1 BOT OR 2 REAL PLAYERS";
-                MatchSetMsg.color = Color.red;    
+                MatchSetMsg.color = Color.red;
             }
         }
     }

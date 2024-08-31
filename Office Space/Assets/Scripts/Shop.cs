@@ -15,6 +15,8 @@ public class Shop : MonoBehaviour
     public int myPlayerBudget;
     //[SerializeField] ControllerTest playersWeaponList;
     [SerializeField] TMP_Text moneyCount;
+    [SerializeField] TMP_Text MsgField;
+    [SerializeField] TMP_Text RoundBudget;
     [Header("-----Primaries-----")]
     [SerializeField] int shotgunPrice;
     [SerializeField] WeaponStats shotgun;
@@ -29,7 +31,7 @@ public class Shop : MonoBehaviour
     [SerializeField] WeaponStats rubberbandBall;
     [Header("----- Sounds -----")]
     [SerializeField] AudioSource aud;
-    [SerializeField] AudioClip audShopFire;
+    [SerializeField] AudioClip audShopBuy;
     [Range(0, 1)][SerializeField] float audShopVol;
     //private void Awake()
     //{
@@ -49,7 +51,14 @@ public class Shop : MonoBehaviour
         //{
         moneyCount.text = string.Empty;
         moneyCount.text = GameManager.instance.statsTracker[myPlayer.name].getMoneyTotal().ToString();
+        updateRoundBudget();
         //}
+    }
+
+    public void updateRoundBudget()
+    {
+        RoundBudget.text = string.Empty;
+        RoundBudget.text = "ROUND " + GameManager.instance.CurrRound.ToString() + " BUDGET:";
     }
 
     public void shotgunButton()
@@ -58,7 +67,7 @@ public class Shop : MonoBehaviour
         
         if (GameManager.instance.statsTracker[myPlayer.name].getMoneyTotal() >= shotgunPrice)
         {
-            aud.PlayOneShot(audShopFire, audShopVol);
+            aud.PlayOneShot(audShopBuy, audShopVol);
             Debug.Log("Buying Shotgun");
             GameManager.instance.statsTracker[myPlayer.name].withdrawMoney(shotgunPrice);
             updateMoneyCount();
@@ -83,7 +92,7 @@ public class Shop : MonoBehaviour
     {
         if (GameManager.instance.statsTracker[myPlayer.name].getMoneyTotal() >= SMGPrice)
         {
-            aud.PlayOneShot(audShopFire, audShopVol);
+            aud.PlayOneShot(audShopBuy, audShopVol);
             GameManager.instance.statsTracker[myPlayer.name].withdrawMoney(SMGPrice);
             updateMoneyCount();
             //ControllerTest playerCT = myPlayer.GetComponent<ControllerTest>();
@@ -104,7 +113,7 @@ public class Shop : MonoBehaviour
     {
         if (GameManager.instance.statsTracker[myPlayer.name].getMoneyTotal() >= riflePrice)
         {
-            aud.PlayOneShot(audShopFire, audShopVol);
+            aud.PlayOneShot(audShopBuy, audShopVol);
             GameManager.instance.statsTracker[myPlayer.name].withdrawMoney(riflePrice);
             updateMoneyCount();
            // ControllerTest playerCT = myPlayer.GetComponent<ControllerTest>();
@@ -128,7 +137,7 @@ public class Shop : MonoBehaviour
         if (GameManager.instance.statsTracker[myPlayer.name].getMoneyTotal() >= shurikenPrice)
         {
             Debug.Log("BUYING SHURIKEN!");
-            aud.PlayOneShot(audShopFire, audShopVol);
+            aud.PlayOneShot(audShopBuy, audShopVol);
             GameManager.instance.statsTracker[myPlayer.name].withdrawMoney(shurikenPrice);
             //GameManager.instance.playerScript.GetWeaponStats(shuriken);
             updateMoneyCount();
@@ -160,7 +169,7 @@ public class Shop : MonoBehaviour
     {
         if (GameManager.instance.statsTracker[myPlayer.name].getMoneyTotal() >= rubberbandBallPrice && myPlayer.GetComponent<ItemThrow>().rubberBallCount < myPlayer.GetComponent<ItemThrow>().GetRubberBallMax())
         {
-            aud.PlayOneShot(audShopFire, audShopVol);
+            aud.PlayOneShot(audShopBuy, audShopVol);
             GameManager.instance.statsTracker[myPlayer.name].withdrawMoney(rubberbandBallPrice);
             //GameManager.instance.playerThrowScript.rubberBallCount++;
             updateMoneyCount();
