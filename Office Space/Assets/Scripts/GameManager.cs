@@ -289,7 +289,14 @@ public class GameManager : MonoBehaviour
         //    isShopDisplayed = true;
         //}
         if (currentMode == gameMode.DONUTKING2 && !isPaused)
+        {
             TallyActiveScores();
+
+            if (PlayerManager.instance.players.Count == 3)
+            {
+                TallyActiveScoresFor3P();
+            }
+        }
 
         if (Input.GetButtonDown("Cancel"))
         {
@@ -757,7 +764,7 @@ public class GameManager : MonoBehaviour
 
         // For when I add the boards to each player
         foreach (var board in PlayerManager.instance.players)
-        {            
+        {
             if (board.GetComponent<ControllerTest>().isDisplayingScore)
             {
                 board.GetComponent<ControllerTest>().isDisplayingScore = false;
@@ -1003,50 +1010,50 @@ public class GameManager : MonoBehaviour
     }
 
     //TallyActiveScores in Gobal UI
-    //public void TallyActiveScores()
-    //{
+    public void TallyActiveScoresFor3P()
+    {
 
-    //    activeScoreNamesText.text = string.Empty;
-    //    activeTimeHeldText.text = string.Empty;
-    //    activeRoundsText.text = string.Empty;
-    //    activeDKSText.text = string.Empty;
-    //    var scoreBoard = statsTracker.OrderByDescending(pair => pair.Value.getTimeHeld());
-    //    foreach (var score in scoreBoard)
-    //    {
-    //        int timeElapsed = score.Value.timeHeld;
-    //        int timerMinutes = timeElapsed / 60;
-    //        int timerSeconds = timeElapsed % 60;
-    //        string timeText = "";
+        activeScoreNamesText.text = string.Empty;
+        activeScoreText.text = string.Empty;
+        activeRoundsText.text = string.Empty;
+        activeDKSText.text = string.Empty;
+        var scoreBoard = statsTracker.OrderByDescending(pair => pair.Value.getTimeHeld());
+        foreach (var score in scoreBoard)
+        {
+            int timeElapsed = score.Value.timeHeld;
+            int timerMinutes = timeElapsed / 60;
+            int timerSeconds = timeElapsed % 60;
+            string timeText = "";
 
-    //        if (timerMinutes == 0 || timerMinutes < 10)
-    //            timeText = "0";
+            if (timerMinutes == 0 || timerMinutes < 10)
+                timeText = "0";
 
-    //        timeText += timerMinutes.ToString() + ":";
+            timeText += timerMinutes.ToString() + ":";
 
-    //        if (timerSeconds == 0 || timerSeconds < 10)
-    //            timeText += "0";
+            if (timerSeconds == 0 || timerSeconds < 10)
+                timeText += "0";
 
-    //        timeText += timerSeconds.ToString();
-    //        //Name Printage
-    //        activeScoreNamesText.text += score.Key;
-    //        activeScoreNamesText.text += '\n';
-    //        //DKStatus Printage
-    //        if (score.Value.getDKStatus())
-    //            activeDKSText.text += "O";
-    //        activeDKSText.text += "\n";
-    //        activeRoundsText.text += score.Value.getRoundsWon();
-    //        activeRoundsText.text += "\n";
+            timeText += timerSeconds.ToString();
+            //Name Printage
+            activeScoreNamesText.text += score.Key;
+            activeScoreNamesText.text += '\n';
+            //DKStatus Printage
+            if (score.Value.getDKStatus())
+                activeDKSText.text += "O";
+            activeDKSText.text += "\n";
+            activeRoundsText.text += score.Value.getRoundsWon();
+            activeRoundsText.text += "\n";
 
-    //        activeTimeHeldText.text += timeText + '\n';
-    //    }
+            activeScoreText.text += timeText + '\n';
+        }
 
-    //}
-    
+    }
+
     public void TallyActiveScores() //For Local scoreboards
     {
         foreach (var player in PlayerManager.instance.players)
         {
-            
+
             player.GetComponent<ControllerTest>().activeScoreNamesText.text = string.Empty;
             player.GetComponent<ControllerTest>().activeTimeHeldText.text = string.Empty;
             player.GetComponent<ControllerTest>().activeRoundsText.text = string.Empty;
@@ -1081,7 +1088,7 @@ public class GameManager : MonoBehaviour
                 player.GetComponent<ControllerTest>().activeRoundsText.text += "\n";
                 player.GetComponent<ControllerTest>().activeTimeHeldText.text += timeText + '\n';
             }
-        }        
+        }
 
     }
 

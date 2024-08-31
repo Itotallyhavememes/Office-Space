@@ -32,6 +32,7 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] Slider timerSlider;
     [SerializeField] GameObject roundsDropdown;
     [SerializeField] GameObject threePlayerBlockout;
+    [SerializeField] GameObject globalScoreBoard;
     [SerializeField] GameObject TwoPlayBlock1;
     [SerializeField] GameObject TwoPlayBlock2;
 
@@ -238,6 +239,7 @@ public class PlayerManager : MonoBehaviour
         else if (players.Count == 3)
         {
             threePlayerBlockout.SetActive(false);
+            globalScoreBoard.SetActive(false);
         }
 
     }
@@ -252,6 +254,7 @@ public class PlayerManager : MonoBehaviour
         else if (players.Count == 3)
         {
             threePlayerBlockout.SetActive(true);
+            globalScoreBoard.SetActive(true);
         }
     }
 }

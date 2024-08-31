@@ -29290,7 +29290,8 @@ MonoBehaviour:
   botsDropdown: {fileID: 2554222924471759714}
   timerSlider: {fileID: 1634090617345999489}
   roundsDropdown: {fileID: 0}
-  playerBlockout: {fileID: 401661095}
+  threePlayerBlockout: {fileID: 401661095}
+  globalScoreBoard: {fileID: 0}
   TwoPlayBlock1: {fileID: 732666618}
   TwoPlayBlock2: {fileID: 342490406}
   matchSettingsMenu: {fileID: 7582829895097461547}
