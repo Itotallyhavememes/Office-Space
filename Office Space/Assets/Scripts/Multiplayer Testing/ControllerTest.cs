@@ -832,7 +832,7 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
             if (scrollValue > 0)
             {
                 selectedWeapon++;
-               // aud.PlayOneShot(audWeaponScroll, audWeaponScrollVol);
+                // aud.PlayOneShot(audWeaponScroll, audWeaponScrollVol);
                 if (selectedWeapon > weaponList.Count - 1)
                     selectedWeapon = 0;
 
@@ -842,7 +842,7 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
             else if (scrollValue < 0)
             {
                 selectedWeapon--;
-              //  aud.PlayOneShot(audWeaponScroll, audWeaponScrollVol);
+                //  aud.PlayOneShot(audWeaponScroll, audWeaponScrollVol);
                 if (selectedWeapon < 0)
                     selectedWeapon = weaponList.Count - 1;
 
@@ -1107,6 +1107,7 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
     public void ActivateShopUI()
     {
         //ACTIVATE SHOP UI IN EACH PLAYER
+        PlayerManager.instance.DeactivateWeaponCamera();
         GameManager.instance.eventSystem.SetActive(false);
         menuShop.SetActive(true);
         //Added to the code to reset each player's player root 
@@ -1132,12 +1133,14 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
             GameManager.instance.StateUnpause();
             StartCoroutine(GameManager.instance.Timer());
             GameManager.instance.playersReady = 0;
+            GameManager.instance.InstantiateGlobalScoreBoard();
+            GameManager.instance.InstantiateLocalScoreBoard();
+            GameManager.instance.timerUI.SetActive(true);
+            PlayerManager.instance.ReactivateWeaponCamera();
         }
         //Call InstantaiteScoreBoard here to make sure all entities are accounted for
-        GameManager.instance.InstantiateGlobalScoreBoard();
-        GameManager.instance.InstantiateLocalScoreBoard();
         //GameManager.instance.SetDKTimer((int)PlayerManager.instance.timerSlider.value * 60);
-        GameManager.instance.timerUI.SetActive(true);
+
     }
 
     public void DisplayScoreboard(InputAction.CallbackContext context)

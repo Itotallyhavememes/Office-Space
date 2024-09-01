@@ -292,4 +292,20 @@ public class PlayerManager : MonoBehaviour
             globalScoreBoard.SetActive(true);
         }
     }
+
+    public void DeactivateWeaponCamera()
+    {
+        foreach(var player in players)
+        {
+            player.GetComponent<ControllerTest>().weaponCamera.gameObject.SetActive(false);
+        }
+    }
+    
+    public void ReactivateWeaponCamera()
+    {
+        foreach (var player in players)
+        {
+            player.GetComponent<ControllerTest>().weaponCamera.gameObject.SetActive(true);
+        }
+    }
 }
