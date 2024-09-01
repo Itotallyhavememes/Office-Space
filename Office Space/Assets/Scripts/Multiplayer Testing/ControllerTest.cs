@@ -1132,7 +1132,8 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
             GameManager.instance.playersReady = 0;
         }
         //Call InstantaiteScoreBoard here to make sure all entities are accounted for
-        GameManager.instance.InstantiateScoreBoard();
+        GameManager.instance.InstantiateGlobalScoreBoard();
+        GameManager.instance.InstantiateLocalScoreBoard();
         //GameManager.instance.SetDKTimer((int)PlayerManager.instance.timerSlider.value * 60);
         GameManager.instance.timerUI.SetActive(true);
     }

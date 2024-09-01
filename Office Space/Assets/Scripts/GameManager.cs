@@ -47,7 +47,7 @@ public class GameManager : MonoBehaviour
     [Range(0, 1)][SerializeField] float audGameOverVol2;
     [Range(0, 1)] public float audwrongButtonVol;
     [SerializeField] GameObject deathPoof;
-    
+
 
     [Header("Main Menu First Selected Options")]
     [SerializeField] GameObject mainMenuFirst;
@@ -259,7 +259,7 @@ public class GameManager : MonoBehaviour
             //timerUI.SetActive(true);
             //RandomizeVending();
             //StartCoroutine(Timer());
-            //InstantiateScoreBoard();
+            //InstantiateGlobalScoreBoard();
             donutDropItem.transform.position = donutDropStarter.transform.position;
         }
 
@@ -320,7 +320,7 @@ public class GameManager : MonoBehaviour
     }
 
     //INSTANTIATING SCOREBOARD PLACEMENTS BASED OFF NUMBER OF PLAYERS:
-    public void InstantiateScoreBoard()
+    public void InstantiateGlobalScoreBoard() //For Global Scoreboard
     {
         scoreBoardPlacementsText.text = string.Empty;
         activePlaceText.text = string.Empty;
@@ -361,6 +361,44 @@ public class GameManager : MonoBehaviour
         }
         //scoreBoardPlacementsText.color = Color.yellow;
     }
+
+    public void InstantiateLocalScoreBoard() //For Local Scoreboard
+    {
+        foreach (var player in PlayerManager.instance.players)
+        {
+            player.GetComponent<ControllerTest>().activePlaceText.text = string.Empty;
+            Debug.Log(statsTracker.Count.ToString());
+            for (int i = 0; i < statsTracker.Count; ++i)
+            {
+                player.GetComponent<ControllerTest>().activePlaceText.text += i + 1;
+                switch (i)
+                {
+                    case 0:
+                        {
+                            player.GetComponent<ControllerTest>().activePlaceText.text += "st";
+                            break;
+                        }
+                    case 1:
+                        {
+                            player.GetComponent<ControllerTest>().activePlaceText.text += "nd";
+                            break;
+                        }
+                    case 2:
+                        {
+                            player.GetComponent<ControllerTest>().activePlaceText.text += "rd";
+                            break;
+                        }
+                    default:
+                        {
+                            player.GetComponent<ControllerTest>().activePlaceText.text += "th";
+                            break;
+                        }
+                }
+                player.GetComponent<ControllerTest>().activePlaceText.text += "\n";
+            }
+        }
+    }
+
     //METHOD FOR RESETTING EVERYTHING WITHOUT RESETTING PARTICPANTSTATS
     public void ResetTheRound()
     {
@@ -384,13 +422,13 @@ public class GameManager : MonoBehaviour
             //player.GetComponent<ControllerTest>().menuShop.GetComponent<Shop>().updateMoneyCount();
             player.GetComponent<ControllerTest>().ActivateShopUI();
         }
-        
+
         if (isThereDonutKing)
         {
             TheDonutKing.transform.position = new Vector3(0, 0, 0);
             dropTheDonut(TheDonutKing);
         }
-        else if(!isThereDonutKing /*&& donutDropItem.gameObject.transform.position != new Vector3(0, 1, 0)*/)
+        else if (!isThereDonutKing /*&& donutDropItem.gameObject.transform.position != new Vector3(0, 1, 0)*/)
         {
             Destroy(donutDropItem.gameObject);
             Instantiate(donutDropItem, new Vector3(0, 1, 0), new Quaternion());
@@ -438,7 +476,7 @@ public class GameManager : MonoBehaviour
             //if(doorComp)
             doorComp.ResetDoors();
         }
-        
+
     }
 
     void RandomizeVending()
@@ -900,7 +938,7 @@ public class GameManager : MonoBehaviour
             //RESULT SUBMENU:
             //-Change Result Text to say ROUND OVER
             //-SetActive(true) for NEXT ROUND
-            //InstantiateScoreBoard();
+            //InstantiateGlobalScoreBoard();
             scoreBoardTitleText.text = "TIME'S UP!";
             foreach (var score in scoreBoard)
             {
@@ -1225,7 +1263,7 @@ public class GameManager : MonoBehaviour
         statsTracker[donutDropper.name].updateDKStatus();
         PriorityPoint.Clear();
         PriorityPoint.Add(donutDropItem.transform);
-        
+
         // //DebugLog(donutDropper.name.ToString() + " : " + statsTracker[donutDropper.name].getAllStats());
         aud.PlayOneShot(audDonutDrop, audDonutDropVol);
     }

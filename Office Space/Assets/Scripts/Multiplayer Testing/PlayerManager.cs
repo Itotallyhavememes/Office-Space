@@ -161,7 +161,7 @@ public class PlayerManager : MonoBehaviour
             Instantiate(enemy, spawnPoints[i + players.Count].position, spawnPoints[i + players.Count].rotation);
             //enemy.SetActive(true);
         }
-        //GameManager.instance.InstantiateScoreBoard();
+        //GameManager.instance.InstantiateGlobalScoreBoard();
     }
 
     public void StartMatch()
