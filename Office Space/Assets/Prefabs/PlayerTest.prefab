@@ -1407,7 +1407,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1292069436461648624
 Transform:
   m_ObjectHideFlags: 0
@@ -15781,6 +15781,8 @@ MonoBehaviour:
   aud: {fileID: 2048329367369337838}
   audShopBuy: {fileID: 8300000, guid: 66acfeeb85899a4448985c93af8e0b45, type: 3}
   audShopVol: 0.925
+  audNoMoney: {fileID: 8300000, guid: fcc225802cf1a3146a38aa44f0c3e6ab, type: 3}
+  audNMVol: 1
 --- !u!82 &7428551683726850378
 AudioSource:
   m_ObjectHideFlags: 0

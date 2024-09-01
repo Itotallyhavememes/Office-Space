@@ -33,6 +33,8 @@ public class Shop : MonoBehaviour
     [SerializeField] AudioSource aud;
     [SerializeField] AudioClip audShopBuy;
     [Range(0, 1)][SerializeField] float audShopVol;
+    [SerializeField] AudioClip audNoMoney;
+    [Range(0, 1)][SerializeField] float audNMVol;
     //private void Awake()
     //{
     //    //instance = this;
@@ -72,17 +74,30 @@ public class Shop : MonoBehaviour
     {
         if (GameManager.instance.statsTracker[myPlayer.name].getMoneyTotal() >= shotgunPrice)
         {
+            MsgField.text = string.Empty;
             for (int i = 0; i < playerCT.weaponList.Count; i++)
             {
                 if (playerCT.weaponList[i].weaponModel == shotgun.weaponModel && playerCT.weaponList[i].currentAmmo >= playerCT.weaponList[i].startAmmo)
                 {
+                    aud.PlayOneShot(audNoMoney, audNMVol);
+                    MsgField.text = "AMMO ALREADY FULL";
+                    MsgField.color = Color.red;
+                    
                     return;
                 }
             }
+            MsgField.text = "TERRY'S CANNON PURCHASED!";
+            MsgField.color = Color.yellow;
             aud.PlayOneShot(audShopBuy, audShopVol);
             playerCT.GetWeaponStats(shotgun);
             GameManager.instance.statsTracker[myPlayer.name].withdrawMoney(shotgunPrice);
             updateMoneyCount();
+        }
+        else
+        {
+            aud.PlayOneShot(audNoMoney, audNMVol);
+            MsgField.text = "NOT ENOUGH MONEY";
+            MsgField.color = Color.red;
         }
     }
 
@@ -90,17 +105,30 @@ public class Shop : MonoBehaviour
     {
         if (GameManager.instance.statsTracker[myPlayer.name].getMoneyTotal() >= SMGPrice)
         {
+            MsgField.text = string.Empty;
             for (int i = 0; i < playerCT.weaponList.Count; i++)
             {
                 if (playerCT.weaponList[i].weaponModel == SMG.weaponModel && playerCT.weaponList[i].currentAmmo >= playerCT.weaponList[i].startAmmo)
                 {
+                    aud.PlayOneShot(audNoMoney, audNMVol);
+                    MsgField.text = "AMMO ALREADY FULL";
+                    MsgField.color = Color.red;
+                    
                     return;
                 }
             }
+            MsgField.text = "FRED'S SMG PURCHASED!";
+            MsgField.color = Color.yellow;
             aud.PlayOneShot(audShopBuy, audShopVol);
             playerCT.GetWeaponStats(SMG);
             GameManager.instance.statsTracker[myPlayer.name].withdrawMoney(SMGPrice);
             updateMoneyCount();
+        }
+        else
+        {
+            aud.PlayOneShot(audNoMoney, audNMVol);
+            MsgField.text = "NOT ENOUGH MONEY";
+            MsgField.color = Color.red;
         }
     }
 
@@ -108,49 +136,91 @@ public class Shop : MonoBehaviour
     {
         if (GameManager.instance.statsTracker[myPlayer.name].getMoneyTotal() >= riflePrice)
         {
+            MsgField.text = string.Empty;
             for (int i = 0; i < playerCT.weaponList.Count; i++)
             {
                 if (playerCT.weaponList[i].weaponModel == rifle.weaponModel && playerCT.weaponList[i].currentAmmo >= playerCT.weaponList[i].startAmmo)
                 {
+                    aud.PlayOneShot(audNoMoney, audNMVol);
+                    MsgField.text = "AMMO ALREADY FULL";
+                    MsgField.color = Color.red;
+                    
                     return;
                 }
             }
+            MsgField.text = "NORMA'S RIFLE PURCHASED!";
+            MsgField.color = Color.yellow;
             aud.PlayOneShot(audShopBuy, audShopVol);
             playerCT.GetWeaponStats(rifle);
             GameManager.instance.statsTracker[myPlayer.name].withdrawMoney(riflePrice);
             updateMoneyCount();
+        }
+        else
+        {
+            aud.PlayOneShot(audNoMoney, audNMVol);
+            MsgField.text = "NOT ENOUGH MONEY";
+            MsgField.color = Color.red;
         }
     }
 
     public void shurikenButton()
     {
         if (GameManager.instance.statsTracker[myPlayer.name].getMoneyTotal() >= shurikenPrice)
-        {          
+        {
+            MsgField.text = string.Empty;
             for (int i = 0; i < playerCT.weaponList.Count; i++)
             {                
                 if (playerCT.weaponList[i].weaponModel == shuriken.weaponModel && playerCT.weaponList[i].currentAmmo >= playerCT.weaponList[i].startAmmo)
                 {
                     //Display full ammo message
+                    aud.PlayOneShot(audNoMoney, audNMVol);
+                    MsgField.text = "AMMO ALREADY FULL";
+                    MsgField.color = Color.red;
+                    
                     return;
                 }
             }
+            MsgField.text = "PAPER STARS PURCHASED!";
+            MsgField.color = Color.yellow;
             aud.PlayOneShot(audShopBuy, audShopVol);
             playerCT.GetWeaponStats(shuriken);
             GameManager.instance.statsTracker[myPlayer.name].withdrawMoney(shurikenPrice); 
             updateMoneyCount();
-        }        
+        }
+        else
+        {
+            aud.PlayOneShot(audNoMoney, audNMVol);
+            MsgField.text = "NOT ENOUGH MONEY";
+            MsgField.color = Color.red;
+        }
     }
 
     public void rubberbandBallButton()
     {
+        MsgField.text = string.Empty;
         if (GameManager.instance.statsTracker[myPlayer.name].getMoneyTotal() >= rubberbandBallPrice && myPlayer.GetComponent<ItemThrow>().rubberBallCount < myPlayer.GetComponent<ItemThrow>().GetRubberBallMax())
         {
+            MsgField.text = "RUBBER BOMB PURCHASED!";
+            MsgField.color = Color.yellow;
             aud.PlayOneShot(audShopBuy, audShopVol);
             GameManager.instance.statsTracker[myPlayer.name].withdrawMoney(rubberbandBallPrice);
             updateMoneyCount();
             ItemThrow playerCTI = myPlayer.GetComponent<ItemThrow>();
             if (playerCTI != null)
                 playerCTI.rubberBallCount++;
+        }
+        else if (GameManager.instance.statsTracker[myPlayer.name].getMoneyTotal() < rubberbandBallPrice)
+        {
+            aud.PlayOneShot(audNoMoney, audNMVol);
+            MsgField.text = "NOT ENOUGH MONEY";
+            MsgField.color = Color.red;
+        }
+        else
+        {
+            aud.PlayOneShot(audNoMoney, audNMVol);
+            MsgField.text = "AMMO ALREADY FULL";
+            MsgField.color = Color.red;
+            
         }
         myPlayer.GetComponent<ItemThrow>().updateGrenadeUI();
     }

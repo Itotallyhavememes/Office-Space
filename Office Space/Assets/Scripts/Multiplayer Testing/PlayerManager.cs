@@ -220,12 +220,12 @@ public class PlayerManager : MonoBehaviour
             GameManager.instance.aud.PlayOneShot(GameManager.instance.wrongButton, GameManager.instance.audwrongButtonVol);
             if (players.Count == 0)
             {
-                MatchSetMsg.text = "MINIMUM 1 REAL PLAYER";
+                MatchSetMsg.text = "NO REAL PLAYER DETECTED";
                 MatchSetMsg.color = Color.red;
             }
             else if (players.Count + botCount == 1)
             {
-                MatchSetMsg.text = "NEED 1 BOT OR 2 REAL PLAYERS";
+                MatchSetMsg.text = "ADD 1 BOT OR 1 REAL PLAYER";
                 MatchSetMsg.color = Color.red;
             }
         }
