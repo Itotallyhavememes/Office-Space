@@ -55,10 +55,10 @@ public class Vending : MonoBehaviour, IVend
             ambientIsPlaying = true;
         }
 
-        if (GameManager.instance.canVend && inTrigger.Count > 0)
-            interactionSprite.SetActive(true);
-        else if (!GameManager.instance.canVend && inTrigger.Count > 0)
-            interactionSprite.SetActive(false);
+        //if (GameManager.instance.canVend && inTrigger.Count > 0)
+        //    interactionSprite.SetActive(true);
+        //else if (!GameManager.instance.canVend && inTrigger.Count > 0)
+        //    interactionSprite.SetActive(false);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -70,7 +70,7 @@ public class Vending : MonoBehaviour, IVend
                 if (other.gameObject == item)
                     return;
 
-            interactionSprite.SetActive(true);
+            //interactionSprite.SetActive(true);
             playerInCollider = true;
 
             ControllerTest playerCT = other.GetComponent<ControllerTest>();
@@ -87,13 +87,13 @@ public class Vending : MonoBehaviour, IVend
     private void OnTriggerStay(Collider other)
     {
 
-        if (other.CompareTag("Player") && GameManager.instance.canVend && !interactionSprite.activeSelf)
+        if (other.CompareTag("Player") && GameManager.instance.canVend /*&& !interactionSprite.activeSelf*/)
         {
             foreach (var person in inTrigger)
                 if (other.gameObject == person)
                     return;
 
-            interactionSprite.SetActive(true);
+            //interactionSprite.SetActive(true);
             playerInCollider = true;
 
             ControllerTest playerCT = other.GetComponent<ControllerTest>();
@@ -127,7 +127,7 @@ public class Vending : MonoBehaviour, IVend
 
             if (inTrigger.Count <= 0)
             {
-                interactionSprite.SetActive(false);
+                //interactionSprite.SetActive(false);
                 playerInCollider = false;
             }
         }
@@ -160,7 +160,7 @@ public class Vending : MonoBehaviour, IVend
 
             AudSrcInteract.PlayOneShot(interact);
             GameManager.instance.StartVendingMachineCooldown();
-            interactionSprite.SetActive(false);
+            //interactionSprite.SetActive(false);
             ambientIsPlaying = false;
         }
     }

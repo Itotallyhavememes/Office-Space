@@ -6815,11 +6815,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.16, y: 1.94, z: 0.6}
   m_Center: {x: 0.03, y: 1.09, z: 0}
---- !u!1 &1425291246 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3516850555123272402, guid: 1d594cdbe6f034c4198880c780c3417d, type: 3}
-  m_PrefabInstance: {fileID: 401661093}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1433812882 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 1e861bfed19ef9e419528c4862abb705, type: 3}
@@ -31047,11 +31042,16 @@ MonoBehaviour:
   botsDropdown: {fileID: 2554222924471759714}
   timerSlider: {fileID: 1634090617345999489}
   roundsDropdown: {fileID: 0}
-  threePlayerBlockout: {fileID: 1425291246}
-  globalScoreBoard: {fileID: 4408299119649803603}
+  threePlayerBlockout: {fileID: 0}
+  globalScoreBoard: {fileID: 0}
   TwoPlayBlock1: {fileID: 732666618}
   TwoPlayBlock2: {fileID: 342490406}
   MatchSetMsg: {fileID: 1573249540}
+  playerMapIconsMat:
+  - {fileID: 2100000, guid: d3376d14c44b6534cacecb24c5a93cb1, type: 2}
+  - {fileID: 2100000, guid: e12ab9c503b2e2b4f8e2394ee6c587fc, type: 2}
+  - {fileID: 2100000, guid: befc0d74172bb3e438c150ded7119987, type: 2}
+  - {fileID: 2100000, guid: 12ed14d74998fd94abaf2f8a4d9ba0ad, type: 2}
   matchSettingsMenu: {fileID: 7582829895097461547}
   enemyPrefabs:
   - {fileID: 4464568196514872736, guid: c4aec7654a823f840ac1a7eceebdfb45, type: 3}
@@ -40470,6 +40470,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerTest
       objectReference: {fileID: 0}
+    - target: {fileID: 737468669046305203, guid: 4f7b85e97e3894c44824643b825360c2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1292069436461648624, guid: 4f7b85e97e3894c44824643b825360c2, type: 3}
       propertyPath: m_LocalPosition.x
       value: -9.52
@@ -40510,6 +40514,34 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3520484422368205635, guid: 4f7b85e97e3894c44824643b825360c2, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 941448949487458196}
+    - target: {fileID: 4600395556228476705, guid: 4f7b85e97e3894c44824643b825360c2, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 941448949487458196}
+    - target: {fileID: 4883371417893774992, guid: 4f7b85e97e3894c44824643b825360c2, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 941448949487458196}
+    - target: {fileID: 5009473004830427456, guid: 4f7b85e97e3894c44824643b825360c2, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 135675884610051953}
+    - target: {fileID: 5857213163408658590, guid: 4f7b85e97e3894c44824643b825360c2, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 941448949487458196}
+    - target: {fileID: 6542829182006140814, guid: 4f7b85e97e3894c44824643b825360c2, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 941448949487458196}
+    - target: {fileID: 7343835980920083626, guid: 4f7b85e97e3894c44824643b825360c2, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 941448949487458196}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -63111,7 +63143,7 @@ MonoBehaviour:
   isThereDonutKing: 0
   TheDonutKing: {fileID: 0}
   playersReady: 0
-  startingMoney: 150
+  startingMoney: 9999
   CurrRound: 0
   playerSpawn: {fileID: 1846228661}
   checkPointPos: {fileID: 1440318509537524146}

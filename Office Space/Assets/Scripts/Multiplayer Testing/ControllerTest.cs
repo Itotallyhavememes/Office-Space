@@ -25,6 +25,8 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
     [SerializeField] LayerMask ignoreMask;
     [SerializeField] Animator anim;
     [SerializeField] float animTransitSpeed;
+    [SerializeField] GameObject interactionController;
+    [SerializeField] GameObject interactionKeyboard;
 
     float agentSpeedVert;
     float agentSpeedHori;
@@ -228,6 +230,8 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
     public bool ScoreboardTriggered { get; private set; }
 
     GameObject itemToInteract;
+    [SerializeField] bool isController;
+    GameObject interactUItoShow;
 
     private void Awake()
     {
@@ -283,6 +287,17 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
         //updateGrenadeUI();
 
         //globalUI = GameManager.instance.globalUI;
+
+        if (gameObject.GetComponent<PlayerInput>().currentControlScheme == "Keyboard&Mouse")
+        {
+            isController = false;
+            interactUItoShow = interactionKeyboard;
+        }
+        else
+        {
+            isController = true;
+            interactUItoShow = interactionController;
+        }
     }
 
     private void Update()
@@ -1182,6 +1197,11 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
     public void RecieveInteraction(GameObject interactable)
     {
         itemToInteract = interactable;
+
+        if (itemToInteract != null)
+            interactUItoShow.SetActive(true);
+        else
+            interactUItoShow.SetActive(false);
     }
 
     public void InteractWithAction(InputAction.CallbackContext context)
