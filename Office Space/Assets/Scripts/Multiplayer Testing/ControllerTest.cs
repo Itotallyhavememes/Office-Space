@@ -233,6 +233,8 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
     [SerializeField] bool isController;
     GameObject interactUItoShow;
 
+    float origFOV;
+
     private void Awake()
     {
 
@@ -298,6 +300,8 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
             isController = true;
             interactUItoShow = interactionController;
         }
+
+        origFOV = playerCam.fieldOfView;
     }
 
     private void Update()
@@ -988,16 +992,34 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
         speedCoroutine = StartCoroutine(SpeedPowerUp(stats));
     }
 
+    public void ResetSpeed()
+    {
+        if (isSprinting)
+        {
+            speed = origSpeed * sprintMod;
+        }
+        else
+        {
+                speed = origSpeed;
+        }
+
+        electricParticles.SetActive(false);
+        playerCam.fieldOfView = origFOV;
+        weaponCamera.fieldOfView = origFOV;
+    }
+
     IEnumerator SpeedPowerUp(SpeedBuff stats) //Triggers buffs for a good cup of Joe (mediocre office brew)
     {
-        float origFOV = playerCam.fieldOfView;
+        
 
         electricParticles.SetActive(true);
         playerCam.fieldOfView = speedFOVEffect;
+        weaponCamera.fieldOfView = speedFOVEffect;
         AddSpeed(stats.speedModifier);
         yield return new WaitForSeconds(stats.speedBoostTime);
         AddSpeed(-stats.speedModifier);
         playerCam.fieldOfView = origFOV;
+        weaponCamera.fieldOfView = origFOV;
         electricParticles.SetActive(false);
     }
 
@@ -1043,6 +1065,7 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
                 weaponModel.SetActive(false);
                 deathCamera.gameObject.SetActive(true);
                 //deathPoof.SetActive(true);
+                ResetSpeed();
             }
         }
     }

@@ -840,6 +840,8 @@ public class GameManager : MonoBehaviour
                     enemy.SetActive(false);
                 }
             }
+            Cursor.lockState = CursorLockMode.Confined;
+            Cursor.visible = true;
         }
     }
 
@@ -1292,7 +1294,7 @@ public class GameManager : MonoBehaviour
 
     public void DownWithTheDonutKing()
     {
-        if (isThereDonutKing)
+        //if (isThereDonutKing)
             isThereDonutKing = false;
         if (DKTimerCoroutine != null)
         {

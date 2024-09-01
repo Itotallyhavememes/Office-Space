@@ -50,8 +50,8 @@ public class ParticipantStats
     public void updateDKStatus() 
     { 
         isDonutKing = !isDonutKing;
-        if (!GameManager.instance.isThereDonutKing)
-            GameManager.instance.isThereDonutKing = true;
+        //if (!GameManager.instance.isThereDonutKing)
+        //    GameManager.instance.isThereDonutKing = true;
     }
     public bool getDKStatus()
     {
