@@ -60216,7 +60216,7 @@ MonoBehaviour:
   roundEnded: 0
   menuActive: {fileID: 0}
   menuScore: {fileID: 2246749233854779456}
-  scoreDisplay: {fileID: 0}
+  scoreDisplay: {fileID: 2246749233854779456}
   activeScoreNamesText: {fileID: 5323488828801527922}
   activeScoreText: {fileID: 4475246745735782104}
   activeRoundsText: {fileID: 7329520263641525809}

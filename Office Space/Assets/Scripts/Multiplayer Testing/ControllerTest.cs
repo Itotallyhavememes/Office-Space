@@ -114,7 +114,8 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
     public List<WeaponStats> weaponList;
     [SerializeField] GameObject playerAim;
     [SerializeField] float aimBallDist;
-    [SerializeField] GameObject weaponModel;
+    public GameObject weaponModel;
+    public Camera weaponCamera;
     [SerializeField] WeaponStats starterWeapon;
     [SerializeField] float shootRate;
     [SerializeField] int shootDamage;

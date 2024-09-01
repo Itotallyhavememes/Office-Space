@@ -178,6 +178,8 @@ public class PlayerManager : MonoBehaviour
                 players[i].GetComponent<Animator>().enabled = true;
                 players[i].GetComponent<ControllerTest>().deathCamera.rect
                     = players[i].GetComponent<ControllerTest>().playerCamera.rect;
+                //players[i].GetComponent<ControllerTest>().weaponCamera.rect
+                //    = players[i].GetComponent<ControllerTest>().playerCamera.rect;
                 //players[i].GetComponent<ControllerTest>().UI.SetActive(true);
                 //ACTIVATE SHOP UI
                 //players[i].GetComponent<ControllerTest>().StartCoroutine(players[i].GetComponent<ControllerTest>().DisableControlsTimer());
@@ -190,15 +192,19 @@ public class PlayerManager : MonoBehaviour
                 players[0].GetComponent<ControllerTest>().playerCamera.rect = new Rect(0.25f, 0.5f, 0.5f, 0.5f);
                 players[0].GetComponent<ControllerTest>().deathCamera.rect
                     = players[0].GetComponent<ControllerTest>().playerCamera.rect;
+                players[0].GetComponent<ControllerTest>().weaponCamera.rect
+                    = players[0].GetComponent<ControllerTest>().playerCamera.rect;
 
                 players[1].GetComponent<ControllerTest>().playerCamera.rect = new Rect(0.25f, 0, 0.5f, 0.5f);
                 players[1].GetComponent<ControllerTest>().deathCamera.rect
+                    = players[1].GetComponent<ControllerTest>().playerCamera.rect;
+                players[1].GetComponent<ControllerTest>().weaponCamera.rect 
                     = players[1].GetComponent<ControllerTest>().playerCamera.rect;
             }
 
             matchStarted = true;
             GameManager.instance.SetDKTimer((int)timerSlider.value * 60);
-            
+            AssignLayers();
             //GameManager.instance.SetDKTimer(15);
         }
         else
@@ -218,6 +224,20 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
+    void AssignLayers()
+    {
+        //gameObject.layer uses only integers, but we can turn a layer name into a layer integer using LayerMask.NameToLayer()
+
+        for(int i = 0; i < players.Count; i++)
+        {
+            int playerLayer = LayerMask.NameToLayer("Player" + (i + 1).ToString());
+            players[i].GetComponent<ControllerTest>().weaponModel.layer = playerLayer;
+
+            // Switch on layer 14, leave others as-is
+            players[i].GetComponent<ControllerTest>().weaponCamera.cullingMask |= (1 << playerLayer);
+        }
+        
+    }
 
     public void ResetPlayerRoots()
     {
