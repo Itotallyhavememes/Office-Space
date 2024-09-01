@@ -199,7 +199,8 @@ public class GameManager : MonoBehaviour
     public int worldDonutCount;
     public int worldItemCount;
 
-    Coroutine coroutine;
+    Coroutine spawnerCoroutine;
+    Coroutine DKTimerCoroutine;
 
     //bool isShopDisplayed;
 
@@ -313,9 +314,9 @@ public class GameManager : MonoBehaviour
             //DisplayInfoScreen();
         }
 
-        //if (deadTracker.Count > 0 && coroutine == null) //spawn logic
+        //if (deadTracker.Count > 0 && spawnerCoroutine == null) //spawn logic
         //{
-        //    coroutine = StartCoroutine(SpawnTheDead());
+        //    spawnerCoroutine = StartCoroutine(SpawnTheDead());
         //}
     }
 
@@ -604,7 +605,7 @@ public class GameManager : MonoBehaviour
         statsTracker[self.name].updateDeaths();
         statsTracker[self.name].updateKDR();
 
-        coroutine = StartCoroutine(SpawnTheDead());
+        spawnerCoroutine = StartCoroutine(SpawnTheDead());
         //  //DebugLog(self.name.ToString() + statsTracker[self.name].getAllStats().ToString());
         // //DebugLog(self.name + "DA: " + statsTracker[self.name].getDeaths().ToString());
         //if (statsTracker[self.name].getDKStatus() == true)
@@ -663,7 +664,7 @@ public class GameManager : MonoBehaviour
             deadTracker.RemoveAt(0); //pop front
             //}
 
-            coroutine = null;
+            spawnerCoroutine = null;
         }
     }
     //method to search through tracker and return object
@@ -820,8 +821,8 @@ public class GameManager : MonoBehaviour
             worldCamera.gameObject.SetActive(true);
             worldCamera.GetComponent<AudioListener>().enabled = false;
 
-            if (coroutine != null)
-                StopCoroutine(coroutine);
+            if (spawnerCoroutine != null)
+                StopCoroutine(spawnerCoroutine);
             //Code End for World Camera
 
             TallyFinalScores();
@@ -1285,14 +1286,20 @@ public class GameManager : MonoBehaviour
         if (!isThereDonutKing)
             isThereDonutKing = true;
         //DebugLog("Starting TIMER!");
-        StartCoroutine(DKTimer());
+        if (DKTimerCoroutine == null)
+            DKTimerCoroutine = StartCoroutine(DKTimer());
     }
 
     public void DownWithTheDonutKing()
     {
         if (isThereDonutKing)
             isThereDonutKing = false;
-        StopCoroutine(DKTimer());
+        if (DKTimerCoroutine != null)
+        {
+            StopCoroutine(DKTimerCoroutine);
+            DKTimerCoroutine = null;
+        }
+            
         //DebugLog("Ending TIMER!");
     }
 
