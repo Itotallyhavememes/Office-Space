@@ -12,5 +12,10 @@ public class AudioManger : MonoBehaviour
         musicSource.Play();
     }
 
+    private void Update()
+    {
+        if (!musicSource.isPlaying)
+            musicSource.Play();
+    }
 
 }
