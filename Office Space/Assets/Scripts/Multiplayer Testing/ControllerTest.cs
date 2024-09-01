@@ -226,6 +226,7 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
     public bool InteractTriggered { get; private set; }
     public bool ScoreboardTriggered { get; private set; }
 
+    GameObject itemToInteract;
 
     private void Awake()
     {
@@ -384,7 +385,7 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
         pauseAction.performed += PauseEvent;
         swapWeaponsContAction.performed += WeaponSelectController;
         swapWeaponsScrollAction.performed += WeaponSelectMouse;
-        interactAction.Enable();
+        interactAction.performed += InteractWithAction;
         scoreboardAction.performed += DisplayScoreboard;
         scoreboardAction.canceled += DeactivateScoreboard;
     }
@@ -408,7 +409,7 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
         pauseAction.performed -= PauseEvent;
         swapWeaponsContAction.performed -= WeaponSelectController;
         swapWeaponsScrollAction.performed -= WeaponSelectMouse;
-        interactAction.Disable();
+        interactAction.performed -= InteractWithAction;
         scoreboardAction.performed -= DisplayScoreboard;
         scoreboardAction.canceled -= DeactivateScoreboard;
     }
@@ -1152,5 +1153,23 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
     public bool GetLifeState()
     {
         return isDead;
+    }
+
+    public void RecieveInteraction(GameObject interactable)
+    {
+        itemToInteract = interactable;
+    }
+
+    public void InteractWithAction(InputAction.CallbackContext context)
+    {
+        if (itemToInteract != null)
+        {
+            IVend vending = itemToInteract.GetComponent<IVend>();
+
+            if (vending != null)
+            {
+                vending.VendItem();
+            }
+        }
     }
 }
