@@ -1136,6 +1136,26 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
         return HPOrig;
     }
 
+    public float GetMouseSensitivity()
+    {
+        return mouseSensitivity;
+    }
+    
+    public float GetControllerSensitivity()
+    {
+        return controllerSensitivity;
+    }
+
+    public void SetMouseSensitivity(float sensitivity)
+    {
+        mouseSensitivity = sensitivity;
+    }
+    
+    public void SetControllerSensitivity(float sensitivity)
+    {
+        controllerSensitivity = sensitivity;
+    }
+
     //public IEnumerator DisableControlsTimer() //Does not work
     //{
     //    this.GetComponent<PlayerInput>().enabled = false;

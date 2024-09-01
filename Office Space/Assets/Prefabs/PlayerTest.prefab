@@ -817,7 +817,7 @@ GameObject:
   - component: {fileID: 8921638118154677735}
   - component: {fileID: 2458499341192766796}
   m_Layer: 14
-  m_Name: UI
+  m_Name: Local UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

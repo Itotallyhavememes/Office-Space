@@ -48,6 +48,9 @@ public class GameManager : MonoBehaviour
     [Range(0, 1)] public float audwrongButtonVol;
     [SerializeField] GameObject deathPoof;
 
+    [Header("Sensitivity Bar")]
+    public Slider mouseSensitivity;
+    public Slider controllerSensitivity;
 
     [Header("Main Menu First Selected Options")]
     [SerializeField] GameObject mainMenuFirst;
@@ -142,7 +145,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject RetryButton;
     [SerializeField] GameObject NextRoundButton;
 
-    //Loading UI
+    [Header("Loading UI")]
     [SerializeField] public GameObject loadingScreen;
     [SerializeField] public Image loadingBar;
     [SerializeField] public float amountFilled;
@@ -738,6 +741,8 @@ public class GameManager : MonoBehaviour
             player.GetComponent<ControllerTest>().multEventSystem.SetSelectedGameObject(pauseFirst);
             //EventSystem.current.SetSelectedGameObject(pauseFirst);
             eventSystem.GetComponent<EventSystem>().SetSelectedGameObject(pauseFirst);
+            mouseSensitivity.value = player.GetComponent<ControllerTest>().GetMouseSensitivity();
+            controllerSensitivity.value = player.GetComponent<ControllerTest>().GetControllerSensitivity();
         }
         else if (menuActive == menuPause)
         {
