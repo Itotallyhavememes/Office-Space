@@ -1501,6 +1501,7 @@ MonoBehaviour:
   playerHPBar: {fileID: 962107317397774382}
   playerAmmoBar: {fileID: 8671947604886578972}
   grenadeStack: {fileID: 7369310941407133394}
+  mapIndicator: {fileID: 2838606809636895348}
   scoreDisplay: {fileID: 6355714670378154300}
   activeScoreNamesText: {fileID: 1726775818570125139}
   activeTimeHeldText: {fileID: 7192400384583706559}
@@ -13979,7 +13980,7 @@ Transform:
   m_GameObject: {fileID: 2838606809636895348}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -1, w: 0}
-  m_LocalPosition: {x: 0, y: 16.27, z: 0}
+  m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 6, y: 6, z: 6}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -28659,7 +28660,7 @@ Camera:
   m_Depth: 1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 24575
+    m_Bits: 516095
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0

@@ -96,6 +96,7 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
     public Image playerHPBar;
     public Image playerAmmoBar;
     public TMP_Text grenadeStack;
+    public GameObject mapIndicator;
 
     [Header("Scoreboard")]
     public GameObject scoreDisplay;
@@ -1145,12 +1146,32 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
 
     public void DisplayScoreboard(InputAction.CallbackContext context)
     {
-        GameManager.instance.DisplayScoreboard(this.gameObject);
+        if (!GameManager.instance.isPaused)
+        {
+            GameManager.instance.DisplayScoreboard(this.gameObject);
+
+            //When pressing the scoreboard, activate the playerCam layer for player 1 and deactivate the weapon camera
+            int playerLayer = weaponModel.layer;
+
+            // Switch on player layer on main camera, leave others as-is
+            playerCamera.cullingMask |= (1 << playerLayer);
+            weaponCamera.gameObject.SetActive(false);
+        }
+
+
     }
 
     public void DeactivateScoreboard(InputAction.CallbackContext context)
     {
-        GameManager.instance.DeactivateScoreboard(this.gameObject);
+        if (!GameManager.instance.isPaused)
+        {
+            GameManager.instance.DeactivateScoreboard(this.gameObject);
+
+            int playerLayer = weaponModel.layer;
+            // Switch off player layer on main camera, leave others as-is
+            playerCamera.cullingMask &= ~(1 << playerLayer);
+            weaponCamera.gameObject.SetActive(true);
+        }
     }
 
     public bool GetLifeState()

@@ -13107,7 +13107,7 @@ Light:
   m_RenderMode: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 516095
   m_RenderingLayerMask: 1
   m_Lightmapping: 2
   m_LightShadowCasterMode: 0
@@ -19221,6 +19221,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4757695527498888752, guid: f70114bd10fc78f4b8b8e9fa300a851f, type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 516095
+      objectReference: {fileID: 0}
     - target: {fileID: 7601297108038699415, guid: f70114bd10fc78f4b8b8e9fa300a851f, type: 3}
       propertyPath: m_Name
       value: Donut King
@@ -29298,6 +29302,11 @@ MonoBehaviour:
   TwoPlayBlock1: {fileID: 732666618}
   TwoPlayBlock2: {fileID: 342490406}
   MatchSetMsg: {fileID: 0}
+  playerMapIconsMat:
+  - {fileID: 2100000, guid: d3376d14c44b6534cacecb24c5a93cb1, type: 2}
+  - {fileID: 2100000, guid: e12ab9c503b2e2b4f8e2394ee6c587fc, type: 2}
+  - {fileID: 2100000, guid: befc0d74172bb3e438c150ded7119987, type: 2}
+  - {fileID: 2100000, guid: 12ed14d74998fd94abaf2f8a4d9ba0ad, type: 2}
   matchSettingsMenu: {fileID: 7582829895097461547}
   enemyPrefabs:
   - {fileID: 4464568196514872736, guid: c4aec7654a823f840ac1a7eceebdfb45, type: 3}
@@ -32390,7 +32399,7 @@ Light:
   m_RenderMode: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 516095
   m_RenderingLayerMask: 1
   m_Lightmapping: 2
   m_LightShadowCasterMode: 0
@@ -39207,7 +39216,7 @@ Light:
   m_RenderMode: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 516095
   m_RenderingLayerMask: 1
   m_Lightmapping: 2
   m_LightShadowCasterMode: 0
@@ -66921,7 +66930,7 @@ Light:
   m_RenderMode: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 516095
   m_RenderingLayerMask: 1
   m_Lightmapping: 2
   m_LightShadowCasterMode: 0
@@ -74148,7 +74157,7 @@ Light:
   m_RenderMode: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 516095
   m_RenderingLayerMask: 1
   m_Lightmapping: 2
   m_LightShadowCasterMode: 0
@@ -87298,7 +87307,7 @@ Light:
   m_RenderMode: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 516095
   m_RenderingLayerMask: 1
   m_Lightmapping: 2
   m_LightShadowCasterMode: 0
@@ -88589,7 +88598,7 @@ Light:
   m_RenderMode: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 516095
   m_RenderingLayerMask: 1
   m_Lightmapping: 2
   m_LightShadowCasterMode: 0

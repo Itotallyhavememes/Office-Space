@@ -41,6 +41,7 @@ public class PlayerManager : MonoBehaviour
     private TMP_Dropdown botsDropdownValue;
     
     List<Color> playerToggleColors = new List<Color> { Color.red, Color.blue, Color.yellow, Color.green };
+    [SerializeField] List<Material> playerMapIconsMat;
     private Color activePlayerTxtColor = Color.white;
     private Color activeBotColor = Color.gray;
     private Color defaultBackgroundColor;
@@ -96,6 +97,10 @@ public class PlayerManager : MonoBehaviour
         //cameras.Add(player.GetComponentInChildren<Camera>());
         GameManager.instance.playerSpawn.transform.position = spawnPoints[players.Count - 1].position;
         GameManager.instance.playerSpawn.transform.rotation = spawnPoints[players.Count - 1].rotation;
+        player.GetComponent<ControllerTest>().mapIndicator.GetComponent<Renderer>().material = playerMapIconsMat[players.Count - 1];
+        player.GetComponent<ControllerTest>().mapIndicator.GetComponent<Renderer>().material.color = playerToggleColors[players.Count - 1];
+        player.GetComponent<ControllerTest>().mapIndicator.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
+        player.GetComponent<ControllerTest>().mapIndicator.GetComponent<Renderer>().material.SetColor("_EmissionColor", playerToggleColors[players.Count - 1]);
         player.GetComponent<ControllerTest>().spawnPlayer();
         player.GetComponent<ControllerTest>().ResetPlayer();
         player.name = "Player " + players.Count.ToString();
@@ -206,6 +211,7 @@ public class PlayerManager : MonoBehaviour
             matchStarted = true;
             GameManager.instance.SetDKTimer((int)timerSlider.value * 60);
             AssignLayers();
+            PersonalWeaponCullingMaskToggle();
             //GameManager.instance.SetDKTimer(15);
         }
         else
@@ -234,10 +240,21 @@ public class PlayerManager : MonoBehaviour
             int playerLayer = LayerMask.NameToLayer("Player" + (i + 1).ToString());
             players[i].GetComponent<ControllerTest>().weaponModel.layer = playerLayer;
 
-            // Switch on layer 14, leave others as-is
+            // Switch on player layer, leave others as-is
             players[i].GetComponent<ControllerTest>().weaponCamera.cullingMask |= (1 << playerLayer);
         }
         
+    }
+
+    void PersonalWeaponCullingMaskToggle() //Toggles the culling mask to activate view of the other player's weapons
+    {
+        for (int i = 0; i < players.Count; i++)
+        {
+            int playerLayer = players[i].GetComponent<ControllerTest>().weaponModel.layer;
+
+            // Switch off player layer on main camera, leave others as-is
+            players[i].GetComponent<ControllerTest>().playerCamera.cullingMask &= ~(1 << playerLayer);
+        }
     }
 
     public void ResetPlayerRoots()
