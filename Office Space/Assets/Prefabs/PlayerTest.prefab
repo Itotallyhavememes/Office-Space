@@ -15506,8 +15506,8 @@ MonoBehaviour:
   rubberbandBallPrice: 75
   rubberbandBall: {fileID: 0}
   aud: {fileID: 2048329367369337838}
-  audShopBuy: {fileID: 0}
-  audShopVol: 0.5
+  audShopBuy: {fileID: 8300000, guid: 66acfeeb85899a4448985c93af8e0b45, type: 3}
+  audShopVol: 0.925
 --- !u!82 &7428551683726850378
 AudioSource:
   m_ObjectHideFlags: 0
