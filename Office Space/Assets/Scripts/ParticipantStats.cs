@@ -8,7 +8,8 @@ public class ParticipantStats
 {
     [SerializeField] string DisplayName;
     [SerializeField] int moneyTotal, RoundsWon;
-    public int timeHeld;
+    public int timeHeld, roundTimeHeld;
+    public int RoundDeposit;
     //Changed Kills and Deaths to double to allow KDR to show up to the 0.01 decimal place
     [SerializeField] double Kills, Deaths, KDR;
     [SerializeField] bool isDonutKing;
@@ -19,6 +20,7 @@ public class ParticipantStats
         Kills = 0;
         Deaths = 0;
         timeHeld = 0;
+        RoundDeposit = 0;
         KDR = 0.0f;
         isDonutKing = false;
         moneyTotal = GameManager.instance.startingMoney;//starting money for players
@@ -62,9 +64,12 @@ public class ParticipantStats
     public void updateTimeHeld()
     {
         timeHeld++;
-        depositMoney(GameManager.instance.moneyForTimeHeld);
+        //depositMoney(GameManager.instance.moneyForTimeHeld);
     }
-
+    public void convertTimeHeld()
+    {
+        roundTimeHeld = timeHeld;
+    }
     public void updateRoundsWon() { ++RoundsWon; }
 
     public int getRoundsWon() { return RoundsWon; }
@@ -73,16 +78,26 @@ public class ParticipantStats
 
     public void resetTimeHeld() { timeHeld = 0; }
 
+    public int getRTHeld() { return roundTimeHeld; }
+
     //public void updateScore(int score) { scorePoints += score; }
 
     public void depositMoney(int money) 
     {
         int depositAMT, timeHeldReward;
         depositAMT = money;
-        timeHeldReward = timeHeld;
-        if (timeHeld == 0)
+        timeHeldReward = roundTimeHeld;
+        if (roundTimeHeld == 0)
             timeHeldReward = 1;
+        RoundDeposit = depositAMT * timeHeldReward;
+        Debug.Log("DEP: " + RoundDeposit.ToString() + " = " + depositAMT.ToString() + " X " + timeHeldReward.ToString());
         moneyTotal += depositAMT * timeHeldReward;
+        Debug.Log("BUDGET: " + moneyTotal.ToString());
+    }
+
+    public int getDepositAmount()
+    {
+        return RoundDeposit;
     }
 
     public void withdrawMoney(int money) { moneyTotal -= money; }

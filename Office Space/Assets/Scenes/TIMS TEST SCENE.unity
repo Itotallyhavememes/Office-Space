@@ -40465,10 +40465,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerTest
       objectReference: {fileID: 0}
-    - target: {fileID: 737468669046305203, guid: 4f7b85e97e3894c44824643b825360c2, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 1292069436461648624, guid: 4f7b85e97e3894c44824643b825360c2, type: 3}
       propertyPath: m_LocalPosition.x
       value: -9.52
@@ -63138,9 +63134,8 @@ MonoBehaviour:
   isThereDonutKing: 0
   TheDonutKing: {fileID: 0}
   playersReady: 0
-  moneyForTimeHeld: 20
-  moneyForDonutKing: 500
-  startingMoney: 150
+  startingMoney: 9999
+  CurrRound: 0
   playerSpawn: {fileID: 1846228661}
   checkPointPos: {fileID: 1440318509537524146}
   retryAmount: 0

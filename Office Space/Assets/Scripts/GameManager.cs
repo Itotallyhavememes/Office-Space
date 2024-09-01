@@ -154,8 +154,8 @@ public class GameManager : MonoBehaviour
     [Header("Shop Variables")]
     //CODE FOR PJ's SHOP
     public int playersReady;
-    [SerializeField] public int moneyForTimeHeld;
-    [SerializeField] public int moneyForDonutKing;
+    //[SerializeField] public int moneyForTimeHeld;
+    //[SerializeField] public int moneyForDonutKing;
     [SerializeField] public int startingMoney;
     public int CurrRound;
 
@@ -372,12 +372,14 @@ public class GameManager : MonoBehaviour
         worldCamera.gameObject.SetActive(false);
         roundEnded = false;
         GameManager.instance.CurrRound++; //Should make this 2+
+        timerUI.SetActive(false); //Turn it off in-between rounds
         StatePause();
 
         foreach (var player in PlayerManager.instance.players)
         {
-            statsTracker[player.name].depositMoney(500);
-            Debug.Log("NR: " + statsTracker[player.name].getMoneyTotal().ToString());
+            statsTracker[player.name].depositMoney(120);
+            Debug.Log(player.name.ToString() + " EARNED: " + statsTracker[player.name].getDepositAmount().ToString());
+            //Debug.Log("NR: " + statsTracker[player.name].getMoneyTotal().ToString());
             //player.GetComponent<Shop>().myPlayerBudget = statsTracker[player.name].getMoneyTotal();
             //player.GetComponent<ControllerTest>().menuShop.GetComponent<Shop>().updateMoneyCount();
             player.GetComponent<ControllerTest>().ActivateShopUI();
@@ -388,6 +390,17 @@ public class GameManager : MonoBehaviour
             TheDonutKing.transform.position = new Vector3(0, 0, 0);
             dropTheDonut(TheDonutKing);
         }
+        else if(!isThereDonutKing /*&& donutDropItem.gameObject.transform.position != new Vector3(0, 1, 0)*/)
+        {
+            Destroy(donutDropItem.gameObject);
+            Instantiate(donutDropItem, new Vector3(0, 1, 0), new Quaternion());
+        }
+        //Reset Timer on Everyone
+        foreach (var worker in statsTracker)
+        {
+            worker.Value.resetTimeHeld();
+        }
+
         while (bodyTracker.Count > 0)
         {
             deadTracker.Add(bodyTracker[0]);
@@ -911,6 +924,7 @@ public class GameManager : MonoBehaviour
 
                 timeText += timerSeconds.ToString();
                 scoreBoardScoreText.text += timeText + '\n';
+                score.Value.convertTimeHeld();
                 score.Value.resetTimeHeld();
                 scoreBoardNamesText.text += score.Key + '\n';
 
@@ -1175,6 +1189,7 @@ public class GameManager : MonoBehaviour
     //METHOD FROM: when enemy or player dies and needs to spawn a DONUT near them
     public void dropTheDonut(GameObject donutDropper)
     {
+        DownWithTheDonutKing();
         //creates sphere that's the size of roamDist and selects a random position
         //Vector3 randDropPos = Random.insideUnitSphere * donutDropDistance;
         //randDropPos.y = donutDropItem.transform.position.y;
@@ -1210,7 +1225,7 @@ public class GameManager : MonoBehaviour
         statsTracker[donutDropper.name].updateDKStatus();
         PriorityPoint.Clear();
         PriorityPoint.Add(donutDropItem.transform);
-        DownWithTheDonutKing();
+        
         // //DebugLog(donutDropper.name.ToString() + " : " + statsTracker[donutDropper.name].getAllStats());
         aud.PlayOneShot(audDonutDrop, audDonutDropVol);
     }

@@ -59,6 +59,13 @@ public class Shop : MonoBehaviour
     {
         RoundBudget.text = string.Empty;
         RoundBudget.text = "ROUND " + GameManager.instance.CurrRound.ToString() + " BUDGET:";
+        if(GameManager.instance.CurrRound > 1)
+        {
+            //Display how much they've earned
+            MsgField.text = string.Empty;
+            MsgField.text = "EARNED: " + GameManager.instance.statsTracker[myPlayer.name].getRTHeld().ToString() + "sec X $120 = $" + GameManager.instance.statsTracker[myPlayer.name].getDepositAmount().ToString(); 
+            MsgField.color = Color.yellow;
+        }
     }
 
     public void shotgunButton()
@@ -67,23 +74,25 @@ public class Shop : MonoBehaviour
         
         if (GameManager.instance.statsTracker[myPlayer.name].getMoneyTotal() >= shotgunPrice)
         {
-            aud.PlayOneShot(audShopBuy, audShopVol);
-            Debug.Log("Buying Shotgun");
+            
+            //Debug.Log("Buying Shotgun");
             GameManager.instance.statsTracker[myPlayer.name].withdrawMoney(shotgunPrice);
             updateMoneyCount();
             //ControllerTest playerCT = myPlayer.GetComponent<ControllerTest>();
             for (int i = 0; i < playerCT.weaponList.Count; i++)
             {
-                Debug.Log("Searching Weapons at Index: " + i.ToString());
+                //Debug.Log("Searching Weapons at Index: " + i.ToString());
                 if (playerCT.weaponList[i].weaponModel == shotgun.weaponModel)
                 {
-                    Debug.Log("You already have Shotgun");
+                    aud.PlayOneShot(audShopBuy, audShopVol);
+                    //Debug.Log("You already have Shotgun");
                     //GameManager.instance.playerScript.weaponList[i].currentAmmo = GameManager.instance.playerScript.weaponList[i].startAmmo;
-                    Debug.Log("Refilling Shotgun Ammo");
+                    //Debug.Log("Refilling Shotgun Ammo");
                     playerCT.weaponList[i].currentAmmo = playerCT.weaponList[i].startAmmo;
                     return;
                 }
             }
+            aud.PlayOneShot(audShopBuy, audShopVol);
             playerCT.GetWeaponStats(shotgun);
         }
     }
@@ -100,11 +109,13 @@ public class Shop : MonoBehaviour
             {
                 if (playerCT.weaponList[i].weaponModel == SMG.weaponModel)
                 {
+                    aud.PlayOneShot(audShopBuy, audShopVol);
                     //GameManager.instance.playerScript.weaponList[i].currentAmmo = GameManager.instance.playerScript.weaponList[i].startAmmo;
                     playerCT.weaponList[i].currentAmmo = playerCT.weaponList[i].startAmmo;
                     return;
                 }
             }
+            aud.PlayOneShot(audShopBuy, audShopVol);
             playerCT.GetWeaponStats(SMG);
         }
     }
@@ -121,11 +132,13 @@ public class Shop : MonoBehaviour
             {
                 if (playerCT.weaponList[i].weaponModel == rifle.weaponModel)
                 {
+                    aud.PlayOneShot(audShopBuy, audShopVol);
                     //GameManager.instance.playerScript.weaponList[i].currentAmmo = GameManager.instance.playerScript.weaponList[i].startAmmo;
                     playerCT.weaponList[i].currentAmmo = playerCT.weaponList[i].startAmmo;
                     return;
                 }
             }
+            aud.PlayOneShot(audShopBuy, audShopVol);
             playerCT.GetWeaponStats(rifle);
             //GameManager.instance.playerScript.GetWeaponStats(rifle);
         }
@@ -136,7 +149,7 @@ public class Shop : MonoBehaviour
 
         if (GameManager.instance.statsTracker[myPlayer.name].getMoneyTotal() >= shurikenPrice)
         {
-            Debug.Log("BUYING SHURIKEN!");
+            //Debug.Log("BUYING SHURIKEN!");
             aud.PlayOneShot(audShopBuy, audShopVol);
             GameManager.instance.statsTracker[myPlayer.name].withdrawMoney(shurikenPrice);
             //GameManager.instance.playerScript.GetWeaponStats(shuriken);
@@ -146,20 +159,22 @@ public class Shop : MonoBehaviour
             for (int i = 0; i < playerCT.weaponList.Count; i++)
             {
                 
-                Debug.Log("SEARCHING WEAPONS AT INDEX: " + i.ToString());
+                //Debug.Log("SEARCHING WEAPONS AT INDEX: " + i.ToString());
                 if (playerCT.weaponList[i].weaponModel == shuriken.weaponModel)
                 {
-                    Debug.Log("You have a Shuriken Already");
-                    if (playerCT.weaponList[i].currentAmmo < playerCT.weaponList[i].startAmmo)
-                    {
-                        Debug.Log("refilling Shuriken");
-                        playerCT.weaponList[i].currentAmmo = playerCT.weaponList[i].startAmmo;
+                    aud.PlayOneShot(audShopBuy, audShopVol);
+                    //Debug.Log("You have a Shuriken Already");
+                    //if (playerCT.weaponList[i].currentAmmo < playerCT.weaponList[i].startAmmo)
+                    //{
+                    //Debug.Log("refilling Shuriken");
+                    playerCT.weaponList[i].currentAmmo = playerCT.weaponList[i].startAmmo;
                         return;
-                    }
+                    //}
                     //else { break; }
                     //GameManager.instance.playerScript.weaponList[i].currentAmmo = GameManager.instance.playerScript.weaponList[i].startAmmo;
                 }
             }
+            aud.PlayOneShot(audShopBuy, audShopVol);
             playerCT.GetWeaponStats(shuriken);
             //add code to add new weapon to throwables
         }
