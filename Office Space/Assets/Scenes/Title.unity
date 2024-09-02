@@ -20172,6 +20172,8 @@ MonoBehaviour:
   audGameOverVol2: 0
   audwrongButtonVol: 0
   deathPoof: {fileID: 0}
+  mouseSensitivity: {fileID: 0}
+  controllerSensitivity: {fileID: 0}
   mainMenuFirst: {fileID: 1864329422}
   createMatchFirst: {fileID: 4830679415997371419}
   settingsFirst: {fileID: 4306316876367820079}
@@ -22155,6 +22157,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2555903922358590220, guid: 5e91e106f9569f648a7c0106678bf483, type: 3}
+      propertyPath: m_Navigation.m_SelectOnUp
+      value: 
+      objectReference: {fileID: 335136272}
+    - target: {fileID: 2555903922358590220, guid: 5e91e106f9569f648a7c0106678bf483, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 7729711834160596301}
@@ -22190,6 +22196,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4315461833129113199, guid: 5e91e106f9569f648a7c0106678bf483, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -23.2
+      objectReference: {fileID: 0}
     - target: {fileID: 4703824169826527360, guid: 5e91e106f9569f648a7c0106678bf483, type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -22222,6 +22232,10 @@ PrefabInstance:
       propertyPath: m_Delegates.Array.data[2].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 934574703}
+    - target: {fileID: 5378806415990607099, guid: 5e91e106f9569f648a7c0106678bf483, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -62.1
+      objectReference: {fileID: 0}
     - target: {fileID: 5426980431772963451, guid: 5e91e106f9569f648a7c0106678bf483, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -22250,6 +22264,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7255033064833689775, guid: 5e91e106f9569f648a7c0106678bf483, type: 3}
+      propertyPath: m_Navigation.m_SelectOnDown
+      value: 
+      objectReference: {fileID: 8903960230761064672}
     - target: {fileID: 7255033064833689775, guid: 5e91e106f9569f648a7c0106678bf483, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -22346,6 +22364,10 @@ PrefabInstance:
       propertyPath: m_Delegates.Array.data[2].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 934574703}
+    - target: {fileID: 7900882317225931965, guid: 5e91e106f9569f648a7c0106678bf483, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 16.9
+      objectReference: {fileID: 0}
     - target: {fileID: 7938095801149253945, guid: 5e91e106f9569f648a7c0106678bf483, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -22359,10 +22381,23 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 934574703}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 1570781516878700736, guid: 5e91e106f9569f648a7c0106678bf483, type: 3}
+    - {fileID: 2747747344015372228, guid: 5e91e106f9569f648a7c0106678bf483, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5e91e106f9569f648a7c0106678bf483, type: 3}
+--- !u!114 &8903960230761064672 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2555903922358590220, guid: 5e91e106f9569f648a7c0106678bf483, type: 3}
+  m_PrefabInstance: {fileID: 8903960230761064671}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4306316876367820079}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8913989358348280384
 GameObject:
   m_ObjectHideFlags: 0
