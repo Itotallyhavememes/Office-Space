@@ -791,6 +791,7 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
                 weaponList[selectedWeapon].currentAmmo = weaponList[selectedWeapon].startAmmo;
                 selectedWeapon = index;
                 WeaponChange();
+                UpdateAmmoUI();
                 return;
             }
         }
@@ -800,6 +801,7 @@ public class ControllerTest : MonoBehaviour, ITarget, IDamage
         weaponList[selectedWeapon].currentAmmo = weaponList[selectedWeapon].startAmmo;
 
         WeaponChange();
+        UpdateAmmoUI();
 
     }
 
