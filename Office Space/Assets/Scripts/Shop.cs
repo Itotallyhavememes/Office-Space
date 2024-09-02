@@ -53,7 +53,7 @@ public class Shop : MonoBehaviour
         //{
         moneyCount.text = string.Empty;
         moneyCount.text = GameManager.instance.statsTracker[myPlayer.name].getMoneyTotal().ToString();
-        updateRoundBudget();
+        //updateRoundBudget();
         //}
     }
 
@@ -72,9 +72,10 @@ public class Shop : MonoBehaviour
 
     public void shotgunButton()
     {
+        MsgField.text = string.Empty;
         if (GameManager.instance.statsTracker[myPlayer.name].getMoneyTotal() >= shotgunPrice)
         {
-            MsgField.text = string.Empty;
+            
             for (int i = 0; i < playerCT.weaponList.Count; i++)
             {
                 if (playerCT.weaponList[i].weaponModel == shotgun.weaponModel && playerCT.weaponList[i].currentAmmo >= playerCT.weaponList[i].startAmmo)
@@ -103,9 +104,10 @@ public class Shop : MonoBehaviour
 
     public void SMGButton()
     {
+        MsgField.text = string.Empty;
         if (GameManager.instance.statsTracker[myPlayer.name].getMoneyTotal() >= SMGPrice)
         {
-            MsgField.text = string.Empty;
+            
             for (int i = 0; i < playerCT.weaponList.Count; i++)
             {
                 if (playerCT.weaponList[i].weaponModel == SMG.weaponModel && playerCT.weaponList[i].currentAmmo >= playerCT.weaponList[i].startAmmo)
@@ -134,6 +136,7 @@ public class Shop : MonoBehaviour
 
     public void rifleButton()
     {
+        MsgField.text = string.Empty;
         if (GameManager.instance.statsTracker[myPlayer.name].getMoneyTotal() >= riflePrice)
         {
             MsgField.text = string.Empty;
@@ -165,9 +168,10 @@ public class Shop : MonoBehaviour
 
     public void shurikenButton()
     {
+        MsgField.text = string.Empty;
         if (GameManager.instance.statsTracker[myPlayer.name].getMoneyTotal() >= shurikenPrice)
         {
-            MsgField.text = string.Empty;
+            //MsgField.text = string.Empty;
             for (int i = 0; i < playerCT.weaponList.Count; i++)
             {                
                 if (playerCT.weaponList[i].weaponModel == shuriken.weaponModel && playerCT.weaponList[i].currentAmmo >= playerCT.weaponList[i].startAmmo)

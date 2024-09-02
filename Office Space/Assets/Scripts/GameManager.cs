@@ -424,6 +424,7 @@ public class GameManager : MonoBehaviour
             //Debug.Log("NR: " + statsTracker[player.name].getMoneyTotal().ToString());
             //player.GetComponent<Shop>().myPlayerBudget = statsTracker[player.name].getMoneyTotal();
             //player.GetComponent<ControllerTest>().menuShop.GetComponent<Shop>().updateMoneyCount();
+            player.GetComponent<ControllerTest>().menuShop.GetComponent<Shop>().updateRoundBudget();
             player.GetComponent<ControllerTest>().ActivateShopUI();
         }
 
@@ -432,11 +433,11 @@ public class GameManager : MonoBehaviour
             TheDonutKing.transform.position = new Vector3(0, 0, 0);
             dropTheDonut(TheDonutKing);
         }
-        else if (!isThereDonutKing /*&& donutDropItem.gameObject.transform.position != new Vector3(0, 1, 0)*/)
-        {
-            Destroy(donutDropItem.gameObject);
-            Instantiate(donutDropItem, new Vector3(0, 1, 0), new Quaternion());
-        }
+        //else if (!isThereDonutKing /*&& donutDropItem.gameObject.transform.position != new Vector3(0, 1, 0)*/)
+        //{
+        //    DestroyImmediate(donutDropItem.gameObject, );
+        //    Instantiate(donutDropItem, new Vector3(0, 1, 0), new Quaternion());
+        //}
         //Reset Timer on Everyone
         foreach (var worker in statsTracker)
         {
